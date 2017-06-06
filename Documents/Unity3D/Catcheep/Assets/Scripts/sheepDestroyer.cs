@@ -15,7 +15,6 @@ public class sheepDestroyer : MonoBehaviour
     {
         if (Input.GetMouseButton(0))// && Vector3.Distance(Input.mousePosition,transform.position) <= 10)
         {
-            print("mouse clicked");
             caught = true;
             Destruction();
         }
@@ -23,19 +22,18 @@ public class sheepDestroyer : MonoBehaviour
 
     IEnumerator deathAnimation()
     {
-        Color sheepColor = GetComponent<SpriteRenderer>().color;
-        for (int i = 255; i >= 0; i-=15)
+        SpriteRenderer sheepColor = GetComponent<SpriteRenderer>();
+        for (int i = 255; i >= 0; i-=50)
         {
-            print(sheepColor);
-            sheepColor = new Color(i,i,i, i);
-            yield return new WaitForSeconds(.1f);
+            sheepColor.color = new Color(sheepColor.color.r, sheepColor.color.g, sheepColor.color.b, i);
+            yield return new WaitForSeconds(.5f);
         }
-
-        Destroy(gameObject);
+        
     }
 
     public void Destruction()
     {
-        StartCoroutine(deathAnimation());
+        //StartCoroutine(deathAnimation());
+        Destroy(gameObject);
     }
 }

@@ -13,4 +13,9 @@ public class sheepDestroyer : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void Destruction()
+    {
+        Destroy(gameObject);
+    }
 }

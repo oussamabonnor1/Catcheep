@@ -13,7 +13,7 @@ public class sheepDestroyer : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButton(0))// && Vector3.Distance(Input.mousePosition,transform.position) <= 10)
+        if (Input.GetMouseButtonDown(0) && Vector3.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.position) <= 10.05f)
         {
             caught = true;
             Destruction();

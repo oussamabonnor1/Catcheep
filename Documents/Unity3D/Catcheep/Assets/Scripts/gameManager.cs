@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class gameManager : MonoBehaviour
 {
@@ -8,10 +9,17 @@ public class gameManager : MonoBehaviour
     public int[] waitTimeForEachSpawn;
     private bool gameOver;
     private Vector3 edgeOfScreen;
+    private GameObject scoreText;
+
+    public static int score;
 
     // Use this for initialization
     void Start()
     {
+        score = 0;
+        scoreText = GameObject.Find("Score");
+        scoreText.GetComponent<Text>().text = " x " + score;
+
         //edge of screen is a vector3 that holds the screens width (can't get it directly cause of Screen/World point difference)
         edgeOfScreen = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0f));
         gameOver = false;

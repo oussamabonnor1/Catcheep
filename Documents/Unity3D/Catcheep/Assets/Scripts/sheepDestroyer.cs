@@ -1,20 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class sheepDestroyer : MonoBehaviour
 {
     public bool caught;
+    private GameObject scoreText;
 
     void Start()
     {
         caught = false;
+        scoreText = GameObject.Find("Score");
+
     }
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0) && Vector3.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.position) <= 10.05f)
         {
+            ++gameManager.score;
+            scoreText.GetComponent<Text>().text = " x " + gameManager.score;
             caught = true;
             Destruction();
         }

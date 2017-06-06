@@ -5,6 +5,7 @@ using UnityEngine;
 public class gameManager : MonoBehaviour
 {
     public GameObject[] sheeps;
+    public int[] waitTimeForEachSpawn;
     private bool gameOver;
     private Vector3 edgeOfScreen;
 
@@ -24,12 +25,15 @@ public class gameManager : MonoBehaviour
 
     IEnumerator sheepSpawner()
     {
+        yield return new WaitForSeconds(1f);
         while (!gameOver)
         {
+            int index = Random.Range(0, sheeps.Length);
             float xPosition = Random.Range(-edgeOfScreen.x, edgeOfScreen.x) / 2;
+
             Vector3 spawnPositionVector3 = new Vector3(xPosition, transform.position.y, transform.position.z);
-            yield return new WaitForSeconds(1f);
-            Instantiate(sheeps[Random.Range(0, sheeps.Length)], spawnPositionVector3, Quaternion.identity);
+            Instantiate(sheeps[index], spawnPositionVector3, Quaternion.identity);
+            yield return new WaitForSeconds(waitTimeForEachSpawn[index]);
         }
     }
 }

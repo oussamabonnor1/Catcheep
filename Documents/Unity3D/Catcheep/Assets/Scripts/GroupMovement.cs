@@ -14,12 +14,14 @@ public class GroupMovement : MonoBehaviour {
     {
         Vector3 height = Camera.main.ScreenToWorldPoint(new Vector3(Screen.height, 0f, 0f));
         destination = new Vector2(0f, transform.position.y - height.x);
+
+        transform.Translate(destination * Time.deltaTime * Speed);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        
-        transform.Translate(destination * Time.deltaTime * Speed);
+     //   transform.Translate(destination * Time.deltaTime * Speed);
     }
 }

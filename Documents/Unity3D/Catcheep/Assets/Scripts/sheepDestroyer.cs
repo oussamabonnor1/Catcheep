@@ -6,12 +6,14 @@ using UnityEngine.UI;
 public class sheepDestroyer : MonoBehaviour
 {
     public bool caught;
+    private GameObject sheepsCaughtText;
     private GameObject scoreText;
 
     void Start()
     {
         caught = false;
-        scoreText = GameObject.Find("Score");
+        sheepsCaughtText = GameObject.Find("sheeps caught");
+        scoreText = GameObject.Find("score");
 
     }
 
@@ -19,11 +21,17 @@ public class sheepDestroyer : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && Vector3.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.position) <= 10.05f)
         {
-            ++gameManager.score;
-            scoreText.GetComponent<Text>().text = " x " + gameManager.score;
+            ++gameManager.sheepsCaught;
+            sheepsCaughtText.GetComponent<Text>().text = " x " + gameManager.sheepsCaught;
+
+            ++gameManager.combo;
+            gameManager.score += 100;
+            scoreText.GetComponent<Text>().text = "Score: " + (gameManager.score + 10 * gameManager.combo);
+
             caught = true;
             Destruction();
         }
+        //TODO: figure out a way to communicate scripts combo hits
     }
 
     IEnumerator deathAnimation()

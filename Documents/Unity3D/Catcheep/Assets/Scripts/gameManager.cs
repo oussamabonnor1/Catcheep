@@ -11,14 +11,20 @@ public class gameManager : MonoBehaviour
     private Vector3 edgeOfScreen;
     private GameObject scoreText;
 
+    public static int sheepsCaught;
+    public static int combo;
     public static int score;
+
 
     // Use this for initialization
     void Start()
     {
+        sheepsCaught = 0;
+        combo = 0;
         score = 0;
-        scoreText = GameObject.Find("Score");
-        scoreText.GetComponent<Text>().text = " x " + score;
+
+        scoreText = GameObject.Find("score");
+        scoreText.GetComponent<Text>().text = "Score: " + score;
 
         //edge of screen is a vector3 that holds the screens width (can't get it directly cause of Screen/World point difference)
         edgeOfScreen = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0f));

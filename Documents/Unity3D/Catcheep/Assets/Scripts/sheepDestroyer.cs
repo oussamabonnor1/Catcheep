@@ -8,6 +8,7 @@ public class sheepDestroyer : MonoBehaviour
     private float speed;
     public bool caught;
 
+    public GameObject hitText;
     private GameObject sheepsCaughtText;
     private GameObject scoreText;
     private GameObject sheepCage;
@@ -36,15 +37,22 @@ public class sheepDestroyer : MonoBehaviour
 
     void sheepClicked()
     {
+        GameObject canvas = GameObject.Find("Canvas");
+        //creating hit text
+        Vector3 hitPosition = new Vector3(transform.position.x, transform.position.y + 10,0);
+        GameObject hit = Instantiate(hitText, transform.position , Quaternion.identity);
+        hit.transform.SetParent(canvas.transform,false);
+        //hit.transform.position = hitPosition;
+        
+        //rewarding player
         ++gameManager.sheepsCaught;
         sheepsCaughtText.GetComponent<Text>().text = " x " + gameManager.sheepsCaught;
-
         ++gameManager.combo;
         gameManager.score += 100;
         scoreText.GetComponent<Text>().text = "Score: " + (gameManager.score + 10 * gameManager.combo);
 
+        //destroying sheep
         speed = Mathf.Clamp(Vector3.Distance(transform.position, sheepCage.transform.position), 1f, 6f);
-
         caught = true;
         Destruction();
     }

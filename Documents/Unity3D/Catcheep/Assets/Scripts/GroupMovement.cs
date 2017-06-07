@@ -21,4 +21,12 @@ public class GroupMovement : MonoBehaviour {
     {
       transform.Translate(destination * Time.deltaTime * Speed);
     }
+
+    void FixedUpdate()
+    {
+        if (transform.childCount == 0)
+        {
+            Destroy(gameObject);
+        }
+    }
 }

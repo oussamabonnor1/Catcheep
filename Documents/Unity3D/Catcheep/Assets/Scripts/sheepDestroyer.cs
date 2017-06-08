@@ -43,11 +43,7 @@ public class sheepDestroyer : MonoBehaviour
         GameObject hit = (GameObject)Instantiate(hitText, canvas.transform.position, Quaternion.identity);
         hit.transform.SetParent(canvas.transform);
         hit.GetComponent<RectTransform>().transform.position = positionVector3;
-        /*Vector3 positionPoint = Camera.main.WorldToScreenPoint(transform.position);
-        positionPoint = new Vector3(positionPoint.x/Screen.width , positionPoint.y / Screen.height,positionPoint.z);
-        hit.GetComponent<RectTransform>().transform.position = positionPoint;
-        print(hit.GetComponent<RectTransform>().transform.position + "/" + Camera.main.WorldToScreenPoint(transform.position));*/
-
+        
 
         //rewarding player
         ++gameManager.sheepsCaught;

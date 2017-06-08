@@ -50,13 +50,17 @@ public class gameManager : MonoBehaviour
             yield return new WaitForSeconds(3);
 
             oneSheepyRandom();
-            yield return new WaitForSeconds(1);
+            yield return new WaitForSeconds(2);
 
-            fourSheepyTriangleLookingDown();
+            fourSheepyTriangleLookingDownUp(-1);
             yield return new WaitForSeconds(4);
+
+            fourSheepyTriangleLookingDownUp(1);
+            yield return new WaitForSeconds(4);
+
         }
     }
-
+    //one sheepy formations:
     void oneSheepyRandom()
     {
         float edges = edgeOfScreen.x - (sheeps[0].GetComponent<SpriteRenderer>().sprite.bounds.extents).x;
@@ -70,7 +74,12 @@ public class gameManager : MonoBehaviour
         Vector3 spawnPosition = new Vector3(xPosition, transform.position.y + deltaYPosition, transform.position.z);
         Instantiate(sheeps[0], spawnPosition, Quaternion.identity);
     }
+    //end of one sheepy formations;
 
+    //two sheepy formations:
+    //ende of two sheepy formations;
+
+    //two sheepy formations:
     void threeSheepyHorizontalFullScreen()
     {
         float xPosition = -edgeOfScreen.x + (sheeps[0].GetComponent<SpriteRenderer>().bounds.extents).x;
@@ -102,8 +111,10 @@ public class gameManager : MonoBehaviour
             Instantiate(sheeps[0], spawnPositionVector3, Quaternion.identity);
         }
     }
+    //ende of two sheepy formations;
 
-    void fourSheepyTriangleLookingDown()
+    //four sheepy formations:
+    void fourSheepyTriangleLookingDownUp(int direction)
     {
 
         //some paramtres that we need to instantite correctly
@@ -123,6 +134,7 @@ public class gameManager : MonoBehaviour
             if (i == 1) secondSheepy = spawnPositionVector3;
         }
         
-        oneSheepyChosen(secondSheepy.x, -1.5f * gap);
+        oneSheepyChosen(secondSheepy.x, direction * 1.5f * gap);
     }
+    //ende of two sheepy formations;
 }

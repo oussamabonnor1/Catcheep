@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -40,8 +41,11 @@ public class sheepDestroyer : MonoBehaviour
         //creating hit text
         GameObject canvas = GameObject.Find("Canvas");
         GameObject hit = (GameObject)Instantiate(hitText, transform.position, Quaternion.identity);
+        Vector3 position = Camera.main.WorldToScreenPoint(transform.position);
         hit.transform.SetParent(canvas.transform, false);
-        
+        hit.GetComponent<RectTransform>().transform.position = position;
+        hit.GetComponent<TextMeshProUGUI>().transform.position = position;
+        hit.GetComponent<TextMeshProUGUI>().margin = new Vector4(0, 0, 0, 0);
 
         //rewarding player
         ++gameManager.sheepsCaught;

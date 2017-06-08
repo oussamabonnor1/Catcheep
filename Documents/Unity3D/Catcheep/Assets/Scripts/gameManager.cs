@@ -42,12 +42,24 @@ public class gameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         while (!gameOver)
         {
-            int index = Random.Range(0, sheeps.Length);
-            float xPosition = Random.Range(-edgeOfScreen.x, edgeOfScreen.x) / 2;
-
-            Vector3 spawnPositionVector3 = new Vector3(xPosition, transform.position.y, transform.position.z);
-            Instantiate(sheeps[index], spawnPositionVector3, Quaternion.identity);
-            yield return new WaitForSeconds(waitTimeForEachSpawn[index]);
+            threeSheepyHorizontalFullScreen();
+            yield return new WaitForSeconds(3);
         }
+    }
+
+    void threeSheepyHorizontalFullScreen()
+    {
+       // float edges = edgeOfScreen.x - (3 * (sheeps[0].GetComponent<SpriteRenderer>().bounds.extents).x);
+        float xPosition = -edgeOfScreen.x + (sheeps[0].GetComponent<SpriteRenderer>().bounds.extents).x;// Random.Range(-edgeOfScreen.x, edges);
+       
+        for (int i = 0; i < 3; i++)
+        {
+            
+            Vector3 spawnPositionVector3 = new Vector3(xPosition + (edgeOfScreen.x * 0.8f * i), transform.position.y, transform.position.z);
+
+            Instantiate(sheeps[0], spawnPositionVector3, Quaternion.identity);
+            
+        }
+        
     }
 }

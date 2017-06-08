@@ -12,7 +12,6 @@ public class GroupMovement : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        Vector3 height = Camera.main.ScreenToWorldPoint(new Vector3(Screen.height, 0f, 0f));
         destination = new Vector2(0f, -1f);
     }
 

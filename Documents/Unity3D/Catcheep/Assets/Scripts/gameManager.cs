@@ -32,19 +32,14 @@ public class gameManager : MonoBehaviour
         StartCoroutine(sheepSpawner());
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
     IEnumerator sheepSpawner()
     {
         yield return new WaitForSeconds(1f);
 
         while (!gameOver)
         {
-            twoSheepyHorizontalOneSet();
-            yield return new WaitForSeconds(3);
+            twoSheepyHorizontalManySet(3);
+            yield return new WaitForSeconds(4);
 
             threeSheepyHorizontalpartScreen();
             yield return new WaitForSeconds(3);
@@ -79,13 +74,29 @@ public class gameManager : MonoBehaviour
     //two sheepy formations:
     void twoSheepyHorizontalOneSet()
     {
-        
-            float edges = edgeOfScreen.x - (sheeps[0].GetComponent<SpriteRenderer>().sprite.bounds.extents).x;
-            float xPosition = Random.Range(-edges, edges);
             float gap = Random.Range(edgeOfScreen.x * 0.4f, edgeOfScreen.x * 0.7f);
-
+            float edges = edgeOfScreen.x - (sheeps[0].GetComponent<SpriteRenderer>().sprite.bounds.extents).x;
+            // i used edges - gap cause i instantiate from the left and i m making sure the sheep wont go overboard 
+            // when we add the gap value to the xPosition to create the spacing
+            float xPosition = Random.Range(-edges , edges - gap);
+    
             oneSheepyChosen(xPosition , 0f);
             oneSheepyChosen(xPosition +  gap,0f);   
+    }
+
+    void twoSheepyHorizontalManySet(int times)
+    {
+        float gap = Random.Range(edgeOfScreen.x * 0.4f, edgeOfScreen.x * 0.7f);
+        float edges = edgeOfScreen.x - (sheeps[0].GetComponent<SpriteRenderer>().sprite.bounds.extents).x;
+        // i used edges - gap cause i instantiate from the left and i m making sure the sheep wont go overboard 
+        // when we add the gap value to the xPosition to create the spacing
+        float xPosition = Random.Range(-edges, edges - gap);
+        for (int i = 0; i < times; i++)
+        {
+            oneSheepyChosen(xPosition, i * gap);
+            oneSheepyChosen(xPosition + gap, i * gap);
+        }
+        
     }
     //ende of two sheepy formations;
 
@@ -144,7 +155,7 @@ public class gameManager : MonoBehaviour
             if (i == 1) secondSheepy = spawnPositionVector3;
         }
         
-        oneSheepyChosen(secondSheepy.x, direction * 1.5f * gap);
+        oneSheepyChosen(secondSheepy.x, direction * gap);
     }
     //ende of two sheepy formations;
 }

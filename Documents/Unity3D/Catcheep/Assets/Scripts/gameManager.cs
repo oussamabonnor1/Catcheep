@@ -79,14 +79,13 @@ public class gameManager : MonoBehaviour
     //two sheepy formations:
     void twoSheepyHorizontalOneSet()
     {
-        for (int i = 0; i < 2; i++)
-        {
+        
             float edges = edgeOfScreen.x - (sheeps[0].GetComponent<SpriteRenderer>().sprite.bounds.extents).x;
             float xPosition = Random.Range(-edges, edges);
             float gap = Random.Range(edgeOfScreen.x * 0.4f, edgeOfScreen.x * 0.7f);
 
-            oneSheepyChosen(xPosition + (i * gap), 0f);
-        }   
+            oneSheepyChosen(xPosition , 0f);
+            oneSheepyChosen(xPosition +  gap,0f);   
     }
     //ende of two sheepy formations;
 

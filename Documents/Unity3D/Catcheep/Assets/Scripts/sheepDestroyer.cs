@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,7 +26,7 @@ public class sheepDestroyer : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && Vector3.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.position) <= 10.05f)
         {
-            sheepClicked();
+            sheepClicked(Input.mousePosition);
         }
         //TODO: figure out a way to communicate scripts combo hits
 
@@ -35,15 +36,19 @@ public class sheepDestroyer : MonoBehaviour
         }
     }
 
-    void sheepClicked()
+    void sheepClicked(Vector3 positionVector3)
     {
-        GameObject canvas = GameObject.Find("Canvas");
         //creating hit text
-        Vector3 hitPosition = new Vector3(transform.position.x, transform.position.y + 10,0);
-        GameObject hit = Instantiate(hitText, transform.position , Quaternion.identity);
-        hit.transform.SetParent(canvas.transform,false);
-        //hit.transform.position = hitPosition;
-        
+        GameObject canvas = GameObject.Find("Canvas");
+        GameObject hit = (GameObject)Instantiate(hitText, canvas.transform.position, Quaternion.identity);
+        hit.transform.SetParent(canvas.transform);
+        hit.GetComponent<RectTransform>().transform.position = positionVector3;
+        /*Vector3 positionPoint = Camera.main.WorldToScreenPoint(transform.position);
+        positionPoint = new Vector3(positionPoint.x/Screen.width , positionPoint.y / Screen.height,positionPoint.z);
+        hit.GetComponent<RectTransform>().transform.position = positionPoint;
+        print(hit.GetComponent<RectTransform>().transform.position + "/" + Camera.main.WorldToScreenPoint(transform.position));*/
+
+
         //rewarding player
         ++gameManager.sheepsCaught;
         sheepsCaughtText.GetComponent<Text>().text = " x " + gameManager.sheepsCaught;
@@ -65,7 +70,7 @@ public class sheepDestroyer : MonoBehaviour
         for (float i = originalScale; i >= 0.1f; i-=0.5f)
         {
             transform.localScale = new Vector3(i,i);
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.08f);
         }
 
         Destroy(gameObject);

@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,7 +25,7 @@ public class sheepDestroyer : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && Vector3.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.position) <= 10.05f)
         {
-            sheepClicked(Input.mousePosition);
+            sheepClicked();
         }
         //TODO: figure out a way to communicate scripts combo hits
 
@@ -36,13 +35,12 @@ public class sheepDestroyer : MonoBehaviour
         }
     }
 
-    void sheepClicked(Vector3 positionVector3)
+    void sheepClicked()
     {
         //creating hit text
         GameObject canvas = GameObject.Find("Canvas");
-        GameObject hit = (GameObject)Instantiate(hitText, canvas.transform.position, Quaternion.identity);
-        hit.transform.SetParent(canvas.transform);
-        hit.GetComponent<RectTransform>().transform.position = positionVector3;
+        GameObject hit = (GameObject)Instantiate(hitText, transform.position, Quaternion.identity);
+        hit.transform.SetParent(canvas.transform, false);
         
 
         //rewarding player

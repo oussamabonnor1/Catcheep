@@ -17,7 +17,7 @@ public class sheepDestroyer : MonoBehaviour
 
     void Start()
     {
-        sheepWidth = GetComponent<Renderer>().bounds.extents.x / 2f;
+        sheepWidth = GetComponent<Renderer>().bounds.extents.x / 5f;
         caught = false;
         sheepsCaughtText = GameObject.Find("sheeps caught");
         scoreText = GameObject.Find("score");

@@ -38,27 +38,58 @@ public class gameManager : MonoBehaviour
 
         while (!gameOver)
         {
+            int i = Random.Range(0, 7);
 
-            oneSheepyRandom();
-            yield return new WaitForSeconds(2);
+            switch (i)
+            {
+                case 0:
+                    oneSheepyRandom();
+                    yield return new WaitForSeconds(2);
+                    break;
 
+                case 1:
+                    twoSheepyHorizontalManySet(3);
+                    yield return new WaitForSeconds(4);
+                    break;
+
+                case 2:
+                    threeSheepyHorizontalpartScreen();
+                    yield return new WaitForSeconds(3);
+                    break;
+
+                case 3:
+                    oneSheepyRandom();
+                    yield return new WaitForSeconds(3);
+                    break;
+
+                case 4:
+                    fourSheepyTriangleLookingDownUp(-1);
+                    yield return new WaitForSeconds(4);
+                    break;
+
+                case 5:
+                    fourSheepyTriangleLookingDownUp(1);
+                    yield return new WaitForSeconds(4);
+                    break;
+
+                case 6:
+                    threeSheepyHorizontalFullScreen();
+                    yield return new WaitForSeconds(4);
+                    break;
+
+                case 7:
+                    twoSheepyHorizontalOneSet();
+                    yield return new WaitForSeconds(3);
+                    break;
+            }
+            
+           
+           
+           
+            
+           
         }
-        twoSheepyHorizontalManySet(3);
-            yield return new WaitForSeconds(4);
 
-            threeSheepyHorizontalpartScreen();
-            yield return new WaitForSeconds(3);
-
-            oneSheepyRandom();
-            yield return new WaitForSeconds(2);
-
-            fourSheepyTriangleLookingDownUp(-1);
-            yield return new WaitForSeconds(4);
-
-            fourSheepyTriangleLookingDownUp(1);
-            yield return new WaitForSeconds(4);
-
-        
     }
     //one sheepy formations:
     void oneSheepyRandom()

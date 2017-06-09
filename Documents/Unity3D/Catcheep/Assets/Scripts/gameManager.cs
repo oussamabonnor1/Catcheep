@@ -107,7 +107,7 @@ public class gameManager : MonoBehaviour
             //threeSheepySlidingRightUpDown(1);
             //yield return new WaitForSeconds(3);
 
-            slidingSheepy(3,1);
+            vFormeSheepy(2);
             yield return new WaitForSeconds(3);
         }
 
@@ -237,31 +237,37 @@ public class gameManager : MonoBehaviour
     //ende of two sheepy formations;
 
     //V forme sheepy
-    void slidingSheepy(int number, int direction)
+    void vFormeSheepy(int number)
     {
-        // positioning the first (left = 1 or right = -1 depending on the direction) sheepy
-        float sheepyWidth = (sheeps[0].GetComponent<SpriteRenderer>().bounds.size).x;
-        // edges is the max left position value that a sheepy can have (screen width + concidering the sheepy width)
-        float edges = direction * (-edgeOfScreen.x + sheepyWidth);
-        //choosing half of screen where to position first sheepy depending on direction
-        float xPosition = Random.Range(edges, 0f - direction * (2 * sheepyWidth));
-
-        // finding out how much gap should be between the sheepys (randomly)
-        float gap = Random.Range(edgeOfScreen.x * 0.4f, edgeOfScreen.x * 0.7f);
+        float gap;
+        // finding out how much gap should be between the sheepys
+        switch (number)
+        {
+            case 2:
+                gap = edgeOfScreen.x * 0.6f;
+                break;
+            case 3:
+                gap = edgeOfScreen.x * 0.4f;
+                break;
+            default:
+                gap = 0f;
+                break;
+        }
+        
+        // choosing half of screen where to position first sheepy depending on direction
+        float xPosition = 0f; //Random.Range(edges, -edges);
 
         //instantiating the sheepys
         for (int i = 0; i < number; i++)
         {
-            Vector3 spawnPositionVector3 = new Vector3(xPosition + direction * (gap * i), transform.position.y + (gap * i), transform.position.z);
+            Vector3 spawnPositionVector3 = new Vector3(xPosition + (gap * i), transform.position.y + (gap * i), transform.position.z);
             Instantiate(sheeps[0], spawnPositionVector3, Quaternion.identity);
         }
-
-        direction = -direction;
 
         //instantiating the sheepys
         for (int i = 1; i < number; i++)
         {
-            Vector3 spawnPositionVector3 = new Vector3(xPosition + direction * (gap * i), transform.position.y + (gap * i), transform.position.z);
+            Vector3 spawnPositionVector3 = new Vector3(xPosition - (gap * i), transform.position.y + (gap * i), transform.position.z);
             Instantiate(sheeps[0], spawnPositionVector3, Quaternion.identity);
         }
 

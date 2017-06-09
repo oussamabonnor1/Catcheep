@@ -38,7 +38,12 @@ public class gameManager : MonoBehaviour
 
         while (!gameOver)
         {
-            twoSheepyHorizontalManySet(3);
+
+            oneSheepyRandom();
+            yield return new WaitForSeconds(2);
+
+        }
+        twoSheepyHorizontalManySet(3);
             yield return new WaitForSeconds(4);
 
             threeSheepyHorizontalpartScreen();
@@ -53,7 +58,7 @@ public class gameManager : MonoBehaviour
             fourSheepyTriangleLookingDownUp(1);
             yield return new WaitForSeconds(4);
 
-        }
+        
     }
     //one sheepy formations:
     void oneSheepyRandom()

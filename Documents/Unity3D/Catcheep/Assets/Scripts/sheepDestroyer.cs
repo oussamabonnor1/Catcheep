@@ -8,6 +8,7 @@ public class sheepDestroyer : MonoBehaviour
 {
     private float speed;
     public bool caught;
+    private float sheepWidth;
 
     public GameObject hitText;
     private GameObject sheepsCaughtText;
@@ -16,6 +17,7 @@ public class sheepDestroyer : MonoBehaviour
 
     void Start()
     {
+        sheepWidth = GetComponent<Renderer>().bounds.extents.x / 2f;
         caught = false;
         sheepsCaughtText = GameObject.Find("sheeps caught");
         scoreText = GameObject.Find("score");
@@ -24,8 +26,11 @@ public class sheepDestroyer : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && Vector3.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.position) <= 10.05f)
+        
+        if (Input.GetMouseButtonDown(0) && Vector3.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.position) <= 10f + sheepWidth)
         {
+            print(sheepWidth + " / " + Vector3.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.position));
+
             sheepClicked();
         }
         //TODO: figure out a way to communicate scripts combo hits

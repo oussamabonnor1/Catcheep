@@ -17,7 +17,7 @@ public class sheepDestroyer : MonoBehaviour
 
     void Start()
     {
-        sheepWidth = GetComponent<Renderer>().bounds.extents.x / 5f;
+        sheepWidth = GetComponent<Renderer>().bounds.extents.x / 10f;
         caught = false;
         sheepsCaughtText = GameObject.Find("sheeps caught");
         scoreText = GameObject.Find("score");
@@ -27,11 +27,15 @@ public class sheepDestroyer : MonoBehaviour
     void Update()
     {
         
-        if (Input.GetMouseButtonDown(0) && Vector3.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.position) <= 10f + sheepWidth)
+        if (Input.GetMouseButtonDown(0))
         {
-            print(sheepWidth + " / " + Vector3.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.position));
-
-            sheepClicked();
+            
+            if (Vector3.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.position) <=
+                10f + sheepWidth)
+            {
+                gameManager.catchedSomething = true;
+                sheepClicked();
+            }
         }
         //TODO: figure out a way to communicate scripts combo hits
 
@@ -41,7 +45,7 @@ public class sheepDestroyer : MonoBehaviour
         }
     }
 
-    void sheepClicked()
+    public void sheepClicked()
     {
         //creating hit text
         GameObject canvas = GameObject.Find("Canvas");
@@ -53,8 +57,8 @@ public class sheepDestroyer : MonoBehaviour
         hit.GetComponent<TextMeshProUGUI>().margin = new Vector4(0, 0, 0, 0);
 
         //rewarding player
-        ++gameManager.sheepsCaught;
-        sheepsCaughtText.GetComponent<Text>().text = " x " + gameManager.sheepsCaught;
+        ++gameManager.totalSheepsCaught;
+        sheepsCaughtText.GetComponent<Text>().text = " x " + gameManager.totalSheepsCaught;
         ++gameManager.combo;
         gameManager.score += 100;
         scoreText.GetComponent<Text>().text = "Score: " + (gameManager.score + 10 * gameManager.combo);

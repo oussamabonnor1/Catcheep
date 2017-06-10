@@ -124,7 +124,7 @@ public class gameManager : MonoBehaviour
             //threeSheepySlidingRightUpDown(1);
             //yield return new WaitForSeconds(3);
 
-            twoSheepyHorizontalManySet(1,0);
+            threeSheepyHorizontalFullScreen();
             yield return  new WaitForSeconds(3);
         }
     }
@@ -167,11 +167,13 @@ public class gameManager : MonoBehaviour
     //three sheepy formations:
     void threeSheepyHorizontalFullScreen()
     {
-        float xPosition = -edgeOfScreen.x + (sheeps[0].GetComponent<SpriteRenderer>().bounds.extents).x;
-
+        float sheepyWidth = (sheeps[0].GetComponent<SpriteRenderer>().bounds.size).x;
+        float xPosition = -edgeOfScreen.x + sheepyWidth / 2;
+        //used one sheepy width in gap cause that s how many sheepys are in between (hate this code)
+        float gap = ((edgeOfScreen.x * 2) - (sheepyWidth))/2;
         for (int i = 0; i < 3; i++)
         {
-            Vector3 spawnPositionVector3 = new Vector3(xPosition + (edgeOfScreen.x * 0.8f * i), transform.position.y,
+            Vector3 spawnPositionVector3 = new Vector3(xPosition + (gap * i), transform.position.y,
                 transform.position.z);
             Instantiate(sheeps[0], spawnPositionVector3, Quaternion.identity);
         }

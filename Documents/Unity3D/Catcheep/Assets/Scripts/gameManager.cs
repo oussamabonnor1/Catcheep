@@ -124,7 +124,7 @@ public class gameManager : MonoBehaviour
             //threeSheepySlidingRightUpDown(1);
             //yield return new WaitForSeconds(3);
 
-            threeSheepyHorizontalFullScreen();
+            threeSheepyHorizontalpartScreen();
             yield return  new WaitForSeconds(3);
         }
     }
@@ -182,22 +182,21 @@ public class gameManager : MonoBehaviour
     void threeSheepyHorizontalpartScreen()
     {
         // positioning the first (left) sheepy
-        // sheepy width is half the width of the sheep sprite
-        float sheepyWidth = (sheeps[0].GetComponent<SpriteRenderer>().bounds.extents).x;
-        // edges is the max left position value that a sheepy can have (screen width + concidering the sheepy width)
-        float edges = -edgeOfScreen.x + sheepyWidth;
-        // multiplied by 2 cause sheepy width is HALF of the sprite width and we dont want a sheepy showing in half on the right side J.I.C
-        float xPosition = Random.Range(edges, 0f - (2 * sheepyWidth));
-
-        // finding out how much gap should be between the sheepys (randomly)
-        float gap = Random.Range(edgeOfScreen.x * 0.4f, edgeOfScreen.x * 0.7f);
+        float sheepyWidth = (sheeps[0].GetComponent<SpriteRenderer>().sprite.bounds.extents).x;
+        float edges = edgeOfScreen.x - (sheepyWidth);
+        //gap is between a small value of my choice and the total with of screen - the width of number of sheeps together (2 in this case)
+        float gap = Random.Range(edgeOfScreen.x * 0.4f, (edgeOfScreen.x * 2) - (sheepyWidth * 2));
+        // i used edges - gap cause i instantiate from the left and i m making sure the sheep wont go overboard 
+        float xPosition = Random.Range(-edges, edges - gap);
+        // gap is total gap (previous line) devided by number of gaps in total
+        gap /= 2;
+        
+        
 
         //instantiating the sheepys
         for (int i = 0; i < 3; i++)
         {
-            Vector3 spawnPositionVector3 =
-                new Vector3(xPosition + (gap * i), transform.position.y, transform.position.z);
-            Instantiate(sheeps[0], spawnPositionVector3, Quaternion.identity);
+            oneSheepyChosen(xPosition + (gap * i) , 0f, 0);
         }
     }
 

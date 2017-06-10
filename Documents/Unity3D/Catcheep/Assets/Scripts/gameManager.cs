@@ -8,7 +8,6 @@ using Random = UnityEngine.Random;
 public class gameManager : MonoBehaviour
 {
     public GameObject[] sheeps;
-    public int[] waitTimeForEachSpawn;
     private bool gameOver;
     private Vector3 edgeOfScreen;
     private GameObject scoreText;
@@ -58,90 +57,108 @@ public class gameManager : MonoBehaviour
 
         while (!gameOver)
         {
-            /* int i = Random.Range(1, 100);
+            oneSheepyRandom(0);
+            yield return new WaitForSeconds(2);
+            oneSheepyRandom(1);
+            yield return new WaitForSeconds(2);
+            twoSheepyHorizontalManySet(3, 1);
+            yield return new WaitForSeconds(4);
+            threeSheepyHorizontalpartScreen();
+            yield return new WaitForSeconds(3);
+            vFormeSheepy(3);
+            yield return new WaitForSeconds(3);
+            fourSheepyTriangleLookingDownUp(-1);
+            yield return new WaitForSeconds(3);
+            slidingSheepy(3);
+            yield return new WaitForSeconds(3);
 
-             switch (i)
-             {
-                 case 0:
-                     oneSheepyRandom();
-                     yield return new WaitForSeconds(2);
-                     break;
+            /*
+            int i = Random.Range(0 , 7);
 
-                 case 1:
-                     twoSheepyHorizontalManySet(3);
-                     yield return new WaitForSeconds(4);
-                     break;
+            switch (i)
+            {
+                case 0:
+                    oneSheepyRandom(0);
+                    yield return new WaitForSeconds(2);
+                    break;
 
-                 case 2:
-                     threeSheepyHorizontalpartScreen();
-                     yield return new WaitForSeconds(3);
-                     break;
+                case 1:
+                    oneSheepyRandom(1);
+                    yield return new WaitForSeconds(2);
+                    break;
+                case 2:
+                    twoSheepyHorizontalManySet(3 , 1);
+                    yield return new WaitForSeconds(4);
+                    break;
 
-                 case 3:
-                     oneSheepyRandom();
-                     yield return new WaitForSeconds(3);
-                     break;
+                case 3:
+                    threeSheepyHorizontalpartScreen();
+                    yield return new WaitForSeconds(3);
+                    break;
 
-                 case 4:
-                     fourSheepyTriangleLookingDownUp(-1);
-                     yield return new WaitForSeconds(4);
-                     break;
+                case 4:
+                    vFormeSheepy(3);
+                    yield return new WaitForSeconds(3);
+                    break;
 
-                 case 5:
-                     fourSheepyTriangleLookingDownUp(1);
-                     yield return new WaitForSeconds(4);
-                     break;
+                case 5:
+                    fourSheepyTriangleLookingDownUp(-1);
+                    yield return new WaitForSeconds(4);
+                    break;
 
-                 case 6:
-                     threeSheepyHorizontalFullScreen();
-                     yield return new WaitForSeconds(4);
-                     break;
+                case 6:
+                    slidingSheepy(3);
+                    yield return new WaitForSeconds(4);
+                    break;
 
-                 case 7:
-                     twoSheepyHorizontalOneSet();
-                     yield return new WaitForSeconds(3);
-                     break;
-             }*/
+               /* case 6:
+                    threeSheepyHorizontalFullScreen();
+                    yield return new WaitForSeconds(4);
+                    break;
+
+                case 7:
+                    twoSheepyHorizontalOneSet();
+                    yield return new WaitForSeconds(3);
+                    break;
+            }*/
 
 
             //threeSheepySlidingRightUpDown(1);
             //yield return new WaitForSeconds(3);
-
-            slidingSheepy(4);
-            yield return new WaitForSeconds(3);
         }
-
     }
+
+
     //one sheepy formations:
-    void oneSheepyRandom()
+    void oneSheepyRandom(int index)
     {
         float edges = edgeOfScreen.x - (sheeps[0].GetComponent<SpriteRenderer>().sprite.bounds.extents).x;
         float xPosition = Random.Range(-edges, edges);
-        Vector3 spawnPosition = new Vector3(xPosition,transform.position.y,transform.position.z);
-        Instantiate(sheeps[0], spawnPosition, Quaternion.identity);
+        Vector3 spawnPosition = new Vector3(xPosition, transform.position.y, transform.position.z);
+        Instantiate(sheeps[index], spawnPosition, Quaternion.identity);
     }
 
-    void oneSheepyChosen(float xPosition, float deltaYPosition)
+    void oneSheepyChosen(float xPosition, float deltaYPosition, int index)
     {
         Vector3 spawnPosition = new Vector3(xPosition, transform.position.y + deltaYPosition, transform.position.z);
-        Instantiate(sheeps[0], spawnPosition, Quaternion.identity);
+        Instantiate(sheeps[index], spawnPosition, Quaternion.identity);
     }
     //end of one sheepy formations;
 
     //two sheepy formations:
-    void twoSheepyHorizontalOneSet()
+    void twoSheepyHorizontalOneSet(int index)
     {
-            float gap = Random.Range(edgeOfScreen.x * 0.4f, edgeOfScreen.x * 0.7f);
-            float edges = edgeOfScreen.x - ((sheeps[0].GetComponent<SpriteRenderer>().sprite.bounds.extents).x * 2);
-            // i used edges - gap cause i instantiate from the left and i m making sure the sheep wont go overboard 
-            // when we add the gap value to the xPosition to create the spacing
-            float xPosition = Random.Range(-edges , edges - gap);
-    
-            oneSheepyChosen(xPosition , 0f);
-            oneSheepyChosen(xPosition +  gap,0f);   
+        float gap = Random.Range(edgeOfScreen.x * 0.4f, edgeOfScreen.x * 0.7f);
+        float edges = edgeOfScreen.x - ((sheeps[0].GetComponent<SpriteRenderer>().sprite.bounds.extents).x * 2);
+        // i used edges - gap cause i instantiate from the left and i m making sure the sheep wont go overboard 
+        // when we add the gap value to the xPosition to create the spacing
+        float xPosition = Random.Range(-edges, edges - gap);
+
+        oneSheepyChosen(xPosition, 0f, index);
+        oneSheepyChosen(xPosition + gap, 0f, index);
     }
 
-    void twoSheepyHorizontalManySet(int times)
+    void twoSheepyHorizontalManySet(int times, int index)
     {
         float gap = Random.Range(edgeOfScreen.x * 0.4f, edgeOfScreen.x * 0.7f);
         float edges = edgeOfScreen.x - (sheeps[0].GetComponent<SpriteRenderer>().sprite.bounds.extents).x;
@@ -150,10 +167,9 @@ public class gameManager : MonoBehaviour
         float xPosition = Random.Range(-edges, edges - gap);
         for (int i = 0; i < times; i++)
         {
-            oneSheepyChosen(xPosition, i * gap);
-            oneSheepyChosen(xPosition + gap, i * gap);
+            oneSheepyChosen(xPosition, i * gap, index);
+            oneSheepyChosen(xPosition + gap, i * gap, index);
         }
-        
     }
     //ende of two sheepy formations;
 
@@ -164,9 +180,10 @@ public class gameManager : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            Vector3 spawnPositionVector3 = new Vector3(xPosition + (edgeOfScreen.x * 0.8f * i), transform.position.y, transform.position.z);
+            Vector3 spawnPositionVector3 = new Vector3(xPosition + (edgeOfScreen.x * 0.8f * i), transform.position.y,
+                transform.position.z);
             Instantiate(sheeps[0], spawnPositionVector3, Quaternion.identity);
-        } 
+        }
     }
 
     void threeSheepyHorizontalpartScreen()
@@ -177,7 +194,7 @@ public class gameManager : MonoBehaviour
         // edges is the max left position value that a sheepy can have (screen width + concidering the sheepy width)
         float edges = -edgeOfScreen.x + sheepyWidth;
         // multiplied by 2 cause sheepy width is HALF of the sprite width and we dont want a sheepy showing in half on the right side J.I.C
-        float xPosition = Random.Range(edges,0f -(2 *sheepyWidth));
+        float xPosition = Random.Range(edges, 0f - (2 * sheepyWidth));
 
         // finding out how much gap should be between the sheepys (randomly)
         float gap = Random.Range(edgeOfScreen.x * 0.4f, edgeOfScreen.x * 0.7f);
@@ -185,7 +202,8 @@ public class gameManager : MonoBehaviour
         //instantiating the sheepys
         for (int i = 0; i < 3; i++)
         {
-            Vector3 spawnPositionVector3 = new Vector3(xPosition + (gap * i), transform.position.y, transform.position.z);
+            Vector3 spawnPositionVector3 =
+                new Vector3(xPosition + (gap * i), transform.position.y, transform.position.z);
             Instantiate(sheeps[0], spawnPositionVector3, Quaternion.identity);
         }
     }
@@ -197,15 +215,16 @@ public class gameManager : MonoBehaviour
         // edges is the max left position value that a sheepy can have (screen width + concidering the sheepy width)
         float edges = direction * (-edgeOfScreen.x + sheepyWidth);
         //choosing half of screen where to position first sheepy depending on direction
-        float xPosition = Random.Range(edges, 0f - direction * (2 *sheepyWidth));
-        
+        float xPosition = Random.Range(edges, 0f - direction * (2 * sheepyWidth));
+
         // finding out how much gap should be between the sheepys (randomly)
         float gap = Random.Range(edgeOfScreen.x * 0.4f, edgeOfScreen.x * 0.7f);
 
         //instantiating the sheepys
         for (int i = 0; i < 3; i++)
         {
-            Vector3 spawnPositionVector3 = new Vector3(xPosition + direction * (gap * i), transform.position.y + (gap * i), transform.position.z);
+            Vector3 spawnPositionVector3 = new Vector3(xPosition + direction * (gap * i),
+                transform.position.y + (gap * i), transform.position.z);
             Instantiate(sheeps[0], spawnPositionVector3, Quaternion.identity);
         }
     }
@@ -214,7 +233,6 @@ public class gameManager : MonoBehaviour
     //four sheepy formations:
     void fourSheepyTriangleLookingDownUp(int direction)
     {
-
         //some paramtres that we need to instantite correctly
         float sheepyWidth = (sheeps[0].GetComponent<SpriteRenderer>().bounds.extents).x;
         float edges = -edgeOfScreen.x + sheepyWidth;
@@ -227,12 +245,13 @@ public class gameManager : MonoBehaviour
         //instantiating the sheepys
         for (int i = 0; i < 3; i++)
         {
-            Vector3 spawnPositionVector3 = new Vector3(xPosition + (gap * i), transform.position.y, transform.position.z);
+            Vector3 spawnPositionVector3 =
+                new Vector3(xPosition + (gap * i), transform.position.y, transform.position.z);
             Instantiate(sheeps[0], spawnPositionVector3, Quaternion.identity);
             if (i == 1) secondSheepy = spawnPositionVector3;
         }
-        
-        oneSheepyChosen(secondSheepy.x, direction * gap);
+
+        oneSheepyChosen(secondSheepy.x, direction * gap, 0);
     }
     //ende of two sheepy formations;
 
@@ -253,24 +272,25 @@ public class gameManager : MonoBehaviour
                 gap = 0f;
                 break;
         }
-        
+
         // choosing half of screen where to position first sheepy depending on direction
         float xPosition = 0f; //Random.Range(edges, -edges);
 
         //instantiating the sheepys
         for (int i = 0; i < number; i++)
         {
-            Vector3 spawnPositionVector3 = new Vector3(xPosition + (gap * i), transform.position.y + (gap * i), transform.position.z);
+            Vector3 spawnPositionVector3 = new Vector3(xPosition + (gap * i), transform.position.y + (gap * i),
+                transform.position.z);
             Instantiate(sheeps[0], spawnPositionVector3, Quaternion.identity);
         }
 
         //instantiating the sheepys
         for (int i = 1; i < number; i++)
         {
-            Vector3 spawnPositionVector3 = new Vector3(xPosition - (gap * i), transform.position.y + (gap * i), transform.position.z);
+            Vector3 spawnPositionVector3 = new Vector3(xPosition - (gap * i), transform.position.y + (gap * i),
+                transform.position.z);
             Instantiate(sheeps[0], spawnPositionVector3, Quaternion.identity);
         }
-
     }
     //end of V frome sheepy sheepy
 
@@ -286,11 +306,8 @@ public class gameManager : MonoBehaviour
         float xPosition = -edgeOfScreen.x + sheepWidthTotal;
         for (int i = 0; i < number; i++)
         {
-            oneSheepyChosen(xPosition + (i * gap), (i * gap));     
+            oneSheepyChosen(xPosition + (i * gap), (i * gap), 0);
         }
-       
     }
     //end of sliding forme sheepy
-
-   
 }

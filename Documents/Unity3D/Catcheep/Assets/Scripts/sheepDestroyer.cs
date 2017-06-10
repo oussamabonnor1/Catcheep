@@ -26,10 +26,8 @@ public class sheepDestroyer : MonoBehaviour
 
     void Update()
     {
-        
         if (Input.GetMouseButtonDown(0))
         {
-            
             if (Vector3.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.position) <=
                 10f + sheepWidth)
             {
@@ -49,7 +47,7 @@ public class sheepDestroyer : MonoBehaviour
     {
         //creating hit text
         GameObject canvas = GameObject.Find("Canvas");
-        GameObject hit = (GameObject)Instantiate(hitText, transform.position, Quaternion.identity);
+        GameObject hit = (GameObject) Instantiate(hitText, transform.position, Quaternion.identity);
         Vector3 position = Camera.main.WorldToScreenPoint(transform.position);
         hit.transform.SetParent(canvas.transform, false);
         hit.GetComponent<RectTransform>().transform.position = position;
@@ -68,15 +66,15 @@ public class sheepDestroyer : MonoBehaviour
         caught = true;
         Destruction();
     }
-   
+
 
     IEnumerator deathAnimation()
     {
         float originalScale = transform.localScale.x;
 
-        for (float i = originalScale; i >= 0.1f; i-=0.5f)
+        for (float i = originalScale; i >= 0.1f; i -= 0.5f)
         {
-            transform.localScale = new Vector3(i,i);
+            transform.localScale = new Vector3(i, i);
             yield return new WaitForSeconds(0.08f);
         }
 
@@ -87,5 +85,4 @@ public class sheepDestroyer : MonoBehaviour
     {
         StartCoroutine(deathAnimation());
     }
-
 }

@@ -57,22 +57,20 @@ public class gameManager : MonoBehaviour
 
         while (!gameOver)
         {
-            oneSheepyRandom(0);
+          /*  oneSheepyRandom(0);
             yield return new WaitForSeconds(2);
             oneSheepyRandom(1);
             yield return new WaitForSeconds(2);
-            twoSheepyHorizontalManySet(3, 1);
-            yield return new WaitForSeconds(4);
+            slidingSheepy(3);
+            yield return new WaitForSeconds(3);
             threeSheepyHorizontalpartScreen();
             yield return new WaitForSeconds(3);
             vFormeSheepy(3);
             yield return new WaitForSeconds(3);
             fourSheepyTriangleLookingDownUp(-1);
             yield return new WaitForSeconds(3);
-            slidingSheepy(3);
-            yield return new WaitForSeconds(3);
 
-            /*
+            
             int i = Random.Range(0 , 7);
 
             switch (i)
@@ -125,6 +123,9 @@ public class gameManager : MonoBehaviour
 
             //threeSheepySlidingRightUpDown(1);
             //yield return new WaitForSeconds(3);
+
+            twoSheepyHorizontalManySet(1,0);
+            yield return  new WaitForSeconds(3);
         }
     }
 
@@ -133,7 +134,7 @@ public class gameManager : MonoBehaviour
     void oneSheepyRandom(int index)
     {
         float edges = edgeOfScreen.x - (sheeps[0].GetComponent<SpriteRenderer>().sprite.bounds.extents).x;
-        float xPosition = Random.Range(-edges, edges);
+        float xPosition = -edges;//Random.Range(-edges, edges);
         Vector3 spawnPosition = new Vector3(xPosition, transform.position.y, transform.position.z);
         Instantiate(sheeps[index], spawnPosition, Quaternion.identity);
     }
@@ -146,25 +147,15 @@ public class gameManager : MonoBehaviour
     //end of one sheepy formations;
 
     //two sheepy formations:
-    void twoSheepyHorizontalOneSet(int index)
-    {
-        float gap = Random.Range(edgeOfScreen.x * 0.4f, edgeOfScreen.x * 0.7f);
-        float edges = edgeOfScreen.x - ((sheeps[0].GetComponent<SpriteRenderer>().sprite.bounds.extents).x * 2);
-        // i used edges - gap cause i instantiate from the left and i m making sure the sheep wont go overboard 
-        // when we add the gap value to the xPosition to create the spacing
-        float xPosition = Random.Range(-edges, edges - gap);
-
-        oneSheepyChosen(xPosition, 0f, index);
-        oneSheepyChosen(xPosition + gap, 0f, index);
-    }
-
     void twoSheepyHorizontalManySet(int times, int index)
     {
-        float gap = Random.Range(edgeOfScreen.x * 0.4f, edgeOfScreen.x * 0.7f);
-        float edges = edgeOfScreen.x - (sheeps[0].GetComponent<SpriteRenderer>().sprite.bounds.extents).x;
+        float sheepyWidth = (sheeps[0].GetComponent<SpriteRenderer>().sprite.bounds.extents).x;
+        float edges = edgeOfScreen.x - (sheepyWidth);
+        //gap is between a small value of my choice and the total with of screen - the width of number of sheeps together (2 in this case)
+        float gap = Random.Range(edgeOfScreen.x * 0.4f, (edgeOfScreen.x * 2) - (sheepyWidth * 2));
         // i used edges - gap cause i instantiate from the left and i m making sure the sheep wont go overboard 
-        // when we add the gap value to the xPosition to create the spacing
         float xPosition = Random.Range(-edges, edges - gap);
+
         for (int i = 0; i < times; i++)
         {
             oneSheepyChosen(xPosition, i * gap, index);

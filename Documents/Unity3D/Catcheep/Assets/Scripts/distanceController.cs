@@ -20,11 +20,18 @@ public class distanceController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        //so that a break happens: object must be beneths the speeding object, and a collision must be imminant in the X axis
-        if (other.gameObject.transform.position.y < transform.position.y)
-        {
-            gameObject.GetComponent<SheepMovement>().Speed = other.gameObject.GetComponent<SheepMovement>().Speed;
-        }
+        
+            //so that a break happens: object must be beneths the speeding object, and a collision must be imminant in the X axis
+            float width = other.gameObject.GetComponent<SpriteRenderer>().sprite.bounds.extents.x +
+            GetComponent<SpriteRenderer>().sprite.bounds.extents.x;
+
+            float distance = Mathf.Abs(transform.position.x - other.transform.position.x);
+
+            if (other.gameObject.transform.position.y < transform.position.y && distance < width)
+            {
+                gameObject.GetComponent<SheepMovement>().Speed = other.gameObject.GetComponent<SheepMovement>().Speed;
+            }
+        
     }
 
     void OnTriggerExit2D(Collider2D other)

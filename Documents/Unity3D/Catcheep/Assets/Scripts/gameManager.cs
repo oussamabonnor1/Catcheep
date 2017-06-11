@@ -57,7 +57,7 @@ public class gameManager : MonoBehaviour
 
         while (!gameOver)
         {
-          /*  oneSheepyRandom(0);
+            oneSheepyRandom(0);
             yield return new WaitForSeconds(2);
             oneSheepyRandom(1);
             yield return new WaitForSeconds(2);
@@ -70,7 +70,7 @@ public class gameManager : MonoBehaviour
             fourSheepyTriangleLookingDownUp(-1);
             yield return new WaitForSeconds(3);
 
-            
+          /*  
             int i = Random.Range(0 , 7);
 
             switch (i)
@@ -120,13 +120,6 @@ public class gameManager : MonoBehaviour
                     break;
             }*/
 
-
-            slidingSheepy(4);
-            yield return  new WaitForSeconds(3);
-            slidingSheepy(3);
-            yield return new WaitForSeconds(3);
-            slidingSheepy(2);
-            yield return new WaitForSeconds(3);
         }
     }
 
@@ -251,38 +244,23 @@ public class gameManager : MonoBehaviour
     //V forme sheepy
     void vFormeSheepy(int number)
     {
-        float gap;
         // finding out how much gap should be between the sheepys
-        switch (number)
-        {
-            case 2:
-                gap = edgeOfScreen.x * 0.6f;
-                break;
-            case 3:
-                gap = edgeOfScreen.x * 0.4f;
-                break;
-            default:
-                gap = 0f;
-                break;
-        }
-
+        float gap = edgeOfScreen.x - (sheeps[0].GetComponent<SpriteRenderer>().sprite.bounds.extents.x * number);
+        gap /= number - 1;
+       
         // choosing half of screen where to position first sheepy depending on direction
         float xPosition = 0f; //Random.Range(edges, -edges);
 
         //instantiating the sheepys
         for (int i = 0; i < number; i++)
         {
-            Vector3 spawnPositionVector3 = new Vector3(xPosition + (gap * i), transform.position.y + (gap * i),
-                transform.position.z);
-            Instantiate(sheeps[0], spawnPositionVector3, Quaternion.identity);
+            oneSheepyChosen(xPosition + (gap * i), transform.position.y + (gap * i), 0);
         }
 
         //instantiating the sheepys
         for (int i = 1; i < number; i++)
         {
-            Vector3 spawnPositionVector3 = new Vector3(xPosition - (gap * i), transform.position.y + (gap * i),
-                transform.position.z);
-            Instantiate(sheeps[0], spawnPositionVector3, Quaternion.identity);
+            oneSheepyChosen(xPosition - (gap * i), transform.position.y + (gap * i), 0);
         }
     }
     //end of V frome sheepy sheepy
@@ -290,7 +268,8 @@ public class gameManager : MonoBehaviour
     //sliding forme sheepy (choice above 1 always)
     void slidingSheepy(int number)
     {
-        //total screen ( x 2) - sheep wahed (prck 2 nssas) : gap howa (gap total (li b9a) - sheepWidth * number - 1) / chaal m 
+        //total screen ( x 2) - sheep wahed (prck 2 nssas) : gap howa (gap total (li b9a) - sheepWidth * number - 1) / chaal m gap
+        
         float sheepWidthTotal = sheeps[0].GetComponent<SpriteRenderer>().sprite.bounds.size.x;
         float gapTotal = (edgeOfScreen.x * 2) - (sheepWidthTotal * number - 1);
         float gap = gapTotal / (number - 1);

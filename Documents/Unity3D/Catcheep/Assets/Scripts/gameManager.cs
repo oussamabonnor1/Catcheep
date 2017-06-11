@@ -121,11 +121,12 @@ public class gameManager : MonoBehaviour
             }*/
 
 
-            //threeSheepySlidingRightUpDown(1);
-            //yield return new WaitForSeconds(3);
-
-            threeSheepyHorizontalpartScreen();
+            slidingSheepy(4);
             yield return  new WaitForSeconds(3);
+            slidingSheepy(3);
+            yield return new WaitForSeconds(3);
+            slidingSheepy(2);
+            yield return new WaitForSeconds(3);
         }
     }
 
@@ -289,13 +290,12 @@ public class gameManager : MonoBehaviour
     //sliding forme sheepy (choice above 1 always)
     void slidingSheepy(int number)
     {
-        //total screen ( x 2) - sheep wahed (prck 2 nssas) : gap howa (gap total (li b9a) - sheepWidth * number - 1) / chaal m gap
-
-        float sheepWidthTotal = sheeps[0].GetComponent<SpriteRenderer>().sprite.bounds.extents.x;
-        float gapTotal = (edgeOfScreen.x * 2) - (sheepWidthTotal / 2);
-        float gap = (gapTotal - (sheepWidthTotal * (number - 1))) / (number - 1);
-
-        float xPosition = -edgeOfScreen.x + sheepWidthTotal;
+        //total screen ( x 2) - sheep wahed (prck 2 nssas) : gap howa (gap total (li b9a) - sheepWidth * number - 1) / chaal m 
+        float sheepWidthTotal = sheeps[0].GetComponent<SpriteRenderer>().sprite.bounds.size.x;
+        float gapTotal = (edgeOfScreen.x * 2) - (sheepWidthTotal * number - 1);
+        float gap = gapTotal / (number - 1);
+        float edges = edgeOfScreen.x - (sheepWidthTotal);
+        float xPosition = Random.Range(-edges, edges - gapTotal - (sheepWidthTotal/2));
         for (int i = 0; i < number; i++)
         {
             oneSheepyChosen(xPosition + (i * gap), (i * gap), 0);

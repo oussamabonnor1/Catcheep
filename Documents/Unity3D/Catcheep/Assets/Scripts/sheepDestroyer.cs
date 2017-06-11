@@ -11,9 +11,11 @@ public class sheepDestroyer : MonoBehaviour
     private float sheepWidth;
 
     public GameObject hitText;
+
     private GameObject sheepsCaughtText;
     private GameObject scoreText;
     private GameObject sheepCage;
+    
 
     void Start()
     {

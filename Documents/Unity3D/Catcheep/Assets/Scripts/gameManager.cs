@@ -67,8 +67,6 @@ public class gameManager : MonoBehaviour
             yield return new WaitForSeconds(3);
             vFormeSheepy(3);
             yield return new WaitForSeconds(3);
-            fourSheepyTriangleLookingDownUp(-1);
-            yield return new WaitForSeconds(3);
 
           /*  
             int i = Random.Range(0 , 7);

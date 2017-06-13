@@ -19,7 +19,7 @@ public class sheepDestroyer : MonoBehaviour
 
     void Start()
     {
-        sheepWidth = GetComponent<Renderer>().bounds.extents.x / 10f;
+        sheepWidth = GetComponent<Renderer>().bounds.extents.x/10f + 10f;
         caught = false;
         sheepsCaughtText = GameObject.Find("sheeps caught");
         scoreText = GameObject.Find("score");
@@ -30,8 +30,7 @@ public class sheepDestroyer : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
-            if (Vector3.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.position) <=
-                10f + sheepWidth)
+            if (Vector3.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition), transform.position) <= sheepWidth)
             {
                 gameManager.catchedSomething = true;
                 sheepClicked();

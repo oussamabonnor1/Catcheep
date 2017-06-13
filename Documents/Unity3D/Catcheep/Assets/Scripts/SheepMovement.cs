@@ -3,6 +3,7 @@
 public class SheepMovement : MonoBehaviour
 {
     [Range(0f, 10)] public int Speed;
+    public int slideSpeed;
 
     public sheepDestroyer SheepDestroyer;
 
@@ -22,7 +23,8 @@ public class SheepMovement : MonoBehaviour
                 destination = new Vector2(0f, -1f);
                 break;
             case "blacky":
-                destination = new Vector2(1f, -1f);
+                slideSpeed = 1;
+                destination = new Vector2(slideSpeed, -1f);
                 break;
         }
         
@@ -39,6 +41,7 @@ public class SheepMovement : MonoBehaviour
                     straightMovement(destination);
                     break;
                 case "blacky":
+                    destination = new Vector2(slideSpeed, -1f);
                     zigZagMovement(destination);
                     break;
             }
@@ -57,16 +60,16 @@ public class SheepMovement : MonoBehaviour
     void zigZagMovement(Vector3 destination)
     {
         transform.Translate(destination * Time.deltaTime * Speed);
-        print("sheepy position: " + transform.position.x);
-        print("screen edge " + (edgeOfScreen.x - sheepWidth));
+
         if (transform.position.x >= edgeOfScreen.x - sheepWidth)
         {
-            print("destination changed");
-            this.destination = new Vector2(-1f, -1f);
+            slideSpeed = -1;
+            this.destination = new Vector2(slideSpeed, -1f);
         }
         if (transform.position.x <= -edgeOfScreen.x + sheepWidth)
         {
-            this.destination= new Vector2(1f, -1f);
+            slideSpeed = 1;
+            this.destination= new Vector2(slideSpeed, -1f);
         }
     }
 }

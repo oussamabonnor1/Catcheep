@@ -21,11 +21,14 @@ public class distanceController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        goingDownSpeedControl(other);
-
-        if (gameObject.tag == "blacky")
+        if (other.gameObject.tag != "group")
         {
-            goingSidewaysSpeedControl(other);
+            goingDownSpeedControl(other);
+
+            if (gameObject.tag == "blacky")
+            {
+                goingSidewaysSpeedControl(other);
+            }
         }
     }
 

@@ -48,8 +48,6 @@ public class sheepDestroyer : MonoBehaviour
             }
         }
 
-        //TODO: figure out a way to communicate scripts combo hits
-
         if (caught)
         {
             transform.position = Vector3.Lerp(transform.position, sheepCage.transform.position, Time.deltaTime * speed);

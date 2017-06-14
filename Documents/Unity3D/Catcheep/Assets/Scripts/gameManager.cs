@@ -39,6 +39,7 @@ public class gameManager : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0))
         {
+
             if (!catchedSomething && combo > 0)
             {
                 combo = 0;

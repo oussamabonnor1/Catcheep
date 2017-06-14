@@ -26,7 +26,7 @@ public class distanceController : MonoBehaviour
         if (other.gameObject.tag != "group")
         {
             //speed is lower (collision will happen)
-            if (other.GetComponent<SheepMovement>().Speed > speed)
+            if (other.GetComponent<SheepMovement>().Speed < speed)
             {
                 pathCollsionGameObject = other.gameObject;
                 goingDownSpeedControl(other);

@@ -41,7 +41,6 @@ public class sheepDestroyer : MonoBehaviour
 
             if (hit.collider == smallCollider && hit.collider.transform == transform)
             {
-                print("happened");
                 // raycast hit this gameobject
                 gameManager.catchedSomething = true;
                 sheepClicked();

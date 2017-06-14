@@ -29,26 +29,25 @@ public class sheepDestroyer : MonoBehaviour
 
     void Update()
     {
+        /*float distanceMouseSheep = Vector3.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition),
+            transform.position);
+        
+        if (distanceMouseSheep <= sheepWidth)
+        {*/
         if (Input.GetMouseButtonDown(0))
         {
-            /*float distanceMouseSheep = Vector3.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition),
-                transform.position);
-            
-            if (distanceMouseSheep <= sheepWidth)
-            {*/
-            if (Input.GetMouseButtonDown(0))
-            {
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
 
-                if (hit.collider != null && hit.collider == smallCollider && hit.collider.transform == transform)
-                {
-                    // raycast hit this gameobject
-                    gameManager.catchedSomething = true;
-                    sheepClicked();
-                }
+            if (hit.collider == smallCollider && hit.collider.transform == transform)
+            {
+                print("happened");
+                // raycast hit this gameobject
+                gameManager.catchedSomething = true;
+                sheepClicked();
             }
         }
+
         //TODO: figure out a way to communicate scripts combo hits
 
         if (caught)

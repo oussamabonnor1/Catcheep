@@ -64,7 +64,7 @@ public class gameManager : MonoBehaviour
             switch (i)
             {
                 case 0:
-                    oneSheepyRandom(Random.Range(0, 2));
+                    oneSheepyRandom(Random.Range(0, 3));
                     yield return new WaitForSeconds(2);
                     break;
 
@@ -73,8 +73,9 @@ public class gameManager : MonoBehaviour
                     yield return new WaitForSeconds(3);
                     break;
                 case 2:
-                    twoSheepyHorizontalManySet(3, 0);
-                    yield return new WaitForSeconds(4);
+                    int num = Random.Range(1, 4);
+                    twoSheepyHorizontalManySet(num, Random.Range(0,2));
+                    yield return new WaitForSeconds(num);
                     break;
 
                 case 3:

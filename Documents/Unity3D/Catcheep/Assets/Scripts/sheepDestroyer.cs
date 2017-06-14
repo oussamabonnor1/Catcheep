@@ -64,6 +64,9 @@ public class sheepDestroyer : MonoBehaviour
         hit.GetComponent<TextMeshProUGUI>().transform.position = position;
         hit.GetComponent<TextMeshProUGUI>().margin = new Vector4(0, 0, 0, 0);
 
+        //deactivating collider so that it doesnt disturb the scene (collision detection)
+        smallCollider.enabled = false;
+
         //rewarding player
         ++gameManager.totalSheepsCaught;
         sheepsCaughtText.GetComponent<Text>().text = " x " + gameManager.totalSheepsCaught;

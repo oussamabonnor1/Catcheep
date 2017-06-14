@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class SheepMovement : MonoBehaviour
 {
@@ -9,6 +10,7 @@ public class SheepMovement : MonoBehaviour
 
     private Vector2 destination;
     private Vector3 edgeOfScreen;
+    private GameObject helpTool;
 
     private float sheepWidth;
     // Use this for initialization
@@ -17,6 +19,59 @@ public class SheepMovement : MonoBehaviour
         sheepWidth = GetComponent<SpriteRenderer>().sprite.bounds.extents.x;
         edgeOfScreen = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0f));
 
+        setDestination();
+
+        helpToolHay();
+    }
+
+    
+
+    // Update is called once per frame
+    void Update()
+    {
+        if (helpTool == null)
+        {
+
+            if (!SheepDestroyer.caught)
+            {
+                switch (gameObject.tag)
+                {
+                    case "sheepy":
+                        straightMovement(destination);
+                        break;
+                    case "blacky":
+                        destination = new Vector2(slideSpeed, -1f);
+                        zigZagMovement(destination);
+                        break;
+                }
+            }
+            else
+            {
+                GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+            }
+        }
+        else
+        {
+            Vector2 direction = transform.position - helpTool.transform.position;
+            destination = -direction.normalized;
+            helpTool = null;
+        }
+    }
+
+    public bool helpToolHay()
+    {
+        //finding the position of the hay
+        helpTool = GameObject.Find("hay");
+        
+        //reassigning the destination in case the sheep wasnt collected
+        if(helpTool!= null) setDestination();
+
+        //something is very fucked up in this line, it works but the logic is the same as my understanding of cheese making processe
+        return helpTool == null;
+    }
+
+    void setDestination()
+    {
         switch (gameObject.tag)
         {
             case "sheepy":
@@ -26,29 +81,6 @@ public class SheepMovement : MonoBehaviour
                 slideSpeed = 1;
                 destination = new Vector2(slideSpeed, -1f);
                 break;
-        }
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if (!SheepDestroyer.caught)
-        {
-            switch (gameObject.tag)
-            {
-                case "sheepy":
-                    straightMovement(destination);
-                    break;
-                case "blacky":
-                    destination = new Vector2(slideSpeed, -1f);
-                    zigZagMovement(destination);
-                    break;
-            }
-        }
-        else
-        {
-            GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
         }
     }
 

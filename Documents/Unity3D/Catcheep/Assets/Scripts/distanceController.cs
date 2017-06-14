@@ -6,6 +6,7 @@ public class distanceController : MonoBehaviour
 {
     private int speed;
     private int slideSpeed;
+    private GameObject pathCollsionGameObject;
 
     // Use this for initialization
     void Start()
@@ -23,6 +24,7 @@ public class distanceController : MonoBehaviour
     {
         if (other.gameObject.tag != "group")
         {
+            pathCollsionGameObject = other.gameObject;
             goingDownSpeedControl(other);
 
             if (gameObject.tag == "blacky")
@@ -61,14 +63,17 @@ public class distanceController : MonoBehaviour
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (gameObject.tag == "sheepy" && other.gameObject.tag == "sheepy")
+        if (other.gameObject.tag != "group")
         {
-            gameObject.GetComponent<SheepMovement>().Speed = speed;
-        }
+            if (other.gameObject == pathCollsionGameObject)
+            {
+                gameObject.GetComponent<SheepMovement>().Speed = speed;
 
-        if (gameObject.tag == "blacky")
-        {
-            gameObject.GetComponent<SheepMovement>().slideSpeed = slideSpeed;
+                if (gameObject.tag == "blacky")
+                {
+                    gameObject.GetComponent<SheepMovement>().slideSpeed = slideSpeed;
+                }
+            }
         }
     }
 }

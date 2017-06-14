@@ -22,14 +22,19 @@ public class distanceController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
+        //not a group (collider below screen
         if (other.gameObject.tag != "group")
         {
-            pathCollsionGameObject = other.gameObject;
-            goingDownSpeedControl(other);
-
-            if (gameObject.tag == "blacky")
+            //speed is lower (collision will happen)
+            if (other.GetComponent<SheepMovement>().Speed > speed)
             {
-                goingSidewaysSpeedControl(other);
+                pathCollsionGameObject = other.gameObject;
+                goingDownSpeedControl(other);
+
+                if (gameObject.tag == "blacky")
+                {
+                    goingSidewaysSpeedControl(other);
+                }
             }
         }
     }

@@ -89,7 +89,7 @@ public class gameManager : MonoBehaviour
     IEnumerator sheepSpawner()
     {
         yield return new WaitForSeconds(1f);
-        int size = sheeps.Length;
+        int size = sheeps.Length - 1;
 
         while (!gameOver)
         {

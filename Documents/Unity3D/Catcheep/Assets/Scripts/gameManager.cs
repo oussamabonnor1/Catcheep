@@ -9,6 +9,8 @@ public class gameManager : MonoBehaviour
 {
     public GameObject[] sheeps;
     public GameObject background;
+    public AudioClip[] sheepSound;
+
 
     private bool gameOver;
     private Vector3 edgeOfScreen;
@@ -93,6 +95,8 @@ public class gameManager : MonoBehaviour
 
         while (!gameOver)
         {
+            GetComponent<AudioSource>().clip = sheepSound[Random.Range(0, sheepSound.Length)];
+            GetComponent<AudioSource>().Play();
 
             int i = Random.Range(0, 9);
 

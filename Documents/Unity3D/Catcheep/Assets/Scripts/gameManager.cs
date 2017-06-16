@@ -33,7 +33,7 @@ public class gameManager : MonoBehaviour
             background = GameObject.Find("background");
         }
 
-        Resize();
+        ResizeBackground();
 
         scoreText = GameObject.Find("score");
         scoreText.GetComponent<Text>().text = "Score: " + score;
@@ -61,7 +61,7 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    void Resize()
+    void ResizeBackground()
     {
         SpriteRenderer sr = background.GetComponent<SpriteRenderer>();
         if (sr == null) return;
@@ -89,6 +89,7 @@ public class gameManager : MonoBehaviour
     IEnumerator sheepSpawner()
     {
         yield return new WaitForSeconds(1f);
+        int size = sheeps.Length;
 
         while (!gameOver)
         {
@@ -98,7 +99,7 @@ public class gameManager : MonoBehaviour
             switch (i)
             {
                 case 0:
-                    oneSheepyRandom(Random.Range(0, 3));
+                    oneSheepyRandom(Random.Range(0, size));
                     yield return new WaitForSeconds(2);
                     break;
 
@@ -108,7 +109,7 @@ public class gameManager : MonoBehaviour
                     break;
                 case 2:
                     int num = Random.Range(1, 4);
-                    twoSheepyHorizontalManySet(num, Random.Range(0,2));
+                    twoSheepyHorizontalManySet(num, Random.Range(0, size - 2));
                     yield return new WaitForSeconds(num);
                     break;
 

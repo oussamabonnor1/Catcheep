@@ -21,7 +21,9 @@ public class SheepMovement : MonoBehaviour
 
         setDestination();
 
-        helpToolHay();
+        if(SheepDestroyer == null ) SheepDestroyer = new sheepDestroyer();
+
+       // helpToolHay();
     }
 
     

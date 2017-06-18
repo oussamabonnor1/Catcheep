@@ -94,7 +94,7 @@ public class gameManager : MonoBehaviour
         int size = sheeps.Length - 1;
 
         while (!gameOver)
-        {
+        {       
             GetComponent<AudioSource>().clip = sheepSound[Random.Range(0, sheepSound.Length)];
             GetComponent<AudioSource>().Play();
 

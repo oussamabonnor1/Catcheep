@@ -41,28 +41,42 @@ public class distanceController : MonoBehaviour
 
     void goingDownSpeedControl(Collider2D other)
     {
-        //so that a break happens: object must be beneths the speeding object, and a collision must be imminant in the X axis
-        float width = other.gameObject.GetComponent<SpriteRenderer>().sprite.bounds.extents.x +
-                      GetComponent<SpriteRenderer>().sprite.bounds.extents.x;
-
-        float distance = Mathf.Abs(transform.position.x - other.transform.position.x);
-
-        if (other.gameObject.transform.position.y < transform.position.y && distance < width)
+        if (other.gameObject.tag == "hayStack")
         {
             gameObject.GetComponent<SheepMovement>().Speed = other.gameObject.GetComponent<SheepMovement>().Speed;
+        }
+        else
+        {
+            //so that a break happens: object must be beneths the speeding object, and a collision must be imminant in the X axis
+            float width = other.gameObject.GetComponent<SpriteRenderer>().sprite.bounds.extents.x +
+                          GetComponent<SpriteRenderer>().sprite.bounds.extents.x;
+
+            float distance = Mathf.Abs(transform.position.x - other.transform.position.x);
+
+            if (other.gameObject.transform.position.y < transform.position.y && distance < width)
+            {
+                gameObject.GetComponent<SheepMovement>().Speed = other.gameObject.GetComponent<SheepMovement>().Speed;
+            }
         }
     }
 
     void goingSidewaysSpeedControl(Collider2D other)
     {
-        //so that a break happens: object must be beneths the speeding object, and a collision must be imminant in the Y axis
-        float width = other.gameObject.GetComponent<SpriteRenderer>().sprite.bounds.extents.x +
-                      GetComponent<SpriteRenderer>().sprite.bounds.extents.x;
-        float distance = Mathf.Abs(transform.position.y - other.transform.position.y);
-
-        if (distance < width)
+        if (other.gameObject.tag == "hayStack")
         {
             gameObject.GetComponent<SheepMovement>().slideSpeed = 0;
+        }
+        else
+        {
+            //so that a break happens: object must be beneths the speeding object, and a collision must be imminant in the Y axis
+            float width = other.gameObject.GetComponent<SpriteRenderer>().sprite.bounds.extents.x +
+                          GetComponent<SpriteRenderer>().sprite.bounds.extents.x;
+            float distance = Mathf.Abs(transform.position.y - other.transform.position.y);
+
+            if (distance < width)
+            {
+                gameObject.GetComponent<SheepMovement>().slideSpeed = 0;
+            }
         }
     }
 

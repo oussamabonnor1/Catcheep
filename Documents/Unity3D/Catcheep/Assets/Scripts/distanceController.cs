@@ -47,7 +47,7 @@ public class distanceController : MonoBehaviour
         }
         else if (other.gameObject.tag == "net")
         {
-            GetComponent<SheepMovement>().SheepDestroyer.caught = true;
+            StartCoroutine(sheepyCaughtByNet());
         }
         else
         {
@@ -102,5 +102,12 @@ public class distanceController : MonoBehaviour
                 }
             }
         }
+    }
+
+    IEnumerator sheepyCaughtByNet()
+    {
+        GetComponent<SheepMovement>().SheepDestroyer.caught = true;
+        yield return new WaitForSeconds(0.5f);
+        GetComponent<SheepMovement>().SheepDestroyer.sheepClicked();
     }
 }

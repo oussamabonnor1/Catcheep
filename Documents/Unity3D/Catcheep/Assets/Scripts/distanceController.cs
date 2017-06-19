@@ -45,6 +45,10 @@ public class distanceController : MonoBehaviour
         {
             gameObject.GetComponent<SheepMovement>().Speed = other.gameObject.GetComponent<SheepMovement>().Speed;
         }
+        else if (other.gameObject.tag == "net")
+        {
+            GetComponent<SheepMovement>().SheepDestroyer.caught = true;
+        }
         else
         {
             //so that a break happens: object must be beneths the speeding object, and a collision must be imminant in the X axis
@@ -65,6 +69,10 @@ public class distanceController : MonoBehaviour
         if (other.gameObject.tag == "hayStack")
         {
             gameObject.GetComponent<SheepMovement>().slideSpeed = 0;
+        }
+        else if (other.gameObject.tag == "net")
+        {
+            GetComponent<SheepMovement>().SheepDestroyer.caught = true;
         }
         else
         {

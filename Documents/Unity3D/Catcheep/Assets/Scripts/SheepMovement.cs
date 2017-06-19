@@ -60,18 +60,7 @@ public class SheepMovement : MonoBehaviour
         }
     }
 
-    public bool helpToolHay()
-    {
-        //finding the position of the hay
-        helpTool = GameObject.Find("hay");
-        
-        //reassigning the destination in case the sheep wasnt collected
-        if(helpTool!= null) setDestination();
-
-        //something is very fucked up in this line, it works but the logic is the same as my understanding of cheese making processe
-        return helpTool == null;
-    }
-
+    
     void setDestination()
     {
         switch (gameObject.tag)

@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class helpManager : MonoBehaviour {
+public class helpManager : MonoBehaviour
+{
+    public GameObject[] helpTools;
 
 	// Use this for initialization
 	void Start () {
@@ -13,4 +15,9 @@ public class helpManager : MonoBehaviour {
 	void Update () {
 		
 	}
+
+    public void hayStack()
+    {
+        Instantiate(helpTools[0], transform.position, Quaternion.identity);
+    }
 }

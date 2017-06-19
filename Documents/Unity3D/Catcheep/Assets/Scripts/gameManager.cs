@@ -1,9 +1,12 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
+using UnityEngine.Advertisements;
+
+
+
 
 public class gameManager : MonoBehaviour
 {
@@ -118,7 +121,7 @@ public class gameManager : MonoBehaviour
                     break;
 
                 case 3:
-                    threeSheepyHorizontalpartScreen(Random.Range(0, size));
+                    threeSheepyHorizontalpartScreen(Random.Range(0, size + 1));
                     yield return new WaitForSeconds(3);
                     break;
 
@@ -311,4 +314,12 @@ public class gameManager : MonoBehaviour
 
     //end of sliding forme sheepy
 
+
+   public void ShowAd()
+    {
+        if (Advertisement.IsReady())
+        {
+            Advertisement.Show();
+        }
+    }
 }

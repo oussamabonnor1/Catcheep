@@ -20,4 +20,9 @@ public class helpManager : MonoBehaviour
     {
         Instantiate(helpTools[0], transform.position, Quaternion.identity);
     }
+
+    public void net()
+    {
+        Instantiate(helpTools[1], transform.position, Quaternion.identity);
+    }
 }

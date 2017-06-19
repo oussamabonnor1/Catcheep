@@ -29,11 +29,7 @@ public class sheepDestroyer : MonoBehaviour
 
     void Update()
     {
-        /*float distanceMouseSheep = Vector3.Distance(Camera.main.ScreenToWorldPoint(Input.mousePosition),
-            transform.position);
-        
-        if (distanceMouseSheep <= sheepWidth)
-        {*/
+       
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

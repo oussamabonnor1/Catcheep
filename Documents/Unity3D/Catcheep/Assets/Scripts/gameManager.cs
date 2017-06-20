@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
-//using UnityEngine.Advertisements;
+using UnityEngine.Advertisements;
 
 
 
@@ -63,6 +63,12 @@ public class gameManager : MonoBehaviour
             {
                 catchedSomething = false;
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ShowAd();
+            Application.Quit();
         }
     }
 
@@ -315,11 +321,11 @@ public class gameManager : MonoBehaviour
     //end of sliding forme sheepy
 
 
-   /*public void ShowAd()
+   public void ShowAd()
     {
         if (Advertisement.IsReady())
         {
             Advertisement.Show();
         }
-    }*/
+    }
 }

@@ -15,8 +15,16 @@ public class helpManager : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-		
-	}
+	    if (Input.GetMouseButton(0) && GameObject.FindWithTag("net"))
+	    {
+	        GameObject.FindWithTag("net").transform.position = Vector3.Lerp(GameObject.FindWithTag("net").transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), Time.deltaTime * 5);
+	    }
+
+	    if (GameObject.FindWithTag("hayStack"))
+	    {
+	        //GameObject.FindWithTag("hayStack").transform.position = Vector3.Lerp(GameObject.FindWithTag("hayStack").transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), Time.deltaTime * 5);
+	    }
+    }
 
     public void hayStack()
     {
@@ -24,7 +32,7 @@ public class helpManager : MonoBehaviour
         {
             helpUsed = true;
             GameObject heyGameObject = Instantiate(helpTools[0], transform.position, Quaternion.identity);
-            StartCoroutine(helpDestroyer(3f, heyGameObject));
+            StartCoroutine(helpDestroyer(5f, heyGameObject));
         }
     }
 
@@ -33,24 +41,14 @@ public class helpManager : MonoBehaviour
         if (!helpUsed)
         {
             helpUsed = true;
-            GameObject neGameObject = Instantiate(helpTools[1], transform.position, Quaternion.identity);
-            StartCoroutine(helpDestroyer(1f, neGameObject));
+            GameObject netGameObject = Instantiate(helpTools[1], transform.position, Quaternion.identity);
+            StartCoroutine(helpDestroyer(3f, netGameObject));
         }
     }
 
     IEnumerator helpDestroyer(float lifeTime, GameObject gameObjectToDestroy)
     {
         yield return new WaitForSeconds(lifeTime);
-        SpriteRenderer renderer = gameObjectToDestroy.GetComponent<SpriteRenderer>();
-
-        for (int i = 0; i < 8; i++)
-        {
-            renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 255);
-            yield return new WaitForSeconds(0.1f);
-
-            renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, 10);
-            yield return new WaitForSeconds(0.05f);
-        }
         Destroy(gameObjectToDestroy);
         helpUsed = false;
     }

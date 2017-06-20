@@ -92,8 +92,9 @@ public class distanceController : MonoBehaviour
     {
         if (other.gameObject.tag != "group")
         {
-            if (other.gameObject == pathCollsionGameObject)
+            if (other.gameObject == pathCollsionGameObject || other.gameObject.tag == "heyStack")
             {
+                print(other.gameObject.tag);
                 gameObject.GetComponent<SheepMovement>().Speed = speed;
 
                 if (gameObject.tag == "blacky")
@@ -101,6 +102,7 @@ public class distanceController : MonoBehaviour
                     gameObject.GetComponent<SheepMovement>().slideSpeed = slideSpeed;
                 }
             }
+            
         }
     }
 

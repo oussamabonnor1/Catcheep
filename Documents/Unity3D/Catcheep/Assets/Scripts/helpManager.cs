@@ -54,6 +54,7 @@ public class helpManager : MonoBehaviour
             helpUsed = true;
             helpGameObject = Instantiate(helpTools[index],spawnPosition ,
                 Quaternion.identity);
+            helpGameObject.GetComponent<Collider2D>().enabled = false;
         }
 
         helpGameObject.transform.position = Vector3.Lerp(helpGameObject.transform.position,
@@ -63,6 +64,8 @@ public class helpManager : MonoBehaviour
 
     public void helpToolCreation(GameObject helpToolGameObject)
     {
+        helpGameObject.GetComponent<Collider2D>().enabled = true;
+
         if (helpGameObject.tag == "hayStack")
         {
             StartCoroutine(helpDestroyer(5f, helpToolGameObject));

@@ -34,11 +34,13 @@ public class helpManager : MonoBehaviour
 
                 if (pointer.selectedObject == helpButtons[0])
                 {
+                    helpButtons[0].gameObject.SetActive(false);
                     helpToolCreated(0);
                 }
 
                 if (pointer.selectedObject == helpButtons[1])
                 {
+                    helpButtons[1].gameObject.SetActive(false);
                     helpToolCreated(1);
                 }
             }
@@ -110,5 +112,8 @@ public class helpManager : MonoBehaviour
         Destroy(gameObjectToDestroy);
         helpUsed = false;
         helpToolIsReleased = true;
+
+        helpButtons[0].gameObject.SetActive(true);
+        helpButtons[1].gameObject.SetActive(true);
     }
 }

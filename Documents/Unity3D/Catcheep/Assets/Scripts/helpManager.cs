@@ -54,6 +54,7 @@ public class helpManager : MonoBehaviour
             helpToolReleased(helpGameObject);
         }
 
+        //very bad way to fix the shit of duplication but if it's stupid and it works, it's not stupid
         if(GameObject.FindGameObjectsWithTag("net").Length > 1)
         {
             Destroy(GameObject.FindGameObjectWithTag("net"));

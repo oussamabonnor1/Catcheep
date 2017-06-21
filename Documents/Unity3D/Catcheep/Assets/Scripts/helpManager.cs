@@ -8,8 +8,7 @@ public class helpManager : MonoBehaviour
     public GameObject[] helpTools;
     public GameObject[] helpButtons;
 
-    private GameObject hayGameObject;
-    private GameObject netGameObject;
+    private GameObject helpGameObject;
 
     private bool helpUsed;
 
@@ -22,31 +21,30 @@ public class helpManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetMouseButton(0) && GameObject.FindWithTag("net"))
-        {
-            GameObject.FindWithTag("net").transform.position =
-                Vector3.Lerp(GameObject.FindWithTag("net").transform.position,
-                    Camera.main.ScreenToWorldPoint(Input.mousePosition), Time.deltaTime * 5);
-        }
-
-
+        
         if (Input.GetMouseButton(0))
         {
+            //pointer is much like a raycast but UI related
             PointerEventData pointer = new PointerEventData(EventSystem.current);
 
             if (pointer.selectedObject == helpButtons[0])
             {
-                hayStackDragDrop();
+                helpToolDragDrop(0);
+            }
+
+            if (pointer.selectedObject == helpButtons[1])
+            {
+                helpToolDragDrop(1);
             }
         }
-
+        //help must be already used so that this doesnt get called if player clicks on sheepys
         if (Input.GetMouseButtonUp(0) && helpUsed)
         {
-            hayStackCreation(hayGameObject);
+            helpToolCreation(helpGameObject);
         }
     }
 
-    public void hayStackDragDrop()
+    public void helpToolDragDrop(int index)
     {
         Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 spawnPosition = new Vector3(position.x, position.y, 0f);
@@ -54,32 +52,27 @@ public class helpManager : MonoBehaviour
         if (!helpUsed)
         {
             helpUsed = true;
-           
-            hayGameObject = Instantiate(helpTools[0],spawnPosition ,
+            helpGameObject = Instantiate(helpTools[index],spawnPosition ,
                 Quaternion.identity);
         }
 
-        hayGameObject.transform.position = Vector3.Lerp(hayGameObject.transform.position,
+        helpGameObject.transform.position = Vector3.Lerp(helpGameObject.transform.position,
           spawnPosition, Time.deltaTime * 5);
-
     }
 
 
-    public void hayStackCreation(GameObject hayGameObject)
+    public void helpToolCreation(GameObject helpToolGameObject)
     {
-        StartCoroutine(helpDestroyer(5f, hayGameObject));
-    }
-
-    public void net()
-    {
-        if (!helpUsed)
+        if (helpGameObject.tag == "hayStack")
         {
-            helpUsed = true;
-            netGameObject = Instantiate(helpTools[1], transform.position, Quaternion.identity);
-            StartCoroutine(helpDestroyer(3f, netGameObject));
+            StartCoroutine(helpDestroyer(5f, helpToolGameObject));
+        }
+        if (helpGameObject.tag == "net")
+        {
+            StartCoroutine(helpDestroyer(3f, helpToolGameObject));
         }
     }
-
+    
     IEnumerator helpDestroyer(float lifeTime, GameObject gameObjectToDestroy)
     {
         yield return new WaitForSeconds(lifeTime);

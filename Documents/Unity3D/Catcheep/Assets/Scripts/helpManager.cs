@@ -11,60 +11,87 @@ public class helpManager : MonoBehaviour
     private GameObject helpGameObject;
 
     private bool helpUsed;
+    private bool helpToolIsReleased;
 
     // Use this for initialization
     void Start()
     {
         helpUsed = false;
+        helpToolIsReleased = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //don't use the bool helpUsed cause it won't let us performe a drag and drop when the next frame comes
         if (Input.GetMouseButton(0))
         {
-            //pointer is much like a raycast but UI related
-            PointerEventData pointer = new PointerEventData(EventSystem.current);
-
-            if (pointer.selectedObject == helpButtons[0])
+            //if no help tool is used then u can create and use one
+            if (!helpUsed && helpToolIsReleased)
             {
-                helpToolDragDrop(0);
+                //pointer is much like a raycast but UI related
+                PointerEventData pointer = new PointerEventData(EventSystem.current);
+
+                if (pointer.selectedObject == helpButtons[0])
+                {
+                    helpToolCreated(0);
+                }
+
+                if (pointer.selectedObject == helpButtons[1])
+                {
+                    helpToolCreated(1);
+                }
             }
-
-            if (pointer.selectedObject == helpButtons[1])
+            else
             {
-                helpToolDragDrop(1);
+                //if help tool is released you can't drag and drop anything till it s destroyed
+               if(!helpToolIsReleased && helpGameObject) helpToolDragDrop();
             }
         }
         //help must be already used so that this doesnt get called if player clicks on sheepys
         if (Input.GetMouseButtonUp(0) && helpUsed)
         {
-            helpToolCreation(helpGameObject);
+            helpToolReleased(helpGameObject);
+        }
+
+        if(GameObject.FindGameObjectsWithTag("net").Length > 1)
+        {
+            Destroy(GameObject.FindGameObjectWithTag("net"));
+        }
+        if(GameObject.FindGameObjectsWithTag("hayStack").Length > 1)
+        {
+            Destroy(GameObject.FindGameObjectWithTag("hayStack"));
         }
     }
 
-    public void helpToolDragDrop(int index)
+    void helpToolCreated(int index)
+    {
+        Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 spawnPosition = new Vector3(position.x, position.y, 0f);
+        
+        helpUsed = true;
+        helpToolIsReleased = false;
+
+        helpGameObject = Instantiate(helpTools[index], spawnPosition,
+            Quaternion.identity);
+        helpGameObject.GetComponent<Collider2D>().enabled = false;
+    }
+
+    void helpToolDragDrop()
     {
         Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 spawnPosition = new Vector3(position.x, position.y, 0f);
 
-        if (!helpUsed)
-        {
-            helpUsed = true;
-            helpGameObject = Instantiate(helpTools[index],spawnPosition ,
-                Quaternion.identity);
-            helpGameObject.GetComponent<Collider2D>().enabled = false;
-        }
-
         helpGameObject.transform.position = Vector3.Lerp(helpGameObject.transform.position,
-          spawnPosition, Time.deltaTime * 5);
+            spawnPosition, Time.deltaTime * 5);
     }
 
 
-    public void helpToolCreation(GameObject helpToolGameObject)
+    public void helpToolReleased(GameObject helpToolGameObject)
     {
+        helpToolIsReleased = true;
         helpGameObject.GetComponent<Collider2D>().enabled = true;
+        
 
         if (helpGameObject.tag == "hayStack")
         {
@@ -75,11 +102,12 @@ public class helpManager : MonoBehaviour
             StartCoroutine(helpDestroyer(3f, helpToolGameObject));
         }
     }
-    
+
     IEnumerator helpDestroyer(float lifeTime, GameObject gameObjectToDestroy)
     {
         yield return new WaitForSeconds(lifeTime);
         Destroy(gameObjectToDestroy);
         helpUsed = false;
+        helpToolIsReleased = true;
     }
 }

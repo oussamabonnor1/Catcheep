@@ -94,7 +94,6 @@ public class distanceController : MonoBehaviour
         {
             if (other.gameObject == pathCollsionGameObject || other.gameObject.tag == "heyStack")
             {
-                print(other.gameObject.tag);
                 gameObject.GetComponent<SheepMovement>().Speed = speed;
 
                 if (gameObject.tag == "blacky")

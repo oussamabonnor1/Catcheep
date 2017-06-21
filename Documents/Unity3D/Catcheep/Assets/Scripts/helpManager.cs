@@ -13,13 +13,13 @@ public class helpManager : MonoBehaviour
 
     private bool helpUsed;
 
-	// Use this for initialization
-	void Start ()
-	{
-	    helpUsed = false;
-	}
-	
-	// Update is called once per frame
+    // Use this for initialization
+    void Start()
+    {
+        helpUsed = false;
+    }
+
+    // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButton(0) && GameObject.FindWithTag("net"))
@@ -29,16 +29,10 @@ public class helpManager : MonoBehaviour
                     Camera.main.ScreenToWorldPoint(Input.mousePosition), Time.deltaTime * 5);
         }
 
-        if (GameObject.FindWithTag("hayStack"))
-        {
-            //GameObject.FindWithTag("hayStack").transform.position = Vector3.Lerp(GameObject.FindWithTag("hayStack").transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), Time.deltaTime * 5);
-        }
 
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButton(0))
         {
-            
             PointerEventData pointer = new PointerEventData(EventSystem.current);
-            
 
             if (pointer.selectedObject == helpButtons[0])
             {
@@ -54,14 +48,22 @@ public class helpManager : MonoBehaviour
 
     public void hayStackDragDrop()
     {
+        Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector3 spawnPosition = new Vector3(position.x, position.y, 0f);
+
         if (!helpUsed)
         {
             helpUsed = true;
-            hayGameObject = Instantiate(helpTools[0], Camera.main.ScreenToWorldPoint(Input.mousePosition), Quaternion.identity);
+           
+            hayGameObject = Instantiate(helpTools[0],spawnPosition ,
+                Quaternion.identity);
         }
 
-        hayGameObject.transform.position = Vector3.Lerp(hayGameObject.transform.position, Camera.main.ScreenToWorldPoint(Input.mousePosition), Time.deltaTime * 5);
+        hayGameObject.transform.position = Vector3.Lerp(hayGameObject.transform.position,
+          spawnPosition, Time.deltaTime * 5);
+
     }
+
 
     public void hayStackCreation(GameObject hayGameObject)
     {
@@ -84,6 +86,4 @@ public class helpManager : MonoBehaviour
         Destroy(gameObjectToDestroy);
         helpUsed = false;
     }
-
-    
 }

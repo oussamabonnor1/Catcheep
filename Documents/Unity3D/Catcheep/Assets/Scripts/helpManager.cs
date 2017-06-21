@@ -26,9 +26,11 @@ public class helpManager : MonoBehaviour
         //don't use the bool helpUsed cause it won't let us performe a drag and drop when the next frame comes
         if (Input.GetMouseButton(0))
         {
-            //if no help tool is used then u can create and use one
-            if (!helpUsed && helpToolIsReleased)
+            if (GameObject.FindGameObjectWithTag("net") == null && GameObject.FindGameObjectWithTag("hayStack") == null)
             {
+                //if no help tool is used then u can create and use one
+                // if (!helpUsed && helpToolIsReleased)
+                //{
                 //pointer is much like a raycast but UI related
                 PointerEventData pointer = new PointerEventData(EventSystem.current);
 
@@ -43,12 +45,15 @@ public class helpManager : MonoBehaviour
                     helpButtons[1].gameObject.SetActive(false);
                     helpToolCreated(1);
                 }
+                //}
             }
-            else
+            else if(!helpToolIsReleased)
             {
                 //if help tool is released you can't drag and drop anything till it s destroyed
-               if(!helpToolIsReleased && helpGameObject) helpToolDragDrop();
+                //if (!helpToolIsReleased && helpGameObject) 
+                helpToolDragDrop();
             }
+
         }
         //help must be already used so that this doesnt get called if player clicks on sheepys
         if (Input.GetMouseButtonUp(0) && helpUsed)

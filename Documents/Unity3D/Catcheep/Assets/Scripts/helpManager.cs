@@ -49,8 +49,6 @@ public class helpManager : MonoBehaviour
             }
             else if(!helpToolIsReleased)
             {
-                //if help tool is released you can't drag and drop anything till it s destroyed
-                //if (!helpToolIsReleased && helpGameObject) 
                 helpToolDragDrop();
             }
 
@@ -100,7 +98,6 @@ public class helpManager : MonoBehaviour
         helpToolIsReleased = true;
         helpGameObject.GetComponent<Collider2D>().enabled = true;
         
-
         if (helpGameObject.tag == "hayStack")
         {
             StartCoroutine(helpDestroyer(5f, helpToolGameObject));

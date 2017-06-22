@@ -41,13 +41,10 @@ public class distanceController : MonoBehaviour
 
     void goingDownSpeedControl(Collider2D other)
     {
-        if (other.gameObject.tag == "hayStack")
+        if (other.gameObject.tag == "hayStack" || other.gameObject.tag == "net")
         {
-            gameObject.GetComponent<SheepMovement>().Speed = other.gameObject.GetComponent<SheepMovement>().Speed;
-        }
-        else if (other.gameObject.tag == "net")
-        {
-            StartCoroutine(sheepyCaughtByNet());
+            //gameObject.GetComponent<SheepMovement>().Speed = other.gameObject.GetComponent<SheepMovement>().Speed;
+            StartCoroutine(sheepyCaughtByHelpTool());
         }
         else
         {
@@ -105,7 +102,7 @@ public class distanceController : MonoBehaviour
         }
     }
 
-    IEnumerator sheepyCaughtByNet()
+    IEnumerator sheepyCaughtByHelpTool()
     {
         GetComponent<SheepMovement>().SheepDestroyer.caught = true;
         yield return new WaitForSeconds(0.5f);

@@ -68,6 +68,12 @@ public class helpManager : MonoBehaviour
         {
             Destroy(GameObject.FindGameObjectWithTag("hayStack"));
         }
+
+        //just in case one of the tools isnt enabled
+        if (helpToolIsReleased && helpGameObject != null)
+        {
+           if(helpGameObject.GetComponent<Collider2D>().enabled == false) helpGameObject.GetComponent<Collider2D>().enabled = true;
+        }
     }
 
     void helpToolCreated(int index)

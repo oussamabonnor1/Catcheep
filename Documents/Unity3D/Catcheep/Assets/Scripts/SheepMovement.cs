@@ -10,6 +10,7 @@ public class SheepMovement : MonoBehaviour
 
     private Vector2 destination;
     private Vector3 edgeOfScreen;
+    //help tool will be used only for wolf dressed as sheep as they will go towards it
     private GameObject helpTool;
 
     private float sheepWidth;
@@ -33,7 +34,6 @@ public class SheepMovement : MonoBehaviour
     {
         if (helpTool == null)
         {
-
             if (!SheepDestroyer.caught)
             {
                 switch (gameObject.tag)

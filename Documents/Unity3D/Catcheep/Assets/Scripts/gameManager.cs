@@ -12,6 +12,7 @@ public class gameManager : MonoBehaviour
 {
     public GameObject[] sheeps;
     public GameObject background;
+    public GameObject backgroundOfTrees;
     public AudioClip[] sheepSound;
 
 
@@ -36,9 +37,16 @@ public class gameManager : MonoBehaviour
         if (background == null)
         {
             background = GameObject.Find("background");
+            ResizeBackground(background);
         }
 
-        ResizeBackground();
+        if (backgroundOfTrees == null && GameObject.Find("Trees") != null)
+        {
+            backgroundOfTrees = GameObject.Find("Trees");
+            ResizeBackground(backgroundOfTrees);
+        }
+
+        
 
         scoreText = GameObject.Find("score");
         scoreText.GetComponent<Text>().text = "Score: " + score;
@@ -72,100 +80,104 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    void ResizeBackground()
+    void ResizeBackground(GameObject background)
     {
         SpriteRenderer sr = background.GetComponent<SpriteRenderer>();
+
         if (sr == null) return;
 
         transform.localScale = new Vector3(1, 1, 1);
 
         float width = sr.sprite.bounds.size.x;
         float height = sr.sprite.bounds.size.y;
-
-
+        
         float worldScreenHeight = Camera.main.orthographicSize * 2f;
         float worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
 
         Vector3 xWidth = background.transform.localScale;
         xWidth.x = worldScreenWidth / width;
         background.transform.localScale = xWidth;
-        //transform.localScale.x = worldScreenWidth / width;
+        
         Vector3 yHeight = background.transform.localScale;
         yHeight.y = worldScreenHeight / height;
         background.transform.localScale = yHeight;
-        //transform.localScale.y = worldScreenHeight / height;
 
     }
 
     IEnumerator sheepSpawner()
     {
         yield return new WaitForSeconds(1f);
-        int size = sheeps.Length - 1;
+        int size = sheeps.Length;
+        float taux = 0;
+        
 
         while (!gameOver)
         {       
-            GetComponent<AudioSource>().clip = sheepSound[Random.Range(0, sheepSound.Length)];
-            GetComponent<AudioSource>().Play();
+           
 
-            int i = Random.Range(0, 9);
+            if(taux <= 1) taux += 0.05f;
+            oneSheepyRandom(Random.Range(0,size));
+            yield return new WaitForSeconds(2 - taux);
 
-            switch (i)
-            {
-                case 0:
-                    oneSheepyRandom(Random.Range(0, size));
-                    yield return new WaitForSeconds(2);
-                    break;
+            /* int i = Random.Range(0, 9);
 
-                case 1:
-                    threeSheepySlidingRightUpDown(1, Random.Range(0, size));
-                    yield return new WaitForSeconds(3);
-                    break;
-                case 2:
-                    int num = Random.Range(1, 4);
-                    twoSheepyHorizontalManySet(num, Random.Range(0, size - 2));
-                    yield return new WaitForSeconds(num);
-                    break;
+             switch (i)
+             {
+                 case 0:
+                     oneSheepyRandom(Random.Range(0, size));
+                     yield return new WaitForSeconds(2);
+                     break;
 
-                case 3:
-                    threeSheepyHorizontalpartScreen(Random.Range(0, size + 1));
-                    yield return new WaitForSeconds(3);
-                    break;
+                 case 1:
+                     threeSheepySlidingRightUpDown(1, Random.Range(0, size));
+                     yield return new WaitForSeconds(3);
+                     break;
+                 case 2:
+                     int num = Random.Range(1, 4);
+                     twoSheepyHorizontalManySet(num, Random.Range(0, size - 2));
+                     yield return new WaitForSeconds(num);
+                     break;
 
-                case 4:
-                    vFormeSheepy(Random.Range(2, 4), Random.Range(0, size));
-                    yield return new WaitForSeconds(3);
-                    break;
+                 case 3:
+                     threeSheepyHorizontalpartScreen(Random.Range(0, size + 1));
+                     yield return new WaitForSeconds(3);
+                     break;
 
-                case 5:
-                    fourSheepyTriangleLookingDownUp(-1, Random.Range(0, size));
-                    yield return new WaitForSeconds(4);
-                    break;
+                 case 4:
+                     vFormeSheepy(Random.Range(2, 4), Random.Range(0, size));
+                     yield return new WaitForSeconds(3);
+                     break;
 
-                case 6:
-                    slidingSheepy(Random.Range(2, 5));
-                    yield return new WaitForSeconds(4);
-                    break;
+                 case 5:
+                     fourSheepyTriangleLookingDownUp(-1, Random.Range(0, size));
+                     yield return new WaitForSeconds(4);
+                     break;
 
-                case 7:
-                    threeSheepyHorizontalFullScreen(Random.Range(0, size));
-                    yield return new WaitForSeconds(4);
-                    break;
+                 case 6:
+                     slidingSheepy(Random.Range(2, 5));
+                     yield return new WaitForSeconds(4);
+                     break;
 
-                case 8:
-                    fourSheepyTriangleLookingDownUp(1, Random.Range(0,size));
-                    yield return new WaitForSeconds(4);
-                    break;
-            }
+                 case 7:
+                     threeSheepyHorizontalFullScreen(Random.Range(0, size));
+                     yield return new WaitForSeconds(4);
+                     break;
+
+                 case 8:
+                     fourSheepyTriangleLookingDownUp(1, Random.Range(0,size));
+                     yield return new WaitForSeconds(4);
+                     break;
+             }*/
 
         }
     }
 
 
-    //one sheepy formations:
+    //one sheepy formations
     void oneSheepyRandom(int index)
     {
-        float edges = edgeOfScreen.x - (sheeps[0].GetComponent<SpriteRenderer>().sprite.bounds.extents).x;
-        float xPosition = -edges; //Random.Range(-edges, edges);
+        float edges = edgeOfScreen.x - (sheeps[index].GetComponent<SpriteRenderer>().sprite.bounds.extents).x;
+        float xPosition = Random.Range(-edges, edges);
         Vector3 spawnPosition = new Vector3(xPosition, transform.position.y, transform.position.z);
         Instantiate(sheeps[index], spawnPosition, Quaternion.identity);
     }
@@ -175,13 +187,13 @@ public class gameManager : MonoBehaviour
         Vector3 spawnPosition = new Vector3(xPosition, transform.position.y + deltaYPosition, transform.position.z);
         Instantiate(sheeps[index], spawnPosition, Quaternion.identity);
     }
-    //end of one sheepy formations;
+    //end of one sheepy formations
 
     //two sheepy formations:
     void twoSheepyHorizontalManySet(int times, int index)
     {
-        float sheepyWidth = (sheeps[0].GetComponent<SpriteRenderer>().sprite.bounds.extents).x;
-        float edges = edgeOfScreen.x - (sheepyWidth);
+        float sheepyWidth = sheeps[index].GetComponent<SpriteRenderer>().sprite.bounds.extents.x;
+        float edges = edgeOfScreen.x - sheepyWidth;
         //gap is between a small value of my choice and the total with of screen - the width of number of sheeps together (2 in this case)
         float gap = Random.Range(edgeOfScreen.x * 0.4f, (edgeOfScreen.x * 2) - (sheepyWidth * 2));
         // i used edges - gap cause i instantiate from the left and i m making sure the sheep wont go overboard 
@@ -216,11 +228,11 @@ public class gameManager : MonoBehaviour
         float sheepyWidth = (sheeps[index].GetComponent<SpriteRenderer>().sprite.bounds.extents).x;
         float edges = edgeOfScreen.x - (sheepyWidth);
         //gap is between a small value of my choice and the total with of screen - the width of number of sheeps together (2 in this case)
-        float gap = Random.Range(edgeOfScreen.x * 0.5f, (edgeOfScreen.x * 2) - (sheepyWidth * 2));
+        float gap = edgeOfScreen.x - sheepyWidth; // Random.Range(edgeOfScreen.x * 0.5f, (edgeOfScreen.x * 2) - (sheepyWidth * 2));
         // i used edges - gap cause i instantiate from the left and i m making sure the sheep wont go overboard 
-        float xPosition = Random.Range(-edges, edges - gap);
+        float xPosition = edges - gap;//Random.Range(-edges, edges - gap);
         // gap is total gap (previous line) devided by number of gaps in total
-        gap /= 2;
+        //gap /= 2;
 
 
 

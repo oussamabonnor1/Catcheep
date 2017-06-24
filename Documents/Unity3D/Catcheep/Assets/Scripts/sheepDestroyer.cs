@@ -53,12 +53,10 @@ public class sheepDestroyer : MonoBehaviour
         caught = true;
         //creating hit text
         GameObject canvas = GameObject.Find("Canvas");
-        GameObject hit = (GameObject) Instantiate(hitText, transform.position, Quaternion.identity);
+        GameObject hit = Instantiate(hitText, transform.position, Quaternion.identity);
         Vector3 position = Camera.main.WorldToScreenPoint(transform.position);
         hit.transform.SetParent(canvas.transform, false);
-        hit.GetComponent<RectTransform>().transform.position = position;
-        hit.GetComponent<TextMeshProUGUI>().transform.position = position;
-        hit.GetComponent<TextMeshProUGUI>().margin = new Vector4(0, 0, 0, 0);
+        hit.transform.SetPositionAndRotation(position,Quaternion.identity);
 
         //deactivating collider so that it doesnt disturb the scene (collision detection)
         smallCollider.enabled = false;

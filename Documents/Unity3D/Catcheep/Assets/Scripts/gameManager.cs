@@ -44,9 +44,7 @@ public class gameManager : MonoBehaviour
             backgroundOfTrees = GameObject.Find("Trees");
             ResizeBackground(backgroundOfTrees);
         }
-
         
-
         scoreText = GameObject.Find("score");
         scoreText.GetComponent<Text>().text = "Score: " + score;
 

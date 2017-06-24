@@ -1,8 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 
 public class hitTextManager : MonoBehaviour {
@@ -10,7 +8,7 @@ public class hitTextManager : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
-	    GetComponent<TextMeshProUGUI>().text = "Hit x " + gameManager.combo;
+	    GetComponent<TextMeshProUGUI>().text = "H I T x " + gameManager.combo;
 	    StartCoroutine(destroyText());
 	}
 	
@@ -22,7 +20,8 @@ public class hitTextManager : MonoBehaviour {
     IEnumerator destroyText()
     {
         yield return new WaitForSeconds(0.5f);
-        Destroy(gameObject);
+        GameObject parent = transform.parent.gameObject;
+        Destroy(parent);
 
     }
 }

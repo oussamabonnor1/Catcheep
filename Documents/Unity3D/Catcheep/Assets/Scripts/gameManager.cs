@@ -115,7 +115,7 @@ public class gameManager : MonoBehaviour
            
 
             if(taux <= 1) taux += 0.05f;
-            SheepyHorizontalpartScreen(Random.Range(0, size - 1), 2);
+            fourSheepyTriangleLookingDownUp(1, Random.Range(0, size - 1));
             yield return new WaitForSeconds(2 - taux);
 
             /* int i = Random.Range(0, 9);
@@ -286,8 +286,8 @@ public class gameManager : MonoBehaviour
             Instantiate(sheeps[index], spawnPositionVector3, Quaternion.identity);
             if (i == 1) secondSheepy = spawnPositionVector3;
         }
-
-        oneSheepyChosen(secondSheepy.x, direction * gap, index);
+        print(gap);
+        oneSheepyChosen(secondSheepy.x, direction * (gap + 0.3f), index);
     }
     //ende of two sheepy formations;
 

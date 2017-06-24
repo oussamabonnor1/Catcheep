@@ -95,7 +95,7 @@ public class helpManager : MonoBehaviour
         Vector3 spawnPosition = new Vector3(position.x, position.y, 0f);
 
         helpGameObject.transform.position = Vector3.Lerp(helpGameObject.transform.position,
-            spawnPosition, Time.deltaTime * 5);
+            spawnPosition, Time.deltaTime * 8);
     }
 
 

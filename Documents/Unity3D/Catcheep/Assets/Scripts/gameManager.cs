@@ -115,7 +115,7 @@ public class gameManager : MonoBehaviour
            
 
             if(taux <= 1) taux += 0.05f;
-            fourSheepyTriangleLookingDownUp(1, Random.Range(0, size - 1));
+            vFormeSheepy(Random.Range(2, 4), Random.Range(0, size));
             yield return new WaitForSeconds(2 - taux);
 
             /* int i = Random.Range(0, 9);
@@ -223,7 +223,7 @@ public class gameManager : MonoBehaviour
 
     void SheepyHorizontalpartScreen(int index, int num)
     {
-        // positioning the first (left) sheepy
+        // calculating needed info
         float sheepyWidth = (sheeps[index].GetComponent<SpriteRenderer>().bounds.extents).x;
         float edges = edgeOfScreen.x - (sheepyWidth);
         //gap is between a small value of my choice and the total with of screen - the width of number of sheeps together (2 in this case)
@@ -294,8 +294,9 @@ public class gameManager : MonoBehaviour
     //V forme sheepy
     void vFormeSheepy(int number, int index)
     {
-        // finding out how much gap should be between the sheepys
-        float gap = edgeOfScreen.x - (sheeps[index].GetComponent<SpriteRenderer>().sprite.bounds.extents.x * number);
+        float sheepyWidth = (sheeps[index].GetComponent<SpriteRenderer>().bounds.extents).x;
+        //gap is between a small value of my choice and the total with of screen - the width of number of sheeps together (2 in this case)
+        float gap = Random.Range(edgeOfScreen.x * 0.8f, ((edgeOfScreen.x) - (sheepyWidth * (number - 1))));
         gap /= number - 1;
 
         // choosing half of screen where to position first sheepy depending on direction

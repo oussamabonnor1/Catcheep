@@ -4,8 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 using UnityEngine.Advertisements;
-
-
+using UnityEngine.SceneManagement;
 
 
 public class gameManager : MonoBehaviour
@@ -76,7 +75,7 @@ public class gameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             ShowAd();
-            Application.Quit();
+            SceneManager.LoadScene("Start");
         }
     }
 
@@ -116,7 +115,7 @@ public class gameManager : MonoBehaviour
            
 
             if(taux <= 1) taux += 0.05f;
-            oneSheepyRandom(Random.Range(0,size));
+            threeSheepyHorizontalpartScreen(Random.Range(0, size));
             yield return new WaitForSeconds(2 - taux);
 
             /* int i = Random.Range(0, 9);
@@ -225,17 +224,19 @@ public class gameManager : MonoBehaviour
     void threeSheepyHorizontalpartScreen(int index)
     {
         // positioning the first (left) sheepy
-        float sheepyWidth = (sheeps[index].GetComponent<SpriteRenderer>().sprite.bounds.extents).x;
+        float sheepyWidth = (sheeps[index].GetComponent<SpriteRenderer>().bounds.extents).x;
         float edges = edgeOfScreen.x - (sheepyWidth);
         //gap is between a small value of my choice and the total with of screen - the width of number of sheeps together (2 in this case)
-        float gap = edgeOfScreen.x - sheepyWidth; // Random.Range(edgeOfScreen.x * 0.5f, (edgeOfScreen.x * 2) - (sheepyWidth * 2));
-        // i used edges - gap cause i instantiate from the left and i m making sure the sheep wont go overboard 
-        float xPosition = edges - gap;//Random.Range(-edges, edges - gap);
+        float gap = Random.Range(edgeOfScreen.x * 0.8f, ((edgeOfScreen.x * 2) - (sheepyWidth * 2)));
+
+        // position is calculated from the very edge of the screen and 
+        //we add a value that is between 0 and total with of FREE screen (width of sheepy calculated)
+        //minus total gap (which means acctualy width of sheepys) [just don't touch it, it works fine for other cases]
+        float xPosition = -edges + Random.Range(0f,(edges * 2) - gap);
+
         // gap is total gap (previous line) devided by number of gaps in total
-        //gap /= 2;
-
-
-
+        gap /= 2;
+        
         //instantiating the sheepys
         for (int i = 0; i < 3; i++)
         {

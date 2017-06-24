@@ -24,4 +24,9 @@ public class startMenuManager : MonoBehaviour {
     {
         SceneManager.LoadScene("snow");
     }
+
+    public void quit()
+    {
+        Application.Quit();
+    }
 }

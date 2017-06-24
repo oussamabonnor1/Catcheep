@@ -23,8 +23,7 @@ public class SheepMovement : MonoBehaviour
         setDestination();
 
         if(SheepDestroyer == null ) SheepDestroyer = new sheepDestroyer();
-
-       // helpToolHay();
+        
     }
 
     
@@ -42,7 +41,6 @@ public class SheepMovement : MonoBehaviour
                         straightMovement(destination);
                         break;
                     case "blacky":
-                        destination = new Vector2(slideSpeed, -1f);
                         zigZagMovement(destination);
                         break;
                 }
@@ -69,7 +67,7 @@ public class SheepMovement : MonoBehaviour
                 destination = new Vector2(0f, -1f);
                 break;
             case "blacky":
-                slideSpeed = 1;
+                slideSpeed = Random.Range(0, 2) * 2 - 1;
                 destination = new Vector2(slideSpeed, -1f);
                 break;
         }

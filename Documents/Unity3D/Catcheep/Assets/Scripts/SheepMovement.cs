@@ -9,11 +9,14 @@ public class SheepMovement : MonoBehaviour
     public sheepDestroyer SheepDestroyer;
 
     private Vector2 destination;
+
     private Vector3 edgeOfScreen;
+
     //help tool will be used only for wolf dressed as sheep as they will go towards it
     private GameObject helpTool;
 
     private float sheepWidth;
+
     // Use this for initialization
     void Start()
     {
@@ -22,11 +25,12 @@ public class SheepMovement : MonoBehaviour
 
         setDestination();
 
-        if(SheepDestroyer == null ) SheepDestroyer = new sheepDestroyer();
-        
+        //jst to use the same script for other objects that dnt need it really
+        if (SheepDestroyer == null) SheepDestroyer = new sheepDestroyer();
+
+        if (tag == "blacky") StartCoroutine(suddenChangeInDirection());
     }
 
-    
 
     // Update is called once per frame
     void Update()
@@ -41,7 +45,7 @@ public class SheepMovement : MonoBehaviour
                         straightMovement(destination);
                         break;
                     case "blacky":
-                        destination = new Vector2(slideSpeed,-1f);
+                        destination = new Vector2(slideSpeed, -1f);
                         zigZagMovement(destination);
                         break;
                 }
@@ -59,7 +63,7 @@ public class SheepMovement : MonoBehaviour
         }
     }
 
-    
+
     void setDestination()
     {
         switch (gameObject.tag)
@@ -91,7 +95,16 @@ public class SheepMovement : MonoBehaviour
         if (transform.position.x <= -edgeOfScreen.x + sheepWidth)
         {
             slideSpeed = 1;
-            this.destination= new Vector2(slideSpeed, -1f);
+            this.destination = new Vector2(slideSpeed, -1f);
+        }
+    }
+
+    IEnumerator suddenChangeInDirection()
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            yield return new WaitForSeconds(Random.Range(0.5f, 1f));
+            slideSpeed = Random.Range(-1, 2);
         }
     }
 }

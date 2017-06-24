@@ -260,7 +260,7 @@ public class gameManager : MonoBehaviour
             Instantiate(sheeps[index], spawnPositionVector3, Quaternion.identity);
             if (i == 1) secondSheepy = spawnPositionVector3;
         }
-        print(gap);
+
         oneSheepyChosen(secondSheepy.x, direction * (gap + 0.3f), index);
     }
     //ende of two sheepy formations;

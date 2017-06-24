@@ -115,7 +115,7 @@ public class gameManager : MonoBehaviour
            
 
             if(taux <= 1) taux += 0.05f;
-            threeSheepyHorizontalpartScreen(Random.Range(0, size));
+            SheepyHorizontalpartScreen(Random.Range(0, size - 1), 2);
             yield return new WaitForSeconds(2 - taux);
 
             /* int i = Random.Range(0, 9);
@@ -138,7 +138,7 @@ public class gameManager : MonoBehaviour
                      break;
 
                  case 3:
-                     threeSheepyHorizontalpartScreen(Random.Range(0, size + 1));
+                     SheepyHorizontalpartScreen(Random.Range(0, size + 1));
                      yield return new WaitForSeconds(3);
                      break;
 
@@ -221,13 +221,13 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    void threeSheepyHorizontalpartScreen(int index)
+    void SheepyHorizontalpartScreen(int index, int num)
     {
         // positioning the first (left) sheepy
         float sheepyWidth = (sheeps[index].GetComponent<SpriteRenderer>().bounds.extents).x;
         float edges = edgeOfScreen.x - (sheepyWidth);
         //gap is between a small value of my choice and the total with of screen - the width of number of sheeps together (2 in this case)
-        float gap = Random.Range(edgeOfScreen.x * 0.8f, ((edgeOfScreen.x * 2) - (sheepyWidth * 2)));
+        float gap = Random.Range(edgeOfScreen.x * 0.8f, ((edgeOfScreen.x * 2) - (sheepyWidth * (num-1))));
 
         // position is calculated from the very edge of the screen and 
         //we add a value that is between 0 and total with of FREE screen (width of sheepy calculated)
@@ -235,10 +235,10 @@ public class gameManager : MonoBehaviour
         float xPosition = -edges + Random.Range(0f,(edges * 2) - gap);
 
         // gap is total gap (previous line) devided by number of gaps in total
-        gap /= 2;
+        gap /= num - 1;
         
         //instantiating the sheepys
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < num; i++)
         {
             oneSheepyChosen(xPosition + (gap * i), 0f, index);
         }

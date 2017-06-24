@@ -115,7 +115,7 @@ public class gameManager : MonoBehaviour
            
 
             if(taux <= 1) taux += 0.05f;
-            vFormeSheepy(Random.Range(2, 4), Random.Range(0, size));
+            slidingSheepy(Random.Range(2,5), Random.Range(0, size - 1));
             yield return new WaitForSeconds(2 - taux);
 
             /* int i = Random.Range(0, 9);
@@ -317,18 +317,26 @@ public class gameManager : MonoBehaviour
     //end of V frome sheepy sheepy
 
     //sliding forme sheepy (choice above 1 always)
-    void slidingSheepy(int number)
+    void slidingSheepy(int number, int index)
     {
-        //total screen ( x 2) - sheep wahed (prck 2 nssas) : gap howa (gap total (li b9a) - sheepWidth * number - 1) / chaal m gap
+        //info needed (very similar to the sheepyPartScreen function
+        float sheepyWidth = (sheeps[index].GetComponent<SpriteRenderer>().bounds.extents).x;
+        float edges = edgeOfScreen.x - (sheepyWidth);
+        //gap is between a small value of my choice and the total with of screen - the width of number of sheeps together (2 in this case)
+        float gap = Random.Range(edgeOfScreen.x * 0.8f, ((edgeOfScreen.x * 2) - (sheepyWidth * (number - 1))));
 
-        float sheepWidthTotal = sheeps[0].GetComponent<SpriteRenderer>().sprite.bounds.size.x;
-        float gapTotal = (edgeOfScreen.x * 2) - (sheepWidthTotal * number - 1);
-        float gap = gapTotal / (number - 1);
-        float edges = edgeOfScreen.x - (sheepWidthTotal);
-        float xPosition = Random.Range(-edges, edges - gapTotal - (sheepWidthTotal / 2));
+        // position is calculated from the very edge of the screen and 
+        //we add a value that is between 0 and total with of FREE screen (width of sheepy calculated)
+        //minus total gap (which means acctualy width of sheepys) [just don't touch it, it works fine for other cases]
+        float xPosition = -edges + Random.Range(0f, (edges * 2) - gap);
+
+        // gap is total gap (previous line) devided by number of gaps in total
+        gap /= number - 1;
+
+        //instantiating the sheepys
         for (int i = 0; i < number; i++)
         {
-            oneSheepyChosen(xPosition + (i * gap), (i * gap), 0);
+            oneSheepyChosen(xPosition + (gap * i), gap * i, index);
         }
     }
 

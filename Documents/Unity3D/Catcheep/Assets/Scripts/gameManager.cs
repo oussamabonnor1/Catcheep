@@ -13,9 +13,9 @@ public class gameManager : MonoBehaviour
     public GameObject background;
     public GameObject backgroundOfTrees;
     public AudioClip[] sheepSound;
-
-
-    private bool gameOver;
+    public GameObject winText;
+    
+    public static bool gameOver;
     private Vector3 edgeOfScreen;
     private GameObject scoreText;
 
@@ -108,11 +108,9 @@ public class gameManager : MonoBehaviour
         int size = sheeps.Length -1;
         float taux = 0;
         
-
         while (!gameOver)
         {       
            
-
             if(taux <= 1) taux += 0.05f;
              int i = Random.Range(0, 9);
 
@@ -164,6 +162,12 @@ public class gameManager : MonoBehaviour
                      break;
              }
 
+        }
+
+        if (gameOver)
+        {
+          //  winText = GameObject.Find("win text");
+            winText.SetActive(true);
         }
     }
 

@@ -21,7 +21,7 @@ public class helpManager : MonoBehaviour
         helpToolIsReleased = true;
 
         if(slider == null) slider = GameObject.Find("Slider");
-        slider.GetComponent<Slider>().value = 1;
+        slider.GetComponent<Slider>().value = 0;
 
         StartCoroutine(farmerHeadAnimation());
     }
@@ -133,10 +133,12 @@ public class helpManager : MonoBehaviour
 
     IEnumerator farmerHeadAnimation()
     {
-        for (int i = 0; i < 80; i++)
+        for (int i = 0; i < 1000; i++)
         {
-            yield return new WaitForSeconds(0.25f);
-            slider.GetComponent<Slider>().value -= 0.0125f;
+            yield return new WaitForSeconds(0.0001f);
+            slider.GetComponent<Slider>().value += 0.001f;
         }
+
+        gameManager.gameOver = true;
     }
 }

@@ -64,6 +64,7 @@ public class gameManager : MonoBehaviour
             if (!catchedSomething && combo > 0)
             {
                 combo = 0;
+                Handheld.Vibrate();
             }
 
             if (catchedSomething)

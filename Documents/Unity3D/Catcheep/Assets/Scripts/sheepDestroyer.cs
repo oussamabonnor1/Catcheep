@@ -16,7 +16,6 @@ public class sheepDestroyer : MonoBehaviour
     private GameObject sheepCage;
 
     public CircleCollider2D smallCollider;
-    public CircleCollider2D bigCollider;
 
 
     void Start()

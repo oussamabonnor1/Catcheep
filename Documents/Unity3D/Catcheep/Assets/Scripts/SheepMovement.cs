@@ -41,6 +41,7 @@ public class SheepMovement : MonoBehaviour
                         straightMovement(destination);
                         break;
                     case "blacky":
+                        destination = new Vector2(slideSpeed,-1f);
                         zigZagMovement(destination);
                         break;
                 }

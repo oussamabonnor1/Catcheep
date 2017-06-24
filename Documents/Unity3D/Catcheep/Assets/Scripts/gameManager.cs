@@ -117,7 +117,7 @@ public class gameManager : MonoBehaviour
             if(taux <= 1) taux += 0.05f;
              int i = Random.Range(0, 9);
 
-             switch (i)
+            switch (i)
              {
                  case 0:
                      oneSheepyRandom(Random.Range(0, size +1));

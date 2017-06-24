@@ -7,6 +7,7 @@ public class helpManager : MonoBehaviour
 {
     public GameObject[] helpTools;
     public GameObject[] helpButtons;
+    public GameObject slider;
 
     private GameObject helpGameObject;
 
@@ -18,6 +19,11 @@ public class helpManager : MonoBehaviour
     {
         helpUsed = false;
         helpToolIsReleased = true;
+
+        if(slider == null) slider = GameObject.Find("Slider");
+        slider.GetComponent<Slider>().value = 1;
+
+        StartCoroutine(farmerHeadAnimation());
     }
 
     // Update is called once per frame
@@ -123,5 +129,14 @@ public class helpManager : MonoBehaviour
 
         helpButtons[0].gameObject.SetActive(true);
         helpButtons[1].gameObject.SetActive(true);
+    }
+
+    IEnumerator farmerHeadAnimation()
+    {
+        for (int i = 0; i < 80; i++)
+        {
+            yield return new WaitForSeconds(0.25f);
+            slider.GetComponent<Slider>().value -= 0.0125f;
+        }
     }
 }

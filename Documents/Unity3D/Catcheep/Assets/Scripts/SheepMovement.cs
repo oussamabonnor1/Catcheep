@@ -103,7 +103,7 @@ public class SheepMovement : MonoBehaviour
     {
         for (int i = 0; i < 5; i++)
         {
-            yield return new WaitForSeconds(Random.Range(0.5f, 1f));
+            yield return new WaitForSeconds(Random.Range(0.8f, 1f));
             slideSpeed = Random.Range(-1, 2);
         }
     }

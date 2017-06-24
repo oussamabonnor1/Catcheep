@@ -106,7 +106,7 @@ public class gameManager : MonoBehaviour
     IEnumerator sheepSpawner()
     {
         yield return new WaitForSeconds(1f);
-        int size = sheeps.Length;
+        int size = sheeps.Length -1;
         float taux = 0;
         
 
@@ -115,58 +115,55 @@ public class gameManager : MonoBehaviour
            
 
             if(taux <= 1) taux += 0.05f;
-            slidingSheepy(Random.Range(2,5), Random.Range(0, size - 1));
-            yield return new WaitForSeconds(2 - taux);
-
-            /* int i = Random.Range(0, 9);
+             int i = Random.Range(0, 9);
 
              switch (i)
              {
                  case 0:
-                     oneSheepyRandom(Random.Range(0, size));
-                     yield return new WaitForSeconds(2);
+                     oneSheepyRandom(Random.Range(0, size +1));
+                     yield return new WaitForSeconds(2 - taux);
                      break;
 
                  case 1:
                      threeSheepySlidingRightUpDown(1, Random.Range(0, size));
-                     yield return new WaitForSeconds(3);
+                     yield return new WaitForSeconds(3 - taux);
                      break;
                  case 2:
                      int num = Random.Range(1, 4);
-                     twoSheepyHorizontalManySet(num, Random.Range(0, size - 2));
-                     yield return new WaitForSeconds(num);
+                     twoSheepyHorizontalManySet(num, Random.Range(0, size + 1));
+                     yield return new WaitForSeconds(num - taux);
                      break;
 
                  case 3:
-                     SheepyHorizontalpartScreen(Random.Range(0, size + 1));
-                     yield return new WaitForSeconds(3);
+                     SheepyHorizontalpartScreen(Random.Range(0, size), Random.Range(2,5));
+                     yield return new WaitForSeconds(3 - taux);
                      break;
 
                  case 4:
                      vFormeSheepy(Random.Range(2, 4), Random.Range(0, size));
-                     yield return new WaitForSeconds(3);
+                     yield return new WaitForSeconds(3 - taux);
                      break;
 
                  case 5:
                      fourSheepyTriangleLookingDownUp(-1, Random.Range(0, size));
-                     yield return new WaitForSeconds(4);
+                     yield return new WaitForSeconds(3 - taux);
                      break;
 
                  case 6:
-                     slidingSheepy(Random.Range(2, 5));
-                     yield return new WaitForSeconds(4);
+                     slidingSheepy(Random.Range(2, 5), Random.Range(0, size + 1));
+                     yield return new WaitForSeconds(3 - taux);
                      break;
 
                  case 7:
-                     threeSheepyHorizontalFullScreen(Random.Range(0, size));
-                     yield return new WaitForSeconds(4);
+                     threeSheepyHorizontalFullScreen(Random.Range(0, size + 1));
+                     yield return new WaitForSeconds(3 - taux);
                      break;
 
                  case 8:
                      fourSheepyTriangleLookingDownUp(1, Random.Range(0,size));
-                     yield return new WaitForSeconds(4);
+                     yield return new WaitForSeconds(3 - taux);
                      break;
-             }*/
+             }
 
         }
     }
@@ -218,29 +215,6 @@ public class gameManager : MonoBehaviour
             Vector3 spawnPositionVector3 = new Vector3(xPosition + (gap * i), transform.position.y,
                 transform.position.z);
             Instantiate(sheeps[index], spawnPositionVector3, Quaternion.identity);
-        }
-    }
-
-    void SheepyHorizontalpartScreen(int index, int num)
-    {
-        // calculating needed info
-        float sheepyWidth = (sheeps[index].GetComponent<SpriteRenderer>().bounds.extents).x;
-        float edges = edgeOfScreen.x - (sheepyWidth);
-        //gap is between a small value of my choice and the total with of screen - the width of number of sheeps together (2 in this case)
-        float gap = Random.Range(edgeOfScreen.x * 0.8f, ((edgeOfScreen.x * 2) - (sheepyWidth * (num-1))));
-
-        // position is calculated from the very edge of the screen and 
-        //we add a value that is between 0 and total with of FREE screen (width of sheepy calculated)
-        //minus total gap (which means acctualy width of sheepys) [just don't touch it, it works fine for other cases]
-        float xPosition = -edges + Random.Range(0f,(edges * 2) - gap);
-
-        // gap is total gap (previous line) devided by number of gaps in total
-        gap /= num - 1;
-        
-        //instantiating the sheepys
-        for (int i = 0; i < num; i++)
-        {
-            oneSheepyChosen(xPosition + (gap * i), 0f, index);
         }
     }
 
@@ -324,12 +298,8 @@ public class gameManager : MonoBehaviour
         float edges = edgeOfScreen.x - (sheepyWidth);
         //gap is between a small value of my choice and the total with of screen - the width of number of sheeps together (2 in this case)
         float gap = Random.Range(edgeOfScreen.x * 0.8f, ((edgeOfScreen.x * 2) - (sheepyWidth * (number - 1))));
-
-        // position is calculated from the very edge of the screen and 
-        //we add a value that is between 0 and total with of FREE screen (width of sheepy calculated)
-        //minus total gap (which means acctualy width of sheepys) [just don't touch it, it works fine for other cases]
+        //for more info go to sheepyHorizontalPartScreen function (line 224)
         float xPosition = -edges + Random.Range(0f, (edges * 2) - gap);
-
         // gap is total gap (previous line) devided by number of gaps in total
         gap /= number - 1;
 
@@ -340,10 +310,32 @@ public class gameManager : MonoBehaviour
         }
     }
 
+    void SheepyHorizontalpartScreen(int index, int num)
+    {
+        // calculating needed info
+        float sheepyWidth = (sheeps[index].GetComponent<SpriteRenderer>().bounds.extents).x;
+        float edges = edgeOfScreen.x - (sheepyWidth);
+        //gap is between a small value of my choice and the total with of screen - the width of number of sheeps together (2 in this case)
+        float gap = Random.Range(edgeOfScreen.x * 0.8f, ((edgeOfScreen.x * 2) - (sheepyWidth * (num - 1))));
+
+        // position is calculated from the very edge of the screen and 
+        //we add a value that is between 0 and total with of FREE screen (width of sheepy calculated)
+        //minus total gap (which means acctualy width of sheepys) [just don't touch it, it works fine for other cases]
+        float xPosition = -edges + Random.Range(0f, (edges * 2) - gap);
+
+        // gap is total gap (previous line) devided by number of gaps in total
+        gap /= num - 1;
+
+        //instantiating the sheepys
+        for (int i = 0; i < num; i++)
+        {
+            oneSheepyChosen(xPosition + (gap * i), 0f, index);
+        }
+    }
     //end of sliding forme sheepy
 
 
-   public void ShowAd()
+    public void ShowAd()
     {
         if (Advertisement.IsReady())
         {

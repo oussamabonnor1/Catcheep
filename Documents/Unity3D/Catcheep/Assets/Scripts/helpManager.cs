@@ -9,6 +9,8 @@ public class helpManager : MonoBehaviour
     public GameObject[] helpButtons;
     public GameObject slider;
 
+    public float timeToPlay;
+
     private GameObject helpGameObject;
 
     private bool helpUsed;
@@ -133,11 +135,15 @@ public class helpManager : MonoBehaviour
 
     IEnumerator farmerHeadAnimation()
     {
-        for (int i = 0; i < 1000; i++)
+        float amoutToAdd = 0.1f / timeToPlay;
+
+        print(Time.time);
+        while (slider.GetComponent<Slider>().value < 1)
         {
-            yield return new WaitForSeconds(0.0001f);
-            slider.GetComponent<Slider>().value += 0.001f;
+            yield return new WaitForSeconds(0.1f);
+            slider.GetComponent<Slider>().value += amoutToAdd;
         }
+        print(Time.time);
 
         gameManager.gameOver = true;
     }

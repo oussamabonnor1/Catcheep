@@ -43,7 +43,6 @@ public class distanceController : MonoBehaviour
     {
         if (other.gameObject.tag == "hayStack" || other.gameObject.tag == "net")
         {
-            //gameObject.GetComponent<SheepMovement>().Speed = other.gameObject.GetComponent<SheepMovement>().Speed;
             StartCoroutine(sheepyCaughtByHelpTool());
         }
         else

@@ -136,15 +136,13 @@ public class helpManager : MonoBehaviour
     IEnumerator farmerHeadAnimation()
     {
         float amoutToAdd = 0.1f / timeToPlay;
-
-        print(Time.time);
+        
         while (slider.GetComponent<Slider>().value < 1)
         {
             yield return new WaitForSeconds(0.1f);
             slider.GetComponent<Slider>().value += amoutToAdd;
         }
-        print(Time.time);
-
+        
         gameManager.gameOver = true;
     }
 }

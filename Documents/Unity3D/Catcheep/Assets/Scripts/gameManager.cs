@@ -105,73 +105,84 @@ public class gameManager : MonoBehaviour
 
     IEnumerator sheepSpawner()
     {
-        yield return new WaitForSeconds(1f);
+        //yield return new WaitForSeconds(1f);
         int size = sheeps.Length -1;
         float taux = 0;
         
         while (!gameOver)
-        {       
-           
-            if(taux <= 1) taux += 0.05f;
-             int i = Random.Range(0, 9);
+        {
+            Collider2D collisions = Physics2D.OverlapBox(new Vector2(transform.position.x, transform.position.y),
+                new Vector2(edgeOfScreen.x, edgeOfScreen.y), 0f);
+            print(collisions);
 
-            preMadeFormationThree(0);
+            if (collisions == null)
+            {
+                print(collisions);
+                if (taux < 2) taux += 0.065f;
+                int i = Random.Range(0, 10);
+                
+                switch (i)
+                {
+                    case 0:
+                        oneSheepyRandom(Random.Range(0, size + 1));
+                        //yield return new WaitForSeconds(2 - taux);
+                        break;
 
-            yield return new WaitForSeconds(2 - taux);
+                    case 1:
+                        threeSheepySlidingRightUpDown(1, Random.Range(0, size));
+                        //yield return new WaitForSeconds(3 - taux);
+                        break;
+                    case 2:
+                        int num = Random.Range(1, 4);
+                        twoSheepyHorizontalManySet(num, Random.Range(0, size + 1));
+                        //yield return new WaitForSeconds(num - taux);
+                        break;
 
-            switch (i)
-             {
-                 case 0:
-                     oneSheepyRandom(Random.Range(0, size +1));
-                     yield return new WaitForSeconds(2 - taux);
-                     break;
+                    case 3:
+                        SheepyHorizontalpartScreen(Random.Range(0, size), Random.Range(2, 5));
+                        //yield return new WaitForSeconds(3 - taux);
+                        break;
 
-                 case 1:
-                     threeSheepySlidingRightUpDown(1, Random.Range(0, size));
-                     yield return new WaitForSeconds(3 - taux);
-                     break;
-                 case 2:
-                     int num = Random.Range(1, 4);
-                     twoSheepyHorizontalManySet(num, Random.Range(0, size + 1));
-                     yield return new WaitForSeconds(num - taux);
-                     break;
+                    case 4:
+                        vFormeSheepy(Random.Range(2, 4), Random.Range(0, size));
+                        //yield return new WaitForSeconds(3 - taux);
+                        break;
 
-                 case 3:
-                     SheepyHorizontalpartScreen(Random.Range(0, size), Random.Range(2,5));
-                     yield return new WaitForSeconds(3 - taux);
-                     break;
+                    case 5:
+                        fourSheepyTriangleLookingDownUp(-1, Random.Range(0, size));
+                        //yield return new WaitForSeconds(3 - taux);
+                        break;
 
-                 case 4:
-                     vFormeSheepy(Random.Range(2, 4), Random.Range(0, size));
-                     yield return new WaitForSeconds(3 - taux);
-                     break;
+                    case 6:
+                        slidingSheepy(Random.Range(2, 5), Random.Range(0, size + 1));
+                        //yield return new WaitForSeconds(3 - taux);
+                        break;
 
-                 case 5:
-                     fourSheepyTriangleLookingDownUp(-1, Random.Range(0, size));
-                     yield return new WaitForSeconds(3 - taux);
-                     break;
+                    case 7:
+                        threeSheepyHorizontalFullScreen(Random.Range(0, size + 1));
+                        //yield return new WaitForSeconds(3 - taux);
+                        break;
 
-                 case 6:
-                     slidingSheepy(Random.Range(2, 5), Random.Range(0, size + 1));
-                     yield return new WaitForSeconds(3 - taux);
-                     break;
+                    case 8:
+                        fourSheepyTriangleLookingDownUp(1, Random.Range(0, size));
+                        //yield return new WaitForSeconds(3 - taux);
+                        break;
 
-                 case 7:
-                     threeSheepyHorizontalFullScreen(Random.Range(0, size + 1));
-                     yield return new WaitForSeconds(3 - taux);
-                     break;
+                    case 9:
+                        preMadeFormation(Random.Range(0,formationSheepys.Length));
+                        //yield return new WaitForSeconds();
+                        break;
+                }
 
-                 case 8:
-                     fourSheepyTriangleLookingDownUp(1, Random.Range(0,size));
-                     yield return new WaitForSeconds(3 - taux);
-                     break;
-             }
-
+            }
+            else
+            {
+                yield return new WaitForSeconds(2 - taux);
+            }
         }
 
         if (gameOver)
         {
-          //  winText = GameObject.Find("win text");
             winText.SetActive(true);
         }
     }
@@ -351,8 +362,8 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    void preMadeFormationThree(int index)
+    void preMadeFormation(int index)
     {
-        Instantiate(formationSheepys[index], transform.position, Quaternion.identity);
+        Instantiate(formationSheepys[index], transform.position, formationSheepys[index].transform.rotation);
     }
 }

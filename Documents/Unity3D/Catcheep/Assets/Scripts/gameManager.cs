@@ -120,7 +120,11 @@ public class gameManager : MonoBehaviour
                 print(collisions);
                 if (taux < 2) taux += 0.065f;
                 int i = Random.Range(0, 10);
-                
+
+
+                preMadeFormation(Random.Range(0, formationSheepys.Length));
+                yield return new WaitForSeconds(0.5f);
+
                 switch (i)
                 {
                     case 0:

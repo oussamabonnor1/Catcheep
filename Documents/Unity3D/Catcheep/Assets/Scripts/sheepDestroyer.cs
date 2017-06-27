@@ -84,6 +84,11 @@ public class sheepDestroyer : MonoBehaviour
             transform.localScale = new Vector3(i, i);
             yield return new WaitForSeconds(0.08f);
         }
+            
+        if (transform.parent != null && transform.parent.childCount == 1)
+        {
+            Destroy(transform.parent.gameObject,0.5f);
+        }
 
         Destroy(gameObject);
     }

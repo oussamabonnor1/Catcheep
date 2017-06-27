@@ -10,6 +10,7 @@ using UnityEngine.SceneManagement;
 public class gameManager : MonoBehaviour
 {
     public GameObject[] sheeps;
+    public GameObject[] formationSheepys;
     public GameObject background;
     public GameObject backgroundOfTrees;
     public AudioClip[] sheepSound;
@@ -113,6 +114,10 @@ public class gameManager : MonoBehaviour
            
             if(taux <= 1) taux += 0.05f;
              int i = Random.Range(0, 9);
+
+            preMadeFormationThree(0);
+
+            yield return new WaitForSeconds(2 - taux);
 
             switch (i)
              {
@@ -344,5 +349,10 @@ public class gameManager : MonoBehaviour
         {
             Advertisement.Show();
         }
+    }
+
+    void preMadeFormationThree(int index)
+    {
+        Instantiate(formationSheepys[index], transform.position, Quaternion.identity);
     }
 }

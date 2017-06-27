@@ -17,17 +17,16 @@ public class startMenuManager : MonoBehaviour
 	
 	// Update is called once per frame
 	void Update () {
-	    if (!Input.GetMouseButton(0))
+	    if (Input.GetMouseButton(0))
 	    {
-	        GameObject itemToScroll = GameObject.Find("seperator").transform.GetChild(1).gameObject;
-            
-            if (itemToScroll.transform.localPosition.x > 0 && ScrollRect.GetComponent<Scrollbar>().value > 0)
+	       
+            if (ScrollRect.GetComponent<Scrollbar>().value > 0 && ScrollRect.GetComponent<Scrollbar>().value < 0.4)
             {
 	            ScrollRect.GetComponent<Scrollbar>().value =
 	                Mathf.Lerp(ScrollRect.GetComponent<Scrollbar>().value, 0, 0.05f);
 	        }
 	        else{
-                if (ScrollRect.GetComponent<Scrollbar>().value > 0)
+                if (ScrollRect.GetComponent<Scrollbar>().value < 1)
                 {
                     ScrollRect.GetComponent<Scrollbar>().value =
                         Mathf.Lerp(ScrollRect.GetComponent<Scrollbar>().value, 1, 0.05f);

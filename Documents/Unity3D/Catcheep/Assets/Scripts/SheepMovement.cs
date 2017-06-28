@@ -97,6 +97,8 @@ public class SheepMovement : MonoBehaviour
             slideSpeed = 1;
             this.destination = new Vector2(slideSpeed, -1f);
         }
+
+        suddenChangeInDirection();
     }
 
     IEnumerator suddenChangeInDirection()
@@ -105,7 +107,23 @@ public class SheepMovement : MonoBehaviour
         {
             yield return new WaitForSeconds(Random.Range(0.8f, 1.6f));
             slideSpeed = Random.Range(-1, 2);
+            animatorChangerForBlacky();
         }
+    }
+
+    void animatorChangerForBlacky()
+    {
+        if (slideSpeed == 0)
+        {
+        }
+        if (slideSpeed == 1)
+        {
+        }
+        if (slideSpeed == -1)
+        {
+        }
+
+        
     }
     
 }

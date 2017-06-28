@@ -41,7 +41,7 @@ public class distanceController : MonoBehaviour
 
     void goingDownSpeedControl(Collider2D other)
     {
-        if (other.gameObject.tag == "hayStack" || other.gameObject.tag == "net")
+        if (other.gameObject.tag == "hayStack" || other.gameObject.tag == "net" || other.gameObject.tag == "loveHelp")
         {
             StartCoroutine(sheepyCaughtByHelpTool());
         }

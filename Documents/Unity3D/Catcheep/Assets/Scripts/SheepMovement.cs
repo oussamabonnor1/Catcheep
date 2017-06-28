@@ -28,7 +28,7 @@ public class SheepMovement : MonoBehaviour
         //jst to use the same script for other objects that dnt need it really
         if (SheepDestroyer == null) SheepDestroyer = new sheepDestroyer();
 
-        if (tag == "blacky") StartCoroutine(suddenChangeInDirection());
+        //if (tag == "blacky") StartCoroutine(suddenChangeInDirection());
     }
 
 
@@ -46,7 +46,6 @@ public class SheepMovement : MonoBehaviour
                         break;
                     case "blacky":
                         destination = new Vector2(slideSpeed, -1f);
-                        GetComponent<Animator>().SetInteger("slideSpeedAnimation", (int)slideSpeed);
                         zigZagMovement(destination);
                         break;
                 }
@@ -92,12 +91,16 @@ public class SheepMovement : MonoBehaviour
         {
             slideSpeed = -1;
             this.destination = new Vector2(slideSpeed, -1f);
+            GetComponent<Animator>().SetInteger("slideSpeedAnimation", (int)slideSpeed);
         }
         if (transform.position.x <= -edgeOfScreen.x + sheepWidth)
         {
             slideSpeed = 1;
             this.destination = new Vector2(slideSpeed, -1f);
+            GetComponent<Animator>().SetInteger("slideSpeedAnimation", (int)slideSpeed);
         }
+
+
     }
 
     IEnumerator suddenChangeInDirection()
@@ -106,6 +109,9 @@ public class SheepMovement : MonoBehaviour
         {
             yield return new WaitForSeconds(Random.Range(0.8f, 1.6f));
             slideSpeed = Random.Range(-1, 2);
+
+            int holder = GetComponent<Animator>().GetInteger("slideSpeedAnimation");
+            if (holder != (int)slideSpeed) GetComponent<Animator>().SetInteger("slideSpeedAnimation", (int)slideSpeed);
         }
     }
 

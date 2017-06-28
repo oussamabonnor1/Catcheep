@@ -47,7 +47,6 @@ public class startMenuManager : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             startPosition = Input.mousePosition;
-            currentScrollValue = ScrollBar.value;
         }
         if (Input.GetMouseButtonUp(0)) endPosition = Input.mousePosition;
 
@@ -72,7 +71,7 @@ public class startMenuManager : MonoBehaviour
                 {
                     ScrollBar.value =
                         Mathf.Lerp(ScrollBar.value, currentScrollValue + portion, 0.05f);
-                    if(Mathf.Approximately(ScrollBar.value, currentScrollValue +portion)) {
+                    if(Mathf.Approximately(ScrollBar.value, currentScrollValue + portion)) {
                         currentScrollValue
                         = currentScrollValue + portion;
                         print(currentScrollValue);
@@ -93,6 +92,7 @@ public class startMenuManager : MonoBehaviour
             else
             {
                 //TODO fix going back for last case
+                //TODO work on current value and menu automatic for some reason (vectors)
 
                 //this is to determine to which portion of the menu we have to go back to
                 //made desired destination - 1 at first to not waste frames

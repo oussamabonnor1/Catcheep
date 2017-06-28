@@ -37,8 +37,6 @@ public class helpManager : MonoBehaviour
             if (GameObject.FindGameObjectWithTag("net") == null && GameObject.FindGameObjectWithTag("hayStack") == null)
             {
                 //if no help tool is used then u can create and use one
-                // if (!helpUsed && helpToolIsReleased)
-                //{
                 //pointer is much like a raycast but UI related
                 PointerEventData pointer = new PointerEventData(EventSystem.current);
 

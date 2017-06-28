@@ -13,8 +13,13 @@ public class helpManager : MonoBehaviour
 
     private GameObject helpGameObject;
 
+    //sheepys and blackys are all the sheeps in the scene when the love button is clicked (affected without the others coming afterwards)
+    private GameObject[] sheepys;
+    private GameObject[] blackys;
+
     private bool helpUsed;
     private bool helpToolIsReleased;
+    private bool loveUsed;
 
     // Use this for initialization
     void Start()
@@ -51,7 +56,11 @@ public class helpManager : MonoBehaviour
                     helpButtons[1].gameObject.SetActive(false);
                     helpToolCreated(1);
                 }
-                //}
+
+                if (pointer.selectedObject == helpButtons[2])
+                {
+                    StartCoroutine(loveClickedcall());
+                }
             }
             else if(!helpToolIsReleased)
             {
@@ -79,6 +88,11 @@ public class helpManager : MonoBehaviour
         if (helpToolIsReleased && helpGameObject != null)
         {
            if(helpGameObject.GetComponent<Collider2D>().enabled == false) helpGameObject.GetComponent<Collider2D>().enabled = true;
+        }
+
+        if (loveUsed)
+        {
+            loveUsedCall(sheepys,blackys);
         }
     }
 
@@ -142,5 +156,45 @@ public class helpManager : MonoBehaviour
         }
         
         gameManager.gameOver = true;
+    }
+
+    IEnumerator loveClickedcall()
+    {
+        loveUsed = true;
+        sheepys = GameObject.FindGameObjectsWithTag("sheepy");
+        blackys = GameObject.FindGameObjectsWithTag("blacky");
+
+        GameObject loveGameObject = Instantiate(helpTools[2], transform.position, Quaternion.identity);
+        yield return new WaitForSeconds(3f);
+        Destroy(loveGameObject);
+
+        loveUsed = false;
+        sheepys = null;
+        blackys = null;
+    }
+
+    void loveUsedCall(GameObject[] sheepys, GameObject[] blackys)
+    {
+        for (int i = 0; i < sheepys.Length; i++)
+        {
+            if (sheepys[i] != null)
+            {
+                if (sheepys[i].transform.position.y - transform.position.y < 50)
+                {
+                    int direction = 0;
+                    if (sheepys[i].transform.position.x > transform.position.x)
+                    {
+                        direction = 1;
+                    }
+                    if (sheepys[i].transform.position.x < transform.position.x)
+                    {
+                        direction = -1;
+                    }
+                    sheepys[i].GetComponent<SheepMovement>().slideSpeed =
+                        Mathf.Lerp(sheepys[i].GetComponent<SheepMovement>().slideSpeed, direction * 1, 0.1f);
+                }
+            }
+        }
+        
     }
 }

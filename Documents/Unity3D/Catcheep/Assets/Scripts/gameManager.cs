@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using Random = UnityEngine.Random;
 using UnityEngine.Advertisements;
 using UnityEngine.SceneManagement;
@@ -47,7 +47,7 @@ public class gameManager : MonoBehaviour
         }
         
         scoreText = GameObject.Find("score");
-        scoreText.GetComponent<Text>().text = "Score: " + score;
+        scoreText.GetComponent<TextMeshProUGUI>().text = "Score: " + score;
 
         //edge of screen is a vector3 that holds the screens width (can't get it directly cause of Screen/World point difference)
         edgeOfScreen = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0f));
@@ -113,17 +113,12 @@ public class gameManager : MonoBehaviour
         {
             Collider2D collisions = Physics2D.OverlapBox(new Vector2(transform.position.x, transform.position.y),
                 new Vector2(edgeOfScreen.x, edgeOfScreen.y), 0f);
-            print(collisions);
 
             if (collisions == null)
             {
-                print(collisions);
+
                 if (taux < 2) taux += 0.065f;
                 int i = Random.Range(0, 10);
-
-
-                preMadeFormation(Random.Range(0, formationSheepys.Length));
-                yield return new WaitForSeconds(0.5f);
 
                 switch (i)
                 {
@@ -138,7 +133,7 @@ public class gameManager : MonoBehaviour
                         break;
                     case 2:
                         int num = Random.Range(1, 4);
-                        twoSheepyHorizontalManySet(num, Random.Range(0, size + 1));
+                        twoSheepyHorizontalManySet(num, Random.Range(0, size));
                         //yield return new WaitForSeconds(num - taux);
                         break;
 
@@ -149,7 +144,7 @@ public class gameManager : MonoBehaviour
 
                     case 4:
                         vFormeSheepy(Random.Range(2, 4), Random.Range(0, size));
-                        //yield return new WaitForSeconds(3 - taux);
+                        yield return new WaitForSeconds(2 - taux);
                         break;
 
                     case 5:
@@ -163,7 +158,7 @@ public class gameManager : MonoBehaviour
                         break;
 
                     case 7:
-                        threeSheepyHorizontalFullScreen(Random.Range(0, size + 1));
+                        threeSheepyHorizontalFullScreen(Random.Range(0, size));
                         //yield return new WaitForSeconds(3 - taux);
                         break;
 

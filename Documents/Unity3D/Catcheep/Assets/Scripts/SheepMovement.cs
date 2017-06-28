@@ -4,7 +4,7 @@ using UnityEngine;
 public class SheepMovement : MonoBehaviour
 {
     [Range(0f, 10)] public int Speed;
-    public int slideSpeed;
+    public float slideSpeed;
 
     public sheepDestroyer SheepDestroyer;
 
@@ -69,7 +69,7 @@ public class SheepMovement : MonoBehaviour
         switch (gameObject.tag)
         {
             case "sheepy":
-                destination = new Vector2(0f, -1f);
+                destination = new Vector2(slideSpeed, -1f);
                 break;
             case "blacky":
                 slideSpeed = Random.Range(0, 2) * 2 - 1;
@@ -103,8 +103,9 @@ public class SheepMovement : MonoBehaviour
     {
         for (int i = 0; i < 5; i++)
         {
-            yield return new WaitForSeconds(Random.Range(0.8f, 1f));
+            yield return new WaitForSeconds(Random.Range(0.8f, 1.6f));
             slideSpeed = Random.Range(-1, 2);
         }
     }
+    
 }

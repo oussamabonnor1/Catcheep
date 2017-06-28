@@ -5,7 +5,7 @@ using UnityEngine;
 public class distanceController : MonoBehaviour
 {
     private int speed;
-    private int slideSpeed;
+    private float slideSpeed;
     private GameObject pathCollsionGameObject;
 
     // Use this for initialization

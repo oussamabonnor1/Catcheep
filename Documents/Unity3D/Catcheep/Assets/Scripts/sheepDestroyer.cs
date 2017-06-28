@@ -66,7 +66,7 @@ public class sheepDestroyer : MonoBehaviour
         sheepsCaughtText.GetComponent<Text>().text = " x " + gameManager.totalSheepsCaught;
         ++gameManager.combo;
         gameManager.score += 100;
-        scoreText.GetComponent<Text>().text = "Score: " + (gameManager.score + 10 * gameManager.combo);
+        scoreText.GetComponent<TextMeshProUGUI>().text = "Score: " + (gameManager.score + 10 * gameManager.combo);
 
         //destroying sheep
         speed = Mathf.Clamp(Vector3.Distance(transform.position, sheepCage.transform.position), 1f, 6f);

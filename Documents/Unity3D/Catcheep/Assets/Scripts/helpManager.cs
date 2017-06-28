@@ -57,7 +57,8 @@ public class helpManager : MonoBehaviour
                     helpToolCreated(1);
                 }
 
-                if (pointer.selectedObject == helpButtons[2])
+                //bool condition is there just not to instantiate the love 5 times 
+                if (pointer.selectedObject == helpButtons[2] && !loveUsed)
                 {
                     StartCoroutine(loveClickedcall());
                 }
@@ -161,11 +162,9 @@ public class helpManager : MonoBehaviour
     IEnumerator loveClickedcall()
     {
         loveUsed = true;
-        sheepys = GameObject.FindGameObjectsWithTag("sheepy");
-        blackys = GameObject.FindGameObjectsWithTag("blacky");
 
         GameObject loveGameObject = Instantiate(helpTools[2], transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
         Destroy(loveGameObject);
 
         loveUsed = false;
@@ -173,8 +172,10 @@ public class helpManager : MonoBehaviour
         blackys = null;
     }
 
-    void loveUsedCall(GameObject[] sheepys, GameObject[] blackys)
+    void loveUsedCall(GameObject[] sheepys)
     {
+        sheepys = GameObject.FindGameObjectsWithTag("sheepy");
+
         for (int i = 0; i < sheepys.Length; i++)
         {
             if (sheepys[i] != null)
@@ -184,12 +185,13 @@ public class helpManager : MonoBehaviour
                     int direction = 0;
                     if (sheepys[i].transform.position.x > transform.position.x)
                     {
-                        direction = 1;
+                        direction = -1;
                     }
                     if (sheepys[i].transform.position.x < transform.position.x)
                     {
-                        direction = -1;
+                        direction = 1;
                     }
+
                     sheepys[i].GetComponent<SheepMovement>().slideSpeed =
                         Mathf.Lerp(sheepys[i].GetComponent<SheepMovement>().slideSpeed, direction * 1, 0.1f);
                 }

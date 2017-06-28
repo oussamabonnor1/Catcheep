@@ -28,7 +28,7 @@ public class SheepMovement : MonoBehaviour
         //jst to use the same script for other objects that dnt need it really
         if (SheepDestroyer == null) SheepDestroyer = new sheepDestroyer();
 
-        //if (tag == "blacky") StartCoroutine(suddenChangeInDirection());
+        if (tag == "blacky") StartCoroutine(suddenChangeInDirection());
     }
 
 
@@ -42,6 +42,7 @@ public class SheepMovement : MonoBehaviour
                 switch (gameObject.tag)
                 {
                     case "sheepy":
+                        destination = new Vector2(slideSpeed, -1f);
                         straightMovement(destination);
                         break;
                     case "blacky":
@@ -114,7 +115,5 @@ public class SheepMovement : MonoBehaviour
             if (holder != (int)slideSpeed) GetComponent<Animator>().SetInteger("slideSpeedAnimation", (int)slideSpeed);
         }
     }
-
-   
     
 }

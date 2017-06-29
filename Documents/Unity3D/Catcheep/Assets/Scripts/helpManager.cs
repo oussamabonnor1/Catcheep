@@ -15,7 +15,6 @@ public class helpManager : MonoBehaviour
 
     //sheepys and blackys are all the sheeps in the scene when the love button is clicked (affected without the others coming afterwards)
     private GameObject[] sheepys;
-    private GameObject[] blackys;
 
     private bool helpUsed;
     private bool helpToolIsReleased;
@@ -93,7 +92,7 @@ public class helpManager : MonoBehaviour
 
         if (loveUsed)
         {
-            loveUsedCall(sheepys,blackys);
+            loveUsedCall(sheepys);
         }
     }
 
@@ -169,7 +168,6 @@ public class helpManager : MonoBehaviour
 
         loveUsed = false;
         sheepys = null;
-        blackys = null;
     }
 
     void loveUsedCall(GameObject[] sheepys)

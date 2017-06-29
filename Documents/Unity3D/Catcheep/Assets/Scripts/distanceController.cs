@@ -43,7 +43,7 @@ public class distanceController : MonoBehaviour
     {
         if (other.gameObject.tag == "hayStack" || other.gameObject.tag == "net" || other.gameObject.tag == "loveHelp")
         {
-            StartCoroutine(sheepyCaughtByHelpTool());
+            StartCoroutine(sheepyCaughtByHelpTool(other.gameObject));
         }
         else
         {
@@ -101,10 +101,10 @@ public class distanceController : MonoBehaviour
         }
     }
 
-    IEnumerator sheepyCaughtByHelpTool()
+    IEnumerator sheepyCaughtByHelpTool(GameObject other)
     {
         GetComponent<SheepMovement>().SheepDestroyer.caught = true;
-        yield return new WaitForSeconds(0.5f);
+        if(other.gameObject.tag != "loveHelp") yield return new WaitForSeconds(0.5f);
         GetComponent<SheepMovement>().SheepDestroyer.sheepClicked();
     }
 }

@@ -98,6 +98,8 @@ public class helpManager : MonoBehaviour
 
     void helpToolCreated(int index)
     {
+        gameManager.catchedSomething = true;
+
         Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 spawnPosition = new Vector3(position.x, position.y, 0f);
         
@@ -160,6 +162,7 @@ public class helpManager : MonoBehaviour
 
     IEnumerator loveClickedcall()
     {
+        gameManager.catchedSomething = true;
         loveUsed = true;
 
         GameObject loveGameObject = Instantiate(helpTools[2], transform.position, Quaternion.identity);

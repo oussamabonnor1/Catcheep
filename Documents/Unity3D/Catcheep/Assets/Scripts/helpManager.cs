@@ -170,6 +170,7 @@ public class helpManager : MonoBehaviour
         sheepys = null;
     }
 
+    //this function gets called once per frame when the help love is used
     void loveUsedCall(GameObject[] sheepys)
     {
         sheepys = GameObject.FindGameObjectsWithTag("sheepy");

@@ -17,6 +17,7 @@ public class sheepDestroyer : MonoBehaviour
 
     public CircleCollider2D smallCollider;
 
+    private Touch touchHolder;
 
     void Start()
     {
@@ -28,9 +29,26 @@ public class sheepDestroyer : MonoBehaviour
 
     void Update()
     {
-       
         if (Input.GetMouseButtonDown(0))
         {
+            /*  foreach (Touch touch in Input.touches)
+            {
+           
+            if (touchHolder.Equals(null)) touchHolder = touch;
+                else
+                {
+                    if (touch.phase == TouchPhase.Canceled && touch.phase == TouchPhase.Ended)
+                    {
+                        scoreText.GetComponent<TextMeshProUGUI>().text = "still going";
+                    }
+                    if (touch.phase == TouchPhase.Canceled && touch.phase == TouchPhase.Ended)
+                    {
+                        scoreText.GetComponent<TextMeshProUGUI>().text = "end";
+                    }
+
+
+                }*/
+
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
 
@@ -38,9 +56,11 @@ public class sheepDestroyer : MonoBehaviour
             {
                 // raycast hit this gameobject
                 gameManager.catchedSomething = true;
+
                 sheepClicked();
             }
         }
+
 
         if (caught)
         {
@@ -56,7 +76,7 @@ public class sheepDestroyer : MonoBehaviour
         GameObject hit = Instantiate(hitText, transform.position, Quaternion.identity);
         Vector3 position = Camera.main.WorldToScreenPoint(transform.position);
         hit.transform.SetParent(canvas.transform, false);
-        hit.transform.SetPositionAndRotation(position,Quaternion.identity);
+        hit.transform.SetPositionAndRotation(position, Quaternion.identity);
 
         //deactivating collider so that it doesnt disturb the scene (collision detection)
         smallCollider.enabled = false;
@@ -70,7 +90,7 @@ public class sheepDestroyer : MonoBehaviour
 
         //destroying sheep
         speed = Mathf.Clamp(Vector3.Distance(transform.position, sheepCage.transform.position), 1f, 6f);
-        
+
         Destruction();
     }
 
@@ -84,10 +104,10 @@ public class sheepDestroyer : MonoBehaviour
             transform.localScale = new Vector3(i, i);
             yield return new WaitForSeconds(0.08f);
         }
-            
+
         if (transform.parent != null && transform.parent.childCount == 1)
         {
-            Destroy(transform.parent.gameObject,0.5f);
+            Destroy(transform.parent.gameObject, 0.5f);
         }
 
         Destroy(gameObject);

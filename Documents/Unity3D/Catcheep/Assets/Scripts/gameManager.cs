@@ -118,11 +118,16 @@ public class gameManager : MonoBehaviour
             {
 
                 if (taux < 2) taux += 0.065f;
-                int i = Random.Range(0, 10);
+                int i = Random.Range(-5, 10);
 
                 switch (i)
                 {
-                    case 0:
+                    case -5:
+                    case -4:
+                    case -3:
+                    case -2:
+                    case -1:
+                    case  0:
                         oneSheepyRandom(Random.Range(0, size + 1));
                         //yield return new WaitForSeconds(2 - taux);
                         break;

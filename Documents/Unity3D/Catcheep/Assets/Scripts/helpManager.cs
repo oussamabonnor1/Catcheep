@@ -38,7 +38,7 @@ public class helpManager : MonoBehaviour
         //don't use the bool helpUsed cause it won't let us performe a drag and drop when the next frame comes
         if (Input.GetMouseButton(0))
         {
-            if (GameObject.FindGameObjectWithTag("net") == null && GameObject.FindGameObjectWithTag("hayStack") == null)
+            if (GameObject.FindGameObjectWithTag("net") == null && GameObject.FindGameObjectWithTag("hayStack") == null && GameObject.FindGameObjectWithTag("loveHelp") == null)
             {
                 //if no help tool is used then u can create and use one
                 //pointer is much like a raycast but UI related
@@ -123,6 +123,7 @@ public class helpManager : MonoBehaviour
 
     public void helpToolReleased(GameObject helpToolGameObject)
     {
+
         helpToolIsReleased = true;
         helpGameObject.GetComponent<Collider2D>().enabled = true;
         
@@ -138,9 +139,13 @@ public class helpManager : MonoBehaviour
 
     IEnumerator helpDestroyer(float lifeTime, GameObject gameObjectToDestroy)
     {
+        print("help tool will be destroyed");
+        // helpUsed must stay above wait, this is just to make sure no help tool gets left without destruction
+        helpUsed = false;
+
         yield return new WaitForSeconds(lifeTime);
         Destroy(gameObjectToDestroy);
-        helpUsed = false;
+        
         helpToolIsReleased = true;
 
         helpButtons[0].gameObject.SetActive(true);
@@ -201,4 +206,5 @@ public class helpManager : MonoBehaviour
         }
         
     }
+
 }

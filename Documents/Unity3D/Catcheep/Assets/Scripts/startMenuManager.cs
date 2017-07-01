@@ -29,11 +29,11 @@ public class startMenuManager : MonoBehaviour
             for (int i = 1; i <= menuCount; i++)
             {
                 
-                    if (ScrollBar.value < (i * (portion / 2) ) && ScrollBar.value > ((i - 1) * portion))
+                    if (ScrollBar.value < ((i * portion) - portion / 2) && ScrollBar.value > ((i - 1) * portion))
                     {
                         ScrollBar.value = Mathf.Lerp(ScrollBar.value, (i - 1) * portion, 0.05f);
                     }
-                    if (ScrollBar.value > (i * (portion / 2)) && ScrollBar.value < (i * portion))
+                    if (ScrollBar.value > ((i * portion) - portion / 2) && ScrollBar.value < (i * portion))
                     {
                         ScrollBar.value = Mathf.Lerp(ScrollBar.value, (i) * portion, 0.05f);
                     }

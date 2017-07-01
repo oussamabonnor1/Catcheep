@@ -23,8 +23,8 @@ public class startMenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.touchCount == 0)
-        {
+        //if (Input.touchCount == 0)
+        if(Input.GetMouseButtonDown(0)){
             float portion = (float) 1 / menuCount; 
             for (int i = 1; i <= menuCount; i++)
             {

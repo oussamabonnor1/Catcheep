@@ -214,7 +214,7 @@ public class gameManager : MonoBehaviour
         float sheepyWidth = sheeps[index].GetComponent<SpriteRenderer>().sprite.bounds.extents.x;
         float edges = edgeOfScreen.x - sheepyWidth;
         //gap is between a small value of my choice and the total with of screen - the width of number of sheeps together (2 in this case)
-        float gap = Random.Range(edgeOfScreen.x * 0.4f, (edgeOfScreen.x * 2) - (sheepyWidth * 2));
+        float gap = Random.Range(edgeOfScreen.x * 0.5f, (edgeOfScreen.x * 2) - (sheepyWidth * 2));
         // i used edges - gap cause i instantiate from the left and i m making sure the sheep wont go overboard 
         float xPosition = Random.Range(-edges, edges - gap);
 
@@ -251,7 +251,7 @@ public class gameManager : MonoBehaviour
         float xPosition = Random.Range(edges, 0f - direction * (2 * sheepyWidth));
 
         // finding out how much gap should be between the sheepys (randomly)
-        float gap = Random.Range(edgeOfScreen.x * 0.4f, edgeOfScreen.x * 0.7f);
+        float gap = Random.Range(edgeOfScreen.x * 0.5f, edgeOfScreen.x * 0.7f);
 
         //instantiating the sheepys
         for (int i = 0; i < 3; i++)
@@ -270,7 +270,7 @@ public class gameManager : MonoBehaviour
         float sheepyWidth = (sheeps[index].GetComponent<SpriteRenderer>().bounds.extents).x;
         float edges = -edgeOfScreen.x + sheepyWidth;
         float xPosition = Random.Range(edges, 0f - (2 * sheepyWidth));
-        float gap = Random.Range(edgeOfScreen.x * 0.4f, edgeOfScreen.x * 0.7f);
+        float gap = Random.Range(edgeOfScreen.x * 0.5f, edgeOfScreen.x * 0.7f);
 
         //saving the position of the second sheepy to creat the triangle
         Vector3 secondSheepy = new Vector3();

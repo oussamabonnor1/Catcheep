@@ -24,6 +24,7 @@ public class startMenuManager : MonoBehaviour
     void Update()
     {
         //if (Input.touchCount == 0)
+        //TODO fix it
         if(Input.GetMouseButtonDown(0)){
             float portion = (float) 1 / menuCount; 
             for (int i = 1; i <= menuCount; i++)

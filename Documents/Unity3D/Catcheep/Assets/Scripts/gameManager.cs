@@ -26,6 +26,7 @@ public class gameManager : MonoBehaviour
     public static bool catchedSomething;
 
 
+
     // Use this for initialization
     void Start()
     {
@@ -57,13 +58,14 @@ public class gameManager : MonoBehaviour
 
     void Update()
     {
+
         if (Input.GetMouseButtonDown(0))
         {
 
             if (!catchedSomething && combo > 0)
             {
                 combo = 0;
-                Handheld.Vibrate();
+               // Handheld.Vibrate();
             }
 
             if (catchedSomething)
@@ -74,7 +76,7 @@ public class gameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ShowAd();
+           // ShowAd();
             SceneManager.LoadScene("Start");
         }
     }

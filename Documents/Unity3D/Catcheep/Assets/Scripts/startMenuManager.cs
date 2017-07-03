@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Facebook.Unity;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+
 
 public class startMenuManager : MonoBehaviour
 {
@@ -12,6 +14,8 @@ public class startMenuManager : MonoBehaviour
     private Vector2 edgeOfScreen;
 
     public int menuCount;
+    
+
     // Use this for initialization
     void Start()
     {
@@ -24,28 +28,24 @@ public class startMenuManager : MonoBehaviour
     void Update()
     {
         //if (Input.touchCount == 0)
-        //TODO fix it
-        if(Input.GetMouseButtonDown(0)){
-            float portion = (float) 1 / menuCount; 
+        if (Input.GetMouseButtonDown(0))
+        {
+            float portion = (float) 1 / menuCount;
             for (int i = 1; i <= menuCount; i++)
             {
-                
-                    if (ScrollBar.value < ((i * portion) - portion / 2) && ScrollBar.value > ((i - 1) * portion))
-                    {
-                        ScrollBar.value = Mathf.Lerp(ScrollBar.value, (i - 1) * portion, 0.05f);
-                    }
-                    if (ScrollBar.value > ((i * portion) - portion / 2) && ScrollBar.value < (i * portion))
-                    {
-                        ScrollBar.value = Mathf.Lerp(ScrollBar.value, (i) * portion, 0.05f);
-                    }
-                
+                if (ScrollBar.value < ((i * portion) - portion / 2) && ScrollBar.value > ((i - 1) * portion))
+                {
+                    ScrollBar.value = Mathf.Lerp(ScrollBar.value, (i - 1) * portion, 0.05f);
+                }
+                if (ScrollBar.value > ((i * portion) - portion / 2) && ScrollBar.value < (i * portion))
+                {
+                    ScrollBar.value = Mathf.Lerp(ScrollBar.value, (i) * portion, 0.05f);
+                }
             }
         }
         if (Input.touchCount == 1)
         {
-
         }
-
     }
 
     public void farm()

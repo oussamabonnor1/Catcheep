@@ -15,6 +15,7 @@ public class gameManager : MonoBehaviour
     public GameObject backgroundOfTrees;
     public AudioClip[] sheepSound;
     public GameObject winText;
+    public GameObject flare;
     
     public static bool gameOver;
     private Vector3 edgeOfScreen;
@@ -65,7 +66,8 @@ public class gameManager : MonoBehaviour
             if (!catchedSomething && combo > 0)
             {
                 combo = 0;
-               // Handheld.Vibrate();
+                StartCoroutine(flareMaker(1f));
+                // Handheld.Vibrate();
             }
 
             if (catchedSomething)
@@ -371,5 +373,12 @@ public class gameManager : MonoBehaviour
     void preMadeFormation(int index)
     {
         Instantiate(formationSheepys[index], transform.position, formationSheepys[index].transform.rotation);
+    }
+
+    IEnumerator flareMaker(float time)
+    {
+       GameObject flareGameObject =  Instantiate(flare, Camera.main.ScreenToWorldPoint(Input.mousePosition), Quaternion.identity);
+        yield return new WaitForSeconds(time);
+        Destroy(flareGameObject);
     }
 }

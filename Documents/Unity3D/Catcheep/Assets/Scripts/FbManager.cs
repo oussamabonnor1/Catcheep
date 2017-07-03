@@ -16,7 +16,11 @@ public class FbManager : MonoBehaviour
     void Awake()
     {
         logged = false;
-        FB.Init(setInit, OnHideUnity);
+        if(!FB.IsLoggedIn) FB.Init(setInit, OnHideUnity);
+        else
+        {
+            logCondtion();
+        }
     }
 
     void setInit()
@@ -48,9 +52,9 @@ public class FbManager : MonoBehaviour
     public void FBLogin()
     {
         List<String> permissions = new List<string>();
-        permissions.Add("public_profile");
+        permissions.Add("public_profile,publish_actions");
 
-        FB.LogInWithReadPermissions(permissions, AuthCallBack);
+        FB.LogInWithPublishPermissions(permissions, AuthCallBack);
     }
 
     void AuthCallBack(IResult result)
@@ -77,6 +81,7 @@ public class FbManager : MonoBehaviour
             FB.API("/me?fields=first_name",HttpMethod.GET,displayUserName);
 
             FB.API("/me/picture?type=square&height=128&width=128", HttpMethod.GET, displayPicture);
+            
         }
     }
 

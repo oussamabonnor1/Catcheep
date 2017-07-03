@@ -48,6 +48,7 @@ public class sheepDestroyer : MonoBehaviour
 
 
                 }*/
+           
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);

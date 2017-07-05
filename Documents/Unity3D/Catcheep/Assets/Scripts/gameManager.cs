@@ -66,7 +66,7 @@ public class gameManager : MonoBehaviour
             if (!catchedSomething && combo > 0)
             {
                 combo = 0;
-                StartCoroutine(flareMaker(1f));
+                StartCoroutine(flareMaker(0.45f));
                 // Handheld.Vibrate();
             }
 
@@ -377,7 +377,8 @@ public class gameManager : MonoBehaviour
 
     IEnumerator flareMaker(float time)
     {
-       GameObject flareGameObject =  Instantiate(flare, Camera.main.ScreenToWorldPoint(Input.mousePosition), Quaternion.identity);
+        Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+       GameObject flareGameObject =  Instantiate(flare,new Vector3(position.x,position.y, transform.position.z) , Quaternion.identity);
         yield return new WaitForSeconds(time);
         Destroy(flareGameObject);
     }

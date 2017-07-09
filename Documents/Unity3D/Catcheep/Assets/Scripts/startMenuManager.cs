@@ -33,7 +33,7 @@ public class startMenuManager : MonoBehaviour
             float portion = (float) 1 / menuCount;
             for (int i = 1; i <= menuCount; i++)
             {
-                if (ScrollBar.value < ((i * portion) - portion / 2) && ScrollBar.value > ((i - 1) * portion))
+                if (ScrollBar.value < ((i * portion) - portion / 4) && ScrollBar.value > ((i - 1) * portion))
                 {
                     ScrollBar.value = Mathf.Lerp(ScrollBar.value, (i - 1) * portion, 0.05f);
                 }

@@ -35,10 +35,12 @@ public class startMenuManager : MonoBehaviour
             {
                 if (ScrollBar.value < ((i * portion) - portion / 4) && ScrollBar.value > ((i - 1) * portion))
                 {
+                    print("4");
                     ScrollBar.value = Mathf.Lerp(ScrollBar.value, (i - 1) * portion, 0.05f);
                 }
-                if (ScrollBar.value > ((i * portion) - portion / 2) && ScrollBar.value < (i * portion))
+                if (ScrollBar.value > ((i * portion) - portion / 4) && ScrollBar.value < (i * portion))
                 {
+                    print("2");
                     ScrollBar.value = Mathf.Lerp(ScrollBar.value, (i) * portion, 0.05f);
                 }
             }

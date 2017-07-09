@@ -14,11 +14,21 @@ public class startMenuManager : MonoBehaviour
     private Vector2 edgeOfScreen;
 
     public int menuCount;
+    private float portion;
+    private float destination;
+    private int value;
+
+    private bool isGoingUp;
+    private bool isGoingDown;
     
 
     // Use this for initialization
     void Start()
     {
+        isGoingDown = false;
+        isGoingUp = false;
+
+         portion = (float) 1 / menuCount;
         if (ScrollBarGameObject == null) ScrollBarGameObject = GameObject.Find("Scrollbar");
         ScrollBar = ScrollBarGameObject.GetComponent<Scrollbar>();
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
@@ -28,27 +38,56 @@ public class startMenuManager : MonoBehaviour
     void Update()
     {
         //if (Input.touchCount == 0)
-        if (!Input.GetMouseButton(0))
+        /* if (!Input.GetMouseButton(0))
+         {
+
+             for (int i = 1; i <= menuCount; i++)
+             {
+                 if (ScrollBar.value < ((i * portion) - portion) && ScrollBar.value > ((i - 1) * portion))
+                 {
+                     ScrollBar.value = Mathf.Lerp(ScrollBar.value, (i - 1) * portion, 0.05f);
+                 }
+                 if (ScrollBar.value > ((i * portion) - portion) && ScrollBar.value < (i * portion))
+                 {
+                     ScrollBar.value = Mathf.Lerp(ScrollBar.value, (i) * portion, 0.05f);
+                 }
+             }
+         }
+         if (Input.touchCount == 1)
+         {
+         }*/
+        if (isGoingUp)
         {
-            float portion = (float) 1 / menuCount;
-            for (int i = 1; i <= menuCount; i++)
+            print("is going up called to " + destination);
+            ScrollBar.value = Mathf.Lerp(ScrollBar.value, destination, 0.05f);
+            if (Mathf.Approximately(ScrollBar.value, destination))
             {
-                if (ScrollBar.value < ((i * portion) - portion / 4) && ScrollBar.value > ((i - 1) * portion))
-                {
-                    print("4");
-                    ScrollBar.value = Mathf.Lerp(ScrollBar.value, (i - 1) * portion, 0.05f);
-                }
-                if (ScrollBar.value > ((i * portion) - portion / 4) && ScrollBar.value < (i * portion))
-                {
-                    print("2");
-                    ScrollBar.value = Mathf.Lerp(ScrollBar.value, (i) * portion, 0.05f);
-                }
+                isGoingUp = false;
             }
         }
-        if (Input.touchCount == 1)
+        if (isGoingDown)
         {
+            ScrollBar.value = Mathf.Lerp(ScrollBar.value, destination, 0.05f);
+            if (Mathf.Approximately(ScrollBar.value, destination))
+            {
+                isGoingDown = false;
+            }
         }
     }
+
+    public void goingUp()
+    {
+        print("right button clicked / "+ ScrollBar.value + " / "+ portion + " / " + (ScrollBar.value % portion));
+        destination = ScrollBar.value - (ScrollBar.value % portion) + portion;
+        isGoingUp = true;
+    }
+
+    public void goingDown()
+    {
+        destination = ScrollBar.value + (portion - (ScrollBar.value % portion)) - portion;
+        isGoingDown = true;
+    }
+
 
     public void farm()
     {

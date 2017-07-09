@@ -58,27 +58,20 @@ public class startMenuManager : MonoBehaviour
          }*/
         if (isGoingUp)
         {
-            print("is going up called to " + destination);
             ScrollBar.value = Mathf.Lerp(ScrollBar.value, destination, 0.05f);
-            if (Mathf.Approximately(ScrollBar.value, destination))
-            {
-                isGoingUp = false;
-            }
+            
         }
         if (isGoingDown)
         {
             ScrollBar.value = Mathf.Lerp(ScrollBar.value, destination, 0.05f);
-            if (Mathf.Approximately(ScrollBar.value, destination))
-            {
-                isGoingDown = false;
-            }
+           
         }
     }
 
     public void goingUp()
     {
-        print("right button clicked / "+ ScrollBar.value + " / "+ portion + " / " + (ScrollBar.value % portion));
         destination = ScrollBar.value - (ScrollBar.value % portion) + portion;
+        print("to : " + destination + " / " + ScrollBar.value + " / " + portion + " / " + (ScrollBar.value % portion));
         isGoingUp = true;
     }
 

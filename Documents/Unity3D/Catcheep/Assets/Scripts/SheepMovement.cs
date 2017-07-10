@@ -75,6 +75,7 @@ public class SheepMovement : MonoBehaviour
             case "blacky":
                 slideSpeed = Random.Range(0, 2) * 2 - 1;
                 destination = new Vector2(slideSpeed, -1f);
+                GetComponent<Animator>().SetInteger("slideSpeedAnimation", (int)slideSpeed);
                 break;
         }
     }

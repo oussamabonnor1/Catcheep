@@ -80,7 +80,7 @@ public class FbManager : MonoBehaviour
             logged = true;
             FB.API("/me?fields=first_name",HttpMethod.GET,displayUserName);
 
-            FB.API("/me/picture?type=square&height=128&width=128", HttpMethod.GET, displayPicture);
+            FB.API("/me/picture?type=square&height=130&width=130", HttpMethod.GET, displayPicture);
             
         }
     }
@@ -89,7 +89,8 @@ public class FbManager : MonoBehaviour
     {
         if (result.Error == null)
         {
-            loggedIn.GetComponentInChildren<Text>().text = "welcome " + result.ResultDictionary["first_name"];
+            print("welcome "+ result.ResultDictionary["first_name"]);
+           // loggedIn.GetComponentInChildren<Text>().text = "welcome " + result.ResultDictionary["first_name"];
         }
         else
         {

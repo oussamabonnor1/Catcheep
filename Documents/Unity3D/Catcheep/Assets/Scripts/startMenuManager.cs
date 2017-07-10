@@ -95,4 +95,9 @@ public class startMenuManager : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void likePage()
+    {
+        Application.OpenURL("https://www.facebook.com/JetLightstudio/?ref=bookmarks");
+    }
 }

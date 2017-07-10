@@ -59,12 +59,12 @@ public class startMenuManager : MonoBehaviour
         }
         if (isGoingUp)
         {
-            ScrollBar.value = Mathf.Lerp(ScrollBar.value, destination, 0.05f);
+            ScrollBar.value = Mathf.Lerp(ScrollBar.value, destination, 0.08f);
             if (Mathf.Approximately(ScrollBar.value, destination) && isGoingUp) isGoingUp = false;
         }
         if (isGoingDown)
         {
-            ScrollBar.value = Mathf.Lerp(ScrollBar.value, destination, 0.05f);
+            ScrollBar.value = Mathf.Lerp(ScrollBar.value, destination, 0.08f);
             if (Mathf.Approximately(ScrollBar.value, destination) && isGoingDown) isGoingDown = false;
         }
     }

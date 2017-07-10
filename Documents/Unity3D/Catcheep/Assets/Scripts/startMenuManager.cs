@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using Facebook.Unity;
 using UnityEngine;
@@ -29,6 +30,7 @@ public class startMenuManager : MonoBehaviour
         isGoingUp = false;
 
         portion = (float) 1 / menuCount;
+        portion = (float) Math.Round(portion, 2);
         if (ScrollBarGameObject == null) ScrollBarGameObject = GameObject.Find("Scrollbar");
         ScrollBar = ScrollBarGameObject.GetComponent<Scrollbar>();
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
@@ -58,37 +60,39 @@ public class startMenuManager : MonoBehaviour
         if (isGoingUp)
         {
             ScrollBar.value = Mathf.Lerp(ScrollBar.value, destination, 0.05f);
+            if (Mathf.Approximately(ScrollBar.value, destination) && isGoingUp) isGoingUp = false;
         }
         if (isGoingDown)
         {
             ScrollBar.value = Mathf.Lerp(ScrollBar.value, destination, 0.05f);
+            if (Mathf.Approximately(ScrollBar.value, destination) && isGoingDown) isGoingDown = false;
         }
     }
 
     public void goingUpButtonClick()
     {
+        destination = ScrollBar.value + portion;
+        isGoingUp = true;
         StartCoroutine(goingUp());
     }
 
     public void goingDownButtonClick()
     {
+        destination = ScrollBar.value - portion;
+        isGoingDown = true;
         StartCoroutine(goingDown());
     }
 
     IEnumerator goingUp()
     {
-        destination = ScrollBar.value + portion;
-        isGoingUp = true;
-        yield return new WaitForSeconds(1f);
-        isGoingUp = false;
+        yield return new WaitForSeconds(0.8f);
+        if(isGoingUp) isGoingUp = false;
     }
 
     IEnumerator goingDown()
     {
-        destination = ScrollBar.value - portion;
-        isGoingDown = true;
-        yield return new WaitForSeconds(1f);
-        isGoingDown = false;
+        yield return new WaitForSeconds(0.8f);
+        if(isGoingDown) isGoingDown = false;
     }
 
 

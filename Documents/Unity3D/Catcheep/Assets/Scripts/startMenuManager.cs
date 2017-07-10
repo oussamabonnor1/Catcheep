@@ -38,16 +38,16 @@ public class startMenuManager : MonoBehaviour
     void Update()
     {
         //if (Input.touchCount == 0)
-        /* if (!Input.GetMouseButton(0))
+         if (!Input.GetMouseButton(0))
          {
 
              for (int i = 1; i <= menuCount; i++)
              {
-                 if (ScrollBar.value < ((i * portion) - portion) && ScrollBar.value > ((i - 1) * portion))
+                 if (ScrollBar.value < ((i * portion) - (portion / 2)) && ScrollBar.value > ((i - 1) * portion))
                  {
                      ScrollBar.value = Mathf.Lerp(ScrollBar.value, (i - 1) * portion, 0.05f);
                  }
-                 if (ScrollBar.value > ((i * portion) - portion) && ScrollBar.value < (i * portion))
+                 if (ScrollBar.value > ((i * portion) - (portion / 2)) && ScrollBar.value < (i * portion))
                  {
                      ScrollBar.value = Mathf.Lerp(ScrollBar.value, (i) * portion, 0.05f);
                  }
@@ -55,7 +55,7 @@ public class startMenuManager : MonoBehaviour
          }
          if (Input.touchCount == 1)
          {
-         }*/
+         }
         if (isGoingUp)
         {
             ScrollBar.value = Mathf.Lerp(ScrollBar.value, destination, 0.05f);
@@ -70,14 +70,13 @@ public class startMenuManager : MonoBehaviour
 
     public void goingUp()
     {
-        destination = ScrollBar.value - (ScrollBar.value % portion) + portion;
-        print("to : " + destination + " / " + ScrollBar.value + " / " + portion + " / " + (ScrollBar.value % portion));
+        destination = ScrollBar.value  + portion;
         isGoingUp = true;
     }
 
     public void goingDown()
     {
-        destination = ScrollBar.value + (portion - (ScrollBar.value % portion)) - portion;
+        destination = ScrollBar.value - portion;
         isGoingDown = true;
     }
 

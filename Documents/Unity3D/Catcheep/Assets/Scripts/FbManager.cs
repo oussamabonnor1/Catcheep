@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Facebook.Unity;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class FbManager : MonoBehaviour
@@ -71,17 +72,19 @@ public class FbManager : MonoBehaviour
 
     void logCondtion()
     {
-        loggedIn.SetActive(FB.IsLoggedIn);
-        loggedOut.SetActive(!FB.IsLoggedIn);
-        profilePic.SetActive(FB.IsLoggedIn);
-
-        if (FB.IsLoggedIn && !logged)
+        if (SceneManager.GetActiveScene().name == "Start")
         {
-            logged = true;
-            FB.API("/me?fields=first_name",HttpMethod.GET,displayUserName);
+            loggedIn.SetActive(FB.IsLoggedIn);
+            loggedOut.SetActive(!FB.IsLoggedIn);
+            profilePic.SetActive(FB.IsLoggedIn);
 
-            FB.API("/me/picture?type=square&height=130&width=130", HttpMethod.GET, displayPicture);
-            
+            if (FB.IsLoggedIn && !logged)
+            {
+                logged = true;
+                FB.API("/me?fields=first_name", HttpMethod.GET, displayUserName);
+
+                FB.API("/me/picture?type=square&height=130&width=130", HttpMethod.GET, displayPicture);
+            }
         }
     }
 

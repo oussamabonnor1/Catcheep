@@ -59,7 +59,6 @@ public class startMenuManager : MonoBehaviour
         if (isGoingUp)
         {
             ScrollBar.value = Mathf.Lerp(ScrollBar.value, destination, 0.05f);
-            
         }
         if (isGoingDown)
         {
@@ -68,16 +67,28 @@ public class startMenuManager : MonoBehaviour
         }
     }
 
-    public void goingUp()
+    public void goingUpButtonClick()
+    {
+        StartCoroutine(goingUp());
+    }
+    public void goingDownButtonClick()
+    {
+        StartCoroutine(goingDown());
+    }
+
+     IEnumerator goingUp()
     {
         destination = ScrollBar.value  + portion;
         isGoingUp = true;
+        yield return new WaitForSeconds(1f);
+        isGoingUp = false;
     }
-
-    public void goingDown()
+     IEnumerator goingDown()
     {
         destination = ScrollBar.value - portion;
         isGoingDown = true;
+        yield return new WaitForSeconds(1f);
+        isGoingDown = false;
     }
 
 

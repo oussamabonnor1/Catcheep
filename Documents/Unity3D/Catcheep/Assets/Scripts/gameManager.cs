@@ -78,7 +78,7 @@ public class gameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-           // ShowAd();
+            ShowAd();
             SceneManager.LoadScene("Start");
         }
     }

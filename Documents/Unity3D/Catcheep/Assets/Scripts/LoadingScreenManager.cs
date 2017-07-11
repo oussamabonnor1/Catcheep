@@ -21,11 +21,11 @@ public class LoadingScreenManager : MonoBehaviour {
 	public Image fadeOverlay;
 
 	[Header("Timing Settings")]
-	public float waitOnLoadEnd = 0.25f;
-	public float fadeDuration = 0.25f;
+	public float waitOnLoadEnd;
+	public float fadeDuration;
 
 	[Header("Loading Settings")]
-	public LoadSceneMode loadSceneMode = LoadSceneMode.Single;
+	public LoadSceneMode loadSceneMode;
 	public ThreadPriority loadThreadPriority;
 
 	[Header("Other")]
@@ -35,14 +35,14 @@ public class LoadingScreenManager : MonoBehaviour {
 	AsyncOperation operation;
 	Scene currentScene;
 
-	public static int sceneToLoad = -1;
+	public static int sceneToLoad;
 	// IMPORTANT! This is the build index of your loading scene. You need to change this to match your actual scene index
-	static int loadingSceneIndex = 2;
+	static int loadingSceneIndex;
 
 	public static void LoadScene(int levelNum) {				
 		Application.backgroundLoadingPriority = ThreadPriority.High;
 		sceneToLoad = levelNum;
-		SceneManager.LoadScene(loadingSceneIndex);
+		SceneManager.LoadScene(levelNum);
 	}
 
 	void Start() {
@@ -86,7 +86,7 @@ public class LoadingScreenManager : MonoBehaviour {
 		yield return new WaitForSeconds(fadeDuration);
 
 		if (loadSceneMode == LoadSceneMode.Additive)
-			SceneManager.UnloadScene(currentScene.name);
+			SceneManager.UnloadSceneAsync(currentScene.name);
 		else
 			operation.allowSceneActivation = true;
 	}

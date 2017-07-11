@@ -98,13 +98,17 @@ public class startMenuManager : MonoBehaviour
 
     public void farm()
     {
-        SceneManager.LoadScene("Farm");
+        LoadingScreenManager.sceneToLoad = 1;
+        LoadingScreenManager.LoadScene(3);
     }
 
     public void snow()
     {
-        SceneManager.LoadScene("snow");
+        LoadingScreenManager.sceneToLoad = 2;
+        LoadingScreenManager.LoadScene(3);
+        //SceneManager.LoadScene("snow");
     }
+
 
     public void quit()
     {

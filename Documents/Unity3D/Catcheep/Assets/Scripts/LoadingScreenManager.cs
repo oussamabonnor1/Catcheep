@@ -66,12 +66,12 @@ public class LoadingScreenManager : MonoBehaviour {
 
 		// operation does not auto-activate scene, so it's stuck at 0.9
 		while (DoneLoading() == false) {
-			yield return null;
 
 			if (Mathf.Approximately(operation.progress, lastProgress) == false) {
 				progressBar.fillAmount = operation.progress;
 				lastProgress = operation.progress;
-			}
+			    yield return new WaitForSeconds(0.1f);
+            }
 		}
 
 		if (loadSceneMode == LoadSceneMode.Additive)
@@ -123,9 +123,7 @@ public class LoadingScreenManager : MonoBehaviour {
 	void ShowCompletionVisuals() {
 		loadingIcon.gameObject.SetActive(false);
 		loadingDoneIcon.gameObject.SetActive(true);
-
 		progressBar.fillAmount = 1f;
-		loadingText.text = "LOADING DONE";
 	}
 
 }

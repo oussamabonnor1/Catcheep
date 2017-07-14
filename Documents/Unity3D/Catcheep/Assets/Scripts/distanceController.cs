@@ -80,6 +80,7 @@ public class distanceController : MonoBehaviour
             if (distance < width)
             {
                 gameObject.GetComponent<SheepMovement>().slideSpeed = 0;
+                gameObject.GetComponent<Animator>().SetInteger("slideSpeedAnimation", 0);
             }
         }
     }
@@ -95,6 +96,7 @@ public class distanceController : MonoBehaviour
                 if (gameObject.tag == "blacky")
                 {
                     gameObject.GetComponent<SheepMovement>().slideSpeed = slideSpeed;
+                    gameObject.GetComponent<Animator>().SetInteger("slideSpeedAnimation", (int) slideSpeed);
                 }
             }
             

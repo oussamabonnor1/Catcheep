@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 public class LoadingScreenManager : MonoBehaviour {
 
 	[Header("Loading Visuals")]
-	public Image loadingIcon;
 	public Image loadingDoneIcon;
 	public Text loadingText;
 	public Image progressBar;
@@ -98,23 +97,22 @@ public class LoadingScreenManager : MonoBehaviour {
 	}
 
 	void FadeIn() {
-		fadeOverlay.CrossFadeAlpha(0, fadeDuration, true);
+		fadeOverlay.CrossFadeAlpha(0, 0f, true);
 	}
 
 	void FadeOut() {
-		fadeOverlay.CrossFadeAlpha(1, fadeDuration, true);
+		fadeOverlay.CrossFadeAlpha(1, 0f, true);
 	}
 
 	void ShowLoadingVisuals() {
-		loadingIcon.gameObject.SetActive(true);
 		loadingDoneIcon.gameObject.SetActive(false);
 		progressBar.fillAmount = 0f;
 	}
 
 	void ShowCompletionVisuals() {
-		loadingIcon.gameObject.SetActive(false);
 		loadingDoneIcon.gameObject.SetActive(true);
 		progressBar.fillAmount = 1f;
+	    loadingText.text = "Done !";
 	}
 
 }

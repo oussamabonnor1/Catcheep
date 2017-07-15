@@ -125,8 +125,7 @@ public class gameManager : MonoBehaviour
 
                 if (taux < 2) taux += 0.065f;
                 int i = Random.Range(-5, 11);
-
-                i = 0;
+                
                 switch (i)
                 {
                     case -5:
@@ -207,7 +206,7 @@ public class gameManager : MonoBehaviour
     void oneSheepyRandom(int index)
     {
         float edges = edgeOfScreen.x - (sheeps[index].GetComponent<SpriteRenderer>().sprite.bounds.extents).x;
-        float xPosition = edges;//Random.Range(-edges, edges);
+        float xPosition = Random.Range(-edges, edges);
         Vector3 spawnPosition = new Vector3(xPosition, transform.position.y, transform.position.z);
         Instantiate(sheeps[index], spawnPosition, Quaternion.identity);
     }

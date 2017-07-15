@@ -54,7 +54,7 @@ public class gameManager : MonoBehaviour
 
         //edge of screen is a vector3 that holds the screens width (can't get it directly cause of Screen/World point difference)
         Vector3 helpToolsPlateWidth =
-            Camera.main.ScreenToWorldPoint(helpToolsPlate.GetComponent<RectTransform>().sizeDelta);
+            Camera.main.ScreenToWorldPoint(helpToolsPlate.GetComponent<RectTransform>().rect.size);
         edgeOfScreen = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - helpToolsPlateWidth.x, Screen.height, 0f));
         gameOver = false;
         StartCoroutine(sheepSpawner());
@@ -208,7 +208,7 @@ public class gameManager : MonoBehaviour
     void oneSheepyRandom(int index)
     {
         float edges = edgeOfScreen.x - (sheeps[index].GetComponent<SpriteRenderer>().sprite.bounds.extents).x;
-        float xPosition = Random.Range(-edges, edges);
+        float xPosition = edges;//Random.Range(-edges, edges);
         Vector3 spawnPosition = new Vector3(xPosition, transform.position.y, transform.position.z);
         Instantiate(sheeps[index], spawnPosition, Quaternion.identity);
     }

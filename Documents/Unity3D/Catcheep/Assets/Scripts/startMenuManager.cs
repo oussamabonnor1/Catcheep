@@ -100,6 +100,7 @@ public class startMenuManager : MonoBehaviour
     {
         LoadingScreenManager.sceneToLoad = 2;
         SceneManager.LoadScene(3);
+        //work later
     }
 
     public void snow()

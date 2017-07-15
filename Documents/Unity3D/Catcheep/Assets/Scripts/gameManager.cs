@@ -50,7 +50,7 @@ public class gameManager : MonoBehaviour
         }
         
         scoreText = GameObject.Find("score");
-        scoreText.GetComponent<TextMeshProUGUI>().text = "Score: " + score;
+        scoreText.GetComponent<TextMeshProUGUI>().text = "" + score;
 
         //edge of screen is a vector3 that holds the screens width (can't get it directly cause of Screen/World point difference)
         Vector3 helpToolsPlateWidth = helpToolsPlate.GetComponent<RectTransform>().rect.size;

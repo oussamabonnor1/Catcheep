@@ -53,8 +53,7 @@ public class gameManager : MonoBehaviour
         scoreText.GetComponent<TextMeshProUGUI>().text = "Score: " + score;
 
         //edge of screen is a vector3 that holds the screens width (can't get it directly cause of Screen/World point difference)
-        Vector3 helpToolsPlateWidth =
-            Camera.main.ScreenToWorldPoint(helpToolsPlate.GetComponent<RectTransform>().rect.size);
+        Vector3 helpToolsPlateWidth = helpToolsPlate.GetComponent<RectTransform>().rect.size;
         edgeOfScreen = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - helpToolsPlateWidth.x, Screen.height, 0f));
         gameOver = false;
         StartCoroutine(sheepSpawner());

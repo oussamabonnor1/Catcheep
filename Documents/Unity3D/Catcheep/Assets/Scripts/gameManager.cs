@@ -124,8 +124,8 @@ public class gameManager : MonoBehaviour
             {
 
                 if (taux < 2) taux += 0.065f;
-                int i = Random.Range(-5, 11);
-                
+                int i = Random.Range(-5, 12);
+
                 switch (i)
                 {
                     case -5:
@@ -185,6 +185,10 @@ public class gameManager : MonoBehaviour
                     case 10:
                         preMadeFormation(2);
                         yield return new WaitForSeconds(1.5f);
+                        break;
+                    case 11:
+                        preMadeFormation(3);
+                        yield return new WaitForSeconds(2f);
                         break;
                 }
 

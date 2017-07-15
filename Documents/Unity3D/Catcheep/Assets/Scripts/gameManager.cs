@@ -122,8 +122,9 @@ public class gameManager : MonoBehaviour
             {
 
                 if (taux < 2) taux += 0.065f;
-                int i = Random.Range(-5, 10);
+                int i = Random.Range(-5, 11);
 
+                i = 10;
                 switch (i)
                 {
                     case -5:
@@ -179,6 +180,10 @@ public class gameManager : MonoBehaviour
                     case 9:
                         preMadeFormation(Random.Range(0,formationSheepys.Length));
                         //yield return new WaitForSeconds();
+                        break;
+                    case 10:
+                        preMadeFormation(2);
+                        yield return new WaitForSeconds(1.5f);
                         break;
                 }
 

@@ -115,7 +115,6 @@ public class startMenuManager : MonoBehaviour
         SceneManager.LoadScene(3);
     }
 
-
     public void quit()
     {
         Application.Quit();

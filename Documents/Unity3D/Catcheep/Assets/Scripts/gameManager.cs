@@ -261,7 +261,7 @@ public class gameManager : MonoBehaviour
         float xPosition = Random.Range(edges, 0f - direction * (2 * sheepyWidth));
 
         // finding out how much gap should be between the sheepys (randomly)
-        float gap = Random.Range(edgeOfScreen.x * 0.5f, edgeOfScreen.x * 0.7f);
+        float gap = Random.Range(edgeOfScreen.x * 0.55f, edgeOfScreen.x * 0.7f);
 
         //instantiating the sheepys
         for (int i = 0; i < 3; i++)

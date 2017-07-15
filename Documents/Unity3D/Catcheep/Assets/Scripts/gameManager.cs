@@ -16,6 +16,7 @@ public class gameManager : MonoBehaviour
     public AudioClip[] sheepSound;
     public GameObject winText;
     public GameObject flare;
+    public GameObject helpToolsPlate;
     
     public static bool gameOver;
     private Vector3 edgeOfScreen;
@@ -52,7 +53,9 @@ public class gameManager : MonoBehaviour
         scoreText.GetComponent<TextMeshProUGUI>().text = "Score: " + score;
 
         //edge of screen is a vector3 that holds the screens width (can't get it directly cause of Screen/World point difference)
-        edgeOfScreen = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0f));
+        Vector3 helpToolsPlateWidth =
+            Camera.main.ScreenToWorldPoint(helpToolsPlate.GetComponent<RectTransform>().sizeDelta);
+        edgeOfScreen = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - helpToolsPlateWidth.x, Screen.height, 0f));
         gameOver = false;
         StartCoroutine(sheepSpawner());
     }
@@ -124,7 +127,7 @@ public class gameManager : MonoBehaviour
                 if (taux < 2) taux += 0.065f;
                 int i = Random.Range(-5, 11);
 
-                i = 10;
+                i = 0;
                 switch (i)
                 {
                     case -5:

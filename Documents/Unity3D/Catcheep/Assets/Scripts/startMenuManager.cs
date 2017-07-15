@@ -109,6 +109,12 @@ public class startMenuManager : MonoBehaviour
         //SceneManager.LoadScene("snow");
     }
 
+    public void city()
+    {
+        LoadingScreenManager.sceneToLoad = 4;
+        SceneManager.LoadScene(3);
+    }
+
 
     public void quit()
     {

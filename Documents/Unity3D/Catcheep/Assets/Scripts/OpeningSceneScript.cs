@@ -11,8 +11,8 @@ public class OpeningSceneScript : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-	    GetComponentInChildren<TextMeshProUGUI>().fontSharedMaterial.SetFloat("Face/Softness",1f);
-    }
+	    StartCoroutine(textBlur());
+	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -33,10 +33,12 @@ public class OpeningSceneScript : MonoBehaviour
 
     IEnumerator textBlur()
     {
-        for (int j = 0; j < 9; j++)
+        GetComponentInChildren<TextMeshProUGUI>().fontSharedMaterial.SetFloat(ShaderUtilities.ID_OutlineSoftness, 1f);
+        for (int j = 0; j < 8; j++)
         {
-            yield return new WaitForSeconds(0.1f);
-            GetComponentInChildren<TextMeshProUGUI>().GetComponent<Material>().SetFloat("Softness",1f);
+            yield return new WaitForSeconds(0.15f);
+            GetComponentInChildren<TextMeshProUGUI>().fontSharedMaterial.SetFloat(ShaderUtilities.ID_OutlineSoftness, 
+                GetComponentInChildren<TextMeshProUGUI>().fontSharedMaterial.GetFloat(ShaderUtilities.ID_OutlineSoftness) - 0.1f);
         }
     }
 }

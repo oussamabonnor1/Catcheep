@@ -98,21 +98,21 @@ public class startMenuManager : MonoBehaviour
 
     public void farm()
     {
-        LoadingScreenManager.sceneToLoad = 2;
-        SceneManager.LoadScene(3);
+        LoadingScreenManager.sceneToLoad = 3;
+        SceneManager.LoadScene(4);
     }
 
     public void snow()
     {
-        LoadingScreenManager.sceneToLoad = 1;
-        SceneManager.LoadScene(3);
+        LoadingScreenManager.sceneToLoad = 2;
+        SceneManager.LoadScene(4);
         //SceneManager.LoadScene("snow");
     }
 
     public void city()
     {
-        LoadingScreenManager.sceneToLoad = 4;
-        SceneManager.LoadScene(3);
+        LoadingScreenManager.sceneToLoad = 5;
+        SceneManager.LoadScene(4);
     }
 
     public void quit()

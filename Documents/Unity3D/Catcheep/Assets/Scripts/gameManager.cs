@@ -49,6 +49,7 @@ public class gameManager : MonoBehaviour
             ResizeBackground(backgroundOfTrees);
         }
         
+
         scoreText = GameObject.Find("score");
         scoreText.GetComponent<TextMeshProUGUI>().text = "" + score;
 
@@ -58,6 +59,8 @@ public class gameManager : MonoBehaviour
         gameOver = false;
         StartCoroutine(sheepSpawner());
     }
+
+   
 
     void Update()
     {

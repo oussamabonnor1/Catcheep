@@ -36,7 +36,7 @@ public class OpeningSceneScript : MonoBehaviour
         GetComponentInChildren<TextMeshProUGUI>().fontSharedMaterial.SetFloat(ShaderUtilities.ID_OutlineSoftness, 1f);
         for (int j = 0; j < 8; j++)
         {
-            yield return new WaitForSeconds(0.15f);
+            yield return new WaitForSeconds(0.2f);
             GetComponentInChildren<TextMeshProUGUI>().fontSharedMaterial.SetFloat(ShaderUtilities.ID_OutlineSoftness, 
                 GetComponentInChildren<TextMeshProUGUI>().fontSharedMaterial.GetFloat(ShaderUtilities.ID_OutlineSoftness) - 0.1f);
         }

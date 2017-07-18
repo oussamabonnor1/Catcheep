@@ -8,10 +8,12 @@ public class ObstacleController : MonoBehaviour
     private GameObject obstacle;
 
     private bool obstacleCreated;
+    private Vector2 edgeOfScreen;
 
 	// Use this for initialization
 	void Start ()
 	{
+	    edgeOfScreen = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height,0f));
 	    obstacleCreated = false;
 	    StartCoroutine(createObstacle());
 	}
@@ -21,7 +23,13 @@ public class ObstacleController : MonoBehaviour
         
 	    if (obstacle != null && obstacleCreated) //this is an ensurance policy, do not touch it
 	    {
-	        
+            //
+	        obstacle.transform.position += Time.deltaTime * new Vector3(1f,0f,0f);
+	        if (obstacle.transform.position.x >= edgeOfScreen.x +
+	            obstacle.GetComponent<SpriteRenderer>().sprite.bounds.size.x)
+	        {
+	            
+	        }
 	    }
 	}
 

@@ -10,6 +10,7 @@ public class sheepDestroyer : MonoBehaviour
     public bool caught;
 
     public GameObject hitText;
+    public GameObject explosion;
 
     private GameObject sheepsCaughtText;
     private GameObject scoreText;
@@ -82,7 +83,12 @@ public class sheepDestroyer : MonoBehaviour
 
     void obstacleClicked(GameObject obstacle)
     {
+        caught = true;
         StartCoroutine(GameObject.Find("Game Manager").GetComponent<ObstacleController>().createObstacle());
+        GameObject explosionGameObject = Instantiate(explosion, obstacle.transform.position, Quaternion.identity);
+        gameManager.score += 200 + 10 * gameManager.combo;
+        scoreText.GetComponent<TextMeshProUGUI>().text = "" + (gameManager.score);
+        Destroy(explosionGameObject, 1f);
         Destroy(obstacle);
     }
 
@@ -103,8 +109,8 @@ public class sheepDestroyer : MonoBehaviour
         ++gameManager.totalSheepsCaught;
         sheepsCaughtText.GetComponent<Text>().text = " x " + gameManager.totalSheepsCaught;
         ++gameManager.combo;
-        gameManager.score += 100;
-        scoreText.GetComponent<TextMeshProUGUI>().text = "" + (gameManager.score + 10 * gameManager.combo);
+        gameManager.score += 100 + 10 * gameManager.combo;
+        scoreText.GetComponent<TextMeshProUGUI>().text = "" + (gameManager.score );
 
         //destroying sheep
         speed = Mathf.Clamp(Vector3.Distance(transform.position, sheepCage.transform.position), 1f, 6f);

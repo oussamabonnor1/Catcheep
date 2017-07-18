@@ -16,6 +16,7 @@ public class sheepDestroyer : MonoBehaviour
     private GameObject sheepCage;
 
     public CircleCollider2D smallCollider;
+    public BoxCollider2D BigCollider;
 
     private Touch touchHolder;
 
@@ -48,17 +49,27 @@ public class sheepDestroyer : MonoBehaviour
 
 
                 }*/
-           
+
 
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
 
-            if (hit.collider == smallCollider && hit.collider.transform == transform)
+            if (tag != "group")
             {
-                // raycast hit this gameobject
-                gameManager.catchedSomething = true;
+                if (hit.collider == smallCollider && hit.collider.transform == transform)
+                {
+                    // raycast hit this gameobject
+                    gameManager.catchedSomething = true;
+                    sheepClicked();
+                }
+            }
 
-                sheepClicked();
+            if (tag == "group")
+            {
+                if (hit.collider == BigCollider)
+                {
+                    obstacleClicked(hit.collider.gameObject);
+                }
             }
         }
 
@@ -67,6 +78,12 @@ public class sheepDestroyer : MonoBehaviour
         {
             transform.position = Vector3.Lerp(transform.position, sheepCage.transform.position, Time.deltaTime * speed);
         }
+    }
+
+    void obstacleClicked(GameObject obstacle)
+    {
+        StartCoroutine(GameObject.Find("Game Manager").GetComponent<ObstacleController>().createObstacle());
+        Destroy(obstacle);
     }
 
     public void sheepClicked()

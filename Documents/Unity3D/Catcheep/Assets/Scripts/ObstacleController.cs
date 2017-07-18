@@ -36,7 +36,7 @@ public class ObstacleController : MonoBehaviour
 	    }
 	}
 
-    IEnumerator createObstacle()
+    public IEnumerator createObstacle()
     {
         yield return new WaitForSeconds(Random.Range(5,15));
         obstacle = Instantiate(obstaclePrefab, obstaclePrefab.transform.position,

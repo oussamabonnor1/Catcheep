@@ -5,6 +5,7 @@ using UnityEngine;
 public class ObstacleController : MonoBehaviour
 {
     public GameObject obstaclePrefab;
+    private GameObject obstacle;
 
     private bool obstacleCreated;
 
@@ -12,18 +13,24 @@ public class ObstacleController : MonoBehaviour
 	void Start ()
 	{
 	    obstacleCreated = false;
+	    StartCoroutine(createObstacle());
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		
+        
+	    if (obstacle != null && obstacleCreated) //this is an ensurance policy, do not touch it
+	    {
+	        
+	    }
 	}
 
     IEnumerator createObstacle()
     {
         yield return new WaitForSeconds(Random.Range(5,15));
-        GameObject obstacle = Instantiate(obstaclePrefab, obstaclePrefab.transform.position,
+        obstacle = Instantiate(obstaclePrefab, obstaclePrefab.transform.position,
             obstaclePrefab.transform.rotation);
-        
+        obstacleCreated = true;
+
     }
 }

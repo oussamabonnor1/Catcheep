@@ -9,6 +9,8 @@ public class ObstacleController : MonoBehaviour
     
     private Vector2 edgeOfScreen;
 
+    [Range(0, 10)] public int speed;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -22,7 +24,7 @@ public class ObstacleController : MonoBehaviour
 	    if (obstacle != null) //this is an ensurance policy, do not touch it
 	    {
             //making the obstacle go...
-	        obstacle.transform.position += Time.deltaTime * new Vector3(1f,0f,0f);
+	        obstacle.transform.position += Time.deltaTime * new Vector3(speed,0f,0f);
             //destroying it when it reaches far end of screen...
 	        if (obstacle.transform.position.x >= edgeOfScreen.x +
 	            obstacle.GetComponent<SpriteRenderer>().sprite.bounds.size.x)

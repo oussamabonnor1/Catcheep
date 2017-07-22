@@ -38,7 +38,9 @@ public class ObstacleController : MonoBehaviour
 
     public IEnumerator createObstacle()
     {
-        yield return new WaitForSeconds(Random.Range(0,2));
+        print("started");
+        yield return new WaitForSeconds(Random.Range(1,3));
+        obstacle = null;
         obstacle = Instantiate(obstaclePrefab, obstaclePrefab.transform.position,
             obstaclePrefab.transform.rotation);
     }

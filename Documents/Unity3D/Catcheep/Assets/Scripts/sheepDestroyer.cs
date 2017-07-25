@@ -85,11 +85,11 @@ public class sheepDestroyer : MonoBehaviour
     {
         caught = true;
         StartCoroutine(GameObject.Find("Game Manager").GetComponent<ObstacleController>().createObstacle());
-        GameObject explosionGameObject = Instantiate(explosion, obstacle.transform.position, Quaternion.identity);
-        gameManager.score += 200 + 10 * gameManager.combo;
+         gameManager.score += 200 + 10 * gameManager.combo;
         scoreText.GetComponent<TextMeshProUGUI>().text = "" + (gameManager.score);
         if (obstacle.gameObject.name == "Car(Clone)")
         {
+            GameObject explosionGameObject = Instantiate(explosion, obstacle.transform.position, Quaternion.identity);
             Destroy(explosionGameObject, 1f);
             obstacle.gameObject.SetActive(false);
         }
@@ -141,7 +141,8 @@ public class sheepDestroyer : MonoBehaviour
             Destroy(transform.parent.gameObject, 0.5f);
         }
 
-        Destroy(gameObject);
+        if(gameObject.name != "Snow ball(Clone)") Destroy(gameObject);
+        else gameObject.SetActive(false);
     }
 
     public void Destruction()

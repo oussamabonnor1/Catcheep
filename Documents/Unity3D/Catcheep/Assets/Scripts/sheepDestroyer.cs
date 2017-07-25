@@ -89,7 +89,7 @@ public class sheepDestroyer : MonoBehaviour
         gameManager.score += 200 + 10 * gameManager.combo;
         scoreText.GetComponent<TextMeshProUGUI>().text = "" + (gameManager.score);
         Destroy(explosionGameObject, 1f);
-        Destroy(obstacle);
+        obstacle.gameObject.SetActive(false);
     }
 
     public void sheepClicked()

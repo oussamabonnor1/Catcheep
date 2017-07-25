@@ -17,7 +17,7 @@ public class sheepDestroyer : MonoBehaviour
     private GameObject sheepCage;
 
     public CircleCollider2D smallCollider;
-    public BoxCollider2D BigCollider;
+    public Collider2D BigCollider;
 
     private Touch touchHolder;
 
@@ -88,8 +88,15 @@ public class sheepDestroyer : MonoBehaviour
         GameObject explosionGameObject = Instantiate(explosion, obstacle.transform.position, Quaternion.identity);
         gameManager.score += 200 + 10 * gameManager.combo;
         scoreText.GetComponent<TextMeshProUGUI>().text = "" + (gameManager.score);
-        Destroy(explosionGameObject, 1f);
-        obstacle.gameObject.SetActive(false);
+        if (obstacle.gameObject.name == "Car(Clone)")
+        {
+            Destroy(explosionGameObject, 1f);
+            obstacle.gameObject.SetActive(false);
+        }
+        else
+        {
+            StartCoroutine(deathAnimation());
+        }
     }
 
     public void sheepClicked()

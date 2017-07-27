@@ -124,14 +124,31 @@ public class startMenuManager : MonoBehaviour
 
     IEnumerator shop()
     {
-        Vector3 destination = new Vector3(400 , sceneContent.transform.position.y, sceneContent.transform.position.z);
+        Vector3 destination = new Vector3(-800 , sceneContent.transform.localPosition.y, sceneContent.transform.localPosition.z);
         do
         {
-            sceneContent.transform.position = Vector3.Lerp(sceneContent.transform.position, destination,
+            sceneContent.transform.localPosition = Vector3.Lerp(sceneContent.transform.localPosition, destination,
                  0.8f);
-            yield return new WaitForSeconds(0.1f);
-        } while ((int) sceneContent.transform.localPosition.x != 400);
-        
+            yield return new WaitForSeconds(0.01f);
+        } while ((int) sceneContent.transform.localPosition.x != -800);
+        print("done shop");
+    }
+
+    public void playButtonClicked()
+    {
+        StartCoroutine(play());
+    }
+
+    IEnumerator play()
+    {
+        Vector3 destination = new Vector3(0, sceneContent.transform.localPosition.y, sceneContent.transform.localPosition.z);
+        do
+        {
+            sceneContent.transform.localPosition = Vector3.Lerp(sceneContent.transform.localPosition, destination,
+                0.8f);
+            yield return new WaitForSeconds(0.01f);
+        } while ((int)sceneContent.transform.localPosition.x != (int) destination.x);
+        print("done play");
     }
 
     public void quit()

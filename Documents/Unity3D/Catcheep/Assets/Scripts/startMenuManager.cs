@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Facebook.Unity;
 using UnityEngine;
+using UnityEngine.Advertisements;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -11,6 +12,7 @@ public class startMenuManager : MonoBehaviour
 {
     public GameObject sceneContent;
     public GameObject ScrollBarGameObject;
+    public GameObject vibrationToggle;
     private Scrollbar ScrollBar;
 
     private Vector2 edgeOfScreen;
@@ -168,6 +170,11 @@ public class startMenuManager : MonoBehaviour
         } while ((int) sceneContent.transform.localPosition.x != (int) destination.x);
     }
 
+    public void vibration()
+    {
+        PlayerPrefs.SetString("Vibration", vibrationToggle.GetComponent<Toggle>().isOn.ToString());
+    }
+    
     public void quit()
     {
         Application.Quit();
@@ -176,5 +183,13 @@ public class startMenuManager : MonoBehaviour
     public void likePage()
     {
         Application.OpenURL("https://www.facebook.com/JetLightstudio/?ref=bookmarks");
+    }
+    
+    public void ShowAd()
+    {
+        if (Advertisement.IsReady())
+        {
+            Advertisement.Show();
+        }
     }
 }

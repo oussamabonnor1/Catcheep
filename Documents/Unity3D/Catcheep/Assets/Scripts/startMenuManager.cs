@@ -9,6 +9,7 @@ using UnityEngine.UI;
 
 public class startMenuManager : MonoBehaviour
 {
+    public GameObject sceneContent;
     public GameObject ScrollBarGameObject;
     private Scrollbar ScrollBar;
 
@@ -31,7 +32,8 @@ public class startMenuManager : MonoBehaviour
 
         portion = (float) 1 / menuCount;
         portion = (float) Math.Round(portion, 2);
-        if (ScrollBarGameObject == null) ScrollBarGameObject = GameObject.Find("Scrollbar");
+        if (ScrollBarGameObject == null) ScrollBarGameObject = GameObject.Find("Horizontal scrollbar");
+        if (sceneContent == null) sceneContent = GameObject.Find("Scene content");
         ScrollBar = ScrollBarGameObject.GetComponent<Scrollbar>();
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
     }
@@ -113,6 +115,23 @@ public class startMenuManager : MonoBehaviour
     {
         LoadingScreenManager.sceneToLoad = 5;
         SceneManager.LoadScene(4);
+    }
+
+    public void shopButtonClicked()
+    {
+        StartCoroutine(shop());
+    }
+
+    IEnumerator shop()
+    {
+        Vector3 destination = new Vector3(sceneContent.transform.position.x + edgeOfScreen.x, sceneContent.transform.position.y, sceneContent.transform.position.z);
+        do
+        {
+            sceneContent.transform.position = Vector3.Lerp(sceneContent.transform.position, destination,
+                 0.8f);
+            yield return new WaitForSeconds(0.1f);
+        } while ((int) sceneContent.transform.localPosition.x != 400);
+        
     }
 
     public void quit()

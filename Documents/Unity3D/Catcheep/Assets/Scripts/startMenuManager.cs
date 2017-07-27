@@ -36,6 +36,8 @@ public class startMenuManager : MonoBehaviour
         portion = (float) Math.Round(portion, 2);
         if (ScrollBarGameObject == null) ScrollBarGameObject = GameObject.Find("Horizontal scrollbar");
         if (sceneContent == null) sceneContent = GameObject.Find("Scene content");
+        if (PlayerPrefs.GetString("Vibration") == "True") vibrationToggle.GetComponent<Toggle>().isOn = true;
+        else vibrationToggle.GetComponent<Toggle>().isOn = false;
         ScrollBar = ScrollBarGameObject.GetComponent<Scrollbar>();
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
     }
@@ -173,6 +175,7 @@ public class startMenuManager : MonoBehaviour
     public void vibration()
     {
         PlayerPrefs.SetString("Vibration", vibrationToggle.GetComponent<Toggle>().isOn.ToString());
+        print(vibrationToggle.GetComponent<Toggle>().isOn.ToString());
     }
     
     public void quit()

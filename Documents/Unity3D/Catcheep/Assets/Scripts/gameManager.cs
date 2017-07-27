@@ -48,7 +48,6 @@ public class gameManager : MonoBehaviour
             ResizeBackground(backgroundOfTrees);
         }
         
-
         scoreText = GameObject.Find("score");
         scoreText.GetComponent<TextMeshProUGUI>().text = "" + score;
 
@@ -71,7 +70,7 @@ public class gameManager : MonoBehaviour
             {
                 combo = 0;
                 StartCoroutine(flareMaker(0.45f));
-                // Handheld.Vibrate();
+                if(PlayerPrefs.GetString("Vibration") == "True") Handheld.Vibrate();
             }
 
             if (catchedSomething)
@@ -372,7 +371,6 @@ public class gameManager : MonoBehaviour
         }
     }
     //end of sliding forme sheepy
-
 
     public void ShowAd()
     {

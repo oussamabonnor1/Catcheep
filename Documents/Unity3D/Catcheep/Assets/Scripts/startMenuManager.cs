@@ -124,7 +124,7 @@ public class startMenuManager : MonoBehaviour
 
     IEnumerator shop()
     {
-        Vector3 destination = new Vector3(sceneContent.transform.position.x + edgeOfScreen.x, sceneContent.transform.position.y, sceneContent.transform.position.z);
+        Vector3 destination = new Vector3(400 , sceneContent.transform.position.y, sceneContent.transform.position.z);
         do
         {
             sceneContent.transform.position = Vector3.Lerp(sceneContent.transform.position, destination,

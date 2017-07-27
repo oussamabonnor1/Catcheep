@@ -88,13 +88,13 @@ public class startMenuManager : MonoBehaviour
     IEnumerator goingUp()
     {
         yield return new WaitForSeconds(0.8f);
-        if(isGoingUp) isGoingUp = false;
+        if (isGoingUp) isGoingUp = false;
     }
 
     IEnumerator goingDown()
     {
         yield return new WaitForSeconds(0.8f);
-        if(isGoingDown) isGoingDown = false;
+        if (isGoingDown) isGoingDown = false;
     }
 
 
@@ -124,11 +124,12 @@ public class startMenuManager : MonoBehaviour
 
     IEnumerator shop()
     {
-        Vector3 destination = new Vector3(-800 , sceneContent.transform.localPosition.y, sceneContent.transform.localPosition.z);
+        Vector3 destination = new Vector3(-800, sceneContent.transform.localPosition.y,
+            sceneContent.transform.localPosition.z);
         do
         {
             sceneContent.transform.localPosition = Vector3.Lerp(sceneContent.transform.localPosition, destination,
-                 0.5f);
+                0.5f);
             yield return new WaitForSeconds(0.01f);
         } while ((int) sceneContent.transform.localPosition.x != (int) destination.x);
     }
@@ -140,7 +141,25 @@ public class startMenuManager : MonoBehaviour
 
     IEnumerator play()
     {
-        Vector3 destination = new Vector3(0, sceneContent.transform.localPosition.y, sceneContent.transform.localPosition.z);
+        Vector3 destination = new Vector3(0, sceneContent.transform.localPosition.y,
+            sceneContent.transform.localPosition.z);
+        do
+        {
+            sceneContent.transform.localPosition = Vector3.Lerp(sceneContent.transform.localPosition, destination,
+                0.5f);
+            yield return new WaitForSeconds(0.01f);
+        } while ((int) sceneContent.transform.localPosition.x != (int) destination.x);
+    }
+
+    public void settingsButtonClicked()
+    {
+        StartCoroutine(settings());
+    }
+
+    IEnumerator settings()
+    {
+        Vector3 destination = new Vector3(800, sceneContent.transform.localPosition.y,
+            sceneContent.transform.localPosition.z);
         do
         {
             sceneContent.transform.localPosition = Vector3.Lerp(sceneContent.transform.localPosition, destination,

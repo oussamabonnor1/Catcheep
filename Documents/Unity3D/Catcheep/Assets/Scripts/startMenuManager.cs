@@ -128,10 +128,9 @@ public class startMenuManager : MonoBehaviour
         do
         {
             sceneContent.transform.localPosition = Vector3.Lerp(sceneContent.transform.localPosition, destination,
-                 0.8f);
+                 0.5f);
             yield return new WaitForSeconds(0.01f);
-        } while ((int) sceneContent.transform.localPosition.x != -800);
-        print("done shop");
+        } while ((int) sceneContent.transform.localPosition.x != (int) destination.x);
     }
 
     public void playButtonClicked()
@@ -145,10 +144,9 @@ public class startMenuManager : MonoBehaviour
         do
         {
             sceneContent.transform.localPosition = Vector3.Lerp(sceneContent.transform.localPosition, destination,
-                0.8f);
+                0.5f);
             yield return new WaitForSeconds(0.01f);
-        } while ((int)sceneContent.transform.localPosition.x != (int) destination.x);
-        print("done play");
+        } while ((int) sceneContent.transform.localPosition.x != (int) destination.x);
     }
 
     public void quit()

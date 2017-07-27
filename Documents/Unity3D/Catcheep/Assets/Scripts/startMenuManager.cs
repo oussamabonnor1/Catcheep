@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Facebook.Unity;
 using UnityEngine;
 using UnityEngine.Advertisements;
+using UnityEngine.iOS;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -175,7 +176,7 @@ public class startMenuManager : MonoBehaviour
     public void vibration()
     {
         PlayerPrefs.SetString("Vibration", vibrationToggle.GetComponent<Toggle>().isOn.ToString());
-        print(vibrationToggle.GetComponent<Toggle>().isOn.ToString());
+        if(vibrationToggle.GetComponent<Toggle>().isOn) Handheld.Vibrate();
     }
     
     public void quit()

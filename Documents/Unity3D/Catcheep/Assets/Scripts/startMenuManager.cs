@@ -82,7 +82,7 @@ public class startMenuManager : MonoBehaviour
         {
             if (Vector2.Distance(oldPosition, newPosition) >= (edgeOfScreen.x * 0.2f))// && Mathf.Abs(newPosition.y - oldPosition.y) < 5)
             {
-                if (oldPosition.x < newPosition.x)
+                if (oldPosition.x > newPosition.x)
                 {
                     switch ((int) sceneContent.transform.localPosition.x)
                     {

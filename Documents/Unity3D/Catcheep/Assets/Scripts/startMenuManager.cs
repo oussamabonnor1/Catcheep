@@ -69,19 +69,17 @@ public class startMenuManager : MonoBehaviour
         {
             //when player presses, save that click position
             oldPosition = Input.mousePosition;
-            print("old position saved");
         }
         if (Input.GetMouseButtonUp(0))
         {
             //when player lets go, save that position
             newPosition = Input.mousePosition;
-            print("new position saved");
         }
         //if both positions aren't null
         if (oldPosition != new Vector2(0f, 0f) && newPosition != new Vector2(0f, 0f))
         {
             if (Vector2.Distance(oldPosition, newPosition) >= (edgeOfScreen.x * 0.2f) &&
-                Mathf.Abs(newPosition.y - oldPosition.y) < 150)
+                Mathf.Abs(newPosition.y - oldPosition.y) < (edgeOfScreen.y * 0.07f))
             {
                 if (oldPosition.x > newPosition.x)
                 {

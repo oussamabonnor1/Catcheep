@@ -80,7 +80,8 @@ public class startMenuManager : MonoBehaviour
         //if both positions aren't null
         if (oldPosition != new Vector2(0f, 0f) && newPosition != new Vector2(0f, 0f))
         {
-            if (Vector2.Distance(oldPosition, newPosition) >= (edgeOfScreen.x * 0.2f))// && Mathf.Abs(newPosition.y - oldPosition.y) < 5)
+            if (Vector2.Distance(oldPosition, newPosition) >= (edgeOfScreen.x * 0.2f) &&
+                Mathf.Abs(newPosition.y - oldPosition.y) < 150)
             {
                 if (oldPosition.x > newPosition.x)
                 {
@@ -93,11 +94,10 @@ public class startMenuManager : MonoBehaviour
                             shopButtonClicked();
                             break;
                     }
-                    
                 }
                 else
                 {
-                    switch ((int)sceneContent.transform.localPosition.x)
+                    switch ((int) sceneContent.transform.localPosition.x)
                     {
                         case -800:
                             playButtonClicked();
@@ -107,8 +107,8 @@ public class startMenuManager : MonoBehaviour
                             break;
                     }
                 }
-                oldPosition = new Vector2(0f,0f);
-                newPosition = new Vector2(0f,0f);
+                oldPosition = new Vector2(0f, 0f);
+                newPosition = new Vector2(0f, 0f);
             }
         }
 
@@ -224,9 +224,9 @@ public class startMenuManager : MonoBehaviour
     public void vibration()
     {
         PlayerPrefs.SetString("Vibration", vibrationToggle.GetComponent<Toggle>().isOn.ToString());
-        if(vibrationToggle.GetComponent<Toggle>().isOn) Handheld.Vibrate();
+        if (vibrationToggle.GetComponent<Toggle>().isOn) Handheld.Vibrate();
     }
-    
+
     public void quit()
     {
         Application.Quit();
@@ -236,7 +236,7 @@ public class startMenuManager : MonoBehaviour
     {
         Application.OpenURL("https://www.facebook.com/JetLightstudio/?ref=bookmarks");
     }
-    
+
     public void ShowAd()
     {
         if (Advertisement.IsReady())

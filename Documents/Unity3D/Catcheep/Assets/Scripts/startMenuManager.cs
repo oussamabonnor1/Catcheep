@@ -17,6 +17,9 @@ public class startMenuManager : MonoBehaviour
     private Scrollbar ScrollBar;
 
     private Vector2 edgeOfScreen;
+    private Vector2 oldPosition;
+    private Vector2 newPosition;
+
 
     public int menuCount;
     private float portion;
@@ -61,9 +64,18 @@ public class startMenuManager : MonoBehaviour
                 }
             }
         }
-        if (Input.touchCount == 1)
+        //sliding menu control
+        if (Input.GetMouseButtonDown(0))
         {
+            oldPosition = Input.mousePosition;
         }
+        if (Input.GetMouseButtonUp(0))
+        {
+            newPosition = Input.mousePosition;
+        }
+        //
+        if(oldPosition != new Vector2(0f,0f) && newPosition != new Vector2(0f, 0f))
+
         if (isGoingUp)
         {
             ScrollBar.value = Mathf.Lerp(ScrollBar.value, destination, 0.08f);

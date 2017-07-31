@@ -222,7 +222,7 @@ public class startMenuManager : MonoBehaviour
     public void vibration()
     {
         PlayerPrefs.SetString("Vibration", vibrationToggle.GetComponent<Toggle>().isOn.ToString());
-        if (vibrationToggle.GetComponent<Toggle>().isOn) Handheld.Vibrate();
+        if (vibrationToggle.GetComponent<Toggle>().isOn && (int) sceneContent.transform.localPosition.x != 0) Handheld.Vibrate();
     }
 
     public void quit()

@@ -116,7 +116,6 @@ public class startMenuManager : MonoBehaviour
             if (Mathf.Approximately(ScrollBar.value, destination) && isGoingUp)
             {
                 isGoingUp = false;
-                print("switched");
             }
         }
         if (isGoingDown)
@@ -125,7 +124,6 @@ public class startMenuManager : MonoBehaviour
             if (Mathf.Approximately(ScrollBar.value, destination) && isGoingDown)
             {
                 isGoingDown = false;
-                print("switched");
             }
         }
     }

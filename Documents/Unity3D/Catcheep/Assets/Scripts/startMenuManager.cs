@@ -65,12 +65,12 @@ public class startMenuManager : MonoBehaviour
             }
         }
         //sliding menu control
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && !isGoingDown && !isGoingUp)
         {
             //when player presses, save that click position
             oldPosition = Input.mousePosition;
         }
-        if (Input.GetMouseButtonUp(0))
+        if (Input.GetMouseButtonUp(0) && !isGoingDown && !isGoingUp)
         {
             //when player lets go, save that position
             newPosition = Input.mousePosition;

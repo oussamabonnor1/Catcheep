@@ -65,12 +65,12 @@ public class startMenuManager : MonoBehaviour
             }
         }
         //sliding menu control
-        if (Input.GetMouseButtonDown(0) && !isGoingDown && !isGoingUp)
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began && !isGoingDown && !isGoingUp)
         {
             //when player presses, save that click position
             oldPosition = Input.mousePosition;
         }
-        if (Input.GetMouseButtonUp(0) && !isGoingDown && !isGoingUp)
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended && !isGoingDown && !isGoingUp)
         {
             //when player lets go, save that position
             newPosition = Input.mousePosition;
@@ -113,12 +113,20 @@ public class startMenuManager : MonoBehaviour
         if (isGoingUp)
         {
             ScrollBar.value = Mathf.Lerp(ScrollBar.value, destination, 0.08f);
-            if (Mathf.Approximately(ScrollBar.value, destination) && isGoingUp) isGoingUp = false;
+            if (Mathf.Approximately(ScrollBar.value, destination) && isGoingUp)
+            {
+                isGoingUp = false;
+                print("switched");
+            }
         }
         if (isGoingDown)
         {
             ScrollBar.value = Mathf.Lerp(ScrollBar.value, destination, 0.08f);
-            if (Mathf.Approximately(ScrollBar.value, destination) && isGoingDown) isGoingDown = false;
+            if (Mathf.Approximately(ScrollBar.value, destination) && isGoingDown)
+            {
+                isGoingDown = false;
+                print("switched");
+            }
         }
     }
 

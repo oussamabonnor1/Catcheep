@@ -49,7 +49,6 @@ public class LoadingScreenManager : MonoBehaviour
 			return;
 	    switch (sceneToLoad)
 	    {
-            
 	        case 2:
 	            background.sprite = snow;
 	            break;

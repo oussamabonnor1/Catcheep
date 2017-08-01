@@ -188,7 +188,10 @@ public class startMenuManager : MonoBehaviour
 
     public void shopButtonClicked()
     {
-        StartCoroutine(shop());
+        if (sceneContent.transform.localPosition.x > -800)
+        {
+            StartCoroutine(shop());
+        }
     }
 
     IEnumerator shop()
@@ -222,7 +225,10 @@ public class startMenuManager : MonoBehaviour
 
     public void settingsButtonClicked()
     {
-        StartCoroutine(settings());
+        if (sceneContent.transform.localPosition.x > -800)
+        {
+            StartCoroutine(settings());
+        }
     }
 
     IEnumerator settings()

@@ -11,6 +11,7 @@ public class LoadingScreenManager : MonoBehaviour
     public Sprite farm;
     public Sprite snow;
     public Sprite city;
+    public Sprite alien;
 
 	[Header("Loading Visuals")]
 	public Image loadingDoneIcon;
@@ -58,6 +59,9 @@ public class LoadingScreenManager : MonoBehaviour
 	        case 5:
 	            background.sprite = city;
                 break;
+	        case 6:
+	            background.sprite = alien;
+	            break;
             default:
                 print("default");
 	            break;

@@ -49,7 +49,7 @@ public class startMenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (Input.touchCount == 0)
+        
         if (!Input.GetMouseButton(0))
         {
             for (int i = 1; i <= menuCount; i++)
@@ -108,6 +108,12 @@ public class startMenuManager : MonoBehaviour
                 oldPosition = new Vector2(0f, 0f);
                 newPosition = new Vector2(0f, 0f);
             }
+        }
+
+        if (Input.touchCount == 0)
+        {
+            oldPosition = new Vector2(0f, 0f);
+            newPosition = new Vector2(0f, 0f);
         }
 
         if (isGoingUp)

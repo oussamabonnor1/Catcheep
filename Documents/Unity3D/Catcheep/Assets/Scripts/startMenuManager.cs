@@ -180,6 +180,12 @@ public class startMenuManager : MonoBehaviour
         SceneManager.LoadScene(4);
     }
 
+    public void alien()
+    {
+        LoadingScreenManager.sceneToLoad = 6;
+        SceneManager.LoadScene(4);
+    }
+
     public void shopButtonClicked()
     {
         StartCoroutine(shop());

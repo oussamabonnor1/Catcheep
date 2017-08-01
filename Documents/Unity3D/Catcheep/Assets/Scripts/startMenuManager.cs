@@ -193,7 +193,6 @@ public class startMenuManager : MonoBehaviour
         {
             sceneContent.transform.localPosition = new Vector3(sceneContent.transform.localPosition.x - 50, sceneContent.transform.localPosition.y, sceneContent.transform.localPosition.z);
             yield return new WaitForSeconds(0.01f);
-            print("shop");
         } while ((int) sceneContent.transform.localPosition.x != (int) destination.x);
     }
 
@@ -206,13 +205,12 @@ public class startMenuManager : MonoBehaviour
     {
         Vector3 destination = new Vector3(0, sceneContent.transform.localPosition.y,
             sceneContent.transform.localPosition.z);
-        bool direction = sceneContent.transform.localPosition.x > destination.x;
+        bool direction = sceneContent.transform.localPosition.x < destination.x;
         do
         {
             if(direction) sceneContent.transform.localPosition = new Vector3(sceneContent.transform.localPosition.x + 50, sceneContent.transform.localPosition.y, sceneContent.transform.localPosition.z);
             else sceneContent.transform.localPosition = new Vector3(sceneContent.transform.localPosition.x - 50, sceneContent.transform.localPosition.y, sceneContent.transform.localPosition.z);
             yield return new WaitForSeconds(0.01f);
-            print("play");
         } while ((int) sceneContent.transform.localPosition.x != (int) destination.x);
     }
 

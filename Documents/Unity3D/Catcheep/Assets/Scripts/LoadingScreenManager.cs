@@ -4,13 +4,20 @@ using UnityEngine.UI;
 using System.Collections;
 using UnityEngine.SceneManagement;
 
-public class LoadingScreenManager : MonoBehaviour {
+public class LoadingScreenManager : MonoBehaviour
+{
+
+    [Header("Backgrounds")]
+    public Sprite farm;
+    public Sprite snow;
+    public Sprite city;
 
 	[Header("Loading Visuals")]
 	public Image loadingDoneIcon;
 	public Image loadingText;
 	public Image progressBar;
 	public Image fadeOverlay;
+    public Image background;
 
 	[Header("Timing Settings")]
 	public float waitOnLoadEnd;
@@ -40,7 +47,22 @@ public class LoadingScreenManager : MonoBehaviour {
 	void Start() {
 		if (sceneToLoad < 0)
 			return;
-
+	    switch (sceneToLoad)
+	    {
+            
+	        case 2:
+	            background.sprite = snow;
+	            break;
+	        case 3:
+	            background.sprite = farm;
+                break;
+	        case 5:
+	            background.sprite = city;
+                break;
+            default:
+                print("default");
+	            break;
+        }
 		//fadeOverlay.gameObject.SetActive(true); // Making sure it's on so that we can crossfade Alpha
 		currentScene = SceneManager.GetActiveScene();
 		StartCoroutine(LoadAsync(sceneToLoad));
@@ -105,12 +127,12 @@ public class LoadingScreenManager : MonoBehaviour {
 	}
 
 	void ShowLoadingVisuals() {
-		loadingDoneIcon.gameObject.SetActive(false);
+		//loadingDoneIcon.gameObject.SetActive(false);
 		progressBar.fillAmount = 0f;
 	}
 
 	void ShowCompletionVisuals() {
-		loadingDoneIcon.gameObject.SetActive(true);
+		//loadingDoneIcon.gameObject.SetActive(true);
 		progressBar.fillAmount = 1f;
 	}
 

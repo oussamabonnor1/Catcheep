@@ -225,7 +225,7 @@ public class startMenuManager : MonoBehaviour
 
     public void settingsButtonClicked()
     {
-        if (sceneContent.transform.localPosition.x > -800)
+        if (sceneContent.transform.localPosition.x < 800)
         {
             StartCoroutine(settings());
         }

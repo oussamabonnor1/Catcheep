@@ -32,15 +32,16 @@ public class AlienManager : MonoBehaviour
         {
             spaceShip.transform.localPosition = Vector3.Lerp(spaceShip.transform.localPosition, destination, 2.5f * Time.deltaTime);
             yield return new WaitForSeconds(0.02f);
-        } while (spaceShip.transform.localPosition.y > destination.y);
+        } while ((int) spaceShip.transform.localPosition.y > (int) destination.y + 1);
         
         yield return new WaitForSeconds(1f);
+        print("started");
         StartCoroutine(shipLeaving());
     }
 
     IEnumerator shipLeaving()
     {
-        Vector3 destination = new Vector3(alienShip.transform.localPosition.x, edgeOfScreen.y * 1.5f, 0f);
+        Vector3 destination = new Vector3(alienShip.transform.localPosition.x, edgeOfScreen.y, 0f);
         do
         {
             spaceShip.transform.localPosition = Vector3.Lerp(spaceShip.transform.localPosition, destination, 2.5f * Time.deltaTime);
@@ -48,6 +49,11 @@ public class AlienManager : MonoBehaviour
         } while (spaceShip.transform.localPosition.y < destination.y);
 
         Destroy(spaceShip.gameObject);
+    }
+
+    public void shipGoingRight()
+    {
+        
     }
 
     public void startMenu()

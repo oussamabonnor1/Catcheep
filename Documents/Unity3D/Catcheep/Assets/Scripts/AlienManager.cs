@@ -26,15 +26,16 @@ public class AlienManager : MonoBehaviour
         GameObject spaceShip = Instantiate(alienShip, alienShip.transform.localPosition, alienShip.transform.rotation);
         yield return new WaitForSeconds(1);
         spaceShip.transform.parent = GameObject.Find("Canvas").transform;
-        //next line is necessary, plz dnt remove it when your bored
+        //next lines are necessary, plz dnt remove them when your bored
         spaceShip.transform.localPosition = alienShip.transform.localPosition;
-        /*Vector3 destination = new Vector3(0f,edgeOfScreen.y * 0.2f, 0f);
+
+        Vector3 destination = new Vector3(alienShip.transform.localPosition.x, -edgeOfScreen.y * 0.05f, 0f);
         do
         {
-            spaceShip.transform.localPosition = Vector3.Lerp(spaceShip.transform.localPosition, destination,0.1f * Time.deltaTime);
-            yield return new WaitForSeconds(0.5f);
-        } while (spaceShip.transform.localPosition.y > (edgeOfScreen.y * 0.2));
-        */
+            spaceShip.transform.localPosition = Vector3.Lerp(spaceShip.transform.localPosition, destination, 2.5f * Time.deltaTime);
+            yield return new WaitForSeconds(0.02f);
+        } while (spaceShip.transform.localPosition.y > destination.y);
+        
     }
 
     public void startMenu()

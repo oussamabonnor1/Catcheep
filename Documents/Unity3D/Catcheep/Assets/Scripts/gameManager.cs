@@ -109,21 +109,23 @@ public class gameManager : MonoBehaviour
 
     }
 
+
+    //THE MAIN SHEEP CREATOR, DO NOT ULTER UNLESS YOU UNDERSTAND THE CODE 100% 
+    //this bit is in relation with many scripts
     IEnumerator sheepSpawner()
     {
         //yield return new WaitForSeconds(1f);
         int size = sheeps.Length -1;
         float taux = 0;
-        
         while (!gameOver)
         {
             Collider2D collisions = Physics2D.OverlapBox(new Vector2(transform.position.x, transform.position.y),
-                new Vector2(edgeOfScreen.x, edgeOfScreen.y), 0f);
+                new Vector2(edgeOfScreen.x, 2), 0f);
 
             if (collisions == null)
             {
-
-                if (taux < 2) taux += 0.065f;
+                print(Time.time);
+                if (taux < 1.5f) taux += 0.065f;
                 int i = Random.Range(-5, 12);
 
                 switch (i)
@@ -155,7 +157,7 @@ public class gameManager : MonoBehaviour
 
                     case 4:
                         vFormeSheepy(Random.Range(2, 4), Random.Range(0, size));
-                        yield return new WaitForSeconds(2 - taux);
+                        yield return new WaitForSeconds(1.5f - taux);
                         break;
 
                     case 5:
@@ -184,18 +186,18 @@ public class gameManager : MonoBehaviour
                         break;
                     case 10:
                         preMadeFormation(2);
-                        yield return new WaitForSeconds(1.5f);
+                        yield return new WaitForSeconds(1.5f - taux);
                         break;
                     case 11:
                         preMadeFormation(3);
-                        yield return new WaitForSeconds(2f);
+                        yield return new WaitForSeconds(2f - taux);
                         break;
                 }
 
             }
             else
             {
-                yield return new WaitForSeconds(2 - taux);
+                yield return new WaitForSeconds(1.5f - taux);
             }
         }
 

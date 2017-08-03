@@ -69,6 +69,7 @@ public class sheepDestroyer : MonoBehaviour
             {
                 if (hit.collider == BigCollider)
                 {
+                    gameManager.catchedSomething = true;
                     obstacleClicked(hit.collider.gameObject);
                 }
             }

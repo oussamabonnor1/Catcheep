@@ -8,6 +8,7 @@ public class AlienManager : MonoBehaviour
 
     public GameObject alienShip;
 
+    private GameObject spaceShip;
     private Vector2 edgeOfScreen;
 
 	// Use this for initialization
@@ -23,11 +24,8 @@ public class AlienManager : MonoBehaviour
 
     IEnumerator alienSpawner()
     {
-        GameObject spaceShip = Instantiate(alienShip, alienShip.transform.localPosition, alienShip.transform.rotation);
-        yield return new WaitForSeconds(1);
-        spaceShip.transform.parent = GameObject.Find("Canvas").transform;
-        //next lines are necessary, plz dnt remove them when your bored
-        spaceShip.transform.localPosition = alienShip.transform.localPosition;
+        spaceShip = Instantiate(alienShip, alienShip.transform.localPosition, alienShip.transform.rotation);
+        spaceShip.transform.SetParent(GameObject.Find("Canvas").transform, false);
 
         Vector3 destination = new Vector3(alienShip.transform.localPosition.x, -edgeOfScreen.y * 0.05f, 0f);
         do
@@ -36,6 +34,20 @@ public class AlienManager : MonoBehaviour
             yield return new WaitForSeconds(0.02f);
         } while (spaceShip.transform.localPosition.y > destination.y);
         
+        yield return new WaitForSeconds(1f);
+        StartCoroutine(shipLeaving());
+    }
+
+    IEnumerator shipLeaving()
+    {
+        Vector3 destination = new Vector3(alienShip.transform.localPosition.x, edgeOfScreen.y * 1.5f, 0f);
+        do
+        {
+            spaceShip.transform.localPosition = Vector3.Lerp(spaceShip.transform.localPosition, destination, 2.5f * Time.deltaTime);
+            yield return new WaitForSeconds(0.02f);
+        } while (spaceShip.transform.localPosition.y < destination.y);
+
+        Destroy(spaceShip.gameObject);
     }
 
     public void startMenu()

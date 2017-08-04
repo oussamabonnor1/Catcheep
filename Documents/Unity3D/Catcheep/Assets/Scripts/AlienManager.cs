@@ -20,7 +20,7 @@ public class AlienManager : MonoBehaviour
     void Start()
     {
         currentSheepShowed = -1;
-        changingSheepPic();
+        changingSheepPic(1);
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
         StartCoroutine(alienSpawner());
     }
@@ -81,7 +81,7 @@ public class AlienManager : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         } while ((int)spaceShip.transform.position.x < (int)destination.x * 1.3f);
         Destroy(spaceShip.gameObject);
-        changingSheepPic();
+        changingSheepPic(1);
         StartCoroutine(alienSpawner());
     }
 
@@ -104,16 +104,20 @@ public class AlienManager : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         } while ((int) spaceShip.transform.position.x > (int) destination.x * 0.3f);
         Destroy(spaceShip.gameObject);
-        changingSheepPic();
+        changingSheepPic(-1);
         StartCoroutine(alienSpawner());
     }
 
-    void changingSheepPic()
+    void changingSheepPic(int i)
     {
-        ++currentSheepShowed;
+        currentSheepShowed += i;
         if (currentSheepShowed >= SheepSprites.Length)
         {
             currentSheepShowed = 0;
+        }
+        if (currentSheepShowed < 0)
+        {
+            currentSheepShowed = SheepSprites.Length - 1;
         }
         if (currentSheepShowed < SheepSprites.Length && SheepSprites[currentSheepShowed] != null)
         {

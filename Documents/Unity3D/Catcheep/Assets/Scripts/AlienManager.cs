@@ -20,6 +20,7 @@ public class AlienManager : MonoBehaviour
     void Start()
     {
         currentSheepShowed = -1;
+        changingSheepPic();
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
         StartCoroutine(alienSpawner());
     }
@@ -110,21 +111,15 @@ public class AlienManager : MonoBehaviour
     void changingSheepPic()
     {
         ++currentSheepShowed;
+        if (currentSheepShowed >= SheepSprites.Length)
+        {
+            currentSheepShowed = 0;
+        }
         if (currentSheepShowed < SheepSprites.Length && SheepSprites[currentSheepShowed] != null)
         {
             sheepHolder.GetComponent<Image>().sprite = SheepSprites[currentSheepShowed];
         }
-        else if (SheepSprites[currentSheepShowed] == null)
-        {
-            do
-            {
-                ++currentSheepShowed;
-            } while (SheepSprites[currentSheepShowed] == null && currentSheepShowed < SheepSprites.Length);
-        }
-        else
-        {
-            currentSheepShowed = 0;
-        }
+        
     }
 
     void activatingButtons()

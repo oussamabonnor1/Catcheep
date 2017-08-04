@@ -6,16 +6,20 @@ using UnityEngine.UI;
 
 public class AlienManager : MonoBehaviour
 {
+    public Sprite[] SheepSprites;
     public GameObject alienShip;
     public GameObject rightButton;
     public GameObject leftButton;
+    public GameObject sheepHolder;
 
     private GameObject spaceShip;
     private Vector2 edgeOfScreen;
+    private int currentSheepShowed;
 
     // Use this for initialization
     void Start()
     {
+        currentSheepShowed = -1;
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
         StartCoroutine(alienSpawner());
     }
@@ -39,7 +43,6 @@ public class AlienManager : MonoBehaviour
                 Vector3.Lerp(spaceShip.transform.localPosition, destination, 2.5f * Time.deltaTime);
             yield return new WaitForSeconds(0.02f);
         } while ((int) spaceShip.transform.localPosition.y > 0f);
-        
         activatingButtons();
     }
     IEnumerator shipLeaving()
@@ -77,7 +80,7 @@ public class AlienManager : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         } while ((int)spaceShip.transform.position.x < (int)destination.x * 1.3f);
         Destroy(spaceShip.gameObject);
-        activatingButtons();
+        changingSheepPic();
         StartCoroutine(alienSpawner());
     }
 
@@ -100,12 +103,33 @@ public class AlienManager : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         } while ((int) spaceShip.transform.position.x > (int) destination.x * 0.3f);
         Destroy(spaceShip.gameObject);
-        activatingButtons();
+        changingSheepPic();
         StartCoroutine(alienSpawner());
+    }
+
+    void changingSheepPic()
+    {
+        ++currentSheepShowed;
+        if (currentSheepShowed < SheepSprites.Length && SheepSprites[currentSheepShowed] != null)
+        {
+            sheepHolder.GetComponent<Image>().sprite = SheepSprites[currentSheepShowed];
+        }
+        else if (SheepSprites[currentSheepShowed] == null)
+        {
+            do
+            {
+                ++currentSheepShowed;
+            } while (SheepSprites[currentSheepShowed] == null && currentSheepShowed < SheepSprites.Length);
+        }
+        else
+        {
+            currentSheepShowed = 0;
+        }
     }
 
     void activatingButtons()
     {
+        
         rightButton.GetComponent<Button>().enabled = true;
         leftButton.GetComponent<Button>().enabled = true;
     }

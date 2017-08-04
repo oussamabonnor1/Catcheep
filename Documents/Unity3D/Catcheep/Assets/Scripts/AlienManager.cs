@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class AlienManager : MonoBehaviour
 {
     public GameObject alienShip;
+    public GameObject rightButton;
+    public GameObject leftButton;
 
     private GameObject spaceShip;
     private Vector2 edgeOfScreen;
@@ -25,6 +27,8 @@ public class AlienManager : MonoBehaviour
 
     IEnumerator alienSpawner()
     {
+        deactivatingButtons();
+
         spaceShip = Instantiate(alienShip, alienShip.transform.localPosition, alienShip.transform.rotation);
         spaceShip.transform.SetParent(GameObject.Find("Canvas").transform, false);
 
@@ -35,12 +39,14 @@ public class AlienManager : MonoBehaviour
                 Vector3.Lerp(spaceShip.transform.localPosition, destination, 2.5f * Time.deltaTime);
             yield return new WaitForSeconds(0.02f);
         } while ((int) spaceShip.transform.localPosition.y > (int) destination.y + 1);
-
-        StartCoroutine(shipGoingLeft());
+        
+        activatingButtons();
     }
 
     IEnumerator shipLeaving()
     {
+        deactivatingButtons();
+
         Vector3 destination = new Vector3(alienShip.transform.localPosition.x, edgeOfScreen.y, 0f);
         do
         {
@@ -50,10 +56,12 @@ public class AlienManager : MonoBehaviour
         } while (spaceShip.transform.localPosition.y < destination.y);
 
         Destroy(spaceShip.gameObject);
+        activatingButtons();
     }
 
     public IEnumerator shipGoingRight()
     {
+        deactivatingButtons();
         //spaceShip.transform.localRotation = new Quaternion(spaceShip.transform.localRotation.x, spaceShip.transform.rotation.y, -5, spaceShip.transform.rotation.w);
         Vector3 destination = new Vector3(
             edgeOfScreen.x + alienShip.GetComponentInChildren<Image>().sprite.bounds.size.x,
@@ -65,10 +73,13 @@ public class AlienManager : MonoBehaviour
                 spaceShip.transform.localPosition.y, spaceShip.transform.localPosition.z);
             yield return new WaitForSeconds(0.01f);
         } while ((int) spaceShip.transform.position.x < (int) destination.x * 1.05f);
+
+        activatingButtons();
     }
 
     public IEnumerator shipGoingLeft()
     {
+        deactivatingButtons();
         //spaceShip.transform.localRotation = new Quaternion(spaceShip.transform.localRotation.x, spaceShip.transform.rotation.y, -5, spaceShip.transform.rotation.w);
         Vector3 destination = new Vector3(
             -edgeOfScreen.x - alienShip.GetComponentInChildren<Image>().sprite.bounds.size.x,
@@ -80,7 +91,21 @@ public class AlienManager : MonoBehaviour
                 spaceShip.transform.localPosition.y, spaceShip.transform.localPosition.z);
             yield return new WaitForSeconds(0.01f);
         } while ((int) spaceShip.transform.position.x > (int) destination.x * 1.05f);
+        
+        activatingButtons();
     }
+
+    void activatingButtons()
+    {
+        rightButton.GetComponent<Button>().enabled = true;
+        leftButton.GetComponent<Button>().enabled = true;
+    }
+    void deactivatingButtons()
+    {
+        rightButton.GetComponent<Button>().enabled = false;
+        leftButton.GetComponent<Button>().enabled = false;
+    }
+
 
     public void startMenu()
     {

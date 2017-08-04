@@ -70,7 +70,7 @@ public class AlienManager : MonoBehaviour
         deactivatingButtons();
         //spaceShip.transform.localRotation = new Quaternion(spaceShip.transform.localRotation.x, spaceShip.transform.rotation.y, -5, spaceShip.transform.rotation.w);
         Vector3 destination = new Vector3(
-            edgeOfScreen.x - alienShip.GetComponentInChildren<Image>().sprite.bounds.size.x,
+            edgeOfScreen.x + alienShip.GetComponentInChildren<Image>().sprite.bounds.size.x,
             spaceShip.transform.localPosition.y,
             spaceShip.transform.localPosition.z);
         do
@@ -78,7 +78,7 @@ public class AlienManager : MonoBehaviour
             spaceShip.transform.localPosition = new Vector3(spaceShip.transform.localPosition.x + 10,
                 spaceShip.transform.localPosition.y, spaceShip.transform.localPosition.z);
             yield return new WaitForSeconds(0.01f);
-        } while ((int)spaceShip.transform.position.x < (int)destination.x * 1.05f);
+        } while ((int)spaceShip.transform.position.x < (int)destination.x * 2f);
 
         activatingButtons();
     }

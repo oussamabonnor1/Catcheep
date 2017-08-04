@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class AlienManager : MonoBehaviour
 {
     public Sprite[] SheepSprites;
-    public GameObject alienShip;
+    public GameObject[] alienShip;
     public GameObject rightButton;
     public GameObject leftButton;
     public GameObject sheepHolder;
@@ -18,9 +18,16 @@ public class AlienManager : MonoBehaviour
     private Vector2 newPosition;
     private int currentSheepShowed;
 
+    private int shipType;
     // Use this for initialization
     void Start()
     {
+        if (PlayerPrefs.GetInt("ship") == 0)
+        {
+            PlayerPrefs.SetInt("ship",1);
+        }
+        shipType = PlayerPrefs.GetInt("ship") - 1;
+
         currentSheepShowed = -1;
         changingSheepPic(1);
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
@@ -46,13 +53,13 @@ public class AlienManager : MonoBehaviour
             if (Vector2.Distance(oldPosition, newPosition) >= (edgeOfScreen.x * 0.2f) &&
                 Mathf.Abs(newPosition.y - oldPosition.y) < (edgeOfScreen.y * 0.07f))
             {
-                if (oldPosition.x > newPosition.x)
+                if (oldPosition.x < newPosition.x)
                 {
                     shipGoingRightButtonClicked();
                 }
                 else
                 {
-                    shipGoingRightButtonClicked();
+                    shipGoingLeftButtonClicked();
                 }
                 oldPosition = new Vector2(0f, 0f);
                 newPosition = new Vector2(0f, 0f);
@@ -75,10 +82,10 @@ public class AlienManager : MonoBehaviour
     {
         deactivatingButtons();
 
-        spaceShipFroScript = Instantiate(alienShip, alienShip.transform.localPosition, alienShip.transform.rotation);
+        spaceShipFroScript = Instantiate(alienShip[shipType], alienShip[shipType].transform.localPosition, alienShip[shipType].transform.rotation);
         spaceShipFroScript.transform.SetParent(GameObject.Find("Canvas").transform, false);
 
-        Vector3 destination = new Vector3(alienShip.transform.localPosition.x, -edgeOfScreen.y * 0.05f, 0f);
+        Vector3 destination = new Vector3(alienShip[shipType].transform.localPosition.x, -edgeOfScreen.y * 0.05f, 0f);
         do
         {
             spaceShipFroScript.transform.localPosition =
@@ -91,7 +98,7 @@ public class AlienManager : MonoBehaviour
     {
         deactivatingButtons();
 
-        Vector3 destination = new Vector3(alienShip.transform.localPosition.x, edgeOfScreen.y, 0f);
+        Vector3 destination = new Vector3(alienShip[shipType].transform.localPosition.x, edgeOfScreen.y, 0f);
         do
         {
             spaceShipFroScript.transform.localPosition =
@@ -112,7 +119,7 @@ public class AlienManager : MonoBehaviour
         deactivatingButtons();
         //spaceShipFroScript.transform.localRotation = new Quaternion(spaceShipFroScript.transform.localRotation.x, spaceShipFroScript.transform.rotation.y, -5, spaceShipFroScript.transform.rotation.w);
         Vector3 destination = new Vector3(
-            edgeOfScreen.x + alienShip.GetComponentInChildren<Image>().sprite.bounds.size.x,
+            edgeOfScreen.x + alienShip[shipType].GetComponentInChildren<Image>().sprite.bounds.size.x,
             spaceShipFroScript.transform.localPosition.y,
             spaceShipFroScript.transform.localPosition.z);
         do
@@ -135,7 +142,7 @@ public class AlienManager : MonoBehaviour
         deactivatingButtons();
         //spaceShipFroScript.transform.localRotation = new Quaternion(spaceShipFroScript.transform.localRotation.x, spaceShipFroScript.transform.rotation.y, -5, spaceShipFroScript.transform.rotation.w);
         Vector3 destination = new Vector3(
-           -edgeOfScreen.x - alienShip.GetComponentInChildren<Image>().sprite.bounds.size.x,
+           -edgeOfScreen.x - alienShip[shipType].GetComponentInChildren<Image>().sprite.bounds.size.x,
             spaceShipFroScript.transform.localPosition.y,
             spaceShipFroScript.transform.localPosition.z);
         do

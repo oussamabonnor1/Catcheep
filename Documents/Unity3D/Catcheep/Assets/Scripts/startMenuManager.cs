@@ -265,4 +265,13 @@ public class startMenuManager : MonoBehaviour
             Advertisement.Show();
         }
     }
+
+    public void ShipOne()
+    {
+        PlayerPrefs.SetInt("ship",1);
+    }
+    public void ShipTwo()
+    {
+        PlayerPrefs.SetInt("ship", 2);
+    }
 }

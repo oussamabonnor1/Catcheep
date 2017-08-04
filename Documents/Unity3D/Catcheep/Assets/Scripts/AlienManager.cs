@@ -12,8 +12,10 @@ public class AlienManager : MonoBehaviour
     public GameObject leftButton;
     public GameObject sheepHolder;
 
-    private GameObject spaceShip;
+    private GameObject spaceShipFroScript;
     private Vector2 edgeOfScreen;
+    private Vector2 oldPosition;
+    private Vector2 newPosition;
     private int currentSheepShowed;
 
     // Use this for initialization
@@ -28,22 +30,61 @@ public class AlienManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+        {
+            //when player presses, save that click position
+            oldPosition = Input.mousePosition;
+        }
+        if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Ended)
+        {
+            //when player lets go, save that position
+            newPosition = Input.mousePosition;
+        }
+        //if both positions aren't null
+        if (oldPosition != new Vector2(0f, 0f) && newPosition != new Vector2(0f, 0f))
+        {
+            if (Vector2.Distance(oldPosition, newPosition) >= (edgeOfScreen.x * 0.2f) &&
+                Mathf.Abs(newPosition.y - oldPosition.y) < (edgeOfScreen.y * 0.07f))
+            {
+                if (oldPosition.x > newPosition.x)
+                {
+                    shipGoingRightButtonClicked();
+                }
+                else
+                {
+                    shipGoingRightButtonClicked();
+                }
+                oldPosition = new Vector2(0f, 0f);
+                newPosition = new Vector2(0f, 0f);
+            }
+        }
+
+        if (Input.touchCount == 0)
+        {
+            oldPosition = new Vector2(0f, 0f);
+            newPosition = new Vector2(0f, 0f);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            startMenu();
+        }
     }
 
     IEnumerator alienSpawner()
     {
         deactivatingButtons();
 
-        spaceShip = Instantiate(alienShip, alienShip.transform.localPosition, alienShip.transform.rotation);
-        spaceShip.transform.SetParent(GameObject.Find("Canvas").transform, false);
+        spaceShipFroScript = Instantiate(alienShip, alienShip.transform.localPosition, alienShip.transform.rotation);
+        spaceShipFroScript.transform.SetParent(GameObject.Find("Canvas").transform, false);
 
         Vector3 destination = new Vector3(alienShip.transform.localPosition.x, -edgeOfScreen.y * 0.05f, 0f);
         do
         {
-            spaceShip.transform.localPosition =
-                Vector3.Lerp(spaceShip.transform.localPosition, destination, 2.5f * Time.deltaTime);
+            spaceShipFroScript.transform.localPosition =
+                Vector3.Lerp(spaceShipFroScript.transform.localPosition, destination, 2.5f * Time.deltaTime);
             yield return new WaitForSeconds(0.02f);
-        } while ((int) spaceShip.transform.localPosition.y > 0f);
+        } while ((int) spaceShipFroScript.transform.localPosition.y > 0f);
         activatingButtons();
     }
     IEnumerator shipLeaving()
@@ -53,12 +94,12 @@ public class AlienManager : MonoBehaviour
         Vector3 destination = new Vector3(alienShip.transform.localPosition.x, edgeOfScreen.y, 0f);
         do
         {
-            spaceShip.transform.localPosition =
-                Vector3.Lerp(spaceShip.transform.localPosition, destination, 2.5f * Time.deltaTime);
+            spaceShipFroScript.transform.localPosition =
+                Vector3.Lerp(spaceShipFroScript.transform.localPosition, destination, 2.5f * Time.deltaTime);
             yield return new WaitForSeconds(0.02f);
-        } while (spaceShip.transform.localPosition.y < destination.y);
+        } while (spaceShipFroScript.transform.localPosition.y < destination.y);
 
-        Destroy(spaceShip.gameObject);
+        Destroy(spaceShipFroScript.gameObject);
         activatingButtons();
     }
 
@@ -69,18 +110,18 @@ public class AlienManager : MonoBehaviour
     IEnumerator shipGoingRight()
     {
         deactivatingButtons();
-        //spaceShip.transform.localRotation = new Quaternion(spaceShip.transform.localRotation.x, spaceShip.transform.rotation.y, -5, spaceShip.transform.rotation.w);
+        //spaceShipFroScript.transform.localRotation = new Quaternion(spaceShipFroScript.transform.localRotation.x, spaceShipFroScript.transform.rotation.y, -5, spaceShipFroScript.transform.rotation.w);
         Vector3 destination = new Vector3(
             edgeOfScreen.x + alienShip.GetComponentInChildren<Image>().sprite.bounds.size.x,
-            spaceShip.transform.localPosition.y,
-            spaceShip.transform.localPosition.z);
+            spaceShipFroScript.transform.localPosition.y,
+            spaceShipFroScript.transform.localPosition.z);
         do
         {
-            spaceShip.transform.localPosition = new Vector3(spaceShip.transform.localPosition.x + 10,
-                spaceShip.transform.localPosition.y, spaceShip.transform.localPosition.z);
+            spaceShipFroScript.transform.localPosition = new Vector3(spaceShipFroScript.transform.localPosition.x + 10,
+                spaceShipFroScript.transform.localPosition.y, spaceShipFroScript.transform.localPosition.z);
             yield return new WaitForSeconds(0.01f);
-        } while ((int)spaceShip.transform.position.x < (int)destination.x * 1.3f);
-        Destroy(spaceShip.gameObject);
+        } while ((int)spaceShipFroScript.transform.position.x < (int)destination.x * 1.3f);
+        Destroy(spaceShipFroScript.gameObject);
         changingSheepPic(1);
         StartCoroutine(alienSpawner());
     }
@@ -92,18 +133,18 @@ public class AlienManager : MonoBehaviour
     IEnumerator shipGoingLeft()
     {
         deactivatingButtons();
-        //spaceShip.transform.localRotation = new Quaternion(spaceShip.transform.localRotation.x, spaceShip.transform.rotation.y, -5, spaceShip.transform.rotation.w);
+        //spaceShipFroScript.transform.localRotation = new Quaternion(spaceShipFroScript.transform.localRotation.x, spaceShipFroScript.transform.rotation.y, -5, spaceShipFroScript.transform.rotation.w);
         Vector3 destination = new Vector3(
            -edgeOfScreen.x - alienShip.GetComponentInChildren<Image>().sprite.bounds.size.x,
-            spaceShip.transform.localPosition.y,
-            spaceShip.transform.localPosition.z);
+            spaceShipFroScript.transform.localPosition.y,
+            spaceShipFroScript.transform.localPosition.z);
         do
         {
-            spaceShip.transform.localPosition = new Vector3(spaceShip.transform.localPosition.x - 10,
-                spaceShip.transform.localPosition.y, spaceShip.transform.localPosition.z);
+            spaceShipFroScript.transform.localPosition = new Vector3(spaceShipFroScript.transform.localPosition.x - 10,
+                spaceShipFroScript.transform.localPosition.y, spaceShipFroScript.transform.localPosition.z);
             yield return new WaitForSeconds(0.01f);
-        } while ((int) spaceShip.transform.position.x > (int) destination.x * 0.3f);
-        Destroy(spaceShip.gameObject);
+        } while ((int) spaceShipFroScript.transform.position.x > (int) destination.x * 0.3f);
+        Destroy(spaceShipFroScript.gameObject);
         changingSheepPic(-1);
         StartCoroutine(alienSpawner());
     }

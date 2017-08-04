@@ -41,10 +41,7 @@ public class AlienManager : MonoBehaviour
         } while ((int) spaceShip.transform.localPosition.y > 0f);
         
         activatingButtons();
-
-        StartCoroutine(shipGoingRight());
     }
-
     IEnumerator shipLeaving()
     {
         deactivatingButtons();
@@ -78,9 +75,10 @@ public class AlienManager : MonoBehaviour
             spaceShip.transform.localPosition = new Vector3(spaceShip.transform.localPosition.x + 10,
                 spaceShip.transform.localPosition.y, spaceShip.transform.localPosition.z);
             yield return new WaitForSeconds(0.01f);
-        } while ((int)spaceShip.transform.position.x < (int)destination.x * 2f);
-
+        } while ((int)spaceShip.transform.position.x < (int)destination.x * 1.3f);
+        Destroy(spaceShip.gameObject);
         activatingButtons();
+        StartCoroutine(alienSpawner());
     }
 
     public void shipGoingLeftButtonClicked()
@@ -100,9 +98,10 @@ public class AlienManager : MonoBehaviour
             spaceShip.transform.localPosition = new Vector3(spaceShip.transform.localPosition.x - 10,
                 spaceShip.transform.localPosition.y, spaceShip.transform.localPosition.z);
             yield return new WaitForSeconds(0.01f);
-        } while ((int) spaceShip.transform.position.x > (int) destination.x * 1.05f);
-        
+        } while ((int) spaceShip.transform.position.x > (int) destination.x * 0.3f);
+        Destroy(spaceShip.gameObject);
         activatingButtons();
+        StartCoroutine(alienSpawner());
     }
 
     void activatingButtons()
@@ -115,8 +114,7 @@ public class AlienManager : MonoBehaviour
         rightButton.GetComponent<Button>().enabled = false;
         leftButton.GetComponent<Button>().enabled = false;
     }
-
-
+    
     public void startMenu()
     {
         SceneManager.LoadScene(1);

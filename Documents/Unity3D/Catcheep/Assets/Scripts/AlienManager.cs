@@ -59,7 +59,11 @@ public class AlienManager : MonoBehaviour
         activatingButtons();
     }
 
-    public IEnumerator shipGoingRight()
+    public void shipGoingRightButtonClicked()
+    {
+        StartCoroutine(shipGoingRight());
+    }
+    IEnumerator shipGoingRight()
     {
         deactivatingButtons();
         //spaceShip.transform.localRotation = new Quaternion(spaceShip.transform.localRotation.x, spaceShip.transform.rotation.y, -5, spaceShip.transform.rotation.w);
@@ -77,7 +81,11 @@ public class AlienManager : MonoBehaviour
         activatingButtons();
     }
 
-    public IEnumerator shipGoingLeft()
+    public void shipGoingLeftButtonClicked()
+    {
+        StartCoroutine(shipGoingLeft());
+    }
+    IEnumerator shipGoingLeft()
     {
         deactivatingButtons();
         //spaceShip.transform.localRotation = new Quaternion(spaceShip.transform.localRotation.x, spaceShip.transform.rotation.y, -5, spaceShip.transform.rotation.w);

@@ -19,6 +19,7 @@ public class AlienManager : MonoBehaviour
     public GameObject wantedText;
     public GameObject sheepHolder;
     public GameObject sheepNumberText;
+    public GameObject moneyAmountText;
 
     private GameObject spaceShipForScript;
 
@@ -44,6 +45,7 @@ public class AlienManager : MonoBehaviour
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
 
         //setting the sheeps demands info
+        moneyAmountText.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetInt("money") + " $";
         settingDemands();
 
         StartCoroutine(alienSpawner());
@@ -117,6 +119,8 @@ public class AlienManager : MonoBehaviour
         if (PlayerPrefs.GetInt("sheepy") >= sheepyRequested)
         {
             PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") - sheepyRequested);
+            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + (sheepyRequested * 100));
+            moneyAmountText.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetInt("money") + " $";
             sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
             sheepyRequested = 0;
             wantedText.GetComponent<TextMeshProUGUI>().text = "Sheeps needed: " + sheepyRequested;

@@ -34,7 +34,7 @@ public class gameManager : MonoBehaviour
         catchedSomething = false;
         totalSheepsCaught = PlayerPrefs.GetInt("sheepy");
         combo = 0;
-        score = 0;
+        score = PlayerPrefs.GetInt("money");
 
         if (background == null)
         {

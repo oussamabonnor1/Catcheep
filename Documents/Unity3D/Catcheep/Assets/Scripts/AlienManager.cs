@@ -1,40 +1,46 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class AlienManager : MonoBehaviour
 {
-    [Header("In game objects")]
-    public Sprite[] SheepSprites;
+    [Header("In game objects")] public Sprite[] SheepSprites;
     public GameObject[] alienShip;
-    [Header("UI components")]
-    public GameObject rightButton;
+    [Header("UI components")] public GameObject rightButton;
     public GameObject leftButton;
-    [Header("indication elements")]
-    public GameObject wantedText;
+    [Header("indication elements")] public GameObject wantedText;
     public GameObject sheepHolder;
 
     private GameObject spaceShipForScript;
+
     private Vector2 edgeOfScreen;
     private Vector2 oldPosition;
     private Vector2 newPosition;
+
     private int currentSheepShowed;
     private int sheepyRequested;
     private int shipType;
+
     // Use this for initialization
     void Start()
     {
         if (PlayerPrefs.GetInt("ship") == 0)
         {
-            PlayerPrefs.SetInt("ship",1);
+            PlayerPrefs.SetInt("ship", 1);
         }
         shipType = PlayerPrefs.GetInt("ship") - 1;
 
         currentSheepShowed = -1;
         changingSheepPic(1);
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
+
+        //setting the sheeps demands info
+        sheepyRequested = Random.Range(2, 10) * 10;
+        wantedText.GetComponent<TextMeshProUGUI>().text = "Sheeps needed: " + sheepyRequested;
+
         StartCoroutine(alienSpawner());
     }
 
@@ -86,7 +92,8 @@ public class AlienManager : MonoBehaviour
     {
         deactivatingButtons();
 
-        spaceShipForScript = Instantiate(alienShip[shipType], alienShip[shipType].transform.localPosition, alienShip[shipType].transform.rotation);
+        spaceShipForScript = Instantiate(alienShip[shipType], alienShip[shipType].transform.localPosition,
+            alienShip[shipType].transform.rotation);
         spaceShipForScript.transform.SetParent(GameObject.Find("Canvas").transform, false);
         spaceShipForScript.GetComponentInChildren<Button>().onClick.AddListener(call: shipClicked);
 
@@ -104,19 +111,30 @@ public class AlienManager : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("sheepy") >= sheepyRequested)
         {
+            PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") - sheepyRequested);
+            sheepyRequested = 0;
+            wantedText.GetComponent<TextMeshProUGUI>().text = "Sheeps needed: " + sheepyRequested;
+
             spaceShipForScript.transform.GetChild(1).gameObject.SetActive(false);
             spaceShipForScript.transform.GetChild(1).gameObject.SetActive(true);
             spaceShipForScript.transform.GetChild(0).gameObject.SetActive(true);
 
 
-
-            //StartCoroutine(shipLeaving());
+            StartCoroutine(shipLeaving());
         }
         else
         {
-            
+            StartCoroutine(notEnoughtSheeps());
         }
     }
+
+    IEnumerator notEnoughtSheeps()
+    {
+        wantedText.GetComponent<TextMeshProUGUI>().text = "Not enough sheeps !";
+        yield return new WaitForSeconds(1);
+        wantedText.GetComponent<TextMeshProUGUI>().text = "Sheeps needed: " + sheepyRequested;
+    }
+
     IEnumerator shipLeaving()
     {
         deactivatingButtons();
@@ -135,6 +153,7 @@ public class AlienManager : MonoBehaviour
     {
         StartCoroutine(shipGoingRight());
     }
+
     IEnumerator shipGoingRight()
     {
         if (spaceShipForScript != null)
@@ -162,6 +181,7 @@ public class AlienManager : MonoBehaviour
     {
         StartCoroutine(shipGoingLeft());
     }
+
     IEnumerator shipGoingLeft()
     {
         if (spaceShipForScript != null)
@@ -200,21 +220,20 @@ public class AlienManager : MonoBehaviour
         {
             sheepHolder.GetComponent<Image>().sprite = SheepSprites[currentSheepShowed];
         }
-        
     }
 
     void activatingButtons()
     {
-        
         rightButton.GetComponent<Button>().enabled = true;
         leftButton.GetComponent<Button>().enabled = true;
     }
+
     void deactivatingButtons()
     {
         rightButton.GetComponent<Button>().enabled = false;
         leftButton.GetComponent<Button>().enabled = false;
     }
-    
+
     public void startMenu()
     {
         SceneManager.LoadScene(1);

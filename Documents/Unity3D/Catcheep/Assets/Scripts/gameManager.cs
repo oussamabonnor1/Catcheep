@@ -32,7 +32,7 @@ public class gameManager : MonoBehaviour
     void Start()
     {
         catchedSomething = false;
-        totalSheepsCaught = 0;
+        totalSheepsCaught = PlayerPrefs.GetInt("sheepy");
         combo = 0;
         score = 0;
 
@@ -74,6 +74,7 @@ public class gameManager : MonoBehaviour
 
             if (catchedSomething)
             {
+                PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") + 1);
                 catchedSomething = false;
             }
         }

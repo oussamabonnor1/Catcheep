@@ -7,12 +7,18 @@ using UnityEngine.UI;
 
 public class AlienManager : MonoBehaviour
 {
-    [Header("In game objects")] public Sprite[] SheepSprites;
+    [Header("In game objects")]
+    public Sprite[] SheepSprites;
     public GameObject[] alienShip;
-    [Header("UI components")] public GameObject rightButton;
+
+    [Header("UI components")]
+    public GameObject rightButton;
     public GameObject leftButton;
-    [Header("indication elements")] public GameObject wantedText;
+
+    [Header("indication elements")]
+    public GameObject wantedText;
     public GameObject sheepHolder;
+    public GameObject sheepNumberText;
 
     private GameObject spaceShipForScript;
 
@@ -39,6 +45,7 @@ public class AlienManager : MonoBehaviour
 
         //setting the sheeps demands info
         sheepyRequested = Random.Range(2, 10) * 10;
+        sheepNumberText.GetComponent<TextMeshProUGUI>().text = "x " + PlayerPrefs.GetInt("sheepy");
         wantedText.GetComponent<TextMeshProUGUI>().text = "Sheeps needed: " + sheepyRequested;
 
         StartCoroutine(alienSpawner());
@@ -112,6 +119,7 @@ public class AlienManager : MonoBehaviour
         if (PlayerPrefs.GetInt("sheepy") >= sheepyRequested)
         {
             PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") - sheepyRequested);
+            sheepNumberText.GetComponent<TextMeshProUGUI>().text = "x " + PlayerPrefs.GetInt("sheepy");
             sheepyRequested = 0;
             wantedText.GetComponent<TextMeshProUGUI>().text = "Sheeps needed: " + sheepyRequested;
 

@@ -25,6 +25,7 @@ public class sheepDestroyer : MonoBehaviour
     {
         caught = false;
         sheepsCaughtText = GameObject.Find("sheeps caught");
+        sheepsCaughtText.GetComponent<Text>().text = " x " + gameManager.totalSheepsCaught;
         scoreText = GameObject.Find("score");
         sheepCage = GameObject.Find("sheep cage");
     }

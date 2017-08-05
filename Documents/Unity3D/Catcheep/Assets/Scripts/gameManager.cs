@@ -4,6 +4,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.Advertisements;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class gameManager : MonoBehaviour
@@ -41,7 +42,6 @@ public class gameManager : MonoBehaviour
             background = GameObject.Find("background");
             ResizeBackground(background);
         }
-
         if (backgroundOfTrees == null && GameObject.Find("Trees") != null)
         {
             backgroundOfTrees = GameObject.Find("Trees");
@@ -50,6 +50,7 @@ public class gameManager : MonoBehaviour
         
         scoreText = GameObject.Find("score");
         scoreText.GetComponent<TextMeshProUGUI>().text = "" + score;
+        GameObject.Find("sheeps caught").GetComponent<Text>().text = " x " + gameManager.totalSheepsCaught;
 
         //edge of screen is a vector3 that holds the screens width (can't get it directly cause of Screen/World point difference)
         Vector3 helpToolsPlateWidth = helpToolsPlate.GetComponent<RectTransform>().rect.size;

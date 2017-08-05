@@ -44,9 +44,7 @@ public class AlienManager : MonoBehaviour
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
 
         //setting the sheeps demands info
-        sheepyRequested = Random.Range(2, 10) * 10;
-        sheepNumberText.GetComponent<TextMeshProUGUI>().text = "x " + PlayerPrefs.GetInt("sheepy");
-        wantedText.GetComponent<TextMeshProUGUI>().text = "Sheeps needed: " + sheepyRequested;
+        settingDemands();
 
         StartCoroutine(alienSpawner());
     }
@@ -119,15 +117,10 @@ public class AlienManager : MonoBehaviour
         if (PlayerPrefs.GetInt("sheepy") >= sheepyRequested)
         {
             PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") - sheepyRequested);
-            sheepNumberText.GetComponent<TextMeshProUGUI>().text = "x " + PlayerPrefs.GetInt("sheepy");
+            sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
             sheepyRequested = 0;
             wantedText.GetComponent<TextMeshProUGUI>().text = "Sheeps needed: " + sheepyRequested;
-
-            spaceShipForScript.transform.GetChild(1).gameObject.SetActive(false);
-            spaceShipForScript.transform.GetChild(1).gameObject.SetActive(true);
-            spaceShipForScript.transform.GetChild(0).gameObject.SetActive(true);
-
-
+            
             StartCoroutine(shipLeaving());
         }
         else
@@ -143,8 +136,21 @@ public class AlienManager : MonoBehaviour
         wantedText.GetComponent<TextMeshProUGUI>().text = "Sheeps needed: " + sheepyRequested;
     }
 
+    void settingDemands()
+    {
+        sheepyRequested = Random.Range(2, 10) * 10;
+        sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
+        wantedText.GetComponent<TextMeshProUGUI>().text = "Sheeps needed: " + sheepyRequested;
+    }
+
     IEnumerator shipLeaving()
     {
+        spaceShipForScript.transform.GetChild(1).gameObject.SetActive(false);
+        spaceShipForScript.transform.GetChild(1).gameObject.SetActive(true);
+        spaceShipForScript.transform.GetChild(0).gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(1.5f);
+
         deactivatingButtons();
         Vector3 destination = new Vector3(alienShip[shipType].transform.localPosition.x, edgeOfScreen.y * 0.5f, 0f);
         do
@@ -159,6 +165,7 @@ public class AlienManager : MonoBehaviour
 
     public void shipGoingRightButtonClicked()
     {
+        settingDemands();
         StartCoroutine(shipGoingRight());
     }
 
@@ -187,6 +194,7 @@ public class AlienManager : MonoBehaviour
 
     public void shipGoingLeftButtonClicked()
     {
+        settingDemands();
         StartCoroutine(shipGoingLeft());
     }
 

@@ -6,10 +6,14 @@ using UnityEngine.UI;
 
 public class AlienManager : MonoBehaviour
 {
+    [Header("In game objects")]
     public Sprite[] SheepSprites;
     public GameObject[] alienShip;
+    [Header("UI components")]
     public GameObject rightButton;
     public GameObject leftButton;
+    [Header("indication elements")]
+    public GameObject wantedText;
     public GameObject sheepHolder;
 
     private GameObject spaceShipForScript;
@@ -17,7 +21,7 @@ public class AlienManager : MonoBehaviour
     private Vector2 oldPosition;
     private Vector2 newPosition;
     private int currentSheepShowed;
-
+    private int sheepyRequested;
     private int shipType;
     // Use this for initialization
     void Start()
@@ -98,7 +102,20 @@ public class AlienManager : MonoBehaviour
 
     void shipClicked()
     {
-        StartCoroutine(shipLeaving());
+        if (PlayerPrefs.GetInt("sheepy") >= sheepyRequested)
+        {
+            spaceShipForScript.transform.GetChild(1).gameObject.SetActive(false);
+            spaceShipForScript.transform.GetChild(1).gameObject.SetActive(true);
+            spaceShipForScript.transform.GetChild(0).gameObject.SetActive(true);
+
+
+
+            //StartCoroutine(shipLeaving());
+        }
+        else
+        {
+            
+        }
     }
     IEnumerator shipLeaving()
     {

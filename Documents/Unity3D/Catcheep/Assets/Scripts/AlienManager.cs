@@ -16,7 +16,6 @@ public class AlienManager : MonoBehaviour
     public GameObject leftButton;
 
     [Header("indication elements")]
-    public GameObject wantedText;
     public GameObject sheepHolder;
     public GameObject sheepNumberText;
     public GameObject moneyAmountText;
@@ -39,15 +38,14 @@ public class AlienManager : MonoBehaviour
             PlayerPrefs.SetInt("ship", 1);
         }
         shipType = PlayerPrefs.GetInt("ship") - 1;
-
-        currentSheepShowed = -1;
-        changingSheepPic(1);
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
 
         //setting the sheeps demands info
         moneyAmountText.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetInt("money") + " $";
         settingDemands();
 
+        currentSheepShowed = -1;
+        changingSheepPic(1);
         StartCoroutine(alienSpawner());
     }
 
@@ -123,7 +121,6 @@ public class AlienManager : MonoBehaviour
             moneyAmountText.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetInt("money") + " $";
             sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
             sheepyRequested = 0;
-            wantedText.GetComponent<TextMeshProUGUI>().text = "Sheeps needed: " + sheepyRequested;
             
             StartCoroutine(shipLeaving());
         }
@@ -135,16 +132,13 @@ public class AlienManager : MonoBehaviour
 
     IEnumerator notEnoughtSheeps()
     {
-        wantedText.GetComponent<TextMeshProUGUI>().text = "Not enough sheeps !";
         yield return new WaitForSeconds(1);
-        wantedText.GetComponent<TextMeshProUGUI>().text = "Sheeps needed: " + sheepyRequested;
     }
 
     void settingDemands()
     {
         sheepyRequested = Random.Range(2, 10) * 10;
         sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
-        wantedText.GetComponent<TextMeshProUGUI>().text = "Sheeps needed: " + sheepyRequested;
     }
 
     IEnumerator shipLeaving()
@@ -238,6 +232,7 @@ public class AlienManager : MonoBehaviour
         }
         if (currentSheepShowed < SheepSprites.Length && SheepSprites[currentSheepShowed] != null)
         {
+            sheepHolder.GetComponentInChildren<TextMeshProUGUI>().text = "x" + sheepyRequested;
             sheepHolder.GetComponent<Image>().sprite = SheepSprites[currentSheepShowed];
         }
     }

@@ -258,20 +258,5 @@ public class startMenuManager : MonoBehaviour
         Application.OpenURL("https://www.facebook.com/JetLightstudio/?ref=bookmarks");
     }
 
-    public void ShowAd()
-    {
-        if (Advertisement.IsReady())
-        {
-            Advertisement.Show();
-        }
-    }
-
-    public void ShipOne()
-    {
-        PlayerPrefs.SetInt("ship",1);
-    }
-    public void ShipTwo()
-    {
-        PlayerPrefs.SetInt("ship", 2);
-    }
+    
 }

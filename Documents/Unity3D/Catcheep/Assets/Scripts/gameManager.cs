@@ -49,7 +49,7 @@ public class gameManager : MonoBehaviour
         }
         
         scoreText = GameObject.Find("score");
-        scoreText.GetComponent<TextMeshProUGUI>().text = "" + score;
+        scoreText.GetComponent<TextMeshProUGUI>().text = "x " + score;
         GameObject.Find("sheeps caught").GetComponent<Text>().text = " x " + gameManager.totalSheepsCaught;
 
         //edge of screen is a vector3 that holds the screens width (can't get it directly cause of Screen/World point difference)
@@ -122,12 +122,12 @@ public class gameManager : MonoBehaviour
         while (!gameOver)
         {
             Collider2D collisions = Physics2D.OverlapBox(new Vector2(transform.position.x, transform.position.y),
-                new Vector2(edgeOfScreen.x, 2), 0f);
+                new Vector2(edgeOfScreen.x, 2.5f), 0f);
 
             if (collisions == null)
             {
                 print(Time.time);
-                if (taux < 1.5f) taux += 0.065f;
+                if (taux < 2f) taux += 0.065f;
                 int i = Random.Range(-5, 12);
 
                 switch (i)
@@ -159,7 +159,7 @@ public class gameManager : MonoBehaviour
 
                     case 4:
                         vFormeSheepy(Random.Range(2, 4), Random.Range(0, size));
-                        yield return new WaitForSeconds(1.5f - taux);
+                        yield return new WaitForSeconds(2f - taux);
                         break;
 
                     case 5:
@@ -188,18 +188,18 @@ public class gameManager : MonoBehaviour
                         break;
                     case 10:
                         preMadeFormation(2);
-                        yield return new WaitForSeconds(1.5f - taux);
+                        yield return new WaitForSeconds(2f - taux);
                         break;
                     case 11:
                         preMadeFormation(3);
-                        yield return new WaitForSeconds(2f - taux);
+                        yield return new WaitForSeconds(2.5f - taux);
                         break;
                 }
 
             }
             else
             {
-                yield return new WaitForSeconds(1.5f - taux);
+                yield return new WaitForSeconds(2f - taux);
             }
         }
 
@@ -385,7 +385,7 @@ public class gameManager : MonoBehaviour
 
     void preMadeFormation(int index)
     {
-        Instantiate(formationSheepys[index], transform.position, formationSheepys[index].transform.rotation);
+        Instantiate(formationSheepys[index], formationSheepys[index].transform.position, formationSheepys[index].transform.rotation);
     }
 
     IEnumerator flareMaker(float time)

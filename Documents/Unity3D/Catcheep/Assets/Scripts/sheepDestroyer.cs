@@ -26,7 +26,7 @@ public class sheepDestroyer : MonoBehaviour
         caught = false;
         sheepsCaughtText = GameObject.Find("sheeps caught");
         scoreText = GameObject.Find("score");
-        scoreText.GetComponent<TextMeshProUGUI>().text = " x " + gameManager.score;
+        scoreText.GetComponent<TextMeshProUGUI>().text = "x " + gameManager.score;
         sheepCage = GameObject.Find("sheep cage");
     }
 
@@ -88,7 +88,7 @@ public class sheepDestroyer : MonoBehaviour
         caught = true;
         StartCoroutine(GameObject.Find("Game Manager").GetComponent<ObstacleController>().createObstacle());
          gameManager.score += 200 + 10 * gameManager.combo;
-        scoreText.GetComponent<TextMeshProUGUI>().text = "" + (gameManager.score);
+        scoreText.GetComponent<TextMeshProUGUI>().text = "x " + (gameManager.score);
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + 200 + 10 * gameManager.combo);
         if (obstacle.gameObject.name == "Car(Clone)")
         {
@@ -121,7 +121,7 @@ public class sheepDestroyer : MonoBehaviour
         ++gameManager.combo;
         gameManager.score += 100 + 10 * gameManager.combo;
         PlayerPrefs.SetInt("money", gameManager.score);
-        scoreText.GetComponent<TextMeshProUGUI>().text = "" + (gameManager.score );
+        scoreText.GetComponent<TextMeshProUGUI>().text = "x " + (gameManager.score );
 
         //destroying sheep
         speed = Mathf.Clamp(Vector3.Distance(transform.position, sheepCage.transform.position), 1f, 6f);

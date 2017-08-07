@@ -102,13 +102,13 @@ public class AlienManager : MonoBehaviour
         spaceShipForScript.transform.SetParent(GameObject.Find("Canvas").transform, false);
         spaceShipForScript.GetComponentInChildren<Button>().onClick.AddListener(call: shipClicked);
 
-        Vector3 destination = new Vector3(alienShip[shipType].transform.localPosition.x, -edgeOfScreen.y * 0.05f, 0f);
+        Vector3 destination = new Vector3(alienShip[shipType].transform.localPosition.x, -edgeOfScreen.y * 0.1f, 0f);
         do
         {
             spaceShipForScript.transform.localPosition =
-                Vector3.Lerp(spaceShipForScript.transform.localPosition, destination, 2.5f * Time.deltaTime);
+                Vector3.Lerp(spaceShipForScript.transform.localPosition, destination, 4f * Time.deltaTime);
             yield return new WaitForSeconds(0.02f);
-        } while ((int) spaceShipForScript.transform.localPosition.y > 0f);
+        } while ((int) spaceShipForScript.transform.localPosition.y > -30);
         activatingButtons();
     }
 

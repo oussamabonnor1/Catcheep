@@ -150,13 +150,13 @@ public class AlienManager : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         deactivatingButtons();
-        Vector3 destination = new Vector3(alienShip[shipType].transform.localPosition.x, edgeOfScreen.y * 0.5f, 0f);
+        Vector3 destination = new Vector3(alienShip[shipType].transform.localPosition.x, edgeOfScreen.y, 0f);
         do
         {
             spaceShipForScript.transform.localPosition =
                 Vector3.Lerp(spaceShipForScript.transform.localPosition, destination, 2.5f * Time.deltaTime);
             yield return new WaitForSeconds(0.02f);
-        } while ((int) spaceShipForScript.transform.localPosition.y < (int) destination.y * 1f);
+        } while ((int) spaceShipForScript.transform.localPosition.y < (int) destination.y * 0.7f);
         Destroy(spaceShipForScript.gameObject);
         activatingButtons();
     }
@@ -180,7 +180,7 @@ public class AlienManager : MonoBehaviour
             do
             {
                 spaceShipForScript.transform.localPosition = new Vector3(
-                    spaceShipForScript.transform.localPosition.x + 10,
+                    spaceShipForScript.transform.localPosition.x + 20,
                     spaceShipForScript.transform.localPosition.y, spaceShipForScript.transform.localPosition.z);
                 yield return new WaitForSeconds(0.01f);
             } while ((int) spaceShipForScript.transform.position.x < (int) destination.x * 1.3f);
@@ -209,7 +209,7 @@ public class AlienManager : MonoBehaviour
             do
             {
                 spaceShipForScript.transform.localPosition = new Vector3(
-                    spaceShipForScript.transform.localPosition.x - 10,
+                    spaceShipForScript.transform.localPosition.x - 20,
                     spaceShipForScript.transform.localPosition.y, spaceShipForScript.transform.localPosition.z);
                 yield return new WaitForSeconds(0.01f);
             } while ((int) spaceShipForScript.transform.position.x > (int) destination.x * 0.3f);

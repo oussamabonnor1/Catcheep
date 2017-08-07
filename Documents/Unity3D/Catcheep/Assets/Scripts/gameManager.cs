@@ -58,9 +58,7 @@ public class gameManager : MonoBehaviour
         gameOver = false;
         StartCoroutine(sheepSpawner());
     }
-
-   
-
+    
     void Update()
     {
 

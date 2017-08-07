@@ -59,4 +59,8 @@ public class ShopController : MonoBehaviour
     {
         PlayerPrefs.SetInt("ship", 2);
     }
+    public void ShipTHree()
+    {
+        PlayerPrefs.SetInt("ship", 3);
+    }
 }

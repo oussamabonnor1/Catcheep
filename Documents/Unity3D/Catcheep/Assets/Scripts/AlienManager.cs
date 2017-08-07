@@ -156,7 +156,7 @@ public class AlienManager : MonoBehaviour
             spaceShipForScript.transform.localPosition =
                 Vector3.Lerp(spaceShipForScript.transform.localPosition, destination, 2.5f * Time.deltaTime);
             yield return new WaitForSeconds(0.02f);
-        } while ((int) spaceShipForScript.transform.localPosition.y < (int) destination.y * 0.7f);
+        } while ((int) spaceShipForScript.transform.localPosition.y < (int) destination.y * 1f);
         Destroy(spaceShipForScript.gameObject);
         activatingButtons();
     }

@@ -50,7 +50,7 @@ public class gameManager : MonoBehaviour
         
         scoreText = GameObject.Find("score");
         scoreText.GetComponent<TextMeshProUGUI>().text = "x " + score;
-        GameObject.Find("sheeps caught").GetComponent<Text>().text = " x " + gameManager.totalSheepsCaught;
+        GameObject.Find("sheeps caught").GetComponent<Text>().text = " x " + totalSheepsCaught;
 
         //edge of screen is a vector3 that holds the screens width (can't get it directly cause of Screen/World point difference)
         Vector3 helpToolsPlateWidth = helpToolsPlate.GetComponent<RectTransform>().rect.size;
@@ -82,6 +82,7 @@ public class gameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            PlayerPrefs.SetInt("sheepy", totalSheepsCaught);
             ShowAd();
             SceneManager.LoadScene("Start");
         }
@@ -205,6 +206,7 @@ public class gameManager : MonoBehaviour
 
         if (gameOver)
         {
+            PlayerPrefs.SetInt("sheepy", totalSheepsCaught);
             winText.SetActive(true);
         }
     }

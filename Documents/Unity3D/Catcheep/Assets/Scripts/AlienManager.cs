@@ -108,7 +108,8 @@ public class AlienManager : MonoBehaviour
             spaceShipForScript.transform.localPosition =
                 Vector3.Lerp(spaceShipForScript.transform.localPosition, destination, 4f * Time.deltaTime);
             yield return new WaitForSeconds(0.02f);
-        } while ((int) spaceShipForScript.transform.localPosition.y > -30);
+        } while ((int) spaceShipForScript.transform.position.y > edgeOfScreen.y * 0.5f);
+        print(spaceShipForScript.transform.localPosition.y + " / " + spaceShipForScript.transform.position.y);
         activatingButtons();
     }
 

@@ -207,7 +207,7 @@ public class AlienManager : MonoBehaviour
         } while ((int) spaceShipForScript.transform.localPosition.y < (int) destination.y - destination.y * 0.1f);
         Destroy(spaceShipForScript.gameObject);
         activatingButtons();
-        if(timer[currentSheepShowed] <=0 ) timer[currentSheepShowed] = 179;
+        if (timer[currentSheepShowed] <= 0) timer[currentSheepShowed] = settingTimes(currentSheepShowed);
         timeText.SetActive(true);
     }
 
@@ -237,7 +237,11 @@ public class AlienManager : MonoBehaviour
             Destroy(spaceShipForScript.gameObject);
         }
         changingSheepPic(1);
-        StartCoroutine(alienSpawner());
+        if(timer[currentSheepShowed] <= 0) StartCoroutine(alienSpawner());
+        else
+        {
+            activatingButtons();
+        }
     }
 
     public void shipGoingLeftButtonClicked()
@@ -266,7 +270,15 @@ public class AlienManager : MonoBehaviour
             Destroy(spaceShipForScript.gameObject);
         }
         changingSheepPic(-1);
-        StartCoroutine(alienSpawner());
+        if (timer[currentSheepShowed] <= 0)
+        {
+            StartCoroutine(alienSpawner());
+
+        }
+        else
+        {
+            activatingButtons();
+        }
     }
 
     void changingSheepPic(int i)

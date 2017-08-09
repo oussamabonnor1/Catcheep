@@ -10,6 +10,7 @@ public class AlienManager : MonoBehaviour
     [Header("In game objects")]
     public Sprite[] SheepSprites;
     public GameObject[] alienShip;
+    public GameObject maskHolder;
 
     [Header("UI components")]
     public GameObject rightButton;
@@ -99,7 +100,8 @@ public class AlienManager : MonoBehaviour
 
         spaceShipForScript = Instantiate(alienShip[shipType], alienShip[shipType].transform.localPosition,
             alienShip[shipType].transform.rotation);
-        spaceShipForScript.transform.SetParent(GameObject.Find("Canvas").transform, false);
+        spaceShipForScript.transform.SetParent(GameObject.Find("Mask holder").transform, false);
+        //this next line makes the button of prefab ship clickable, do not alter !
         spaceShipForScript.GetComponentInChildren<Button>().onClick.AddListener(call: shipClicked);
 
         Vector3 destination = new Vector3(alienShip[shipType].transform.localPosition.x, -edgeOfScreen.y * 0.1f, 0f);

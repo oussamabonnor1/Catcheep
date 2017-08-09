@@ -100,20 +100,21 @@ public class AlienManager : MonoBehaviour
 
         spaceShipForScript = Instantiate(alienShip[shipType], alienShip[shipType].transform.localPosition,
             alienShip[shipType].transform.rotation);
-        spaceShipForScript.transform.SetParent(maskHolder.transform, false);
-        maskHolder.GetComponent<ScrollRect>().content = spaceShipForScript.GetComponent<RectTransform>();
+        spaceShipForScript.transform.SetParent(GameObject.Find("Canvas").transform, false);
 
         //this next line makes the button of prefab ship clickable, do not alter !
         spaceShipForScript.GetComponentInChildren<Button>().onClick.AddListener(call: shipClicked);
 
-        Vector3 destination = new Vector3(alienShip[shipType].transform.localPosition.x, -edgeOfScreen.y * 0.4f, 0f);
+        Vector3 destination = new Vector3(alienShip[shipType].transform.localPosition.x, -200f, 0f);
         do
         {
             spaceShipForScript.transform.localPosition =
                 Vector3.Lerp(spaceShipForScript.transform.localPosition, destination, 4f * Time.deltaTime);
             yield return new WaitForSeconds(0.02f);
-        } while ((int) spaceShipForScript.transform.position.y > edgeOfScreen.y * 0.45f);
-        print(spaceShipForScript.transform.localPosition.y + " / " + spaceShipForScript.transform.position.y);
+        } while ((int) spaceShipForScript.transform.localPosition.y > -100f);
+        
+        spaceShipForScript.transform.SetParent(maskHolder.transform, true);
+        maskHolder.GetComponent<ScrollRect>().content = spaceShipForScript.GetComponent<RectTransform>();
         activatingButtons();
     }
 

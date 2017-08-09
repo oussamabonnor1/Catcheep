@@ -125,7 +125,6 @@ public class gameManager : MonoBehaviour
 
             if (collisions == null)
             {
-                print(Time.time);
                 if (taux < 2f) taux += 0.065f;
                 int i = Random.Range(-5, 12);
 

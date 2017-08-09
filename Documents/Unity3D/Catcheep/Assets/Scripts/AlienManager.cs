@@ -100,7 +100,9 @@ public class AlienManager : MonoBehaviour
 
         spaceShipForScript = Instantiate(alienShip[shipType], alienShip[shipType].transform.localPosition,
             alienShip[shipType].transform.rotation);
-        spaceShipForScript.transform.SetParent(GameObject.Find("Mask holder").transform, false);
+        spaceShipForScript.transform.SetParent(maskHolder.transform, false);
+        maskHolder.GetComponent<ScrollRect>().content = spaceShipForScript.GetComponent<RectTransform>();
+
         //this next line makes the button of prefab ship clickable, do not alter !
         spaceShipForScript.GetComponentInChildren<Button>().onClick.AddListener(call: shipClicked);
 

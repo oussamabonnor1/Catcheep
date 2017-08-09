@@ -15,6 +15,7 @@ public class AlienManager : MonoBehaviour
     [Header("UI components")]
     public GameObject rightButton;
     public GameObject leftButton;
+    public GameObject timeText;
 
     [Header("indication elements")]
     public GameObject sheepHolder;
@@ -30,10 +31,12 @@ public class AlienManager : MonoBehaviour
     private int currentSheepShowed;
     private int sheepyRequested;
     private int shipType;
+    private float[] timer;
 
     // Use this for initialization
     void Start()
     {
+        timer = new float[SheepSprites.Length];
         if (PlayerPrefs.GetInt("ship") == 0)
         {
             PlayerPrefs.SetInt("ship", 1);
@@ -50,9 +53,34 @@ public class AlienManager : MonoBehaviour
         StartCoroutine(alienSpawner());
     }
 
+    int settingTimes(int currentSheepShowed)
+    {
+        switch (currentSheepShowed)
+        {
+            case 0:
+                return 59;
+            case 1:
+                return 59;
+            case 2:
+                return 59;
+            case 3:
+                return 59;
+            case 4:
+                return 59; 
+            case 5:
+                return 59;
+            case 6:
+                return 59;
+            default:
+                return 0;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
+        updatingTimers();
+
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
             //when player presses, save that click position
@@ -94,6 +122,20 @@ public class AlienManager : MonoBehaviour
         }
     }
 
+    void updatingTimers()
+    {
+        for (int i = 0; i < timer.Length; i++)
+        {
+            if (timer[i] > 0)
+            {
+                string minutes = Mathf.Floor(timer[currentSheepShowed] / 60).ToString("00");
+                string seconds = (timer[currentSheepShowed] % 60).ToString("00");
+                timeText.GetComponent<TextMeshProUGUI>().text = minutes + ":" + seconds;
+                timer[i] -= Time.deltaTime;
+            }
+        }
+    }
+
     IEnumerator alienSpawner()
     {
         deactivatingButtons();
@@ -118,24 +160,6 @@ public class AlienManager : MonoBehaviour
         activatingButtons();
     }
 
-    void shipClicked()
-    {
-        if (PlayerPrefs.GetInt("sheepy") >= sheepyRequested)
-        {
-            PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") - sheepyRequested);
-            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + (sheepyRequested * 100));
-            moneyAmountText.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetInt("money") + " $";
-            sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
-            sheepyRequested = 0;
-            
-            StartCoroutine(shipLeaving());
-        }
-        else
-        {
-            StartCoroutine(notEnoughtSheeps());
-        }
-    }
-
     IEnumerator notEnoughtSheeps()
     {
         yield return new WaitForSeconds(1);
@@ -145,6 +169,24 @@ public class AlienManager : MonoBehaviour
     {
         sheepyRequested = Random.Range(2, 10);
         sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
+    }
+
+    void shipClicked()
+    {
+        if (PlayerPrefs.GetInt("sheepy") >= sheepyRequested)
+        {
+            PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") - sheepyRequested);
+            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + (sheepyRequested * 100));
+            moneyAmountText.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetInt("money") + " $";
+            sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
+            sheepyRequested = 0;
+
+            StartCoroutine(shipLeaving());
+        }
+        else
+        {
+            StartCoroutine(notEnoughtSheeps());
+        }
     }
 
     IEnumerator shipLeaving()
@@ -165,6 +207,8 @@ public class AlienManager : MonoBehaviour
         } while ((int) spaceShipForScript.transform.localPosition.y < (int) destination.y - destination.y * 0.1f);
         Destroy(spaceShipForScript.gameObject);
         activatingButtons();
+        if(timer[currentSheepShowed] <=0 ) timer[currentSheepShowed] = 179;
+        timeText.SetActive(true);
     }
 
     public void shipGoingRightButtonClicked()
@@ -241,6 +285,19 @@ public class AlienManager : MonoBehaviour
             sheepHolder.GetComponentInChildren<TextMeshProUGUI>().text = "x" + sheepyRequested;
             sheepHolder.GetComponent<Image>().sprite = SheepSprites[currentSheepShowed];
         }
+
+        if (timer[currentSheepShowed] > 0)
+        {
+            string minutes = Mathf.Floor(timer[currentSheepShowed] / 60).ToString("00");
+            string seconds = (timer[currentSheepShowed] % 60).ToString("00");
+            timeText.GetComponent<TextMeshProUGUI>().text = minutes + ":" + seconds;
+            timeText.SetActive(true);
+        }
+        else
+        {
+            timeText.SetActive(false);
+        }
+        
     }
 
     void activatingButtons()

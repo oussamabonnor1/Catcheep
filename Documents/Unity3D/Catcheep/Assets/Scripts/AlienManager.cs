@@ -92,19 +92,22 @@ public class AlienManager : MonoBehaviour
         //if both positions aren't null
         if (oldPosition != new Vector2(0f, 0f) && newPosition != new Vector2(0f, 0f))
         {
-            if (Vector2.Distance(oldPosition, newPosition) >= (edgeOfScreen.x * 0.2f) &&
-                Mathf.Abs(newPosition.y - oldPosition.y) < (edgeOfScreen.y * 0.07f))
+            if (rightButton.GetComponent<Button>().IsActive())
             {
-                if (oldPosition.x < newPosition.x)
+                if (Vector2.Distance(oldPosition, newPosition) >= (edgeOfScreen.x * 0.2f) &&
+                    Mathf.Abs(newPosition.y - oldPosition.y) < (edgeOfScreen.y * 0.07f))
                 {
-                    shipGoingRightButtonClicked();
+                    if (oldPosition.x < newPosition.x)
+                    {
+                        shipGoingRightButtonClicked();
+                    }
+                    else
+                    {
+                        shipGoingLeftButtonClicked();
+                    }
+                    oldPosition = new Vector2(0f, 0f);
+                    newPosition = new Vector2(0f, 0f);
                 }
-                else
-                {
-                    shipGoingLeftButtonClicked();
-                }
-                oldPosition = new Vector2(0f, 0f);
-                newPosition = new Vector2(0f, 0f);
             }
         }
 
@@ -345,9 +348,11 @@ public class AlienManager : MonoBehaviour
         if (SheepMapGameObject.gameObject.activeInHierarchy)
         {
             StartCoroutine(sheepMapClosed());
+            activatingButtons();
         }
         else
         {
+            deactivatingButtons();
             SheepMapGameObject.SetActive(true);
             StartCoroutine(sheepMapOpened());
         }

@@ -106,13 +106,13 @@ public class AlienManager : MonoBehaviour
         //this next line makes the button of prefab ship clickable, do not alter !
         spaceShipForScript.GetComponentInChildren<Button>().onClick.AddListener(call: shipClicked);
 
-        Vector3 destination = new Vector3(alienShip[shipType].transform.localPosition.x, -edgeOfScreen.y * 0.1f, 0f);
+        Vector3 destination = new Vector3(alienShip[shipType].transform.localPosition.x, -edgeOfScreen.y * 0.4f, 0f);
         do
         {
             spaceShipForScript.transform.localPosition =
                 Vector3.Lerp(spaceShipForScript.transform.localPosition, destination, 4f * Time.deltaTime);
             yield return new WaitForSeconds(0.02f);
-        } while ((int) spaceShipForScript.transform.position.y > edgeOfScreen.y * 0.3f);
+        } while ((int) spaceShipForScript.transform.position.y > edgeOfScreen.y * 0.45f);
         print(spaceShipForScript.transform.localPosition.y + " / " + spaceShipForScript.transform.position.y);
         activatingButtons();
     }

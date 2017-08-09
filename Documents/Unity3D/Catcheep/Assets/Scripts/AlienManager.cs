@@ -7,18 +7,16 @@ using UnityEngine.UI;
 
 public class AlienManager : MonoBehaviour
 {
-    [Header("In game objects")]
-    public Sprite[] SheepSprites;
+    [Header("In game objects")] public Sprite[] SheepSprites;
     public GameObject[] alienShip;
     public GameObject maskHolder;
 
-    [Header("UI components")]
-    public GameObject rightButton;
+    [Header("UI components")] public GameObject rightButton;
     public GameObject leftButton;
     public GameObject timeText;
+    public GameObject SheepMapGameObject;
 
-    [Header("indication elements")]
-    public GameObject sheepHolder;
+    [Header("indication elements")] public GameObject sheepHolder;
     public GameObject sheepNumberText;
     public GameObject moneyAmountText;
 
@@ -66,7 +64,7 @@ public class AlienManager : MonoBehaviour
             case 3:
                 return 59;
             case 4:
-                return 59; 
+                return 59;
             case 5:
                 return 59;
             case 6:
@@ -154,7 +152,7 @@ public class AlienManager : MonoBehaviour
                 Vector3.Lerp(spaceShipForScript.transform.localPosition, destination, 4f * Time.deltaTime);
             yield return new WaitForSeconds(0.02f);
         } while ((int) spaceShipForScript.transform.localPosition.y > -100f);
-        
+
         spaceShipForScript.transform.SetParent(maskHolder.transform, true);
         maskHolder.GetComponent<ScrollRect>().content = spaceShipForScript.GetComponent<RectTransform>();
         activatingButtons();
@@ -227,17 +225,31 @@ public class AlienManager : MonoBehaviour
                 edgeOfScreen.x + alienShip[shipType].GetComponentInChildren<Image>().sprite.bounds.size.x,
                 spaceShipForScript.transform.localPosition.y,
                 spaceShipForScript.transform.localPosition.z);
+            /*if (timer[currentSheepShowed-1] > 0)
+            {
+                //setting the timer's position (for pretty animation purpose)
+                timeText.transform.localPosition = new Vector3(-destination.x,
+                    timeText.transform.localPosition.y, timeText.transform.localPosition.z);
+                timeText.SetActive(true);
+            }*/
+
             do
             {
+                /*if (timer[currentSheepShowed] > 0)
+                {
+                    timeText.transform.localPosition = new Vector3(timeText.transform.localPosition.x + 20,
+                        timeText.transform.localPosition.y, timeText.transform.localPosition.z);
+                }*/
+
                 spaceShipForScript.transform.localPosition = new Vector3(
                     spaceShipForScript.transform.localPosition.x + 20,
-                    spaceShipForScript.transform.localPosition.y, spaceShipForScript.transform.localPosition.z);
+                spaceShipForScript.transform.localPosition.y, spaceShipForScript.transform.localPosition.z);
                 yield return new WaitForSeconds(0.01f);
             } while ((int) spaceShipForScript.transform.position.x < (int) destination.x * 1.3f);
             Destroy(spaceShipForScript.gameObject);
         }
         changingSheepPic(1);
-        if(timer[currentSheepShowed] <= 0) StartCoroutine(alienSpawner());
+        if (timer[currentSheepShowed] <= 0) StartCoroutine(alienSpawner());
         else
         {
             activatingButtons();
@@ -273,7 +285,6 @@ public class AlienManager : MonoBehaviour
         if (timer[currentSheepShowed] <= 0)
         {
             StartCoroutine(alienSpawner());
-
         }
         else
         {
@@ -309,7 +320,6 @@ public class AlienManager : MonoBehaviour
         {
             timeText.SetActive(false);
         }
-        
     }
 
     void activatingButtons()
@@ -327,5 +337,82 @@ public class AlienManager : MonoBehaviour
     public void startMenu()
     {
         SceneManager.LoadScene(1);
+    }
+
+    //sheep map functions
+    public void sheepMapClick()
+    {
+        if (SheepMapGameObject.gameObject.activeInHierarchy)
+        {
+            StartCoroutine(sheepMapClosed());
+        }
+        else
+        {
+            SheepMapGameObject.SetActive(true);
+            StartCoroutine(sheepMapOpened());
+        }
+    }
+    IEnumerator sheepMapOpened()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            float a = (float)i / 10;
+            SheepMapGameObject.transform.localScale = new Vector3(a, a, 1);
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+    IEnumerator sheepMapClosed()
+    {
+        for (int i = 10; i > 0; i--)
+        {
+            float a = (float)i / 10;
+            SheepMapGameObject.transform.localScale = new Vector3(a, a, 1);
+            yield return new WaitForSeconds(0.01f);
+        }
+        SheepMapGameObject.SetActive(false);
+    }
+
+    public void sheepyClicked()
+    {
+        print("sheep clicked");
+        StartCoroutine(sheepMapClosed());
+        currentSheepShowed = -1;
+        shipGoingRightButtonClicked();
+    }
+    public void blackyClicked()
+    {
+        StartCoroutine(sheepMapClosed());
+        currentSheepShowed = 0;
+        shipGoingRightButtonClicked();
+    }
+    public void flashClicked()
+    {
+        StartCoroutine(sheepMapClosed());
+        currentSheepShowed = 1;
+        shipGoingRightButtonClicked();
+    }
+    public void sheepySnowClicked()
+    {
+        StartCoroutine(sheepMapClosed());
+        currentSheepShowed = 2;
+        shipGoingRightButtonClicked();
+    }
+    public void blackySnowClicked()
+    {
+        StartCoroutine(sheepMapClosed());
+        currentSheepShowed = 3;
+        shipGoingRightButtonClicked();
+    }
+    public void sheepyCityClicked()
+    {
+        StartCoroutine(sheepMapClosed());
+        currentSheepShowed = 4;
+        shipGoingRightButtonClicked();
+    }
+    public void blackyCityClicked()
+    {
+        StartCoroutine(sheepMapClosed());
+        currentSheepShowed = 5;
+        shipGoingRightButtonClicked();
     }
 }

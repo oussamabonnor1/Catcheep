@@ -143,7 +143,7 @@ public class AlienManager : MonoBehaviour
 
     void settingDemands()
     {
-        sheepyRequested = Random.Range(2, 10) * 10;
+        sheepyRequested = Random.Range(2, 10);
         sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
     }
 
@@ -156,13 +156,13 @@ public class AlienManager : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         deactivatingButtons();
-        Vector3 destination = new Vector3(alienShip[shipType].transform.localPosition.x, edgeOfScreen.y, 0f);
+        Vector3 destination = new Vector3(alienShip[shipType].transform.localPosition.x, edgeOfScreen.y * 1.5f, 0f);
         do
         {
             spaceShipForScript.transform.localPosition =
-                Vector3.Lerp(spaceShipForScript.transform.localPosition, destination, 2.5f * Time.deltaTime);
+                Vector3.Lerp(spaceShipForScript.transform.localPosition, destination, 4f * Time.deltaTime);
             yield return new WaitForSeconds(0.02f);
-        } while ((int) spaceShipForScript.transform.localPosition.y < (int) destination.y * 0.7f);
+        } while ((int) spaceShipForScript.transform.localPosition.y < (int) destination.y - destination.y * 0.1f);
         Destroy(spaceShipForScript.gameObject);
         activatingButtons();
     }

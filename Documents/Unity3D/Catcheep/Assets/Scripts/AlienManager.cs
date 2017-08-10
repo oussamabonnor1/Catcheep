@@ -193,7 +193,8 @@ public class AlienManager : MonoBehaviour
     IEnumerator shipLeaving()
     {
         spaceShipForScript.transform.GetChild(1).gameObject.SetActive(false);
-        spaceShipForScript.transform.GetChild(1).gameObject.SetActive(true);
+        spaceShipForScript.transform.GetChild(2).gameObject.SetActive(false);
+        spaceShipForScript.transform.GetChild(2).gameObject.SetActive(true);
         spaceShipForScript.transform.GetChild(0).gameObject.SetActive(true);
 
         yield return new WaitForSeconds(1.5f);
@@ -359,7 +360,7 @@ public class AlienManager : MonoBehaviour
     }
     IEnumerator sheepMapOpened()
     {
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i <= 10; i++)
         {
             float a = (float)i / 10;
             SheepMapGameObject.transform.localScale = new Vector3(a, a, 1);
@@ -368,7 +369,7 @@ public class AlienManager : MonoBehaviour
     }
     IEnumerator sheepMapClosed()
     {
-        for (int i = 10; i > 0; i--)
+        for (int i = 10; i >= 0; i--)
         {
             float a = (float)i / 10;
             SheepMapGameObject.transform.localScale = new Vector3(a, a, 1);

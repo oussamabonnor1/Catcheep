@@ -9,14 +9,18 @@ using UnityEngine.UI;
 
 public class gameManager : MonoBehaviour
 {
+    [Header("Sheep related objects")]
     public GameObject[] sheeps;
     public GameObject[] formationSheepys;
+    public AudioClip[] sheepSound;
+
+    [Header("UI components")]
     public GameObject background;
     public GameObject backgroundOfTrees;
-    public AudioClip[] sheepSound;
     public GameObject winText;
     public GameObject flare;
     public GameObject helpToolsPlate;
+    public GameObject pausePanel;
     
     public static bool gameOver;
     private Vector3 edgeOfScreen;
@@ -80,9 +84,17 @@ public class gameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            PlayerPrefs.SetInt("sheepy", totalSheepsCaught);
-            ShowAd();
-            SceneManager.LoadScene("Start");
+            if (!pausePanel.gameObject.activeSelf)
+            {
+                Time.timeScale = 0;
+                PlayerPrefs.SetInt("sheepy", totalSheepsCaught);
+                pausePanel.SetActive(true);
+            }
+            else
+            {
+                Time.timeScale = 1;
+                pausePanel.SetActive(false);
+            }
         }
     }
 
@@ -109,8 +121,7 @@ public class gameManager : MonoBehaviour
         background.transform.localScale = yHeight;
 
     }
-
-
+    
     //THE MAIN SHEEP CREATOR, DO NOT ULTER UNLESS YOU UNDERSTAND THE CODE 100% 
     //this bit is in relation with many scripts
     IEnumerator sheepSpawner()
@@ -208,6 +219,12 @@ public class gameManager : MonoBehaviour
         }
     }
 
+    public void quit()
+    {
+        ShowAd();
+        PlayerPrefs.SetInt("sheepy", totalSheepsCaught);
+
+    }
 
     //one sheepy formations
     void oneSheepyRandom(int index)

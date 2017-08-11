@@ -199,6 +199,8 @@ public class AlienManager : MonoBehaviour
         spaceShipForScript.transform.GetChild(0).gameObject.SetActive(true);
 
         yield return new WaitForSeconds(1.5f);
+        timeText.SetActive(true);
+        StartCoroutine(objectOpened(timeText));
 
         Vector3 destination = new Vector3(alienShip[shipType].transform.localPosition.x, edgeOfScreen.y * 1.5f, 0f);
         do
@@ -210,8 +212,7 @@ public class AlienManager : MonoBehaviour
         Destroy(spaceShipForScript.gameObject);
         activatingButtons();
         if (timer[currentSheepShowed] <= 0) timer[currentSheepShowed] = settingTimes(currentSheepShowed);
-        timeText.SetActive(true);
-        StartCoroutine(objectOpened(timeText));
+        
     }
 
     public void shipGoingRightButtonClicked()
@@ -224,7 +225,6 @@ public class AlienManager : MonoBehaviour
     {
         if (spaceShipForScript != null)
         {
-            changingSheepPic(1);
             deactivatingButtons();
             Vector3 destination = new Vector3(
                 edgeOfScreen.x + alienShip[shipType].GetComponentInChildren<Image>().sprite.bounds.size.x,
@@ -240,6 +240,8 @@ public class AlienManager : MonoBehaviour
             } while ((int) spaceShipForScript.transform.position.x < (int) destination.x * 1.3f);
             Destroy(spaceShipForScript.gameObject);
         }
+        changingSheepPic(1);
+      
         if (timer[currentSheepShowed] <= 0) StartCoroutine(alienSpawner());
         else
         {
@@ -261,7 +263,6 @@ public class AlienManager : MonoBehaviour
         }
         if (spaceShipForScript != null)
         {
-            changingSheepPic(-1);
             deactivatingButtons();
             //spaceShipForScript.transform.localRotation = new Quaternion(spaceShipForScript.transform.localRotation.x, spaceShipForScript.transform.rotation.y, -5, spaceShipForScript.transform.rotation.w);
             Vector3 destination = new Vector3(
@@ -277,6 +278,7 @@ public class AlienManager : MonoBehaviour
             } while ((int) spaceShipForScript.transform.position.x > (int) destination.x * 0.3f);
             Destroy(spaceShipForScript.gameObject);
         }
+        changingSheepPic(-1);
         if (timer[currentSheepShowed] <= 0)
         {
             StartCoroutine(alienSpawner());

@@ -181,7 +181,7 @@ public class AlienManager : MonoBehaviour
             moneyAmountText.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetInt("money") + " $";
             sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
             sheepyRequested = 0;
-
+            deactivatingButtons();
             StartCoroutine(shipLeaving());
         }
         else
@@ -199,7 +199,6 @@ public class AlienManager : MonoBehaviour
 
         yield return new WaitForSeconds(1.5f);
 
-        deactivatingButtons();
         Vector3 destination = new Vector3(alienShip[shipType].transform.localPosition.x, edgeOfScreen.y * 1.5f, 0f);
         do
         {

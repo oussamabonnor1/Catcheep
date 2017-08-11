@@ -192,6 +192,7 @@ public class AlienManager : MonoBehaviour
 
     IEnumerator shipLeaving()
     {
+        spaceShipForScript.transform.GetChild(2).GetComponent<Button>().enabled = false;
         spaceShipForScript.transform.GetChild(1).gameObject.SetActive(false);
         spaceShipForScript.transform.GetChild(2).gameObject.SetActive(false);
         spaceShipForScript.transform.GetChild(2).gameObject.SetActive(true);
@@ -210,6 +211,7 @@ public class AlienManager : MonoBehaviour
         activatingButtons();
         if (timer[currentSheepShowed] <= 0) timer[currentSheepShowed] = settingTimes(currentSheepShowed);
         timeText.SetActive(true);
+        StartCoroutine(objectOpened(timeText));
     }
 
     public void shipGoingRightButtonClicked()
@@ -222,28 +224,15 @@ public class AlienManager : MonoBehaviour
     {
         if (spaceShipForScript != null)
         {
+            changingSheepPic(1);
             deactivatingButtons();
-            //spaceShipForScript.transform.localRotation = new Quaternion(spaceShipForScript.transform.localRotation.x, spaceShipForScript.transform.rotation.y, -5, spaceShipForScript.transform.rotation.w);
             Vector3 destination = new Vector3(
                 edgeOfScreen.x + alienShip[shipType].GetComponentInChildren<Image>().sprite.bounds.size.x,
                 spaceShipForScript.transform.localPosition.y,
                 spaceShipForScript.transform.localPosition.z);
-            /*if (timer[currentSheepShowed-1] > 0)
-            {
-                //setting the timer's position (for pretty animation purpose)
-                timeText.transform.localPosition = new Vector3(-destination.x,
-                    timeText.transform.localPosition.y, timeText.transform.localPosition.z);
-                timeText.SetActive(true);
-            }*/
-
+           
             do
             {
-                /*if (timer[currentSheepShowed] > 0)
-                {
-                    timeText.transform.localPosition = new Vector3(timeText.transform.localPosition.x + 20,
-                        timeText.transform.localPosition.y, timeText.transform.localPosition.z);
-                }*/
-
                 spaceShipForScript.transform.localPosition = new Vector3(
                     spaceShipForScript.transform.localPosition.x + 20,
                 spaceShipForScript.transform.localPosition.y, spaceShipForScript.transform.localPosition.z);
@@ -251,7 +240,6 @@ public class AlienManager : MonoBehaviour
             } while ((int) spaceShipForScript.transform.position.x < (int) destination.x * 1.3f);
             Destroy(spaceShipForScript.gameObject);
         }
-        changingSheepPic(1);
         if (timer[currentSheepShowed] <= 0) StartCoroutine(alienSpawner());
         else
         {
@@ -267,8 +255,13 @@ public class AlienManager : MonoBehaviour
 
     IEnumerator shipGoingLeft()
     {
+        if (timeText.gameObject.activeSelf)
+        {
+            StartCoroutine(objectClosed(timeText));
+        }
         if (spaceShipForScript != null)
         {
+            changingSheepPic(-1);
             deactivatingButtons();
             //spaceShipForScript.transform.localRotation = new Quaternion(spaceShipForScript.transform.localRotation.x, spaceShipForScript.transform.rotation.y, -5, spaceShipForScript.transform.rotation.w);
             Vector3 destination = new Vector3(
@@ -284,7 +277,6 @@ public class AlienManager : MonoBehaviour
             } while ((int) spaceShipForScript.transform.position.x > (int) destination.x * 0.3f);
             Destroy(spaceShipForScript.gameObject);
         }
-        changingSheepPic(-1);
         if (timer[currentSheepShowed] <= 0)
         {
             StartCoroutine(alienSpawner());
@@ -318,6 +310,7 @@ public class AlienManager : MonoBehaviour
             string seconds = (timer[currentSheepShowed] % 60).ToString("00");
             timeText.GetComponent<TextMeshProUGUI>().text = minutes + ":" + seconds;
             timeText.SetActive(true);
+            StartCoroutine(objectOpened(timeText));
         }
         else
         {
@@ -347,31 +340,31 @@ public class AlienManager : MonoBehaviour
     {
         if (SheepMapGameObject.gameObject.activeInHierarchy)
         {
-            StartCoroutine(sheepMapClosed());
+            StartCoroutine(objectClosed(SheepMapGameObject));
             activatingButtons();
         }
         else
         {
             deactivatingButtons();
             SheepMapGameObject.SetActive(true);
-            StartCoroutine(sheepMapOpened());
+            StartCoroutine(objectOpened(SheepMapGameObject));
         }
     }
-    IEnumerator sheepMapOpened()
+    IEnumerator objectOpened(GameObject objectToOpen)
     {
         for (int i = 0; i <= 10; i++)
         {
             float a = (float)i / 10;
-            SheepMapGameObject.transform.localScale = new Vector3(a, a, 1);
+            objectToOpen.transform.localScale = new Vector3(a, a, 1);
             yield return new WaitForSeconds(0.01f);
         }
     }
-    IEnumerator sheepMapClosed()
+    IEnumerator objectClosed(GameObject objectToOpen)
     {
         for (int i = 10; i >= 0; i--)
         {
             float a = (float)i / 10;
-            SheepMapGameObject.transform.localScale = new Vector3(a, a, 1);
+            objectToOpen.transform.localScale = new Vector3(a, a, 1);
             yield return new WaitForSeconds(0.01f);
         }
         SheepMapGameObject.SetActive(false);
@@ -379,44 +372,43 @@ public class AlienManager : MonoBehaviour
 
     public void sheepyClicked()
     {
-        print("sheep clicked");
-        StartCoroutine(sheepMapClosed());
+        StartCoroutine(objectClosed(SheepMapGameObject));
         currentSheepShowed = -1;
         shipGoingRightButtonClicked();
     }
     public void blackyClicked()
     {
-        StartCoroutine(sheepMapClosed());
+        StartCoroutine(objectClosed(SheepMapGameObject));
         currentSheepShowed = 0;
         shipGoingRightButtonClicked();
     }
     public void flashClicked()
     {
-        StartCoroutine(sheepMapClosed());
+        StartCoroutine(objectClosed(SheepMapGameObject));
         currentSheepShowed = 1;
         shipGoingRightButtonClicked();
     }
     public void sheepySnowClicked()
     {
-        StartCoroutine(sheepMapClosed());
+        StartCoroutine(objectClosed(SheepMapGameObject));
         currentSheepShowed = 2;
         shipGoingRightButtonClicked();
     }
     public void blackySnowClicked()
     {
-        StartCoroutine(sheepMapClosed());
+        StartCoroutine(objectClosed(SheepMapGameObject));
         currentSheepShowed = 3;
         shipGoingRightButtonClicked();
     }
     public void sheepyCityClicked()
     {
-        StartCoroutine(sheepMapClosed());
+        StartCoroutine(objectClosed(SheepMapGameObject));
         currentSheepShowed = 4;
         shipGoingRightButtonClicked();
     }
     public void blackyCityClicked()
     {
-        StartCoroutine(sheepMapClosed());
+        StartCoroutine(objectClosed(SheepMapGameObject));
         currentSheepShowed = 5;
         shipGoingRightButtonClicked();
     }

@@ -92,8 +92,7 @@ public class gameManager : MonoBehaviour
             }
             else
             {
-                Time.timeScale = 1;
-                pausePanel.SetActive(false);
+                ContinueGame();
             }
         }
     }
@@ -223,7 +222,18 @@ public class gameManager : MonoBehaviour
     {
         ShowAd();
         PlayerPrefs.SetInt("sheepy", totalSheepsCaught);
-
+        SceneManager.LoadScene("Start");
+    }
+    public void ContinueGame()
+    {
+        Time.timeScale = 1;
+        pausePanel.SetActive(false);
+    }
+    public void restart()
+    {
+        ShowAd();
+        PlayerPrefs.SetInt("sheepy", totalSheepsCaught);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     //one sheepy formations

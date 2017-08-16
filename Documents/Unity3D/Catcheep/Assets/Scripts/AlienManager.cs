@@ -7,16 +7,19 @@ using UnityEngine.UI;
 
 public class AlienManager : MonoBehaviour
 {
-    [Header("In game objects")] public Sprite[] SheepSprites;
+    [Header("In game objects")]
+    public Sprite[] SheepSprites;
     public GameObject[] alienShip;
     public GameObject maskHolder;
 
-    [Header("UI components")] public GameObject rightButton;
+    [Header("UI components")]
+    public GameObject rightButton;
     public GameObject leftButton;
     public GameObject timeText;
     public GameObject SheepMapGameObject;
 
-    [Header("indication elements")] public GameObject sheepHolder;
+    [Header("indication elements")]
+    public GameObject sheepHolder;
     public GameObject sheepNumberText;
     public GameObject moneyAmountText;
 
@@ -70,6 +73,7 @@ public class AlienManager : MonoBehaviour
             case 6:
                 return 59;
             default:
+                print("Error: sheep index of aliens");
                 return 0;
         }
     }
@@ -193,6 +197,7 @@ public class AlienManager : MonoBehaviour
     IEnumerator shipLeaving()
     {
         spaceShipForScript.transform.GetChild(2).GetComponent<Button>().enabled = false;
+
         spaceShipForScript.transform.GetChild(1).gameObject.SetActive(false);
         spaceShipForScript.transform.GetChild(2).gameObject.SetActive(false);
         spaceShipForScript.transform.GetChild(2).gameObject.SetActive(true);

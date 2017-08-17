@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Advertisements;
 
@@ -13,9 +14,10 @@ public class ShopController : MonoBehaviour
     
 
     // Use this for initialization
-    void Start () {
-		
-	}
+    void Start ()
+    {
+        cashText.GetComponent<TextMeshProUGUI>().text = " Ca$h: < i >< b >"+PlayerPrefs.GetInt("money")+"</ b ></ i >";
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -58,32 +60,58 @@ public class ShopController : MonoBehaviour
         {
             PlayerPrefs.SetInt("ship", 1);
             PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 2500);
-            Ca$h: < i >< b > PlayerPrefs.GetInt("money") </ b ></ i >
+            cashText.GetComponent<TextMeshProUGUI>().text = " Ca$h: < i >< b >" + PlayerPrefs.GetInt("money") + "</ b ></ i >";
         }
         else
-        { 
-            
+        {
+
+            cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
+
         }
     }
     public void ShipTwo()
     {
-        if (PlayerPrefs.GetInt("money") > 2500)
+        if (PlayerPrefs.GetInt("money") >= 4000)
         {
-            PlayerPrefs.SetInt("ship", 2);
+            PlayerPrefs.SetInt("ship", 1);
+            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 4000);
+            cashText.GetComponent<TextMeshProUGUI>().text = " Ca$h: < i >< b >" + PlayerPrefs.GetInt("money") + "</ b ></ i >";
+        }
+        else
+        {
+
+            cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
+
         }
     }
     public void ShipThree()
     {
-        if (PlayerPrefs.GetInt("money") > 2500)
+        if (PlayerPrefs.GetInt("money") >= 8000)
         {
-            PlayerPrefs.SetInt("ship", 3);
+            PlayerPrefs.SetInt("ship", 1);
+            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 8000);
+            cashText.GetComponent<TextMeshProUGUI>().text = " Ca$h: < i >< b >" + PlayerPrefs.GetInt("money") + "</ b ></ i >";
+        }
+        else
+        {
+
+            cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
+
         }
     }
     public void ShipFour()
     {
-        if (PlayerPrefs.GetInt("money") > 2500)
+        if (PlayerPrefs.GetInt("money") >= 15000)
         {
-            PlayerPrefs.SetInt("ship", 4);
+            PlayerPrefs.SetInt("ship", 1);
+            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 15000);
+            cashText.GetComponent<TextMeshProUGUI>().text = " Ca$h: < i >< b >" + PlayerPrefs.GetInt("money") + "</ b ></ i >";
+        }
+        else
+        {
+
+            cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
+
         }
     }
 }

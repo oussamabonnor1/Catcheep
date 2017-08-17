@@ -192,17 +192,17 @@ public class AlienManager : MonoBehaviour
 
     IEnumerator shipLeaving()
     {
+        //setting spaceship UI
         spaceShipForScript.transform.GetChild(2).GetComponent<Button>().enabled = false;
-
         spaceShipForScript.transform.GetChild(1).gameObject.SetActive(false);
         spaceShipForScript.transform.GetChild(2).gameObject.SetActive(false);
         spaceShipForScript.transform.GetChild(2).gameObject.SetActive(true);
         spaceShipForScript.transform.GetChild(0).gameObject.SetActive(true);
 
+        //setting sheeps to hover
         yield return new WaitForSeconds(1.5f);
-        timeText.SetActive(true);
-        StartCoroutine(objectOpened(timeText));
-
+        
+        //sending the ship away
         Vector3 destination = new Vector3(alienShip[shipType].transform.localPosition.x, edgeOfScreen.y * 1.5f, 0f);
         do
         {
@@ -212,6 +212,10 @@ public class AlienManager : MonoBehaviour
         } while ((int) spaceShipForScript.transform.localPosition.y < (int) destination.y - destination.y * 0.1f);
         Destroy(spaceShipForScript.gameObject);
         activatingButtons();
+
+        //setting Timer
+        timeText.SetActive(true);
+        StartCoroutine(objectOpened(timeText));
         if (timer[currentSheepShowed] <= 0) timer[currentSheepShowed] = settingTimes(currentSheepShowed);
         
     }

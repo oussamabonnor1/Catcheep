@@ -155,7 +155,7 @@ public class AlienManager : MonoBehaviour
             spaceShipForScript.transform.localPosition =
                 Vector3.Lerp(spaceShipForScript.transform.localPosition, destination, 4f * Time.deltaTime);
             yield return new WaitForSeconds(0.02f);
-        } while ((int) spaceShipForScript.transform.localPosition.y > -100f);
+        } while ((int) spaceShipForScript.transform.localPosition.y > 0f);
 
         spaceShipForScript.transform.SetParent(maskHolder.transform, true);
         maskHolder.GetComponent<ScrollRect>().content = spaceShipForScript.GetComponent<RectTransform>();
@@ -207,6 +207,7 @@ public class AlienManager : MonoBehaviour
                 SheepHoverGameObject.transform.localRotation);
             sheepHoverTemp.transform.SetParent(GameObject.Find("Sheep shooter").transform, false);
             sheepHoverTemp.GetComponent<Image>().sprite = SheepSprites[currentSheepShowed];
+            StartCoroutine(objectOpened(sheepHoverTemp));
             do
             {
                 sheepHoverTemp.transform.position = new Vector3(
@@ -214,7 +215,7 @@ public class AlienManager : MonoBehaviour
                     sheepHoverTemp.transform.position.y + 10, sheepHoverTemp.transform.position.z);
                 yield return new WaitForSeconds(0.01f);
 
-            } while (sheepHoverTemp.transform.position.y < spaceShipForScript.transform.GetChild(1).position.y);
+            } while (sheepHoverTemp.transform.position.y < spaceShipForScript.transform.GetChild(1).position.y +30);
             Destroy(sheepHoverTemp);
         }
 

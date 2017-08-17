@@ -53,18 +53,30 @@ public class ShopController : MonoBehaviour
 
     public void ShipOne()
     {
-        PlayerPrefs.SetInt("ship", 1);
+        if (PlayerPrefs.GetInt("money") > 2500)
+        {
+            PlayerPrefs.SetInt("ship", 1);
+        }
     }
     public void ShipTwo()
     {
-        PlayerPrefs.SetInt("ship", 2);
+        if (PlayerPrefs.GetInt("money") > 2500)
+        {
+            PlayerPrefs.SetInt("ship", 2);
+        }
     }
     public void ShipThree()
     {
-        PlayerPrefs.SetInt("ship", 3);
+        if (PlayerPrefs.GetInt("money") > 2500)
+        {
+            PlayerPrefs.SetInt("ship", 3);
+        }
     }
     public void ShipFour()
     {
-        PlayerPrefs.SetInt("ship", 4);
+        if (PlayerPrefs.GetInt("money") > 2500)
+        {
+            PlayerPrefs.SetInt("ship", 4);
+        }
     }
 }

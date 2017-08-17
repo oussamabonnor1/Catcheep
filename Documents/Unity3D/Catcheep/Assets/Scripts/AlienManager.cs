@@ -207,7 +207,7 @@ public class AlienManager : MonoBehaviour
         {
             sheepHoverTemp.transform.position = new Vector3(
                 sheepHoverTemp.transform.position.x,
-                sheepHoverTemp.transform.position.y + 10, sheepHoverTemp.transform.position.z);
+                sheepHoverTemp.transform.position.y + 5, sheepHoverTemp.transform.position.z);
             yield return new WaitForSeconds(0.01f);
         } while (sheepHoverTemp.transform.position.y < spaceShipForScript.transform.GetChild(1).position.y + 30);
         Destroy(sheepHoverTemp);

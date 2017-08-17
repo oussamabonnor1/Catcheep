@@ -73,7 +73,7 @@ public class ShopController : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("money") >= 4000)
         {
-            PlayerPrefs.SetInt("ship", 1);
+            PlayerPrefs.SetInt("ship", 2);
             PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 4000);
             cashText.GetComponent<TextMeshProUGUI>().text = " Ca$h: " + PlayerPrefs.GetInt("money") +" $";
         }
@@ -88,7 +88,7 @@ public class ShopController : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("money") >= 8000)
         {
-            PlayerPrefs.SetInt("ship", 1);
+            PlayerPrefs.SetInt("ship", 3);
             PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 8000);
             cashText.GetComponent<TextMeshProUGUI>().text = " Ca$h: " + PlayerPrefs.GetInt("money") + " $";
         }
@@ -103,7 +103,7 @@ public class ShopController : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("money") >= 15000)
         {
-            PlayerPrefs.SetInt("ship", 1);
+            PlayerPrefs.SetInt("ship", 4);
             PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 15000);
             cashText.GetComponent<TextMeshProUGUI>().text = " Ca$h: " + PlayerPrefs.GetInt("money") + " $";
         }

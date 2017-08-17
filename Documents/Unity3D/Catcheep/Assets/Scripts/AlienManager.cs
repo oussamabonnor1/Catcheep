@@ -11,6 +11,7 @@ public class AlienManager : MonoBehaviour
     public Sprite[] SheepSprites;
     public GameObject[] alienShip;
     public GameObject maskHolder;
+    public GameObject SheepHoverGameObject;
 
     [Header("UI components")]
     public GameObject rightButton;
@@ -200,10 +201,22 @@ public class AlienManager : MonoBehaviour
         spaceShipForScript.transform.GetChild(0).gameObject.SetActive(true);
 
         //setting sheeps to hover
-        yield return new WaitForSeconds(1.5f);
-        
-        //sending the ship away
-        Vector3 destination = new Vector3(alienShip[shipType].transform.localPosition.x, edgeOfScreen.y * 1.5f, 0f);
+        GameObject sheepHoverTemp = Instantiate(SheepHoverGameObject, SheepHoverGameObject.transform.localPosition,
+            SheepHoverGameObject.transform.localRotation);
+        sheepHoverTemp.transform.SetParent(GameObject.Find("Sheep shooter").transform,false);
+        sheepHoverTemp.GetComponent<Image>().sprite = SheepSprites[currentSheepShowed];
+        do
+        {
+            sheepHoverTemp.transform.position= new Vector3(
+                sheepHoverTemp.transform.position.x,
+                sheepHoverTemp.transform.position.y + 10, sheepHoverTemp.transform.position.z);
+            yield return new WaitForSeconds(0.01f);
+           
+        } while (sheepHoverTemp.transform.position.y < spaceShipForScript.transform.GetChild(1).position.y);
+        Destroy(sheepHoverTemp);
+
+         //sending the ship away
+         Vector3 destination = new Vector3(alienShip[shipType].transform.localPosition.x, edgeOfScreen.y * 1.5f, 0f);
         do
         {
             spaceShipForScript.transform.localPosition =

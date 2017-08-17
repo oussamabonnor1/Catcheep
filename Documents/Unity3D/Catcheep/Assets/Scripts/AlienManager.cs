@@ -38,10 +38,6 @@ public class AlienManager : MonoBehaviour
     void Start()
     {
         timer = new float[SheepSprites.Length];
-        if (PlayerPrefs.GetInt("ship") == 0)
-        {
-            PlayerPrefs.SetInt("ship", 1);
-        }
         shipType = PlayerPrefs.GetInt("ship") - 1;
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
 

@@ -6,6 +6,7 @@ using UnityEngine.Advertisements;
 public class ShopController : MonoBehaviour
 {
     [Header("Shop Menu UI")]
+    public GameObject cashText;
     public GameObject BuyShipButtonGameObject;
     public GameObject ShopMenuGameObject;
     public GameObject HelpToolsGameObject;
@@ -53,9 +54,15 @@ public class ShopController : MonoBehaviour
 
     public void ShipOne()
     {
-        if (PlayerPrefs.GetInt("money") > 2500)
+        if (PlayerPrefs.GetInt("money") >= 2500)
         {
             PlayerPrefs.SetInt("ship", 1);
+            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 2500);
+            Ca$h: < i >< b > PlayerPrefs.GetInt("money") </ b ></ i >
+        }
+        else
+        { 
+            
         }
     }
     public void ShipTwo()

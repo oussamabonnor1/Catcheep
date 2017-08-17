@@ -200,22 +200,25 @@ public class AlienManager : MonoBehaviour
         spaceShipForScript.transform.GetChild(2).gameObject.SetActive(true);
         spaceShipForScript.transform.GetChild(0).gameObject.SetActive(true);
 
-        //setting sheeps to hover
-        GameObject sheepHoverTemp = Instantiate(SheepHoverGameObject, SheepHoverGameObject.transform.localPosition,
-            SheepHoverGameObject.transform.localRotation);
-        sheepHoverTemp.transform.SetParent(GameObject.Find("Sheep shooter").transform,false);
-        sheepHoverTemp.GetComponent<Image>().sprite = SheepSprites[currentSheepShowed];
-        do
+        for (int i = 0; i < 3; i++)
         {
-            sheepHoverTemp.transform.position= new Vector3(
-                sheepHoverTemp.transform.position.x,
-                sheepHoverTemp.transform.position.y + 10, sheepHoverTemp.transform.position.z);
-            yield return new WaitForSeconds(0.01f);
-           
-        } while (sheepHoverTemp.transform.position.y < spaceShipForScript.transform.GetChild(1).position.y);
-        Destroy(sheepHoverTemp);
+            //setting sheeps to hover
+            GameObject sheepHoverTemp = Instantiate(SheepHoverGameObject, SheepHoverGameObject.transform.localPosition,
+                SheepHoverGameObject.transform.localRotation);
+            sheepHoverTemp.transform.SetParent(GameObject.Find("Sheep shooter").transform, false);
+            sheepHoverTemp.GetComponent<Image>().sprite = SheepSprites[currentSheepShowed];
+            do
+            {
+                sheepHoverTemp.transform.position = new Vector3(
+                    sheepHoverTemp.transform.position.x,
+                    sheepHoverTemp.transform.position.y + 10, sheepHoverTemp.transform.position.z);
+                yield return new WaitForSeconds(0.01f);
 
-         //sending the ship away
+            } while (sheepHoverTemp.transform.position.y < spaceShipForScript.transform.GetChild(1).position.y);
+            Destroy(sheepHoverTemp);
+        }
+
+        //sending the ship away
          Vector3 destination = new Vector3(alienShip[shipType].transform.localPosition.x, edgeOfScreen.y * 1.5f, 0f);
         do
         {

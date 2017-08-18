@@ -220,9 +220,10 @@ public class gameManager : MonoBehaviour
 
     public void quit()
     {
-        ShowAd();
+        Time.timeScale = 1;
         PlayerPrefs.SetInt("sheepy", totalSheepsCaught);
-        SceneManager.LoadScene("Start");
+        ShowAd();
+        SceneManager.LoadScene(1);
     }
     public void ContinueGame()
     {
@@ -231,6 +232,7 @@ public class gameManager : MonoBehaviour
     }
     public void restart()
     {
+        Time.timeScale = 1;
         ShowAd();
         PlayerPrefs.SetInt("sheepy", totalSheepsCaught);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);

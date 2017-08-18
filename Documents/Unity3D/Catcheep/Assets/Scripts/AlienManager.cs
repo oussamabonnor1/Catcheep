@@ -53,7 +53,7 @@ public class AlienManager : MonoBehaviour
         switch (currentSheepShowed)
         {
             case 0:
-                return 59;
+                return int.Parse(JsonReader.getData("sheepy","sheeps")["time"].ToString());
             case 1:
                 return 59;
             case 2:

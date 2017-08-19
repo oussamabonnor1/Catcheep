@@ -13,7 +13,6 @@ public class JsonReader : MonoBehaviour
     //Use this for initialization
     void Start()
     {
-        test("sheepy.json");
     }
 
     public static JsonData getJsonFile(string path)
@@ -47,7 +46,7 @@ public class JsonReader : MonoBehaviour
         return null;
     }
 
-    public void test(string url)
+    public static void timeModifier(string url)
     {
         string json = getJsonByName("sheepsDataBase.json", "sheeps", url).ToString();
         json = getJsonFile(json).ToJson();

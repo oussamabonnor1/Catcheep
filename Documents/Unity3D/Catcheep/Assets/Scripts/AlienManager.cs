@@ -1,10 +1,12 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using LitJson;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class AlienManager : MonoBehaviour
 {
@@ -43,10 +45,22 @@ public class AlienManager : MonoBehaviour
         //setting the sheeps demands info
         moneyAmountText.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetInt("money") + " $";
         settingDemands();
+        settingTimerOnStart();
 
         currentSheepShowed = -1;
         changingSheepPic(1);
-        StartCoroutine(alienSpawner());
+        if (timer[currentSheepShowed] <= 0) StartCoroutine(alienSpawner()); 
+    }
+
+    void settingTimerOnStart()
+    {
+        for (int i = 0; i < 1; i++)
+        {
+            String url = JsonReader.getDataByIndex("sheeps", i).ToString();
+            JsonData json = JsonReader.getJsonFile(url);
+            int time = int.Parse(JsonReader.getDataFromJson(json, "time"));
+            timer[i] = gettingRemainingTime(url, time);
+        }
     }
 
     int settingTimes(int currentSheepShowed)
@@ -54,7 +68,7 @@ public class AlienManager : MonoBehaviour
         switch (currentSheepShowed)
         {
             case 0:
-                return gettingRemainingTime("sheepy.json");
+                return settingTimeOfClick("sheepy.json");
             case 1:
                 return 59;
             case 2:
@@ -73,15 +87,20 @@ public class AlienManager : MonoBehaviour
         }
     }
 
-    int gettingRemainingTime(string url)
+    int settingTimeOfClick(string url)
+    {
+        JsonReader.timeModifier(url);
+        JsonData json = JsonReader.getJsonFile(url);
+        return int.Parse(JsonReader.getDataFromJson(json, "time"));
+    }
+    int gettingRemainingTime(string url, int time)
     {
         JsonData json = JsonReader.getJsonFile(url);
-        print(JsonReader.getDataFromJson(json, "timeOfSell"));
-        JsonReader.timeModifier(url);
-        //JsonData json = JsonReader.getJsonFile("sheepy.json");
-        json = JsonReader.getJsonFile(url);
-        print(JsonReader.getDataFromJson(json, "timeOfSell"));
-        return int.Parse(JsonReader.getDataFromJson(json, "time"));
+        DateTime startTime = DateTime.Parse(JsonReader.getDataFromJson(json, "timeOfSell"));
+        DateTime endTime = DateTime.Now;
+        TimeSpan amounTime = endTime - startTime;
+        if (time - (int) amounTime.TotalSeconds > 0) return time - (int) amounTime.TotalSeconds;
+        else return 0;
     }
 
     // Update is called once per frame

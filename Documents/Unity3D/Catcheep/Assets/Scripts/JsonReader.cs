@@ -42,7 +42,8 @@ public class JsonReader : MonoBehaviour
 
     public static JsonData getDataByIndex(string array, int index)
     {
-        if (itemData[array][index] != null) return itemData[array][index];
+        itemData = getJsonFile("sheepsDataBase.json");
+        if (itemData[array][index] != null) return itemData[array][index]["url"];
         return null;
     }
 

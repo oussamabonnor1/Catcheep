@@ -56,7 +56,7 @@ public class AlienManager : MonoBehaviour
             case 0:
                 JsonReader.timeModifier("sheepy.json");
                 JsonData json = JsonReader.getJsonFile("sheepy.json");
-                return int.Parse(JsonReader.getDataFromJson(json, "sheeps", "time"));
+                return int.Parse(JsonReader.getDataFromJson(json, "time"));
             case 1:
                 return 59;
             case 2:

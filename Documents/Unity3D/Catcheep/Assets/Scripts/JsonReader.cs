@@ -35,9 +35,9 @@ public class JsonReader : MonoBehaviour
         return null;
     }
 
-    public static String getDataFromJson(JsonData json,string array, string attribute)
+    public static String getDataFromJson(JsonData json, string attribute)
     {
-          return itemData[array][0][attribute].ToString();
+          return itemData[attribute].ToString();
     }
 
     public static JsonData getDataByIndex(string array, int index)
@@ -57,10 +57,7 @@ public class JsonReader : MonoBehaviour
         mySheep.timeOfSell = DateTime.Now.ToString();
         JsonData temp = JsonMapper.ToJson(mySheep);
         File.WriteAllText(Application.dataPath + "/JSON files/" +"sheepy.json", temp.ToString());
-
-        json = getJsonByName("sheepsDataBase.json", "sheeps", url).ToString();
-        json = getJsonFile(json).ToJson();
-        print(json);
+        
     }
 }
 

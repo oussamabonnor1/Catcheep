@@ -50,10 +50,10 @@ public class AlienManager : MonoBehaviour
 
     int settingTimes(int currentSheepShowed)
     {
-        switch (currentSheepShowed)
+        /*switch (currentSheepShowed)
         {
             case 0:
-                return int.Parse(JsonReader.getData("sheepy","sheeps")["time"].ToString());
+                return int.Parse(JsonReader.getDataByIndex("sheepy","sheeps")["time"].ToString());
             case 1:
                 return 59;
             case 2:
@@ -69,7 +69,8 @@ public class AlienManager : MonoBehaviour
             default:
                 print("Error: sheep index of aliens");
                 return 0;
-        }
+        }*/
+        return int.Parse(JsonReader.getDataByIndex("sheeps", currentSheepShowed)["time"].ToString());
     }
 
     // Update is called once per frame

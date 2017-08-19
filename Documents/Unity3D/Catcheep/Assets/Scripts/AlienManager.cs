@@ -54,9 +54,7 @@ public class AlienManager : MonoBehaviour
         switch (currentSheepShowed)
         {
             case 0:
-                JsonReader.timeModifier("sheepy.json");
-                JsonData json = JsonReader.getJsonFile("sheepy.json");
-                return int.Parse(JsonReader.getDataFromJson(json, "time"));
+                return gettingRemainingTime("sheepy.json");
             case 1:
                 return 59;
             case 2:
@@ -73,6 +71,17 @@ public class AlienManager : MonoBehaviour
                 print("Error: sheep index of aliens");
                 return 0;
         }
+    }
+
+    int gettingRemainingTime(string url)
+    {
+        JsonData json = JsonReader.getJsonFile(url);
+        print(JsonReader.getDataFromJson(json, "timeOfSell"));
+        JsonReader.timeModifier(url);
+        //JsonData json = JsonReader.getJsonFile("sheepy.json");
+        json = JsonReader.getJsonFile(url);
+        print(JsonReader.getDataFromJson(json, "timeOfSell"));
+        return int.Parse(JsonReader.getDataFromJson(json, "time"));
     }
 
     // Update is called once per frame

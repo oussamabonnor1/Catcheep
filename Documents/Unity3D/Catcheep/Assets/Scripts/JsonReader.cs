@@ -50,14 +50,12 @@ public class JsonReader : MonoBehaviour
     {
         string json = getJsonByName("sheepsDataBase.json", "sheeps", url).ToString();
         json = getJsonFile(json).ToJson();
-
-        //string temp = getDataFromJson(json,"sheepy","timeOfSell");
+        
         Sheep mySheep = new Sheep();
         mySheep = JsonUtility.FromJson<Sheep>(json);
         mySheep.timeOfSell = DateTime.Now.ToString();
         JsonData temp = JsonMapper.ToJson(mySheep);
         File.WriteAllText(Application.dataPath + "/JSON files/" +"sheepy.json", temp.ToString());
-        
     }
 }
 

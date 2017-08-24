@@ -34,7 +34,7 @@ public class AlienManager : MonoBehaviour
     private int sheepyRequested;
     private int shipType;
     private float[] timer;
-    //jst
+    
 
     // Use this for initialization
     void Start()

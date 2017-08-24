@@ -13,11 +13,15 @@ public class JsonReader : MonoBehaviour
     //Use this for initialization
     void Start()
     {
+        print(getDataFromJson(getDataByIndex("sheeps", 0),"time"));
     }
 
     public static JsonData getJsonFile(string path)
     {
-        string jsonString = File.ReadAllText(Application.dataPath + "/JSON files/" + path);
+        string newPath = path.Replace(".json", "");
+        TextAsset file = Resources.Load(newPath) as TextAsset;
+        string jsonString = file.ToString();
+        //string jsonString = File.ReadAllText(Application.dataPath + "/JSON files/" + path);
         return itemData = JsonMapper.ToObject(jsonString);
     }
 

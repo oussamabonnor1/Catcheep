@@ -43,7 +43,8 @@ public class AlienManager : MonoBehaviour
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
 
         //setting the sheeps demands info
-        moneyAmountText.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetInt("money") + " $";
+        JsonData json = JsonReader.getJsonFile("sheepy.json");
+        moneyAmountText.GetComponent<TextMeshProUGUI>().text = JsonReader.getDataFromJson(json, "time");//PlayerPrefs.GetInt("money") + " $";
         settingDemands();
         settingTimerOnStart();
 

@@ -8,6 +8,8 @@ public class WheelSpinner : MonoBehaviour
 {
 
     public GameObject wheelOfLuck;
+    public GameObject triangl;
+    public GameObject[] items;
 
 	// Use this for initialization
 	void Start ()
@@ -42,6 +44,19 @@ public class WheelSpinner : MonoBehaviour
             yield return new WaitForSeconds(0.001f);
         } while (wheelOfLuck.GetComponent<Rigidbody2D>().angularVelocity > 0);
 
+        float distence = 0;
+        int index = 0;
+        for (int j = 0; j < items.Length; j++)
+        {
+            if (j == 0) distence = Vector3.Distance(triangl.transform.position, items[j].transform.position);
+            if (Vector3.Distance(triangl.transform.position, items[j].transform.position) < distence)
+            {
+                distence = Vector3.Distance(triangl.transform.position, items[j].transform.position);
+                index = j;
+            }
+        }
 
+        print(items[index].gameObject.name);
+        
     }
 }

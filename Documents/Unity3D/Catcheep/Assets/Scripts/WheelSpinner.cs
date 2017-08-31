@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
 public class WheelSpinner : MonoBehaviour
@@ -10,6 +11,7 @@ public class WheelSpinner : MonoBehaviour
     public GameObject wheelOfLuck;
     public GameObject triangl;
     public GameObject[] items;
+    public GameObject spinButton;
 
 	// Use this for initialization
 	void Start ()
@@ -28,6 +30,7 @@ public class WheelSpinner : MonoBehaviour
 
     IEnumerator wheelTurned()
     {
+        spinButton.GetComponent<Button>().enabled = false;
         int i = Random.Range(5,10);
         do
         {
@@ -57,6 +60,20 @@ public class WheelSpinner : MonoBehaviour
         }
 
         print(items[index].gameObject.name);
-        
+        StartCoroutine(animationOfWin(index));
+    }
+
+    IEnumerator animationOfWin(int index)
+    {
+        float i = 1;
+        do
+        {
+            items[index].transform.localPosition = Vector3.Lerp(items[index].transform.localPosition,new Vector3(0,0,0),1f * Time.deltaTime);
+            i += 0.01f;
+            if (i < 2.5f) items[index].transform.localScale = new Vector3(i,i,i);
+            yield return new WaitForSeconds(0.01f);
+        } while ((int) items[index].transform.position.x != 0);
+
+        spinButton.GetComponent<Button>().enabled = false;
     }
 }

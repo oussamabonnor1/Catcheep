@@ -68,8 +68,8 @@ public class WheelSpinner : MonoBehaviour
         float i = 1;
         do
         {
-            items[index].transform.localPosition = Vector3.Lerp(items[index].transform.localPosition,new Vector3(0,0,0),1f * Time.deltaTime);
-            i += 0.01f;
+            items[index].transform.localPosition = Vector3.Lerp(items[index].transform.localPosition,new Vector3(0,0,0),3f * Time.deltaTime);
+            i += 0.03f;
             if (i < 2.5f) items[index].transform.localScale = new Vector3(i,i,i);
             yield return new WaitForSeconds(0.01f);
         } while ((int) items[index].transform.position.x != 0);

@@ -11,6 +11,7 @@ public class ShopController : MonoBehaviour
     public GameObject BuyShipButtonGameObject;
     public GameObject ShopMenuGameObject;
     public GameObject HelpToolsGameObject;
+    public GameObject WheelOfFortuneGameObject;
     
 
     // Use this for initialization
@@ -43,6 +44,17 @@ public class ShopController : MonoBehaviour
     public void returnHelpTool()
     {
         HelpToolsGameObject.SetActive(false);
+        ShopMenuGameObject.SetActive(true);
+    }
+
+    public void wheelOfFortuneButton()
+    {
+        WheelOfFortuneGameObject.SetActive(true);
+        ShopMenuGameObject.SetActive(false);
+    }
+    public void wheelOfFortuneReturn()
+    {
+        WheelOfFortuneGameObject.SetActive(false);
         ShopMenuGameObject.SetActive(true);
     }
 

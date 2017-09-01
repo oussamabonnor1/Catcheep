@@ -56,6 +56,7 @@ public class ShopController : MonoBehaviour
     {
         WheelOfFortuneGameObject.SetActive(false);
         ShopMenuGameObject.SetActive(true);
+
     }
 
     public void ShowAd()

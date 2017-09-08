@@ -136,7 +136,7 @@ public class sheepDestroyer : MonoBehaviour
         Destruction();
     }
 
-    void sickClicked()
+    public void sickClicked()
     {
         //deactivating collider so that it doesnt disturb the scene (collision detection)
         smallCollider.enabled = false;

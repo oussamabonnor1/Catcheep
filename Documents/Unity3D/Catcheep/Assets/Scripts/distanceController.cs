@@ -22,7 +22,7 @@ public class distanceController : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        //not a group (collider below screen
+        //not a group (collider below screen)
         if (other.gameObject.tag != "group")
         {
             //speed is lower (collision will happen)
@@ -105,8 +105,15 @@ public class distanceController : MonoBehaviour
 
     IEnumerator sheepyCaughtByHelpTool(GameObject other)
     {
-        GetComponent<SheepMovement>().SheepDestroyer.caught = true;
-        if(other.gameObject.tag != "loveHelp") yield return new WaitForSeconds(0.5f);
-        GetComponent<SheepMovement>().SheepDestroyer.sheepClicked();
+        if (gameObject.tag.Equals("sick"))
+        {
+            GetComponent<SheepMovement>().SheepDestroyer.Destruction();
+        }
+        else
+        {
+            GetComponent<SheepMovement>().SheepDestroyer.caught = true;
+            if (other.gameObject.tag != "loveHelp") yield return new WaitForSeconds(0.5f);
+            GetComponent<SheepMovement>().SheepDestroyer.sheepClicked();
+        }
     }
 }

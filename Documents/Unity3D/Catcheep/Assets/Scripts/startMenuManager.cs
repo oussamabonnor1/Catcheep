@@ -55,11 +55,11 @@ public class startMenuManager : MonoBehaviour
             {
                 if (ScrollBar.value < ((i * portion) - (portion / 2)) && ScrollBar.value > ((i - 1) * portion))
                 {
-                    ScrollBar.value = Mathf.Lerp(ScrollBar.value, (i - 1) * portion, 0.05f);
+                    ScrollBar.value = Mathf.Lerp(ScrollBar.value, (i - 1) * portion, 3 * Time.deltaTime);
                 }
                 if (ScrollBar.value > ((i * portion) - (portion / 2)) && ScrollBar.value < (i * portion))
                 {
-                    ScrollBar.value = Mathf.Lerp(ScrollBar.value, (i) * portion, 0.05f);
+                    ScrollBar.value = Mathf.Lerp(ScrollBar.value, (i) * portion, 3 * Time.deltaTime);
                 }
             }
         }
@@ -117,7 +117,7 @@ public class startMenuManager : MonoBehaviour
 
         if (isGoingUp)
         {
-            ScrollBar.value = Mathf.Lerp(ScrollBar.value, destination, 0.08f);
+            ScrollBar.value = Mathf.Lerp(ScrollBar.value, destination, 5 * Time.deltaTime);
             if (Mathf.Approximately(ScrollBar.value, destination) && isGoingUp)
             {
                 isGoingUp = false;
@@ -125,7 +125,7 @@ public class startMenuManager : MonoBehaviour
         }
         if (isGoingDown)
         {
-            ScrollBar.value = Mathf.Lerp(ScrollBar.value, destination, 0.08f);
+            ScrollBar.value = Mathf.Lerp(ScrollBar.value, destination, 5 * Time.deltaTime);
             if (Mathf.Approximately(ScrollBar.value, destination) && isGoingDown)
             {
                 isGoingDown = false;

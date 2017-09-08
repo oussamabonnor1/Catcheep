@@ -42,6 +42,7 @@ public class SheepMovement : MonoBehaviour
                 switch (gameObject.tag)
                 {
                     case "sheepy":
+                    case "sick":
                         destination = new Vector2(slideSpeed, -1f);
                         straightMovement(destination);
                         break;
@@ -70,6 +71,7 @@ public class SheepMovement : MonoBehaviour
         switch (gameObject.tag)
         {
             case "sheepy":
+            case "sick":
                 destination = new Vector2(slideSpeed, -1f);
                 break;
             case "blacky":

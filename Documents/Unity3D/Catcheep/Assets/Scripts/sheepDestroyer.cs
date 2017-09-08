@@ -60,9 +60,16 @@ public class sheepDestroyer : MonoBehaviour
             {
                 if (hit.collider == smallCollider && hit.collider.transform == transform)
                 {
-                    // raycast hit this gameobject
-                    gameManager.catchedSomething = true;
-                    sheepClicked();
+                    if (gameObject.tag.Equals("sick"))
+                    { 
+                        sickClicked();
+                    }
+                    else
+                    {
+                        // raycast hit this gameobject
+                        gameManager.catchedSomething = true;
+                        sheepClicked();
+                    }
                 }
             }
 
@@ -111,7 +118,7 @@ public class sheepDestroyer : MonoBehaviour
         Vector3 position = Camera.main.WorldToScreenPoint(transform.position);
         hit.transform.SetParent(canvas.transform, false);
         hit.transform.SetPositionAndRotation(position, Quaternion.identity);
-
+        
         //deactivating collider so that it doesnt disturb the scene (collision detection)
         smallCollider.enabled = false;
 
@@ -129,6 +136,21 @@ public class sheepDestroyer : MonoBehaviour
         Destruction();
     }
 
+    void sickClicked()
+    {
+        //deactivating collider so that it doesnt disturb the scene (collision detection)
+        smallCollider.enabled = false;
+        
+        //punishing player
+        gameManager.score -= 500;
+        PlayerPrefs.SetInt("money", gameManager.score);
+        scoreText.GetComponent<TextMeshProUGUI>().text = "x " + (gameManager.score);
+
+        //destroying sheep
+        speed = Mathf.Clamp(Vector3.Distance(transform.position, sheepCage.transform.position), 1f, 6f);
+
+        Destruction();
+    }
 
     IEnumerator deathAnimation()
     {

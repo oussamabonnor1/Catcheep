@@ -22,12 +22,12 @@ public class OpeningSceneScript : MonoBehaviour
     void OnCollisionEnter2D(Collision2D other)
     {
         i++;
-        if (i > 5) StartCoroutine(opening());
+        if (i > 5 && i < 7) StartCoroutine(opening());
     }
 
     IEnumerator opening()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(3f);
         SceneManager.LoadScene(1);
     }
 

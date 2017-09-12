@@ -44,8 +44,8 @@ public class AlienManager : MonoBehaviour
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
 
         //setting the sheeps demands info
-        JsonData json = JsonReader.getJsonFile("sheepy.json");
-        moneyAmountText.GetComponent<TextMeshProUGUI>().text = JsonReader.getDataFromJson(json, "time");//PlayerPrefs.GetInt("money") + " $";
+        //JsonData json = JsonReader.getJsonFile("sheepy.json");
+        //moneyAmountText.GetComponent<TextMeshProUGUI>().text = JsonReader.getDataFromJson(json, "time");//PlayerPrefs.GetInt("money") + " $";
         settingDemands();
         settingTimerOnStart();
 
@@ -162,7 +162,7 @@ public class AlienManager : MonoBehaviour
             {
                 string minutes = Mathf.Floor(timer[currentSheepShowed] / 60).ToString("00");
                 string seconds = (timer[currentSheepShowed] % 60).ToString("00");
-                timeText.transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = minutes + ":" + seconds;
+                timeText.transform.GetChild(0).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = minutes + ":" + seconds;
                 timer[i] -= Time.deltaTime;
             }
         }
@@ -357,7 +357,7 @@ public class AlienManager : MonoBehaviour
         {
             string minutes = Mathf.Floor(timer[currentSheepShowed] / 60).ToString("00");
             string seconds = (timer[currentSheepShowed] % 60).ToString("00");
-            timeText.transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = minutes + ":" + seconds;
+            timeText.transform.GetChild(0).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = minutes + ":" + seconds;
             timeText.SetActive(true);
             StartCoroutine(objectOpened(timeText));
         }

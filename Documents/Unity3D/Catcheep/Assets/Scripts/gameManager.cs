@@ -136,10 +136,16 @@ public class gameManager : MonoBehaviour
             if (collisions == null)
             {
                 if (taux < 2f) taux += 0.065f;
-                int i = Random.Range(-5, 12);
+                int i = Random.Range(-6, 12);
+
 
                 switch (i)
                 {
+                    case -6:
+                        //making sure boss sheepy is rare af
+                        int j = Random.Range(0, 2);
+                        if(j == 1) StartCoroutine(bossSheepy());
+                        break;
                     case -5:
                     case -4:
                     case -3:
@@ -251,6 +257,29 @@ public class gameManager : MonoBehaviour
     {
         Vector3 spawnPosition = new Vector3(xPosition, transform.position.y + deltaYPosition, transform.position.z);
         Instantiate(sheeps[index], spawnPosition, Quaternion.identity);
+    }
+
+    IEnumerator bossSheepy()
+    {
+        GameObject boss = Instantiate(sheeps[sheeps.Length-1]);
+        boss.SetActive(false);
+        Vector2 spawnPosition = new Vector2(Random.Range(-edgeOfScreen.x,edgeOfScreen.x), Random.Range(-edgeOfScreen.y, edgeOfScreen.y));
+        for (int i = 0; i < 3; i++)
+        {
+            Collider2D collisions = Physics2D.OverlapBox(spawnPosition, new Vector2(2.5f, 2.5f), 0f);
+
+            if (collisions == null)
+            {
+                boss.transform.position = spawnPosition;
+                boss.SetActive(true);
+                yield return new WaitForSeconds(3f);
+                boss.GetComponent<sheepDestroyer>().Destruction();
+            }
+            else
+            {
+                yield return new WaitForSeconds(1f);
+            }
+        }
     }
     //end of one sheepy formations
 

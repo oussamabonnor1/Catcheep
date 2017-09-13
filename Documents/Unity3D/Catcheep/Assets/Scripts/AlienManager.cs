@@ -162,7 +162,7 @@ public class AlienManager : MonoBehaviour
             {
                 string minutes = Mathf.Floor(timer[currentSheepShowed] / 60).ToString("00");
                 string seconds = (timer[currentSheepShowed] % 60).ToString("00");
-                timeText.transform.GetChild(0).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = minutes + ":" + seconds;
+                timeText.transform.GetChild(1).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = minutes + ":" + seconds;
                 timer[i] -= Time.deltaTime;
             }
         }

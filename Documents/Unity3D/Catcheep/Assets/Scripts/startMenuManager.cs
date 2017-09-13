@@ -1,25 +1,26 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Facebook.Unity;
 using UnityEngine;
-using UnityEngine.iOS;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 
 public class startMenuManager : MonoBehaviour
 {
+    [Header("in Game objects")]
     public GameObject sceneContent;
     public GameObject ScrollBarGameObject;
     public GameObject vibrationToggle;
+    public GameObject bossSheep;
     private Scrollbar ScrollBar;
 
     private Vector2 edgeOfScreen;
     private Vector2 oldPosition;
     private Vector2 newPosition;
 
-
+    [Header("UI")]
     public int menuCount;
     private float portion;
     private float destination;
@@ -37,12 +38,21 @@ public class startMenuManager : MonoBehaviour
 
         portion = (float) 1 / menuCount;
         portion = (float) Math.Round(portion, 2);
+
+        //making sure all objects are affected and not null
         if (ScrollBarGameObject == null) ScrollBarGameObject = GameObject.Find("Horizontal scrollbar");
         if (sceneContent == null) sceneContent = GameObject.Find("Scene content");
+
+        //reminding player of vibration (delete when finished devloping)
         if (PlayerPrefs.GetString("Vibration") == "True") vibrationToggle.GetComponent<Toggle>().isOn = true;
         else vibrationToggle.GetComponent<Toggle>().isOn = false;
+
+        //extracting necissary elements for functions
         ScrollBar = ScrollBarGameObject.GetComponent<Scrollbar>();
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
+
+        //starting boss sheep animation a second after the scene loading (explaining "1" as param)
+        StartCoroutine(bossPopingUp(1));
     }
 
     // Update is called once per frame
@@ -159,6 +169,13 @@ public class startMenuManager : MonoBehaviour
         if (isGoingDown) isGoingDown = false;
     }
 
+    IEnumerator bossPopingUp(float timeToWait)
+    {
+        bossSheep.SetActive(false);
+        yield return new WaitForSeconds(timeToWait);
+        bossSheep.SetActive(true);
+        StartCoroutine(bossPopingUp(Random.Range(1, 5)));
+    }
 
     public void farm()
     {

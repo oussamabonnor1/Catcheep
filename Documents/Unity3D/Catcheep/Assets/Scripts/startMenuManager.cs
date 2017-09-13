@@ -52,7 +52,7 @@ public class startMenuManager : MonoBehaviour
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
 
         //starting boss sheep animation a second after the scene loading (explaining "1" as param)
-        StartCoroutine(bossPopingUp(1));
+        StartCoroutine(bossPopingUp(Random.Range(5,10)));
     }
 
     // Update is called once per frame
@@ -171,10 +171,12 @@ public class startMenuManager : MonoBehaviour
 
     IEnumerator bossPopingUp(float timeToWait)
     {
+        bossSheep.SetActive(true);
+        float timeOfBossAnimation = 3;
+        yield return new WaitForSeconds(timeOfBossAnimation);
         bossSheep.SetActive(false);
         yield return new WaitForSeconds(timeToWait);
-        bossSheep.SetActive(true);
-        StartCoroutine(bossPopingUp(Random.Range(1, 5)));
+        StartCoroutine(bossPopingUp(Random.Range(5, 10)));
     }
 
     public void farm()

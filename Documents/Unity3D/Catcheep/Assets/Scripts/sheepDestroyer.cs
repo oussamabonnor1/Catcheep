@@ -118,6 +118,19 @@ public class sheepDestroyer : MonoBehaviour
             gameManager.score += 10000 + 1000 * gameManager.combo;
         }
 
+        if (gameObject.name.Contains("sheepy"))
+        {
+            gameManager.sheepyCaught++;
+        }
+        if (gameObject.tag.Equals("blacky"))
+        {
+            gameManager.blackyCaught++;
+        }
+        if (gameObject.name.Contains("flash"))
+        {
+            gameManager.flashCaught++;
+        }
+
         caught = true;
         //creating hit text
         GameObject canvas = GameObject.Find("Canvas");

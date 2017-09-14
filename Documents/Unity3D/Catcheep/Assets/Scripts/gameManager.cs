@@ -17,7 +17,7 @@ public class gameManager : MonoBehaviour
     [Header("UI components")]
     public GameObject background;
     public GameObject backgroundOfTrees;
-    public GameObject winText;
+    public GameObject finishPanel;
     public GameObject flare;
     public GameObject helpToolsPlate;
     public GameObject pausePanel;
@@ -30,7 +30,12 @@ public class gameManager : MonoBehaviour
     public static int totalSheepsCaught;
     public static int combo;
     public static int score;
+    public static int sheepyCaught;
+    public static int flashCaught;
+    public static int blackyCaught;
     public static bool catchedSomething;
+
+    private int originalScore;
 
 
 
@@ -40,6 +45,7 @@ public class gameManager : MonoBehaviour
         catchedSomething = false;
         totalSheepsCaught = PlayerPrefs.GetInt("sheepy");
         combo = 0;
+        originalScore= PlayerPrefs.GetInt("money");
         score = PlayerPrefs.GetInt("money");
 
         if (background == null)
@@ -220,7 +226,13 @@ public class gameManager : MonoBehaviour
         if (gameOver)
         {
             PlayerPrefs.SetInt("sheepy", totalSheepsCaught);
-            winText.SetActive(true);
+            //i wish i was focused enough to find a more beautiful way of assigning values but...
+            //it's been a long 3 months working on this 'game' and i honestly jst wanna get it over with.
+            finishPanel.SetActive(true);
+            finishPanel.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "+" + (score - originalScore);
+            finishPanel.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "+" + sheepyCaught;
+            finishPanel.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "+" + blackyCaught;
+            finishPanel.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = "+" + flashCaught;
         }
     }
 
@@ -448,7 +460,7 @@ public class gameManager : MonoBehaviour
     IEnumerator flareMaker(float time)
     {
         Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-       GameObject flareGameObject =  Instantiate(flare,new Vector3(position.x,position.y, transform.position.z) , Quaternion.identity);
+        GameObject flareGameObject =  Instantiate(flare,new Vector3(position.x,position.y, transform.position.z) , Quaternion.identity);
         yield return new WaitForSeconds(time);
         Destroy(flareGameObject);
     }

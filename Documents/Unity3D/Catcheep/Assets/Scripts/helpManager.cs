@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -23,6 +24,8 @@ public class helpManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        settingHelpSuplies();
+        
         helpUsed = false;
         helpToolIsReleased = true;
 
@@ -205,6 +208,14 @@ public class helpManager : MonoBehaviour
             }
         }
         
+    }
+
+    //this function gets called on start to give player info about how many help tools are left
+    void settingHelpSuplies()
+    {
+        helpButtons[0].GetComponentInChildren<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("hayStackStock");
+        helpButtons[1].GetComponentInChildren<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("netStock");
+        helpButtons[2].GetComponentInChildren<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("loveStock");
     }
 
 }

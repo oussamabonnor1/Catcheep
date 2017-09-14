@@ -143,7 +143,7 @@ public class gameManager : MonoBehaviour
                 {
                     case -6:
                         //making sure boss sheepy is rare af
-                        int j = Random.Range(0, 2);
+                        int j = Random.Range(0, 10);
                         if(j == 1) StartCoroutine(bossSheepy());
                         break;
                     case -5:
@@ -461,7 +461,30 @@ public class gameManager : MonoBehaviour
     public IEnumerator badViewCoroutine()
     {
         BadViewGameObject.SetActive(true);
+        StartCoroutine(objectOpened(BadViewGameObject));
         yield return new WaitForSeconds(2);
+        StartCoroutine(objectClosed(BadViewGameObject));
+        yield return new WaitForSeconds(0.3f);
         BadViewGameObject.SetActive(false);
+    }
+
+    IEnumerator objectOpened(GameObject objectToOpen)
+    {
+        for (int i = 0; i <= 10; i++)
+        {
+            float a = (float)i / 10;
+            objectToOpen.transform.localScale = new Vector3(a, a, 1);
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+
+    IEnumerator objectClosed(GameObject objectToOpen)
+    {
+        for (int i = 10; i >= 0; i--)
+        {
+            float a = (float)i / 10;
+            objectToOpen.transform.localScale = new Vector3(a, a, 1);
+            yield return new WaitForSeconds(0.01f);
+        }
     }
 }

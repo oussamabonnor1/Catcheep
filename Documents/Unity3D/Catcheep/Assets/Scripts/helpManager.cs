@@ -54,17 +54,17 @@ public class helpManager : MonoBehaviour
                     helpToolCreated(0);
                 }
 
-                if (pointer.selectedObject == helpButtons[1] && PlayerPrefs.GetInt("netStackStock") > 0)
+                if (pointer.selectedObject == helpButtons[1] && PlayerPrefs.GetInt("netStock") > 0)
                 {
-                    PlayerPrefs.SetInt("netStackStock", PlayerPrefs.GetInt("netStackStock") - 1);
+                    PlayerPrefs.SetInt("netStock", PlayerPrefs.GetInt("netStock") - 1);
                     helpButtons[1].gameObject.SetActive(false);
                     helpToolCreated(1);
                 }
 
                 //bool condition is there just not to instantiate the love 5 times 
-                if (pointer.selectedObject == helpButtons[2] && !loveUsed && PlayerPrefs.GetInt("netStackStock") > 0)
+                if (pointer.selectedObject == helpButtons[2] && !loveUsed && PlayerPrefs.GetInt("loveStock") > 0)
                 {
-                    PlayerPrefs.SetInt("netStackStock", PlayerPrefs.GetInt("netStackStock") - 1);
+                    PlayerPrefs.SetInt("netStock", PlayerPrefs.GetInt("netStackStock") - 1);
                     StartCoroutine(loveClickedcall());
                 }
             }
@@ -222,5 +222,4 @@ public class helpManager : MonoBehaviour
         helpButtons[1].GetComponentInChildren<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("netStock");
         helpButtons[2].GetComponentInChildren<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("loveStock");
     }
-
 }

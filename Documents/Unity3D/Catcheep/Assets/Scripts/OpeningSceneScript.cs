@@ -27,7 +27,7 @@ public class OpeningSceneScript : MonoBehaviour
 
     IEnumerator opening()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(0.5f);
         SceneManager.LoadScene(1);
     }
 
@@ -38,7 +38,7 @@ public class OpeningSceneScript : MonoBehaviour
         {
             yield return new WaitForSeconds(0.2f);
             GetComponentInChildren<TextMeshProUGUI>().fontSharedMaterial.SetFloat(ShaderUtilities.ID_OutlineSoftness, 
-                GetComponentInChildren<TextMeshProUGUI>().fontSharedMaterial.GetFloat(ShaderUtilities.ID_OutlineSoftness) - 0.1f);
+            GetComponentInChildren<TextMeshProUGUI>().fontSharedMaterial.GetFloat(ShaderUtilities.ID_OutlineSoftness) - 0.1f);
         }
     }
 }

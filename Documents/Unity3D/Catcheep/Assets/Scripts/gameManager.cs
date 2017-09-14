@@ -452,7 +452,12 @@ public class gameManager : MonoBehaviour
         yield return new WaitForSeconds(time);
         Destroy(flareGameObject);
     }
-    
+
+    public void badView()
+    {
+        StartCoroutine(badViewCoroutine());
+    }
+
     public IEnumerator badViewCoroutine()
     {
         BadViewGameObject.SetActive(true);

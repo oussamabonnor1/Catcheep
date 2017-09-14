@@ -133,7 +133,7 @@ public class gameManager : MonoBehaviour
         {
             Collider2D collisions = Physics2D.OverlapBox(new Vector2(transform.position.x, transform.position.y),
                 new Vector2(edgeOfScreen.x, 2.5f), 0f);
-
+            
             if (collisions == null)
             {
                 if (taux < 2f) taux += 0.065f;
@@ -152,7 +152,7 @@ public class gameManager : MonoBehaviour
                     case -2:
                     case -1:
                     case  0:
-                        oneSheepyRandom(Random.Range(0, size + 1));
+                        oneSheepyRandom(Random.Range(0, size));
                         //yield return new WaitForSeconds(2 - taux);
                         break;
 
@@ -182,7 +182,7 @@ public class gameManager : MonoBehaviour
                         break;
 
                     case 6:
-                        slidingSheepy(Random.Range(2, 5), Random.Range(0, size + 1));
+                        slidingSheepy(Random.Range(2, 5), Random.Range(0, size));
                         //yield return new WaitForSeconds(3 - taux);
                         break;
 
@@ -261,19 +261,19 @@ public class gameManager : MonoBehaviour
 
     IEnumerator bossSheepy()
     {
-        GameObject boss = Instantiate(sheeps[sheeps.Length-1]);
-        boss.SetActive(false);
-        Vector2 spawnPosition = new Vector2(Random.Range(-edgeOfScreen.x,edgeOfScreen.x), Random.Range(-edgeOfScreen.y, edgeOfScreen.y));
+        
+        Vector2 spawnPosition = new Vector2(Random.Range(-edgeOfScreen.x,edgeOfScreen.x),
+            Random.Range(-edgeOfScreen.y / 2, edgeOfScreen.y / 2));
         for (int i = 0; i < 3; i++)
         {
             Collider2D collisions = Physics2D.OverlapBox(spawnPosition, new Vector2(2.5f, 2.5f), 0f);
 
-            if (collisions == null)
+            if (collisions)
             {
-                boss.transform.position = spawnPosition;
-                boss.SetActive(true);
-                yield return new WaitForSeconds(3f);
+                GameObject boss = Instantiate(sheeps[sheeps.Length - 1] , spawnPosition, Quaternion.identity);
+                yield return new WaitForSeconds(1.5f);
                 boss.GetComponent<sheepDestroyer>().Destruction();
+                break;
             }
             else
             {

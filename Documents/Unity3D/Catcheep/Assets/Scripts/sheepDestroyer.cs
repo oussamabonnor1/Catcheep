@@ -111,6 +111,13 @@ public class sheepDestroyer : MonoBehaviour
 
     public void sheepClicked()
     {
+        if (gameObject.tag.Contains("Boss"))
+        {
+            //Giving the player a great reward for an amazing opening
+            print("You caught a sheepy !");
+            gameManager.score += 10000 + 1000 * gameManager.combo;
+        }
+
         caught = true;
         //creating hit text
         GameObject canvas = GameObject.Find("Canvas");

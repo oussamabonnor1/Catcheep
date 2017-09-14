@@ -47,21 +47,24 @@ public class helpManager : MonoBehaviour
                 //pointer is much like a raycast but UI related
                 PointerEventData pointer = new PointerEventData(EventSystem.current);
 
-                if (pointer.selectedObject == helpButtons[0])
+                if (pointer.selectedObject == helpButtons[0] && PlayerPrefs.GetInt("hayStackStock") > 0)
                 {
+                    PlayerPrefs.SetInt("hayStackStock", PlayerPrefs.GetInt("hayStackStock") - 1);
                     helpButtons[0].gameObject.SetActive(false);
                     helpToolCreated(0);
                 }
 
-                if (pointer.selectedObject == helpButtons[1])
+                if (pointer.selectedObject == helpButtons[1] && PlayerPrefs.GetInt("netStackStock") > 0)
                 {
+                    PlayerPrefs.SetInt("netStackStock", PlayerPrefs.GetInt("netStackStock") - 1);
                     helpButtons[1].gameObject.SetActive(false);
                     helpToolCreated(1);
                 }
 
                 //bool condition is there just not to instantiate the love 5 times 
-                if (pointer.selectedObject == helpButtons[2] && !loveUsed)
+                if (pointer.selectedObject == helpButtons[2] && !loveUsed && PlayerPrefs.GetInt("netStackStock") > 0)
                 {
+                    PlayerPrefs.SetInt("netStackStock", PlayerPrefs.GetInt("netStackStock") - 1);
                     StartCoroutine(loveClickedcall());
                 }
             }
@@ -153,6 +156,7 @@ public class helpManager : MonoBehaviour
 
         helpButtons[0].gameObject.SetActive(true);
         helpButtons[1].gameObject.SetActive(true);
+        settingHelpSuplies();
     }
 
     IEnumerator farmerHeadAnimation()
@@ -179,6 +183,7 @@ public class helpManager : MonoBehaviour
 
         loveUsed = false;
         sheepys = null;
+        settingHelpSuplies();
     }
 
     //this function gets called once per frame when the help love is used

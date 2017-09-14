@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -95,6 +96,8 @@ public class WheelSpinner : MonoBehaviour
 
     void rewardCollectedCall()
     {
+        PlayerPrefs.SetInt("money" , PlayerPrefs.GetInt("money") + 2000);
+        GameObject.Find("Cash text").GetComponent<TextMeshProUGUI>().text = " Ca$h: " + PlayerPrefs.GetInt("money") + " $";
         items[index].transform.position = originalVector3;
         items[index].transform.localRotation = originalQuaternion;
         items[index].transform.localScale = new Vector3(1,1,1);

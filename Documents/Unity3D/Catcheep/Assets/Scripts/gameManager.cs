@@ -21,6 +21,7 @@ public class gameManager : MonoBehaviour
     public GameObject flare;
     public GameObject helpToolsPlate;
     public GameObject pausePanel;
+    public GameObject BadViewGameObject;
     
     public static bool gameOver;
     private Vector3 edgeOfScreen;
@@ -137,8 +138,7 @@ public class gameManager : MonoBehaviour
             {
                 if (taux < 2f) taux += 0.065f;
                 int i = Random.Range(-6, 12);
-
-
+                
                 switch (i)
                 {
                     case -6:
@@ -451,5 +451,12 @@ public class gameManager : MonoBehaviour
        GameObject flareGameObject =  Instantiate(flare,new Vector3(position.x,position.y, transform.position.z) , Quaternion.identity);
         yield return new WaitForSeconds(time);
         Destroy(flareGameObject);
+    }
+    
+    public IEnumerator badViewCoroutine()
+    {
+        BadViewGameObject.SetActive(true);
+        yield return new WaitForSeconds(2);
+        BadViewGameObject.SetActive(false);
     }
 }

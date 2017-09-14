@@ -20,6 +20,7 @@ public class sheepDestroyer : MonoBehaviour
     public Collider2D BigCollider;
 
     private Touch touchHolder;
+    private static bool ableToTouch;
 
     void Start()
     {
@@ -32,7 +33,8 @@ public class sheepDestroyer : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        //ableToTouch is a boolean that is controlled by the badView panel, vomit when sick sheepy is clicked
+        if (Input.GetMouseButtonDown(0) && ableToTouch)
         {
             /*  foreach (Touch touch in Input.touches)
             {
@@ -142,6 +144,7 @@ public class sheepDestroyer : MonoBehaviour
         smallCollider.enabled = false;
         
         //punishing player
+        StartCoroutine(GameObject.Find("Game Manager").GetComponent<gameManager>().badViewCoroutine());
         gameManager.score -= 500;
         PlayerPrefs.SetInt("money", gameManager.score);
         scoreText.GetComponent<TextMeshProUGUI>().text = "x " + (gameManager.score);

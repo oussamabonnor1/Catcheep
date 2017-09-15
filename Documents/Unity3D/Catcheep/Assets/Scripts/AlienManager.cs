@@ -21,6 +21,7 @@ public class AlienManager : MonoBehaviour
     public GameObject SheepMapGameObject;
     public GameObject mailPanel;
     public GameObject mailButton;
+    public GameObject neededPrayPrefab;
 
     [Header("indication elements")] public GameObject sheepHolder;
     public GameObject sheepNumberText;
@@ -205,6 +206,8 @@ public class AlienManager : MonoBehaviour
         sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
     }
 
+
+
     void shipClicked()
     {
         if (PlayerPrefs.GetInt("sheepy") >= sheepyRequested)
@@ -351,9 +354,34 @@ public class AlienManager : MonoBehaviour
         }
         if (currentSheepShowed < SheepSprites.Length && SheepSprites[currentSheepShowed] != null)
         {
-            sheepHolder.GetComponentInChildren<TextMeshProUGUI>().text = "x" + sheepyRequested;
             sheepHolder.GetComponent<Image>().sprite = SheepSprites[currentSheepShowed];
         }
+        String nameOfSheep = "";
+        switch (currentSheepShowed)
+        {
+            case 0:
+                nameOfSheep = "sheepy";
+                break;
+            case 1:
+                nameOfSheep = "blacky";
+                break;
+            case 2:
+                nameOfSheep = "flash";
+                break;
+            case 3:
+                nameOfSheep = "S.sheepy";
+                break;
+            case 4:
+                nameOfSheep = "S.blacky";
+                break;
+            case 5:
+                nameOfSheep = "C.sheepy";
+                break;
+            case 6:
+                nameOfSheep = "C.blacky";
+                break;
+        }
+        sheepHolder.GetComponentInChildren<TextMeshProUGUI>().text = nameOfSheep;
 
         if (timer[currentSheepShowed] > 0)
         {
@@ -393,8 +421,23 @@ public class AlienManager : MonoBehaviour
     {
         receivedMail(false);
         mailButton.GetComponent<Button>().enabled = false;
+        fillingMailPanel(new []{0},new []{45});
         mailPanel.SetActive(true);
         StartCoroutine(objectOpened(mailPanel));
+    }
+
+    void fillingMailPanel(int[] index,int[] need)
+    {
+        Vector2 position = new Vector2(mailPanel.transform.GetChild(0).transform.position.x,mailPanel.transform.GetChild(0).transform.position.y - 230);
+        for (int i = 0; i < need.Length; i++)
+        {
+            position = new Vector2(position.x,position.y - (i * 50));
+            GameObject obj = Instantiate(neededPrayPrefab, position, Quaternion.identity);
+            obj.GetComponentInChildren<TextMeshProUGUI>().text = "x" + need[i];
+            obj.GetComponent<Image>().sprite = SheepSprites[index[i]];
+            obj.transform.SetParent(mailPanel.transform,true);
+            obj.transform.localScale = new Vector3(1,1,1);
+        }
     }
 
     public void closeMailPanel()

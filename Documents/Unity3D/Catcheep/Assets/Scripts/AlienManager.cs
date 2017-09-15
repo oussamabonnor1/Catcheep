@@ -421,22 +421,34 @@ public class AlienManager : MonoBehaviour
     {
         receivedMail(false);
         mailButton.GetComponent<Button>().enabled = false;
-        fillingMailPanel(new []{0},new []{45});
+        StartCoroutine(fillingMailPanel(new []{2,1,0},new []{15,50,22}));
         mailPanel.SetActive(true);
-        StartCoroutine(objectOpened(mailPanel));
     }
 
-    void fillingMailPanel(int[] index,int[] need)
+    IEnumerator fillingMailPanel(int[] index,int[] need)
     {
-        Vector2 position = new Vector2(mailPanel.transform.GetChild(0).transform.position.x,mailPanel.transform.GetChild(0).transform.position.y - 230);
+        //function objectOpened rewritten here cause of scale prblem
+        //the function fill doesnt wait for the object to open first
+        //which means everything will scale up (children of object)
+        for (int i = 0; i <= 10; i++)
+        {
+            float a = (float)i / 10;
+            mailPanel.transform.localScale = new Vector3(a, a, 1);
+            yield return new WaitForSeconds(0.01f);
+        }
+        //filling the panel depending on mission
+        //don't panic: this jst means centering the mission info in a nice way (excuse me, im tired)
+        Vector2 position = new Vector2(mailPanel.transform.GetChild(0).transform.position.x 
+            - neededPrayPrefab.GetComponent<Image>().sprite.bounds.extents.x,
+            mailPanel.transform.GetChild(0).transform.position.y - (edgeOfScreen.y * 0.04f));
         for (int i = 0; i < need.Length; i++)
         {
-            position = new Vector2(position.x,position.y - (i * 50));
+            position = new Vector2(position.x,position.y - (edgeOfScreen.y * 0.10f));
             GameObject obj = Instantiate(neededPrayPrefab, position, Quaternion.identity);
             obj.GetComponentInChildren<TextMeshProUGUI>().text = "x" + need[i];
             obj.GetComponent<Image>().sprite = SheepSprites[index[i]];
-            obj.transform.SetParent(mailPanel.transform,true);
-            obj.transform.localScale = new Vector3(1,1,1);
+            obj.transform.SetParent(mailPanel.transform, true);
+            obj.transform.localScale= new Vector3(1, 1, 1);
         }
     }
 
@@ -444,8 +456,12 @@ public class AlienManager : MonoBehaviour
     {
         receivedMail(true);
         mailButton.GetComponent<Button>().enabled = true;
-        mailPanel.SetActive(false);
+        for (int i = 2; i < mailPanel.transform.childCount; i++)
+        {
+            Destroy(mailPanel.transform.GetChild(i).gameObject);
+        }
         StartCoroutine(objectClosed(mailPanel));
+        mailPanel.SetActive(false);
     }
 
     

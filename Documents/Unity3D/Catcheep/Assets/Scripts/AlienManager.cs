@@ -19,6 +19,8 @@ public class AlienManager : MonoBehaviour
     public GameObject leftButton;
     public GameObject timeText;
     public GameObject SheepMapGameObject;
+    public GameObject mailPanel;
+    public GameObject mailButton;
 
     [Header("indication elements")] public GameObject sheepHolder;
     public GameObject sheepNumberText;
@@ -379,27 +381,32 @@ public class AlienManager : MonoBehaviour
         leftButton.GetComponent<Button>().enabled = false;
     }
 
-    public void startMenu()
+   
+    //mail related code
+    void receivedMail(bool state)
     {
-        SceneManager.LoadScene(1);
+        mailButton.GetComponent<Animator>().enabled = state;
+        mailButton.transform.GetChild(0).gameObject.SetActive(state);
     }
 
-    //sheep map functions
-    public void sheepMapClick()
+    public void openMailPanel()
     {
-        if (SheepMapGameObject.gameObject.activeInHierarchy)
-        {
-            StartCoroutine(objectClosed(SheepMapGameObject));
-            activatingButtons();
-        }
-        else
-        {
-            deactivatingButtons();
-            SheepMapGameObject.SetActive(true);
-            StartCoroutine(objectOpened(SheepMapGameObject));
-        }
+        receivedMail(false);
+        mailButton.GetComponent<Button>().enabled = false;
+        mailPanel.SetActive(true);
+        StartCoroutine(objectOpened(mailPanel));
     }
 
+    public void closeMailPanel()
+    {
+        receivedMail(true);
+        mailButton.GetComponent<Button>().enabled = true;
+        mailPanel.SetActive(false);
+        StartCoroutine(objectClosed(mailPanel));
+    }
+
+    
+    //opening and closing objects animations (very important and used everywhere)
     IEnumerator objectOpened(GameObject objectToOpen)
     {
         for (int i = 0; i <= 10; i++)
@@ -419,6 +426,23 @@ public class AlienManager : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
         SheepMapGameObject.SetActive(false);
+    }
+    
+    //map panel code
+    //sheep map functions
+    public void sheepMapClick()
+    {
+        if (SheepMapGameObject.gameObject.activeInHierarchy)
+        {
+            StartCoroutine(objectClosed(SheepMapGameObject));
+            activatingButtons();
+        }
+        else
+        {
+            deactivatingButtons();
+            SheepMapGameObject.SetActive(true);
+            StartCoroutine(objectOpened(SheepMapGameObject));
+        }
     }
 
     public void sheepyClicked()
@@ -469,4 +493,10 @@ public class AlienManager : MonoBehaviour
         currentSheepShowed = 5;
         shipGoingRightButtonClicked();
     }
+
+    public void startMenu()
+    {
+        SceneManager.LoadScene(1);
+    }
+
 }

@@ -24,6 +24,7 @@ public class AlienManager : MonoBehaviour
     public GameObject mailPanel;
     public GameObject mailButton;
     public GameObject neededPrayPrefab;
+    public GameObject slider;
 
     [Header("indication elements")] public GameObject sheepHolder;
     public GameObject sheepNumberText;
@@ -490,7 +491,6 @@ public class AlienManager : MonoBehaviour
 
     public void closeMailPanel()
     {
-        receivedMail(true);
         mailButton.GetComponent<Button>().enabled = true;
         for (int i = 2; i < mailPanel.transform.childCount; i++)
         {
@@ -587,6 +587,22 @@ public class AlienManager : MonoBehaviour
         StartCoroutine(objectClosed(SheepMapGameObject));
         currentSheepShowed = 5;
         shipGoingRightButtonClicked();
+    }
+
+    //slider functions
+    void setSlider(int level)
+    {
+        if (level < 50)
+        {
+            slider.GetComponent<Slider>().value = level;
+            PlayerPrefs.SetInt("level",PlayerPrefs.GetInt("level")+1);
+            receivedMail(true);
+            mailButton.GetComponent<Button>().enabled = true;
+        }
+        else
+        {
+            //wining game is put here
+        }
     }
 
     public void startMenu()

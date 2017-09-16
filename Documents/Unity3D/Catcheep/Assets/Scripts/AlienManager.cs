@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Text;
 using LitJson;
 using TMPro;
 using UnityEngine;
@@ -37,7 +39,8 @@ public class AlienManager : MonoBehaviour
     private int sheepyRequested;
     private int shipType;
     private float[] timer;
-    
+    private int[] indexes, amounts;
+
 
     // Use this for initialization
     void Start()
@@ -54,7 +57,7 @@ public class AlienManager : MonoBehaviour
 
         currentSheepShowed = -1;
         changingSheepPic(1);
-        if (timer[currentSheepShowed] <= 0) StartCoroutine(alienSpawner()); 
+        if (timer[currentSheepShowed] <= 0) StartCoroutine(alienSpawner());
     }
 
     void settingTimerOnStart()
@@ -98,6 +101,7 @@ public class AlienManager : MonoBehaviour
         JsonData json = JsonReader.getJsonFile(url);
         return int.Parse(JsonReader.getDataFromJson(json, "time"));
     }
+
     int gettingRemainingTime(string url, int time)
     {
         JsonData json = JsonReader.getJsonFile(url);
@@ -165,7 +169,8 @@ public class AlienManager : MonoBehaviour
             {
                 string minutes = Mathf.Floor(timer[currentSheepShowed] / 60).ToString("00");
                 string seconds = (timer[currentSheepShowed] % 60).ToString("00");
-                timeText.transform.GetChild(1).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = minutes + ":" + seconds;
+                timeText.transform.GetChild(1).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
+                    minutes + ":" + seconds;
                 timer[i] -= Time.deltaTime;
             }
         }
@@ -205,7 +210,6 @@ public class AlienManager : MonoBehaviour
         sheepyRequested = Random.Range(2, 10);
         sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
     }
-
 
 
     void shipClicked()
@@ -387,7 +391,8 @@ public class AlienManager : MonoBehaviour
         {
             string minutes = Mathf.Floor(timer[currentSheepShowed] / 60).ToString("00");
             string seconds = (timer[currentSheepShowed] % 60).ToString("00");
-            timeText.transform.GetChild(0).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = minutes + ":" + seconds;
+            timeText.transform.GetChild(0).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
+                minutes + ":" + seconds;
             timeText.SetActive(true);
             StartCoroutine(objectOpened(timeText));
         }
@@ -409,7 +414,7 @@ public class AlienManager : MonoBehaviour
         leftButton.GetComponent<Button>().enabled = false;
     }
 
-   
+
     //mail related code
     void receivedMail(bool state)
     {
@@ -417,38 +422,69 @@ public class AlienManager : MonoBehaviour
         mailButton.transform.GetChild(0).gameObject.SetActive(state);
     }
 
+    private void loadTextFile(string fileName, int level)
+    {
+        //loading a text file
+        String line = "";
+        TextAsset text = Resources.Load(fileName) as TextAsset;
+        line = text.ToString();
+
+        //splitting it to missions (lines)
+        String[] missions = line.Split(',');
+        //splitting to words (only one line)
+        String[] words = missions[level].Split(' ');
+        //splitting data
+        indexes = new int[words.Length / 2];
+        amounts = new int[words.Length / 2];
+        //parsing data
+        for (int i = 0; i < words.Length; i++)
+        {
+            //these two line makes sure no space or comma is in parsing to integer
+            int a = words[i].IndexOf(" ", StringComparison.Ordinal);
+            if (a > -1) words[i] = words[i].Remove(a);
+            int b = words[i].IndexOf(",", StringComparison.Ordinal);
+            if (b > -1) words[i] = words[i].Remove(b);
+            //parsing stuff
+            if (i % 2 == 0) indexes[i / 2] = int.Parse(words[i]);
+            if (i % 2 == 1) amounts[(i - 1) / 2] = int.Parse(words[i]);
+        }
+        StartCoroutine(fillingMailPanel(indexes, amounts));
+    }
+
+
     public void openMailPanel()
     {
         receivedMail(false);
+        loadTextFile("missions", 0);
         mailButton.GetComponent<Button>().enabled = false;
-        StartCoroutine(fillingMailPanel(new []{2,1,0},new []{15,50,22}));
         mailPanel.SetActive(true);
     }
 
-    IEnumerator fillingMailPanel(int[] index,int[] need)
+    IEnumerator fillingMailPanel(int[] index, int[] need)
     {
         //function objectOpened rewritten here cause of scale prblem
         //the function fill doesnt wait for the object to open first
         //which means everything will scale up (children of object)
         for (int i = 0; i <= 10; i++)
         {
-            float a = (float)i / 10;
+            float a = (float) i / 10;
             mailPanel.transform.localScale = new Vector3(a, a, 1);
             yield return new WaitForSeconds(0.01f);
         }
         //filling the panel depending on mission
         //don't panic: this jst means centering the mission info in a nice way (excuse me, im tired)
-        Vector2 position = new Vector2(mailPanel.transform.GetChild(0).transform.position.x 
-            - neededPrayPrefab.GetComponent<Image>().sprite.bounds.extents.x,
+        Vector2 position = new Vector2(mailPanel.transform.GetChild(0).transform.position.x,
             mailPanel.transform.GetChild(0).transform.position.y - (edgeOfScreen.y * 0.04f));
+
         for (int i = 0; i < need.Length; i++)
         {
-            position = new Vector2(position.x,position.y - (edgeOfScreen.y * 0.10f));
+            position = new Vector2(position.x, position.y - (edgeOfScreen.y * 0.10f));
             GameObject obj = Instantiate(neededPrayPrefab, position, Quaternion.identity);
             obj.GetComponentInChildren<TextMeshProUGUI>().text = "x" + need[i];
             obj.GetComponent<Image>().sprite = SheepSprites[index[i]];
             obj.transform.SetParent(mailPanel.transform, true);
-            obj.transform.localScale= new Vector3(1, 1, 1);
+            obj.transform.localScale = new Vector3(1, 1, 1);
+            obj.transform.localPosition = new Vector2(-50, obj.transform.localPosition.y);
         }
     }
 
@@ -464,7 +500,7 @@ public class AlienManager : MonoBehaviour
         mailPanel.SetActive(false);
     }
 
-    
+
     //opening and closing objects animations (very important and used everywhere)
     IEnumerator objectOpened(GameObject objectToOpen)
     {
@@ -486,7 +522,7 @@ public class AlienManager : MonoBehaviour
         }
         SheepMapGameObject.SetActive(false);
     }
-    
+
     //map panel code
     //sheep map functions
     public void sheepMapClick()
@@ -557,5 +593,4 @@ public class AlienManager : MonoBehaviour
     {
         SceneManager.LoadScene(1);
     }
-
 }

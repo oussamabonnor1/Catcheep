@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using LitJson;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 public class AlienManager : MonoBehaviour
 {
@@ -37,7 +34,7 @@ public class AlienManager : MonoBehaviour
     private Vector2 newPosition;
 
     private int currentSheepShowed;
-    private int sheepyRequested;
+    private int[] sheepyRequested;
     private int shipType;
     private float[] timer;
     private int[] indexes, amounts;
@@ -49,27 +46,16 @@ public class AlienManager : MonoBehaviour
         timer = new float[SheepSprites.Length];
         shipType = PlayerPrefs.GetInt("ship") - 1;
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
+        sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
 
-        //setting the sheeps demands info
-        //JsonData json = JsonReader.getJsonFile("sheepy.json");
-        //moneyAmountText.GetComponent<TextMeshProUGUI>().text = JsonReader.getDataFromJson(json, "time");//PlayerPrefs.GetInt("money") + " $";
-        settingDemands();
-        settingTimerOnStart();
+        sheepyRequested = new[] {0, 0, 0, 0, 0, 0, 0};
+        loadTextFile("missions",PlayerPrefs.GetInt("level"),false);
+        receivedMail(true);
+        slider.GetComponent<Slider>().value = PlayerPrefs.GetInt("level");
 
         currentSheepShowed = -1;
         changingSheepPic(1);
         if (timer[currentSheepShowed] <= 0) StartCoroutine(alienSpawner());
-    }
-
-    void settingTimerOnStart()
-    {
-        for (int i = 0; i < 1; i++)
-        {
-            String url = JsonReader.getDataByIndex("sheeps", i).ToString();
-            JsonData json = JsonReader.getJsonFile(url);
-            int time = int.Parse(JsonReader.getDataFromJson(json, "time"));
-            timer[i] = gettingRemainingTime(url, time);
-        }
     }
 
     int settingTimes(int currentSheepShowed)
@@ -77,7 +63,7 @@ public class AlienManager : MonoBehaviour
         switch (currentSheepShowed)
         {
             case 0:
-                return settingTimeOfClick("sheepy.json");
+                return 59;
             case 1:
                 return 59;
             case 2:
@@ -95,24 +81,7 @@ public class AlienManager : MonoBehaviour
                 return 0;
         }
     }
-
-    int settingTimeOfClick(string url)
-    {
-        JsonReader.timeModifier(url);
-        JsonData json = JsonReader.getJsonFile(url);
-        return int.Parse(JsonReader.getDataFromJson(json, "time"));
-    }
-
-    int gettingRemainingTime(string url, int time)
-    {
-        JsonData json = JsonReader.getJsonFile(url);
-        DateTime startTime = DateTime.Parse(JsonReader.getDataFromJson(json, "timeOfSell"));
-        DateTime endTime = DateTime.Now;
-        TimeSpan amounTime = endTime - startTime;
-        if (time - (int) amounTime.TotalSeconds > 0) return time - (int) amounTime.TotalSeconds;
-        else return 0;
-    }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -206,24 +175,29 @@ public class AlienManager : MonoBehaviour
         yield return new WaitForSeconds(1);
     }
 
-    void settingDemands()
+    void settingDemands(int[] index, int[] demand)
     {
-        sheepyRequested = Random.Range(2, 10);
-        sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
+        for (int i = 0; i < index.Length; i++)
+        {
+            //sheep needed (index) = demand (i is used to make things organised)
+            //index and demand must be synched and taken from missions.txt
+            sheepyRequested[index[i]] = demand[i];
+        }
     }
 
 
     void shipClicked()
     {
-        if (PlayerPrefs.GetInt("sheepy") >= sheepyRequested)
+        if (PlayerPrefs.GetInt("sheepy") >= sheepyRequested[currentSheepShowed])
         {
-            PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") - sheepyRequested);
-            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + (sheepyRequested * 100));
+            PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") - sheepyRequested[currentSheepShowed]);
+            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + (sheepyRequested[currentSheepShowed] * 100));
             moneyAmountText.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetInt("money") + " $";
             sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
-            sheepyRequested = 0;
+            sheepyRequested[currentSheepShowed] = 0;
             deactivatingButtons();
             StartCoroutine(shipLeaving());
+            if(checkingIfMissionCompleted()) setSlider(PlayerPrefs.GetInt("level")+1);
         }
         else
         {
@@ -274,7 +248,6 @@ public class AlienManager : MonoBehaviour
 
     public void shipGoingRightButtonClicked()
     {
-        settingDemands();
         StartCoroutine(shipGoingRight());
     }
 
@@ -308,7 +281,6 @@ public class AlienManager : MonoBehaviour
 
     public void shipGoingLeftButtonClicked()
     {
-        settingDemands();
         StartCoroutine(shipGoingLeft());
     }
 
@@ -392,7 +364,7 @@ public class AlienManager : MonoBehaviour
         {
             string minutes = Mathf.Floor(timer[currentSheepShowed] / 60).ToString("00");
             string seconds = (timer[currentSheepShowed] % 60).ToString("00");
-            timeText.transform.GetChild(0).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
+            timeText.transform.GetChild(1).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
                 minutes + ":" + seconds;
             timeText.SetActive(true);
             StartCoroutine(objectOpened(timeText));
@@ -423,7 +395,7 @@ public class AlienManager : MonoBehaviour
         mailButton.transform.GetChild(0).gameObject.SetActive(state);
     }
 
-    private void loadTextFile(string fileName, int level)
+    private void loadTextFile(string fileName, int level, bool mailPanelOpened)
     {
         //loading a text file
         String line = "";
@@ -449,14 +421,14 @@ public class AlienManager : MonoBehaviour
             if (i % 2 == 0) indexes[i / 2] = int.Parse(words[i]);
             if (i % 2 == 1) amounts[(i - 1) / 2] = int.Parse(words[i]);
         }
-        StartCoroutine(fillingMailPanel(indexes, amounts));
+        settingDemands(indexes,amounts);
+        if(mailPanelOpened) StartCoroutine(fillingMailPanel(indexes, amounts));
     }
-
-
+    
     public void openMailPanel()
     {
         receivedMail(false);
-        loadTextFile("missions", 0);
+        loadTextFile("missions", PlayerPrefs.GetInt("level"), true);
         mailButton.GetComponent<Button>().enabled = false;
         mailPanel.SetActive(true);
     }
@@ -590,12 +562,24 @@ public class AlienManager : MonoBehaviour
     }
 
     //slider functions
+    bool checkingIfMissionCompleted()
+    {
+        for (int i = 0; i < sheepyRequested.Length; i++)
+        {
+            if (sheepyRequested[i] != 0)
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+
     void setSlider(int level)
     {
         if (level < 50)
         {
+            PlayerPrefs.SetInt("level",level);
             slider.GetComponent<Slider>().value = level;
-            PlayerPrefs.SetInt("level",PlayerPrefs.GetInt("level")+1);
             receivedMail(true);
             mailButton.GetComponent<Button>().enabled = true;
         }

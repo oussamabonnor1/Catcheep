@@ -22,6 +22,7 @@ public class AlienManager : MonoBehaviour
     public GameObject mailButton;
     public GameObject neededPrayPrefab;
     public GameObject slider;
+    public GameObject levelText;
 
     [Header("indication elements")] public GameObject sheepHolder;
     public GameObject sheepNumberText;
@@ -52,6 +53,7 @@ public class AlienManager : MonoBehaviour
         loadTextFile("missions",PlayerPrefs.GetInt("level"),false);
         receivedMail(true);
         slider.GetComponent<Slider>().value = PlayerPrefs.GetInt("level");
+        levelText.GetComponent<TextMeshProUGUI>().text = ""+PlayerPrefs.GetInt("level");
 
         currentSheepShowed = -1;
         changingSheepPic(1);
@@ -580,6 +582,7 @@ public class AlienManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("level",level);
             slider.GetComponent<Slider>().value = level;
+            levelText.GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("level");
             receivedMail(true);
             mailButton.GetComponent<Button>().enabled = true;
         }

@@ -50,7 +50,15 @@ public class AlienManager : MonoBehaviour
         sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
 
         sheepyRequested = new[] {0, 0, 0, 0, 0, 0, 0};
-        loadTextFile("missions",PlayerPrefs.GetInt("level"));
+        if (PlayerPrefs.GetInt("levelUp") == 0)
+        {
+            loadTextFile("missions", PlayerPrefs.GetInt("level"));
+            PlayerPrefs.SetInt("levelUp", 1);
+        }
+        else
+        {
+            loadCurrentMission();
+        }
         receivedMail(true);
         slider.GetComponent<Slider>().value = PlayerPrefs.GetInt("level");
         levelText.GetComponent<TextMeshProUGUI>().text = ""+PlayerPrefs.GetInt("level");
@@ -186,6 +194,24 @@ public class AlienManager : MonoBehaviour
             moneyAmountText.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetInt("money") + " $";
             sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
             sheepyRequested[currentSheepShowed] = 0;
+            //this long thing will make sure the player will have updated hunting
+            int toDelete = 0;
+            bool found = false;
+            for (int i = 0; i < indexes.Length; i++)
+            {
+                if (indexes[i] == currentSheepShowed)
+                {
+                    toDelete = i;
+                    found = true;
+                }
+            }
+            if (found)
+            {
+                PlayerPrefs.SetInt("amount" + indexes[toDelete], 0);
+                PlayerPrefs.SetInt("index" + toDelete, 0);
+            }
+            //end of confusing code
+
             deactivatingButtons();
             StartCoroutine(shipLeaving());
             if(checkingIfMissionCompleted()) setSlider(PlayerPrefs.GetInt("level")+1);
@@ -403,9 +429,22 @@ public class AlienManager : MonoBehaviour
         mailButton.transform.GetChild(0).gameObject.SetActive(state);
     }
 
+    private void loadCurrentMission()
+    {
+        indexes = new[] {0, 0, 0};
+        amounts = new[] {0, 0, 0};
+        for (int i = 0; i < 3; i++)
+        {
+            if (PlayerPrefs.GetInt("amount" + i) > 0)
+            {
+                indexes[i] = PlayerPrefs.GetInt("index" + i);
+                amounts[i] = PlayerPrefs.GetInt("amount" + i);
+            }
+        }
+        settingDemands(indexes, amounts);
+    }
     private void loadTextFile(string fileName, int level)
     {
-        PlayerPrefs.SetInt("levelUp",1);
         //loading a text file
         String line = "";
         TextAsset text = Resources.Load(fileName) as TextAsset;
@@ -427,13 +466,21 @@ public class AlienManager : MonoBehaviour
             int b = words[i].IndexOf(",", StringComparison.Ordinal);
             if (b > -1) words[i] = words[i].Remove(b);
             //parsing stuff
-            if (i % 2 == 0) indexes[i / 2] = int.Parse(words[i]);
-            if (i % 2 == 1) amounts[(i - 1) / 2] = int.Parse(words[i]);
+            if (i % 2 == 0)
+            {
+                indexes[i / 2] = int.Parse(words[i]);
+                if (i / 2 < 3) PlayerPrefs.SetInt("index" + (i / 2), indexes[i / 2]);
+            }
+            if (i % 2 == 1)
+            {
+                amounts[(i - 1) / 2] = int.Parse(words[i]);
+                if ((i-1)/2 < 3) PlayerPrefs.SetInt("amount" + (i - 1) / 2, indexes[(i - 1) / 2]);
+            }
         }
+        
         settingDemands(indexes,amounts);
     }
-
-
+    
     void settingDemands(int[] index, int[] demand)
     {
         for (int i = 0; i < index.Length; i++)
@@ -447,6 +494,11 @@ public class AlienManager : MonoBehaviour
     public void openMailPanel()
     {
         receivedMail(false);
+        if (PlayerPrefs.GetInt("levelUp") == 0)
+        {
+            loadTextFile("missions", PlayerPrefs.GetInt("level"));
+            PlayerPrefs.SetInt("levelUp", 1);
+        }
         StartCoroutine(fillingMailPanel(indexes, amounts));
         mailButton.GetComponent<Button>().enabled = false;
         mailPanel.SetActive(true);

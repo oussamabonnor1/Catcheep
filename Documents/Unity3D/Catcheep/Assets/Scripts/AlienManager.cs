@@ -474,7 +474,7 @@ public class AlienManager : MonoBehaviour
             if (i % 2 == 1)
             {
                 amounts[(i - 1) / 2] = int.Parse(words[i]);
-                if ((i-1)/2 < 3) PlayerPrefs.SetInt("amount" + (i - 1) / 2, indexes[(i - 1) / 2]);
+                if ((i-1)/2 < 3) PlayerPrefs.SetInt("amount" + (i - 1) / 2, amounts[(i - 1) / 2]);
             }
         }
         
@@ -522,13 +522,16 @@ public class AlienManager : MonoBehaviour
 
         for (int i = 0; i < need.Length; i++)
         {
-            position = new Vector2(position.x, position.y - (edgeOfScreen.y * 0.10f));
-            GameObject obj = Instantiate(neededPrayPrefab, position, Quaternion.identity);
-            obj.GetComponentInChildren<TextMeshProUGUI>().text = "x" + need[i];
-            obj.GetComponent<Image>().sprite = SheepSprites[index[i]];
-            obj.transform.SetParent(mailPanel.transform, true);
-            obj.transform.localScale = new Vector3(1, 1, 1);
-            obj.transform.localPosition = new Vector2(-50, obj.transform.localPosition.y);
+            if (PlayerPrefs.GetInt("amount" + i) > 0)
+            {
+                position = new Vector2(position.x, position.y - (edgeOfScreen.y * 0.10f));
+                GameObject obj = Instantiate(neededPrayPrefab, position, Quaternion.identity);
+                obj.GetComponentInChildren<TextMeshProUGUI>().text = "x" + need[i];
+                obj.GetComponent<Image>().sprite = SheepSprites[index[i]];
+                obj.transform.SetParent(mailPanel.transform, true);
+                obj.transform.localScale = new Vector3(1, 1, 1);
+                obj.transform.localPosition = new Vector2(-50, obj.transform.localPosition.y);
+            }
         }
     }
 

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using LitJson;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,6 +22,7 @@ public class AlienManager : MonoBehaviour
     public GameObject neededPrayPrefab;
     public GameObject slider;
     public GameObject levelText;
+    public GameObject levelUpPanel;
 
     [Header("indication elements")] public GameObject sheepHolder;
     public GameObject sheepNumberText;
@@ -583,8 +583,11 @@ public class AlienManager : MonoBehaviour
             PlayerPrefs.SetInt("level",level);
             slider.GetComponent<Slider>().value = level;
             levelText.GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("level");
+            levelUpPanel.SetActive(true);
+            levelUpPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("level");
+            StartCoroutine(objectOpened(levelUpPanel));
             receivedMail(true);
-            mailButton.GetComponent<Button>().enabled = true;
+            mailButton.GetComponent<Button>().enabled = false;
         }
         else
         {
@@ -592,6 +595,14 @@ public class AlienManager : MonoBehaviour
         }
     }
 
+    //level up panel functions
+
+    public void closeLevelUpPanel()
+    {
+        StartCoroutine(objectClosed(levelUpPanel));
+        levelUpPanel.SetActive(false);
+        mailButton.GetComponent<Button>().enabled = false;
+    }
     public void startMenu()
     {
         SceneManager.LoadScene(1);

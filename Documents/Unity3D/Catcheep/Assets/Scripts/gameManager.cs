@@ -16,6 +16,7 @@ public class gameManager : MonoBehaviour
 
     [Header("UI components")]
     public GameObject background;
+    public GameObject menuBackground;
     public GameObject backgroundOfTrees;
     public GameObject finishPanel;
     public GameObject flare;
@@ -52,6 +53,7 @@ public class gameManager : MonoBehaviour
         {
             background = GameObject.Find("background");
             ResizeBackground(background);
+            ResizeBackground(menuBackground);
         }
         if (backgroundOfTrees == null && GameObject.Find("Trees") != null)
         {
@@ -67,9 +69,24 @@ public class gameManager : MonoBehaviour
         Vector3 helpToolsPlateWidth = helpToolsPlate.GetComponent<RectTransform>().rect.size;
         edgeOfScreen = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - helpToolsPlateWidth.x, Screen.height, 0f));
         gameOver = false;
+        StartCoroutine(animatedBackgrounds(background, menuBackground));
+        
+    }
+
+    IEnumerator animatedBackgrounds(GameObject a, GameObject b)
+    {
+        yield return new WaitForSeconds(0.5f);
+        for (int i = 0; i < 12; i++)
+        {
+            Vector3 v1 = a.transform.position;
+            a.transform.position = new Vector3(v1.x, v1.y + 1, v1.z);
+            Vector3 v2 = b.transform.position;
+            b.transform.position = new Vector3(v2.x, v2.y + 1, v2.z);
+            yield return new WaitForSeconds(0.03f);
+        }
         StartCoroutine(sheepSpawner());
     }
-    
+
     void Update()
     {
 

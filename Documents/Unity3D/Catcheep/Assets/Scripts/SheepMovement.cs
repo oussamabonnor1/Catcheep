@@ -31,7 +31,6 @@ public class SheepMovement : MonoBehaviour
         if (tag == "blacky") StartCoroutine(suddenChangeInDirection());
     }
 
-
     // Update is called once per frame
     void Update()
     {

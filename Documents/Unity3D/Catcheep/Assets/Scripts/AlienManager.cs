@@ -50,7 +50,7 @@ public class AlienManager : MonoBehaviour
         sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
 
         sheepyRequested = new[] {0, 0, 0, 0, 0, 0, 0};
-        if(PlayerPrefs.GetInt("levelUp") == 0) loadTextFile("missions",PlayerPrefs.GetInt("level"));
+        loadTextFile("missions",PlayerPrefs.GetInt("level"));
         receivedMail(true);
         slider.GetComponent<Slider>().value = PlayerPrefs.GetInt("level");
         levelText.GetComponent<TextMeshProUGUI>().text = ""+PlayerPrefs.GetInt("level");
@@ -193,6 +193,23 @@ public class AlienManager : MonoBehaviour
         else
         {
             StartCoroutine(notEnoughtSheeps());
+        }
+
+        if (sheepyRequested[currentSheepShowed] == 0)
+        {
+             StartCoroutine(cameraVibrate());
+        }
+        
+    }
+
+    IEnumerator cameraVibrate()
+    {
+        for (int i = 0; i < 10; i++)
+        {
+            Vector3 a = Camera.main.transform.position;
+            if(i % 2 == 0) Camera.main.transform.position = new Vector3(a.x + 10, a.y,a.z);
+            else Camera.main.transform.position = new Vector3(a.x - 10, a.y, a.z);
+            yield return new WaitForSeconds(0.01f);
         }
     }
 

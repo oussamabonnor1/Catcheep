@@ -50,7 +50,7 @@ public class AlienManager : MonoBehaviour
         sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
 
         sheepyRequested = new[] {0, 0, 0, 0, 0, 0, 0};
-        loadTextFile("missions",PlayerPrefs.GetInt("level"),false);
+        if(PlayerPrefs.GetInt("levelUp") == 0) loadTextFile("missions",PlayerPrefs.GetInt("level"));
         receivedMail(true);
         slider.GetComponent<Slider>().value = PlayerPrefs.GetInt("level");
         levelText.GetComponent<TextMeshProUGUI>().text = ""+PlayerPrefs.GetInt("level");
@@ -176,17 +176,6 @@ public class AlienManager : MonoBehaviour
     {
         yield return new WaitForSeconds(1);
     }
-
-    void settingDemands(int[] index, int[] demand)
-    {
-        for (int i = 0; i < index.Length; i++)
-        {
-            //sheep needed (index) = demand (i is used to make things organised)
-            //index and demand must be synched and taken from missions.txt
-            sheepyRequested[index[i]] = demand[i];
-        }
-    }
-
 
     void shipClicked()
     {
@@ -397,8 +386,9 @@ public class AlienManager : MonoBehaviour
         mailButton.transform.GetChild(0).gameObject.SetActive(state);
     }
 
-    private void loadTextFile(string fileName, int level, bool mailPanelOpened)
+    private void loadTextFile(string fileName, int level)
     {
+        PlayerPrefs.SetInt("levelUp",1);
         //loading a text file
         String line = "";
         TextAsset text = Resources.Load(fileName) as TextAsset;
@@ -424,13 +414,23 @@ public class AlienManager : MonoBehaviour
             if (i % 2 == 1) amounts[(i - 1) / 2] = int.Parse(words[i]);
         }
         settingDemands(indexes,amounts);
-        if(mailPanelOpened) StartCoroutine(fillingMailPanel(indexes, amounts));
     }
-    
+
+
+    void settingDemands(int[] index, int[] demand)
+    {
+        for (int i = 0; i < index.Length; i++)
+        {
+            //sheep needed (index) = demand (i is used to make things organised)
+            //index and demand must be synched and taken from missions.txt
+            if (sheepyRequested[index[i]] == 0) sheepyRequested[index[i]] = demand[i];
+        }
+    }
+
     public void openMailPanel()
     {
         receivedMail(false);
-        loadTextFile("missions", PlayerPrefs.GetInt("level"), true);
+        StartCoroutine(fillingMailPanel(indexes, amounts));
         mailButton.GetComponent<Button>().enabled = false;
         mailPanel.SetActive(true);
     }
@@ -586,6 +586,8 @@ public class AlienManager : MonoBehaviour
             levelUpPanel.SetActive(true);
             levelUpPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("level");
             StartCoroutine(objectOpened(levelUpPanel));
+            loadTextFile("missions",level);
+            PlayerPrefs.SetInt("levelUp",0);
             receivedMail(true);
             mailButton.GetComponent<Button>().enabled = false;
         }
@@ -601,7 +603,7 @@ public class AlienManager : MonoBehaviour
     {
         StartCoroutine(objectClosed(levelUpPanel));
         levelUpPanel.SetActive(false);
-        mailButton.GetComponent<Button>().enabled = false;
+        mailButton.GetComponent<Button>().enabled = true;
     }
     public void startMenu()
     {

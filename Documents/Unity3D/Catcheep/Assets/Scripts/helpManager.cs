@@ -64,7 +64,7 @@ public class helpManager : MonoBehaviour
                 //bool condition is there just not to instantiate the love 5 times 
                 if (pointer.selectedObject == helpButtons[2] && !loveUsed && PlayerPrefs.GetInt("loveStock") > 0)
                 {
-                    PlayerPrefs.SetInt("netStock", PlayerPrefs.GetInt("netStackStock") - 1);
+                    PlayerPrefs.SetInt("loveStock", PlayerPrefs.GetInt("loveStock") - 1);
                     StartCoroutine(loveClickedcall());
                 }
             }
@@ -145,7 +145,6 @@ public class helpManager : MonoBehaviour
 
     IEnumerator helpDestroyer(float lifeTime, GameObject gameObjectToDestroy)
     {
-        print("help tool will be destroyed");
         // helpUsed must stay above wait, this is just to make sure no help tool gets left without destruction
         helpUsed = false;
 

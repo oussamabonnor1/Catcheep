@@ -44,8 +44,8 @@ public class startMenuManager : MonoBehaviour
         if (sceneContent == null) sceneContent = GameObject.Find("Scene content");
 
         //reminding player of vibration (delete when finished devloping)
-        if (PlayerPrefs.GetString("Vibration") == "True") vibrationToggle.GetComponent<Toggle>().isOn = true;
-        else vibrationToggle.GetComponent<Toggle>().isOn = false;
+        if (PlayerPrefs.GetString("Vibration") == "True") vibrationToggle.GetComponent<Switch>().isOn = true;
+        else vibrationToggle.GetComponent<Switch>().isOn = false;
 
         //extracting necissary elements for functions
         ScrollBar = ScrollBarGameObject.GetComponent<Scrollbar>();

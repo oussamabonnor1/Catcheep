@@ -17,7 +17,7 @@ public class ShopController : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
-        cashText.GetComponent<TextMeshProUGUI>().text = " Ca$h: "+PlayerPrefs.GetInt("money") + " $";
+        cashUpdate(PlayerPrefs.GetInt("money"));
     }
 	
 	// Update is called once per frame
@@ -73,7 +73,7 @@ public class ShopController : MonoBehaviour
         {
             PlayerPrefs.SetInt("ship", 1);
             PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 2500);
-            cashText.GetComponent<TextMeshProUGUI>().text = " Ca$h: " + PlayerPrefs.GetInt("money") + " $";
+            cashUpdate(PlayerPrefs.GetInt("money"));
         }
         else
         {
@@ -88,7 +88,7 @@ public class ShopController : MonoBehaviour
         {
             PlayerPrefs.SetInt("ship", 2);
             PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 4000);
-            cashText.GetComponent<TextMeshProUGUI>().text = " Ca$h: " + PlayerPrefs.GetInt("money") +" $";
+            cashUpdate(PlayerPrefs.GetInt("money"));
         }
         else
         {
@@ -103,7 +103,7 @@ public class ShopController : MonoBehaviour
         {
             PlayerPrefs.SetInt("ship", 3);
             PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 8000);
-            cashText.GetComponent<TextMeshProUGUI>().text = " Ca$h: " + PlayerPrefs.GetInt("money") + " $";
+            cashUpdate(PlayerPrefs.GetInt("money"));
         }
         else
         {
@@ -118,7 +118,7 @@ public class ShopController : MonoBehaviour
         {
             PlayerPrefs.SetInt("ship", 4);
             PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 15000);
-            cashText.GetComponent<TextMeshProUGUI>().text = " Ca$h: " + PlayerPrefs.GetInt("money") + " $";
+            cashUpdate(PlayerPrefs.GetInt("money"));
         }
         else
         {
@@ -132,7 +132,7 @@ public class ShopController : MonoBehaviour
         {
             PlayerPrefs.SetInt("hayStackStock",PlayerPrefs.GetInt("hayStackStock") + 1);
             PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 15000);
-            cashText.GetComponent<TextMeshProUGUI>().text = " Ca$h: " + PlayerPrefs.GetInt("money") + " $";
+            cashUpdate(PlayerPrefs.GetInt("money"));
         }
         else
         {
@@ -146,7 +146,7 @@ public class ShopController : MonoBehaviour
         {
             PlayerPrefs.SetInt("netStock", PlayerPrefs.GetInt("netStock") + 1);
             PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 20000);
-            cashText.GetComponent<TextMeshProUGUI>().text = " Ca$h: " + PlayerPrefs.GetInt("money") + " $";
+            cashUpdate(PlayerPrefs.GetInt("money"));
         }
         else
         {
@@ -160,11 +160,16 @@ public class ShopController : MonoBehaviour
         {
             PlayerPrefs.SetInt("loveStock", PlayerPrefs.GetInt("loveStock") + 1);
             PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 30000);
-            cashText.GetComponent<TextMeshProUGUI>().text = " Ca$h: " + PlayerPrefs.GetInt("money") + " $";
+            cashUpdate(PlayerPrefs.GetInt("money"));
         }
         else
         {
             cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
         }
+    }
+
+    void cashUpdate(int current)
+    {
+        cashText.GetComponent<TextMeshProUGUI>().text = "$" +current;
     }
 }

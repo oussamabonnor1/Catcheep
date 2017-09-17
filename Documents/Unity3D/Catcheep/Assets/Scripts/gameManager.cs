@@ -75,6 +75,7 @@ public class gameManager : MonoBehaviour
 
     IEnumerator animatedBackgrounds(GameObject a, GameObject b)
     {
+        backgroundOfTrees.SetActive(false);
         yield return new WaitForSeconds(0.5f);
         for (int i = 0; i < 12; i++)
         {
@@ -84,6 +85,7 @@ public class gameManager : MonoBehaviour
             b.transform.position = new Vector3(v2.x, v2.y + 1, v2.z);
             yield return new WaitForSeconds(0.03f);
         }
+        backgroundOfTrees.SetActive(true);
         StartCoroutine(sheepSpawner());
     }
 

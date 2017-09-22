@@ -68,8 +68,7 @@ public class AlienManager : MonoBehaviour
         changingSheepPic(1);
         if (musicManager.timer[currentSheepShowed] <= 0) StartCoroutine(alienSpawner());
         else
-        {
-            
+        {   
                 string minutes = Mathf.Floor(musicManager.timer[currentSheepShowed] / 60).ToString("00");
                 string seconds = (musicManager.timer[currentSheepShowed] % 60).ToString("00");
                 timeText.transform.GetChild(1).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =

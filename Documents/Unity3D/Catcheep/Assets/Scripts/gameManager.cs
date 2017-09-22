@@ -252,8 +252,21 @@ public class gameManager : MonoBehaviour
             //it's been a long 3 months working on this 'game' and i honestly jst wanna get it over with.
             finishPanel.SetActive(true);
             finishPanel.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = "+" + (score - originalScore);
-            finishPanel.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "+" + sheepyCaught;
-            finishPanel.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "+" + blackyCaught;
+            if (SceneManager.GetActiveScene().name.Equals("Farm"))
+            {
+                finishPanel.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "+" + sheepyCaught;
+                finishPanel.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "+" + blackyCaught;
+            }
+            if (SceneManager.GetActiveScene().name.Equals("Snow"))
+            {
+                finishPanel.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "+" + snowSheepyCaught;
+                finishPanel.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "+" + snowBlackyCaught;
+            }
+            if (SceneManager.GetActiveScene().name.Equals("City"))
+            {
+                finishPanel.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "+" + citySheepyCaught;
+                finishPanel.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = "+" + cityBlackyCaught;
+            }
             finishPanel.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = "+" + flashCaught;
         }
     }

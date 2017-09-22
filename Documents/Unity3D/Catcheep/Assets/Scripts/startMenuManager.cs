@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -14,6 +15,9 @@ public class startMenuManager : MonoBehaviour
     public GameObject ScrollBarGameObject;
     public GameObject vibrationToggle;
     public GameObject bossSheep;
+    public GameObject timeText;
+    public GameObject heartText;
+    public GameObject moneyText;
     private Scrollbar ScrollBar;
 
     private Vector2 edgeOfScreen;
@@ -53,12 +57,24 @@ public class startMenuManager : MonoBehaviour
 
         //starting boss sheep animation a second after the scene loading (explaining "1" as param)
         StartCoroutine(bossPopingUp(Random.Range(5,10)));
+
+        //giving data to texts (as late as possible)
+        heartText.GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("hearts");
+        moneyText.GetComponent<TextMeshProUGUI>().text = "$" + PlayerPrefs.GetInt("money");
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        //updating timer
+        if (PlayerPrefs.GetInt("hearts") < PlayerPrefs.GetInt("maxHearts"))
+        {
+            string minutes = Mathf.Floor(PlayerPrefs.GetFloat("heartTime") / 60).ToString("00");
+            string seconds = (PlayerPrefs.GetFloat("heartTime") % 60).ToString("00");
+            timeText.GetComponent<TextMeshProUGUI>().text =
+                minutes + ":" + seconds;
+        }
+
         if (!Input.GetMouseButton(0))
         {
             for (int i = 1; i <= menuCount; i++)

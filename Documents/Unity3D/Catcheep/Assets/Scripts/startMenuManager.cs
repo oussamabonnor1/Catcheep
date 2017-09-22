@@ -59,7 +59,7 @@ public class startMenuManager : MonoBehaviour
         StartCoroutine(bossPopingUp(Random.Range(5,10)));
 
         //giving data to texts (as late as possible)
-        heartText.GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("hearts");
+        heartText.GetComponent<TextMeshProUGUI>().text = "x" + PlayerPrefs.GetInt("hearts");
         moneyText.GetComponent<TextMeshProUGUI>().text = "$" + PlayerPrefs.GetInt("money");
     }
 
@@ -197,21 +197,32 @@ public class startMenuManager : MonoBehaviour
 
     public void farm()
     {
-        LoadingScreenManager.sceneToLoad = 3;
-        SceneManager.LoadScene(4);
+        if (PlayerPrefs.GetInt("hearts") > 0)
+        {
+            PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") - 1);
+            LoadingScreenManager.sceneToLoad = 3;
+            SceneManager.LoadScene(4);
+        }
     }
 
     public void snow()
     {
-        LoadingScreenManager.sceneToLoad = 2;
-        SceneManager.LoadScene(4);
-        //SceneManager.LoadScene("snow");
+        if (PlayerPrefs.GetInt("hearts") > 0)
+        {
+            PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") - 1);
+            LoadingScreenManager.sceneToLoad = 2;
+            SceneManager.LoadScene(4);
+        }
     }
 
     public void city()
     {
-        LoadingScreenManager.sceneToLoad = 5;
-        SceneManager.LoadScene(4);
+        if (PlayerPrefs.GetInt("hearts") > 0)
+        {
+            PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") - 1);
+            LoadingScreenManager.sceneToLoad = 5;
+            SceneManager.LoadScene(4);
+        }
     }
 
     public void alien()
@@ -278,8 +289,8 @@ public class startMenuManager : MonoBehaviour
 
     public void vibration()
     {
-        PlayerPrefs.SetString("Vibration", vibrationToggle.GetComponent<Toggle>().isOn.ToString());
-        if (vibrationToggle.GetComponent<Toggle>().isOn && (int) sceneContent.transform.localPosition.x != 0) Handheld.Vibrate();
+        PlayerPrefs.SetString("Vibration", vibrationToggle.GetComponent<Switch>().isOn.ToString());
+        if (vibrationToggle.GetComponent<Switch>().isOn && (int) sceneContent.transform.localPosition.x != 0) Handheld.Vibrate();
     }
 
     public void quit()
@@ -292,5 +303,13 @@ public class startMenuManager : MonoBehaviour
         Application.OpenURL("https://www.facebook.com/JetLightstudio/?ref=bookmarks");
     }
 
-    
+    public void moreGames()
+    {
+        Application.OpenURL("https://play.google.com/store/apps/dev?id=5638230701137828274");
+    }
+
+    public void deleteProgress()
+    {
+        
+    }
 }

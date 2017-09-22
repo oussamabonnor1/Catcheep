@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -12,6 +13,7 @@ public class AlienManager : MonoBehaviour
     public GameObject[] alienShip;
     public GameObject maskHolder;
     public GameObject SheepHoverGameObject;
+    private music musicManager;
 
     [Header("UI components")] public GameObject rightButton;
     public GameObject leftButton;
@@ -37,14 +39,13 @@ public class AlienManager : MonoBehaviour
     private int currentSheepShowed;
     private int[] sheepyRequested;
     private int shipType;
-    private float[] timer;
     private int[] indexes, amounts;
 
 
     // Use this for initialization
     void Start()
     {
-        timer = new float[SheepSprites.Length];
+        musicManager = GameObject.Find("Music Manager").GetComponent<music>();
         shipType = PlayerPrefs.GetInt("ship") - 1;
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
         sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
@@ -65,7 +66,18 @@ public class AlienManager : MonoBehaviour
 
         currentSheepShowed = -1;
         changingSheepPic(1);
-        if (timer[currentSheepShowed] <= 0) StartCoroutine(alienSpawner());
+        if (musicManager.timer[currentSheepShowed] <= 0) StartCoroutine(alienSpawner());
+        else
+        {
+            
+                string minutes = Mathf.Floor(musicManager.timer[currentSheepShowed] / 60).ToString("00");
+                string seconds = (musicManager.timer[currentSheepShowed] % 60).ToString("00");
+                timeText.transform.GetChild(1).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
+                    minutes + ":" + seconds;
+                timeText.SetActive(true);
+                StartCoroutine(objectOpened(timeText));
+            
+        }
     }
 
     int settingTimes(int currentSheepShowed)
@@ -95,7 +107,7 @@ public class AlienManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        updatingTimers();
+        updatingTimeText();
 
         if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
@@ -141,21 +153,16 @@ public class AlienManager : MonoBehaviour
         }
     }
 
-    void updatingTimers()
+    void updatingTimeText()
     {
-        for (int i = 0; i < timer.Length; i++)
+        if (musicManager.timer[currentSheepShowed] > 0)
         {
-            if (timer[i] > 0)
-            {
-                string minutes = Mathf.Floor(timer[currentSheepShowed] / 60).ToString("00");
-                string seconds = (timer[currentSheepShowed] % 60).ToString("00");
-                timeText.transform.GetChild(1).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
-                    minutes + ":" + seconds;
-                timer[i] -= Time.deltaTime;
-            }
+            string minutes = Mathf.Floor(musicManager.timer[currentSheepShowed] / 60).ToString("00");
+            string seconds = (musicManager.timer[currentSheepShowed] % 60).ToString("00");
+            timeText.transform.GetChild(1).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
+                minutes + ":" + seconds;
         }
     }
-
     IEnumerator alienSpawner()
     {
         deactivatingButtons();
@@ -277,7 +284,11 @@ public class AlienManager : MonoBehaviour
         //setting Timer
         timeText.SetActive(true);
         StartCoroutine(objectOpened(timeText));
-        if (timer[currentSheepShowed] <= 0) timer[currentSheepShowed] = settingTimes(currentSheepShowed);
+        if (musicManager.timer[currentSheepShowed] <= 0)
+        {
+            musicManager.timer[currentSheepShowed] = settingTimes(currentSheepShowed);
+            PlayerPrefs.SetFloat("time" + currentSheepShowed, musicManager.timer[currentSheepShowed]);
+        }
     }
 
     public void shipGoingRightButtonClicked()
@@ -306,7 +317,7 @@ public class AlienManager : MonoBehaviour
         }
         changingSheepPic(1);
 
-        if (timer[currentSheepShowed] <= 0) StartCoroutine(alienSpawner());
+        if (musicManager.timer[currentSheepShowed] <= 0) StartCoroutine(alienSpawner());
         else
         {
             activatingButtons();
@@ -342,7 +353,7 @@ public class AlienManager : MonoBehaviour
             Destroy(spaceShipForScript.gameObject);
         }
         changingSheepPic(-1);
-        if (timer[currentSheepShowed] <= 0)
+        if (musicManager.timer[currentSheepShowed] <= 0)
         {
             StartCoroutine(alienSpawner());
         }
@@ -394,10 +405,10 @@ public class AlienManager : MonoBehaviour
         }
         sheepHolder.GetComponentInChildren<TextMeshProUGUI>().text = nameOfSheep;
 
-        if (timer[currentSheepShowed] > 0)
+        if (musicManager.timer[currentSheepShowed] > 0)
         {
-            string minutes = Mathf.Floor(timer[currentSheepShowed] / 60).ToString("00");
-            string seconds = (timer[currentSheepShowed] % 60).ToString("00");
+            string minutes = Mathf.Floor(musicManager.timer[currentSheepShowed] / 60).ToString("00");
+            string seconds = (musicManager.timer[currentSheepShowed] % 60).ToString("00");
             timeText.transform.GetChild(1).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
                 minutes + ":" + seconds;
             timeText.SetActive(true);

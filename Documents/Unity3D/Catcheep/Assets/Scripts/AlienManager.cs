@@ -162,6 +162,11 @@ public class AlienManager : MonoBehaviour
             timeText.transform.GetChild(1).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
                 minutes + ":" + seconds;
         }
+        else if(spaceShipForScript == null)
+        {
+            StartCoroutine(objectClosed(timeText));
+            StartCoroutine(alienSpawner());
+        }
     }
     IEnumerator alienSpawner()
     {
@@ -194,8 +199,9 @@ public class AlienManager : MonoBehaviour
 
     void shipClicked()
     {
-        if (PlayerPrefs.GetInt("sheepy") >= sheepyRequested[currentSheepShowed])
+        if (PlayerPrefs.GetInt("sheep"+currentSheepShowed) >= sheepyRequested[currentSheepShowed])
         {
+            PlayerPrefs.SetInt("sheep"+currentSheepShowed, PlayerPrefs.GetInt("sheep" + currentSheepShowed) - sheepyRequested[currentSheepShowed]);
             PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") - sheepyRequested[currentSheepShowed]);
             PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + (sheepyRequested[currentSheepShowed] * 100));
             moneyAmountText.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetInt("money") + " $";
@@ -284,6 +290,7 @@ public class AlienManager : MonoBehaviour
         //setting Timer
         timeText.SetActive(true);
         StartCoroutine(objectOpened(timeText));
+        spaceShipForScript = null;
         if (musicManager.timer[currentSheepShowed] <= 0)
         {
             musicManager.timer[currentSheepShowed] = settingTimes(currentSheepShowed);
@@ -577,11 +584,20 @@ public class AlienManager : MonoBehaviour
             objectToOpen.transform.localScale = new Vector3(a, a, 1);
             yield return new WaitForSeconds(0.01f);
         }
+        objectToOpen.SetActive(false);
         SheepMapGameObject.SetActive(false);
     }
 
     //map panel code
     //sheep map functions
+    void sheepMapNumberUpdate()
+    {
+        for (int i = 0; i < 7; i++)
+        {
+            SheepMapGameObject.transform.GetChild(i).GetComponentInChildren<TextMeshProUGUI>().text =
+                "" + PlayerPrefs.GetInt("sheep" + i);
+        }
+    }
     public void sheepMapClick()
     {
         if (SheepMapGameObject.gameObject.activeInHierarchy)
@@ -592,6 +608,7 @@ public class AlienManager : MonoBehaviour
         else
         {
             deactivatingButtons();
+            sheepMapNumberUpdate();
             SheepMapGameObject.SetActive(true);
             StartCoroutine(objectOpened(SheepMapGameObject));
         }

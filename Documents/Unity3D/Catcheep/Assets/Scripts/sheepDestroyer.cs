@@ -121,14 +121,37 @@ public class sheepDestroyer : MonoBehaviour
         if (gameObject.name.Contains("sheepy"))
         {
             gameManager.sheepyCaught++;
+            PlayerPrefs.SetInt("sheep0",PlayerPrefs.GetInt("sheep0")+1);
         }
         if (gameObject.tag.Equals("blacky"))
         {
             gameManager.blackyCaught++;
+            PlayerPrefs.SetInt("sheep1", PlayerPrefs.GetInt("sheep1") + 1);
         }
         if (gameObject.name.Contains("flash"))
         {
             gameManager.flashCaught++;
+            PlayerPrefs.SetInt("sheep2", PlayerPrefs.GetInt("sheep2") + 1);
+        }
+        if (gameObject.name.Contains("sheepy skiing"))
+        {
+            gameManager.snowSheepyCaught++;
+            PlayerPrefs.SetInt("sheep3", PlayerPrefs.GetInt("sheep3") + 1);
+        }
+        if (gameObject.name.Contains("blacky skiing"))
+        {
+            gameManager.snowBlackyCaught++;
+            PlayerPrefs.SetInt("sheep4", PlayerPrefs.GetInt("sheep4") + 1);
+        }
+        if (gameObject.name.Contains("sheepy city"))
+        {
+            gameManager.citySheepyCaught++;
+            PlayerPrefs.SetInt("sheep5", PlayerPrefs.GetInt("sheep5") + 1);
+        }
+        if (gameObject.name.Contains("blacky city"))
+        {
+            gameManager.cityBlackyCaught++;
+            PlayerPrefs.SetInt("sheep6", PlayerPrefs.GetInt("sheep6") + 1);
         }
 
         caught = true;

@@ -32,8 +32,12 @@ public class gameManager : MonoBehaviour
     public static int combo;
     public static int score;
     public static int sheepyCaught;
+    public static int snowSheepyCaught;
+    public static int citySheepyCaught;
     public static int flashCaught;
     public static int blackyCaught;
+    public static int snowBlackyCaught;
+    public static int cityBlackyCaught;
     public static bool catchedSomething;
 
     private int originalScore;
@@ -75,7 +79,6 @@ public class gameManager : MonoBehaviour
 
     IEnumerator animatedBackgrounds(GameObject a, GameObject b)
     {
-        backgroundOfTrees.SetActive(false);
         yield return new WaitForSeconds(0.5f);
         for (int i = 0; i < 12; i++)
         {
@@ -85,7 +88,7 @@ public class gameManager : MonoBehaviour
             b.transform.position = new Vector3(v2.x, v2.y + 1, v2.z);
             yield return new WaitForSeconds(0.03f);
         }
-        backgroundOfTrees.SetActive(true);
+        if(backgroundOfTrees != null )backgroundOfTrees.SetActive(true);
         StartCoroutine(sheepSpawner());
     }
 

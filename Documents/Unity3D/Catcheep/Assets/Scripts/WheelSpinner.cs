@@ -18,6 +18,7 @@ public class WheelSpinner : MonoBehaviour
     private Vector3 originalVector3;
     private Quaternion originalQuaternion;
     private int index;
+    private int indexHiarchy;
 
     // Use this for initialization
     void Start()
@@ -75,6 +76,8 @@ public class WheelSpinner : MonoBehaviour
         originalQuaternion = items[index].transform.localRotation;
         triangl.transform.SetParent(wheelOfLuck.transform, true);
         float i = 1;
+        indexHiarchy = items[index].transform.GetSiblingIndex();
+        items[index].transform.SetAsLastSibling();
         do
         {
             items[index].transform.localPosition = Vector3.Lerp(items[index].transform.localPosition,
@@ -97,7 +100,8 @@ public class WheelSpinner : MonoBehaviour
     void rewardCollectedCall()
     {
         PlayerPrefs.SetInt("money" , PlayerPrefs.GetInt("money") + 20000);
-        GameObject.Find("Cash text").GetComponent<TextMeshProUGUI>().text = " Ca$h: " + PlayerPrefs.GetInt("money") + " $";
+        GameObject.Find("Cash text").GetComponent<TextMeshProUGUI>().text = "$" + PlayerPrefs.GetInt("money");
+        items[index].transform.SetSiblingIndex(indexHiarchy);
         items[index].transform.position = originalVector3;
         items[index].transform.localRotation = originalQuaternion;
         items[index].transform.localScale = new Vector3(1,1,1);

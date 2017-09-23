@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -18,7 +17,7 @@ namespace Assets.Scripts
                 if (PlayerPrefs.GetInt("maxHearts") == 0)
                 {
                     PlayerPrefs.SetInt("maxHearts", 5);
-                    PlayerPrefs.SetInt("hearts", 4);
+                    PlayerPrefs.SetInt("hearts", 3);
                 }
             }
         }
@@ -41,7 +40,7 @@ namespace Assets.Scripts
             }
         }
 
-        void loadingTimeData()
+        public void loadingTimeData()
         {
             timer = new float[7];
             for (int i = 0; i < 7; i++)
@@ -60,10 +59,10 @@ namespace Assets.Scripts
                 }
                 else
                 {
-                    PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") + 1);
                     if (PlayerPrefs.GetInt("hearts") < PlayerPrefs.GetInt("maxHearts"))
                     {
-                        PlayerPrefs.SetFloat("heartTime", 600);
+                        PlayerPrefs.SetFloat("heartTime", 90);
+                        PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") + 1);
                     }
                 }
             }

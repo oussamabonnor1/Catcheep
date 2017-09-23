@@ -46,6 +46,7 @@ public class AlienManager : MonoBehaviour
     void Start()
     {
         musicManager = GameObject.Find("Music Manager").GetComponent<music>();
+        if (PlayerPrefs.GetInt("ship") == 0) PlayerPrefs.SetInt("ship",1);
         shipType = PlayerPrefs.GetInt("ship") - 1;
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
         sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
@@ -62,7 +63,7 @@ public class AlienManager : MonoBehaviour
         }
         receivedMail(true);
         slider.GetComponent<Slider>().value = PlayerPrefs.GetInt("level");
-        levelText.GetComponent<TextMeshProUGUI>().text = ""+PlayerPrefs.GetInt("level");
+        levelText.GetComponent<TextMeshProUGUI>().text = ""+(PlayerPrefs.GetInt("level")+1);
 
         currentSheepShowed = -1;
         changingSheepPic(1);
@@ -681,7 +682,7 @@ public class AlienManager : MonoBehaviour
         {
             PlayerPrefs.SetInt("level",level);
             slider.GetComponent<Slider>().value = level;
-            levelText.GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("level");
+            levelText.GetComponent<TextMeshProUGUI>().text = "" + (PlayerPrefs.GetInt("level")+1);
             levelUpPanel.SetActive(true);
             levelUpPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("level");
             StartCoroutine(objectOpened(levelUpPanel));

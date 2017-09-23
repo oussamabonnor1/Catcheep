@@ -46,7 +46,7 @@ public class AlienManager : MonoBehaviour
     void Start()
     {
         musicManager = GameObject.Find("Music Manager").GetComponent<music>();
-        if (PlayerPrefs.GetInt("ship") == 0) PlayerPrefs.SetInt("ship",1);
+        if (PlayerPrefs.GetInt("ship") == 0) PlayerPrefs.SetInt("ship", 1);
         shipType = PlayerPrefs.GetInt("ship") - 1;
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
         sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
@@ -63,29 +63,28 @@ public class AlienManager : MonoBehaviour
         }
         receivedMail(true);
         slider.GetComponent<Slider>().value = PlayerPrefs.GetInt("level");
-        levelText.GetComponent<TextMeshProUGUI>().text = ""+(PlayerPrefs.GetInt("level")+1);
+        levelText.GetComponent<TextMeshProUGUI>().text = "" + (PlayerPrefs.GetInt("level") + 1);
 
         currentSheepShowed = -1;
         changingSheepPic(1);
         if (musicManager.timer[currentSheepShowed] <= 0) StartCoroutine(alienSpawner());
         else
-        {   
-                string minutes = Mathf.Floor(musicManager.timer[currentSheepShowed] / 60).ToString("00");
-                string seconds = (musicManager.timer[currentSheepShowed] % 60).ToString("00");
-                timeText.transform.GetChild(1).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
-                    minutes + ":" + seconds;
-                timeText.SetActive(true);
-                StartCoroutine(objectOpened(timeText));
-            
+        {
+            string minutes = Mathf.Floor(musicManager.timer[currentSheepShowed] / 60).ToString("00");
+            string seconds = (musicManager.timer[currentSheepShowed] % 60).ToString("00");
+            timeText.transform.GetChild(1).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
+                minutes + ":" + seconds;
+            timeText.SetActive(true);
+            StartCoroutine(objectOpened(timeText));
         }
     }
 
     int settingTimes(int currentSheepShowed)
     {
-        int discount = 15 * (PlayerPrefs.GetInt("ship")-1) - 5;
+        int discount = 15 * (PlayerPrefs.GetInt("ship") - 1) - 5;
         if ((PlayerPrefs.GetInt("ship") - 1) == 0) discount = 0;
         switch (currentSheepShowed)
-        { 
+        {
             case 0:
                 return 30 - (30 * discount / 100);
             case 1:
@@ -105,7 +104,7 @@ public class AlienManager : MonoBehaviour
                 return 0;
         }
     }
-    
+
     // Update is called once per frame
     void Update()
     {
@@ -164,12 +163,13 @@ public class AlienManager : MonoBehaviour
             timeText.transform.GetChild(1).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
                 minutes + ":" + seconds;
         }
-        else if(spaceShipForScript == null)
+        else if (spaceShipForScript == null)
         {
             StartCoroutine(objectClosed(timeText));
             StartCoroutine(alienSpawner());
         }
     }
+
     IEnumerator alienSpawner()
     {
         deactivatingButtons();
@@ -201,9 +201,10 @@ public class AlienManager : MonoBehaviour
 
     void shipClicked()
     {
-        if (PlayerPrefs.GetInt("sheep"+currentSheepShowed) >= sheepyRequested[currentSheepShowed])
+        if (PlayerPrefs.GetInt("sheep" + currentSheepShowed) >= sheepyRequested[currentSheepShowed])
         {
-            PlayerPrefs.SetInt("sheep"+currentSheepShowed, PlayerPrefs.GetInt("sheep" + currentSheepShowed) - sheepyRequested[currentSheepShowed]);
+            PlayerPrefs.SetInt("sheep" + currentSheepShowed,
+                PlayerPrefs.GetInt("sheep" + currentSheepShowed) - sheepyRequested[currentSheepShowed]);
             PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") - sheepyRequested[currentSheepShowed]);
             PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + (sheepyRequested[currentSheepShowed] * 100));
             moneyAmountText.GetComponent<TextMeshProUGUI>().text = PlayerPrefs.GetInt("money") + " $";
@@ -214,10 +215,14 @@ public class AlienManager : MonoBehaviour
             bool found = false;
             for (int i = 0; i < indexes.Length; i++)
             {
-                if (indexes[i] == currentSheepShowed)
+                if (indexes[i] >= 0)
                 {
-                    toDelete = i;
-                    found = true;
+                    if (indexes[i] == currentSheepShowed)
+                    {
+                        print(toDelete + " is being killed " + indexes[i]);
+                        toDelete = i;
+                        found = true;
+                    }
                 }
             }
             if (found)
@@ -229,7 +234,7 @@ public class AlienManager : MonoBehaviour
 
             deactivatingButtons();
             StartCoroutine(shipLeaving());
-            if(checkingIfMissionCompleted()) setSlider(PlayerPrefs.GetInt("level")+1);
+            if (checkingIfMissionCompleted()) setSlider(PlayerPrefs.GetInt("level") + 1);
         }
         else
         {
@@ -238,9 +243,8 @@ public class AlienManager : MonoBehaviour
 
         if (sheepyRequested[currentSheepShowed] == 0)
         {
-             StartCoroutine(cameraVibrate());
+            StartCoroutine(cameraVibrate());
         }
-        
     }
 
     IEnumerator cameraVibrate()
@@ -248,7 +252,7 @@ public class AlienManager : MonoBehaviour
         for (int i = 0; i < 10; i++)
         {
             Vector3 a = Camera.main.transform.position;
-            if(i % 2 == 0) Camera.main.transform.position = new Vector3(a.x + 10, a.y,a.z);
+            if (i % 2 == 0) Camera.main.transform.position = new Vector3(a.x + 10, a.y, a.z);
             else Camera.main.transform.position = new Vector3(a.x - 10, a.y, a.z);
             yield return new WaitForSeconds(0.01f);
         }
@@ -451,7 +455,7 @@ public class AlienManager : MonoBehaviour
 
     private void loadCurrentMission()
     {
-        indexes = new[] {0, 0, 0};
+        indexes = new[] {-1, -1, -1};
         amounts = new[] {0, 0, 0};
         for (int i = 0; i < 3; i++)
         {
@@ -463,6 +467,7 @@ public class AlienManager : MonoBehaviour
         }
         settingDemands(indexes, amounts);
     }
+
     private void loadTextFile(string fileName, int level)
     {
         //loading a text file
@@ -494,20 +499,24 @@ public class AlienManager : MonoBehaviour
             if (i % 2 == 1)
             {
                 amounts[(i - 1) / 2] = int.Parse(words[i]);
-                if ((i-1)/2 < 3) PlayerPrefs.SetInt("amount" + (i - 1) / 2, amounts[(i - 1) / 2]);
+                if ((i - 1) / 2 < 3) PlayerPrefs.SetInt("amount" + (i - 1) / 2, amounts[(i - 1) / 2]);
             }
         }
-        
-        settingDemands(indexes,amounts);
+
+        settingDemands(indexes, amounts);
     }
-    
+
     void settingDemands(int[] index, int[] demand)
     {
         for (int i = 0; i < index.Length; i++)
         {
             //sheep needed (index) = demand (i is used to make things organised)
             //index and demand must be synched and taken from missions.txt
-            if (sheepyRequested[index[i]] == 0) sheepyRequested[index[i]] = demand[i];
+            //making sure it's not -1 (initialy)
+            if (index[i] >= 0)
+            {
+                if (sheepyRequested[index[i]] == 0) sheepyRequested[index[i]] = demand[i];
+            }
         }
     }
 
@@ -600,6 +609,7 @@ public class AlienManager : MonoBehaviour
                 "" + PlayerPrefs.GetInt("sheep" + i);
         }
     }
+
     public void sheepMapClick()
     {
         if (SheepMapGameObject.gameObject.activeInHierarchy)
@@ -682,14 +692,15 @@ public class AlienManager : MonoBehaviour
     {
         if (level < 50)
         {
-            PlayerPrefs.SetInt("level",level);
+            PlayerPrefs.SetInt("level", level);
             slider.GetComponent<Slider>().value = level;
-            levelText.GetComponent<TextMeshProUGUI>().text = "" + (PlayerPrefs.GetInt("level")+1);
+            levelText.GetComponent<TextMeshProUGUI>().text = "" + (PlayerPrefs.GetInt("level") + 1);
             levelUpPanel.SetActive(true);
-            levelUpPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("level");
+            levelUpPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
+                "" + PlayerPrefs.GetInt("level");
             StartCoroutine(objectOpened(levelUpPanel));
-            loadTextFile("missions",level);
-            PlayerPrefs.SetInt("levelUp",0);
+            loadTextFile("missions", level);
+            PlayerPrefs.SetInt("levelUp", 0);
             receivedMail(true);
             mailButton.GetComponent<Button>().enabled = false;
         }
@@ -707,6 +718,7 @@ public class AlienManager : MonoBehaviour
         levelUpPanel.SetActive(false);
         mailButton.GetComponent<Button>().enabled = true;
     }
+
     public void startMenu()
     {
         SceneManager.LoadScene(1);

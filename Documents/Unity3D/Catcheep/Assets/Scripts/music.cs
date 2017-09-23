@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -63,6 +64,11 @@ namespace Assets.Scripts
                     {
                         PlayerPrefs.SetFloat("heartTime", 90);
                         PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") + 1);
+                        if (SceneManager.GetActiveScene().name.Equals("Start"))
+                        {
+                            GameObject.Find("hearts").GetComponent<TextMeshProUGUI>().text =
+                                "x" + PlayerPrefs.GetInt("hearts");
+                        }
                     }
                 }
             }

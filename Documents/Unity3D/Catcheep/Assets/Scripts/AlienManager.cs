@@ -82,22 +82,24 @@ public class AlienManager : MonoBehaviour
 
     int settingTimes(int currentSheepShowed)
     {
+        int discount = 15 * (PlayerPrefs.GetInt("ship")-1) - 5;
+        if ((PlayerPrefs.GetInt("ship") - 1) == 0) discount = 0;
         switch (currentSheepShowed)
-        {
+        { 
             case 0:
-                return 59;
+                return 30 - (30 * discount / 100);
             case 1:
-                return 59;
+                return 45 - (45 * discount / 100);
             case 2:
-                return 59;
+                return 59 - (59 * discount / 100);
             case 3:
-                return 59;
+                return 45 - (45 * discount / 100);
             case 4:
-                return 59;
+                return 59 - (59 * discount / 100);
             case 5:
-                return 59;
+                return 59 - (59 * discount / 100);
             case 6:
-                return 59;
+                return 89 - (89 * discount / 100);
             default:
                 print("Error: sheep index of aliens");
                 return 0;

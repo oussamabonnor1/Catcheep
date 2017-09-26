@@ -39,11 +39,10 @@ public class WheelSpinner : MonoBehaviour
     IEnumerator wheelTurned()
     {
         spinButton.GetComponent<Button>().enabled = false;
-        int i = Random.Range(5, 10);
+        int i = Random.Range(5, 15);
         do
         {
             wheelOfLuck.GetComponent<Rigidbody2D>().AddTorque(10);
-            //wheelOfLuck.GetComponent<RectTransform>().transform.Rotate(0f,0f,10f);//RotateAround(wheelOfLuck.transform.position,Vector3.back,10);
             i++;
             yield return new WaitForSeconds(0.01f);
         } while (i < 50);
@@ -74,7 +73,6 @@ public class WheelSpinner : MonoBehaviour
     {
         originalVector3 = items[index].transform.position;
         originalQuaternion = items[index].transform.localRotation;
-        triangl.transform.SetParent(wheelOfLuck.transform, true);
         float i = 1;
         indexHiarchy = items[index].transform.GetSiblingIndex();
         items[index].transform.SetAsLastSibling();
@@ -99,12 +97,39 @@ public class WheelSpinner : MonoBehaviour
 
     void rewardCollectedCall()
     {
-        PlayerPrefs.SetInt("money" , PlayerPrefs.GetInt("money") + 20000);
+        switch (index)
+        {
+            case 0:
+                PlayerPrefs.SetInt("netStock", PlayerPrefs.GetInt("netStock") + 1);
+                break;
+            case 1:
+                if(PlayerPrefs.GetInt("hearts") < PlayerPrefs.GetInt("maxHearts"))
+                {
+                    PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") + 1);
+                }
+                break;
+            case 2:
+                PlayerPrefs.SetInt("loveStock", PlayerPrefs.GetInt("loveStock") + 1);
+                break;
+            case 3:
+                PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + 10000);
+                break;
+            case 4:
+                PlayerPrefs.SetInt("hayStackStock", PlayerPrefs.GetInt("hayStackStock") + 1);
+                break;
+            case 5:
+                PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + 5000);
+                break;
+
+        }
         GameObject.Find("Cash text").GetComponent<TextMeshProUGUI>().text = "$" + PlayerPrefs.GetInt("money");
         items[index].transform.SetSiblingIndex(indexHiarchy);
         items[index].transform.position = originalVector3;
         items[index].transform.localRotation = originalQuaternion;
         items[index].transform.localScale = new Vector3(1,1,1);
         spinButton.GetComponent<Button>().enabled = true;
+        wheelOfLuck.transform.Rotate(0, 0, -wheelOfLuck.transform.rotation.eulerAngles.z);
+        triangl.transform.SetParent(wheelOfLuck.transform, true);
     }
+
 }

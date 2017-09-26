@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.UTime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -19,6 +20,7 @@ public class startMenuManager : MonoBehaviour
     public GameObject levelText;
     public GameObject heartText;
     public GameObject moneyText;
+    public GameObject spinText;
     private Scrollbar ScrollBar;
 
     private Vector2 edgeOfScreen;
@@ -38,6 +40,7 @@ public class startMenuManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        dailySpinTime();
         isGoingDown = false;
         isGoingUp = false;
 
@@ -299,12 +302,7 @@ public class startMenuManager : MonoBehaviour
     {
         Application.Quit();
     }
-
-    public void likePage()
-    {
-        Application.OpenURL("https://www.facebook.com/JetLightstudio/?ref=bookmarks");
-    }
-
+    
     public void moreGames()
     {
         Application.OpenURL("https://play.google.com/store/apps/dev?id=5638230701137828274");
@@ -313,5 +311,39 @@ public class startMenuManager : MonoBehaviour
     public void deleteProgress()
     {
         
+    }
+
+    void dailySpinTime()
+    {
+        if (PlayerPrefs.GetString("spinTime").Equals("")) PlayerPrefs.SetString("spinTime", DateTime.Now.ToString());
+        UTime.GetUtcTimeAsync(OnTimeReceived);
+        UTime.HasConnection(connection => print(""));
+    }
+    private void OnTimeReceived(bool success, string error, DateTime time)
+    {
+        if (success)
+        {       
+            rewardSpin(time.ToLocalTime().ToString(), PlayerPrefs.GetString("spinTime"));
+        }
+        else
+        {
+            rewardSpin(DateTime.Now.ToString(), PlayerPrefs.GetString("spinTime"));
+        }
+    }
+
+    void rewardSpin(String now,String spinTime)
+    {
+        DateTime n = Convert.ToDateTime(now);
+        DateTime s = Convert.ToDateTime(spinTime);
+        TimeSpan result = n - s;
+        if (result.Days >= 1)
+        {
+            PlayerPrefs.SetString("spinTime", now);
+            PlayerPrefs.SetInt("spin", PlayerPrefs.GetInt("spin") + 1);
+        }
+        else
+        {
+            spinText.GetComponent<TextMeshProUGUI>().text = "Time left: " + (24 - result.Hours)+"h";
+        }
     }
 }

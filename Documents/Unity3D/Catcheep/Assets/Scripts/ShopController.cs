@@ -212,4 +212,10 @@ public class ShopController : MonoBehaviour
     {
         cashText.GetComponent<TextMeshProUGUI>().text = "$" +current;
     }
+
+    public void facebook()
+    {
+        Application.OpenURL("https://www.facebook.com/JetLightstudio/");
+    }
+
 }

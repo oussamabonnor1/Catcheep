@@ -11,6 +11,7 @@ public class ShopController : MonoBehaviour
     public GameObject BuyShipButtonGameObject;
     public GameObject ShopMenuGameObject;
     public GameObject HelpToolsGameObject;
+    public GameObject EnergyGameObject;
     public GameObject WheelOfFortuneGameObject;
     
 
@@ -59,6 +60,48 @@ public class ShopController : MonoBehaviour
 
     }
 
+    public void energyDringButtonClick()
+    {
+        ShopMenuGameObject.SetActive(false);
+        EnergyGameObject.SetActive(true);
+    }
+
+    public void energyDringButtonOff()
+    {
+        ShopMenuGameObject.SetActive(true);
+        EnergyGameObject.SetActive(false);
+    }
+
+    public void buyALife()
+    {
+        if (PlayerPrefs.GetInt("money") >= 7500 && PlayerPrefs.GetInt("hearts") < PlayerPrefs.GetInt("maxHearts"))
+        {
+            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 7500);
+            cashUpdate(PlayerPrefs.GetInt("money"));
+            PlayerPrefs.SetInt("hearts",PlayerPrefs.GetInt("hearts")+1);
+            GameObject.Find("hearts").GetComponent<TextMeshProUGUI>().text =
+                "x" + PlayerPrefs.GetInt("hearts");
+        }
+    }
+
+    public void killTime()
+    {
+        if (PlayerPrefs.GetInt("money") >= 3000 && PlayerPrefs.GetFloat("heartTime") >= 1)
+        {
+            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 3000);
+            PlayerPrefs.SetFloat("heartTime", -1);
+        }
+    }
+
+    public void moreCapacity()
+    {
+        if (PlayerPrefs.GetInt("money") >= 12500 && PlayerPrefs.GetInt("maxHearts") < 10)
+        {
+            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 12500);
+            PlayerPrefs.SetInt("maxHearts", PlayerPrefs.GetInt("maxHearts") + 1);
+        }
+    }
+
     public void ShowAd()
     {
         if (Advertisement.IsReady())
@@ -92,7 +135,6 @@ public class ShopController : MonoBehaviour
         }
         else
         {
-
             cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
 
         }
@@ -107,9 +149,7 @@ public class ShopController : MonoBehaviour
         }
         else
         {
-
             cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
-
         }
     }
     public void ShipFour()

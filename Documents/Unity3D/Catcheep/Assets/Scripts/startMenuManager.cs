@@ -16,6 +16,7 @@ public class startMenuManager : MonoBehaviour
     public GameObject vibrationToggle;
     public GameObject bossSheep;
     public GameObject timeText;
+    public GameObject levelText;
     public GameObject heartText;
     public GameObject moneyText;
     private Scrollbar ScrollBar;
@@ -61,6 +62,7 @@ public class startMenuManager : MonoBehaviour
         //giving data to texts (as late as possible)
         heartText.GetComponent<TextMeshProUGUI>().text = "x" + PlayerPrefs.GetInt("hearts");
         moneyText.GetComponent<TextMeshProUGUI>().text = "$" + PlayerPrefs.GetInt("money");
+        levelText.GetComponent<TextMeshProUGUI>().text = "Level " + PlayerPrefs.GetInt("level");
     }
 
     // Update is called once per frame

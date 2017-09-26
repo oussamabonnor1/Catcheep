@@ -32,8 +32,12 @@ public class WheelSpinner : MonoBehaviour
 
     public void spin()
     {
-        triangl.transform.SetParent(wheelOfFortuneSelection.transform, true);
-        StartCoroutine(wheelTurned());
+        if (PlayerPrefs.GetInt("spin") > 0)
+        {
+            PlayerPrefs.SetInt("spin",PlayerPrefs.GetInt("spin")-1);
+            triangl.transform.SetParent(wheelOfFortuneSelection.transform, true);
+            StartCoroutine(wheelTurned());
+        }
     }
 
     IEnumerator wheelTurned()
@@ -65,7 +69,6 @@ public class WheelSpinner : MonoBehaviour
                 index = j;
             }
         }
-
         StartCoroutine(animationOfWin());
     }
 
@@ -91,8 +94,7 @@ public class WheelSpinner : MonoBehaviour
                 items[index].GetComponent<RectTransform>().transform.rotation.eulerAngles,
                 new Vector3(0, 0, 0), 3f * Time.deltaTime));
             yield return new WaitForSeconds(0.01f);
-        } while ((int) items[index].GetComponent<RectTransform>().transform.rotation.eulerAngles.z != 0);
-        
+        } while ((int) items[index].GetComponent<RectTransform>().transform.rotation.eulerAngles.z != 0);   
     }
 
     void rewardCollectedCall()

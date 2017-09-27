@@ -26,7 +26,6 @@ public class WheelSpinner : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        PlayerPrefs.SetString("spinTime", new DateTime(2017,09,26,15,00,01).ToString());
         dailySpinTime();
     }
 

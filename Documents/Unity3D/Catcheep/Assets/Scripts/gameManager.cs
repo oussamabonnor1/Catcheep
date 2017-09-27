@@ -285,10 +285,14 @@ public class gameManager : MonoBehaviour
     }
     public void restart()
     {
-        Time.timeScale = 1;
-        ShowAd();
-        PlayerPrefs.SetInt("sheepy", totalSheepsCaught);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if (PlayerPrefs.GetInt("hearts") > 0)
+        {
+            PlayerPrefs.SetInt("hearts",PlayerPrefs.GetInt("hearts")-1);
+            Time.timeScale = 1;
+            ShowAd();
+            PlayerPrefs.SetInt("sheepy", totalSheepsCaught);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
     }
 
     //one sheepy formations

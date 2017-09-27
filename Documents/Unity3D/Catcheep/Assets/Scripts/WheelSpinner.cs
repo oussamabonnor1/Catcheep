@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Assets.SimpleAndroidNotifications;
+using Assets.UTime;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Advertisements;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -13,7 +16,7 @@ public class WheelSpinner : MonoBehaviour
     public GameObject[] items;
     public GameObject spinButton;
     public GameObject wheelOfFortuneSelection;
-    public GameObject ShopMenuGameObject;
+    public GameObject spinText;
 
     private Vector3 originalVector3;
     private Quaternion originalQuaternion;
@@ -23,6 +26,8 @@ public class WheelSpinner : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        PlayerPrefs.SetString("spinTime", new DateTime(2017,09,26,15,00,01).ToString());
+        dailySpinTime();
     }
 
     // Update is called once per frame
@@ -34,9 +39,28 @@ public class WheelSpinner : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("spin") > 0)
         {
+            PlayerPrefs.SetString("spinTime", DateTime.Now.ToString());
             PlayerPrefs.SetInt("spin",PlayerPrefs.GetInt("spin")-1);
             triangl.transform.SetParent(wheelOfFortuneSelection.transform, true);
             StartCoroutine(wheelTurned());
+            dailySpinTime();
+            var notificationParams = new NotificationParams
+            {
+                Id = Random.Range(0, int.MaxValue),
+                Delay = TimeSpan.FromDays(1),
+                Title = "Daily Spin :3",
+                Message = "Your Daily Spin is Ready, Go Catch sheeps !",
+                Ticker = "Ticker",
+                Sound = true,
+                Vibrate = true,
+                Light = true,
+                SmallIcon = NotificationIcon.Heart,
+                SmallIconColor = new Color(0, 0.5f, 0),
+                LargeIcon = "app_icon"
+            };
+
+            NotificationManager.SendCustom(notificationParams);
+
         }
     }
 
@@ -134,4 +158,56 @@ public class WheelSpinner : MonoBehaviour
         triangl.transform.SetParent(wheelOfLuck.transform, true);
     }
 
+    void dailySpinTime()
+    {
+        if (PlayerPrefs.GetString("spinTime").Equals("")) PlayerPrefs.SetString("spinTime", DateTime.Now.ToString());
+        if (PlayerPrefs.GetInt("spin") == 0)
+        {
+            UTime.GetUtcTimeAsync(OnTimeReceived);
+
+            UTime.HasConnection(connection => print(""));
+        }
+        else
+        {
+            spinText.GetComponent<TextMeshProUGUI>().text = "Spin !";
+        }
+    }
+
+    private void OnTimeReceived(bool success, string error, DateTime time)
+    {
+        if (success)
+        {
+            rewardSpin(time.ToLocalTime().ToString(), PlayerPrefs.GetString("spinTime"));
+        }
+        else
+        {
+            rewardSpin(DateTime.Now.ToString(), PlayerPrefs.GetString("spinTime"));
+        }
+    }
+
+    void rewardSpin(String now, String spinTime)
+    {
+        DateTime n = Convert.ToDateTime(now);
+        DateTime s = Convert.ToDateTime(spinTime);
+        TimeSpan result = n - s;
+        if (result.Days >= 1)
+        {
+            spinText.GetComponent<TextMeshProUGUI>().text = "spin!";
+            PlayerPrefs.SetString("spinTime", now);
+            if (PlayerPrefs.GetInt("spin") == 0) PlayerPrefs.SetInt("spin", PlayerPrefs.GetInt("spin") + 1);
+        }
+        else
+        {
+            spinText.GetComponent<TextMeshProUGUI>().text = "Time left: " + (24 - result.Hours) + "h";
+        }
+    }
+
+    public void watchAdSpin()
+    {
+        if (Advertisement.IsReady())
+        {
+            PlayerPrefs.SetInt("spin", PlayerPrefs.GetInt("spin") + 1);
+            Advertisement.Show();
+        }
+    }
 }

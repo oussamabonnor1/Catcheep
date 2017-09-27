@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.Advertisements;
 
@@ -13,12 +11,13 @@ public class ShopController : MonoBehaviour
     public GameObject HelpToolsGameObject;
     public GameObject EnergyGameObject;
     public GameObject WheelOfFortuneGameObject;
-    
+
 
     // Use this for initialization
     void Start ()
     {
         cashUpdate(PlayerPrefs.GetInt("money"));
+
     }
 	
 	// Update is called once per frame
@@ -218,4 +217,5 @@ public class ShopController : MonoBehaviour
         Application.OpenURL("https://www.facebook.com/JetLightstudio/");
     }
 
+   
 }

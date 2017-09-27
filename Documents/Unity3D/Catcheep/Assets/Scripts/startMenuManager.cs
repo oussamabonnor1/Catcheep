@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
-using Assets.UTime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -11,8 +9,7 @@ using Random = UnityEngine.Random;
 
 public class startMenuManager : MonoBehaviour
 {
-    [Header("in Game objects")]
-    public GameObject sceneContent;
+    [Header("in Game objects")] public GameObject sceneContent;
     public GameObject ScrollBarGameObject;
     public GameObject vibrationToggle;
     public GameObject bossSheep;
@@ -20,15 +17,13 @@ public class startMenuManager : MonoBehaviour
     public GameObject levelText;
     public GameObject heartText;
     public GameObject moneyText;
-    public GameObject spinText;
     private Scrollbar ScrollBar;
 
     private Vector2 edgeOfScreen;
     private Vector2 oldPosition;
     private Vector2 newPosition;
 
-    [Header("UI")]
-    public int menuCount;
+    [Header("UI")] public int menuCount;
     private float portion;
     private float destination;
     private int value;
@@ -40,7 +35,6 @@ public class startMenuManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        dailySpinTime();
         isGoingDown = false;
         isGoingUp = false;
 
@@ -60,7 +54,7 @@ public class startMenuManager : MonoBehaviour
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
 
         //starting boss sheep animation a second after the scene loading (explaining "1" as param)
-        StartCoroutine(bossPopingUp(Random.Range(5,10)));
+        StartCoroutine(bossPopingUp(Random.Range(5, 10)));
 
         //giving data to texts (as late as possible)
         heartText.GetComponent<TextMeshProUGUI>().text = "x" + PlayerPrefs.GetInt("hearts");
@@ -250,7 +244,8 @@ public class startMenuManager : MonoBehaviour
             sceneContent.transform.localPosition.z);
         do
         {
-            sceneContent.transform.localPosition = new Vector3(sceneContent.transform.localPosition.x - 50, sceneContent.transform.localPosition.y, sceneContent.transform.localPosition.z);
+            sceneContent.transform.localPosition = new Vector3(sceneContent.transform.localPosition.x - 50,
+                sceneContent.transform.localPosition.y, sceneContent.transform.localPosition.z);
             yield return new WaitForSeconds(0.01f);
         } while ((int) sceneContent.transform.localPosition.x != (int) destination.x);
     }
@@ -267,8 +262,12 @@ public class startMenuManager : MonoBehaviour
         bool direction = sceneContent.transform.localPosition.x < destination.x;
         do
         {
-            if(direction) sceneContent.transform.localPosition = new Vector3(sceneContent.transform.localPosition.x + 50, sceneContent.transform.localPosition.y, sceneContent.transform.localPosition.z);
-            else sceneContent.transform.localPosition = new Vector3(sceneContent.transform.localPosition.x - 50, sceneContent.transform.localPosition.y, sceneContent.transform.localPosition.z);
+            if (direction)
+                sceneContent.transform.localPosition = new Vector3(sceneContent.transform.localPosition.x + 50,
+                    sceneContent.transform.localPosition.y, sceneContent.transform.localPosition.z);
+            else
+                sceneContent.transform.localPosition = new Vector3(sceneContent.transform.localPosition.x - 50,
+                    sceneContent.transform.localPosition.y, sceneContent.transform.localPosition.z);
             yield return new WaitForSeconds(0.01f);
         } while ((int) sceneContent.transform.localPosition.x != (int) destination.x);
     }
@@ -287,7 +286,8 @@ public class startMenuManager : MonoBehaviour
             sceneContent.transform.localPosition.z);
         do
         {
-            sceneContent.transform.localPosition = new Vector3(sceneContent.transform.localPosition.x + 50, sceneContent.transform.localPosition.y, sceneContent.transform.localPosition.z);
+            sceneContent.transform.localPosition = new Vector3(sceneContent.transform.localPosition.x + 50,
+                sceneContent.transform.localPosition.y, sceneContent.transform.localPosition.z);
             yield return new WaitForSeconds(0.01f);
         } while ((int) sceneContent.transform.localPosition.x != (int) destination.x);
     }
@@ -295,14 +295,15 @@ public class startMenuManager : MonoBehaviour
     public void vibration()
     {
         PlayerPrefs.SetString("Vibration", vibrationToggle.GetComponent<Switch>().isOn.ToString());
-        if (vibrationToggle.GetComponent<Switch>().isOn && (int) sceneContent.transform.localPosition.x != 0) Handheld.Vibrate();
+        if (vibrationToggle.GetComponent<Switch>().isOn &&
+            (int) sceneContent.transform.localPosition.x != 0) Handheld.Vibrate();
     }
 
     public void quit()
     {
         Application.Quit();
     }
-    
+
     public void moreGames()
     {
         Application.OpenURL("https://play.google.com/store/apps/dev?id=5638230701137828274");
@@ -310,40 +311,7 @@ public class startMenuManager : MonoBehaviour
 
     public void deleteProgress()
     {
-        
     }
 
-    void dailySpinTime()
-    {
-        if (PlayerPrefs.GetString("spinTime").Equals("")) PlayerPrefs.SetString("spinTime", DateTime.Now.ToString());
-        UTime.GetUtcTimeAsync(OnTimeReceived);
-        UTime.HasConnection(connection => print(""));
-    }
-    private void OnTimeReceived(bool success, string error, DateTime time)
-    {
-        if (success)
-        {       
-            rewardSpin(time.ToLocalTime().ToString(), PlayerPrefs.GetString("spinTime"));
-        }
-        else
-        {
-            rewardSpin(DateTime.Now.ToString(), PlayerPrefs.GetString("spinTime"));
-        }
-    }
-
-    void rewardSpin(String now,String spinTime)
-    {
-        DateTime n = Convert.ToDateTime(now);
-        DateTime s = Convert.ToDateTime(spinTime);
-        TimeSpan result = n - s;
-        if (result.Days >= 1)
-        {
-            PlayerPrefs.SetString("spinTime", now);
-            PlayerPrefs.SetInt("spin", PlayerPrefs.GetInt("spin") + 1);
-        }
-        else
-        {
-            spinText.GetComponent<TextMeshProUGUI>().text = "Time left: " + (24 - result.Hours)+"h";
-        }
-    }
+    
 }

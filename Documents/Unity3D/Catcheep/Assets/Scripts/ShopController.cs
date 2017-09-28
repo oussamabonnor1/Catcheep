@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System.Collections;
+using TMPro;
 using UnityEngine;
 using UnityEngine.Advertisements;
 using UnityEngine.UI;
@@ -77,7 +78,7 @@ public class ShopController : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("money") >= 7500 && PlayerPrefs.GetInt("hearts") < PlayerPrefs.GetInt("maxHearts"))
         {
-            DecisionPanel.SetActive(true);
+            StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
                 "Do you wanna buy an energy drink ?";
             DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(buyALife);
@@ -96,14 +97,14 @@ public class ShopController : MonoBehaviour
         PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") + 1);
         GameObject.Find("hearts").GetComponent<TextMeshProUGUI>().text =
             "x" + PlayerPrefs.GetInt("hearts");
-        NoDecisionPanel();
+        StartCoroutine(objectClosed(DecisionPanel));
     }
 
     public void killTimeButton()
     {
         if (PlayerPrefs.GetInt("money") >= 3000 && PlayerPrefs.GetFloat("heartTime") >= 1)
         {
-            DecisionPanel.SetActive(true);
+            StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
                 "Do you wanna set the energy drink timer to 00:00 ?";
             DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(killTime);
@@ -114,14 +115,14 @@ public class ShopController : MonoBehaviour
     {
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 3000);
         PlayerPrefs.SetFloat("heartTime", -1);
-        NoDecisionPanel();
+        StartCoroutine(objectClosed(DecisionPanel));
     }
 
     public void moreCapacityButton()
     {
         if (PlayerPrefs.GetInt("money") >= 12500 && PlayerPrefs.GetInt("maxHearts") < 10)
         {
-            DecisionPanel.SetActive(true);
+            StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
                 "Do you wanna buy more energy drinks capacity (+1) ?";
             DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(moreCapacity);
@@ -132,7 +133,7 @@ public class ShopController : MonoBehaviour
     {
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 12500);
         PlayerPrefs.SetInt("maxHearts", PlayerPrefs.GetInt("maxHearts") + 1);
-        NoDecisionPanel();
+        StartCoroutine(objectClosed(DecisionPanel));
     }
 
     public void ShowAd()
@@ -145,7 +146,7 @@ public class ShopController : MonoBehaviour
 
     public void shipOneButton()
     {
-        DecisionPanel.SetActive(true);
+        StartCoroutine(objectOpened(DecisionPanel));
         DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
             "Do you Set this Ship as Default ship ?";
         DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(ShipOne);
@@ -154,14 +155,14 @@ public class ShopController : MonoBehaviour
     void ShipOne()
     {
         PlayerPrefs.SetInt("ship", 1);
-        NoDecisionPanel();
+        StartCoroutine(objectClosed(DecisionPanel));
     }
 
     public void shipTwoButton()
     {
         if (PlayerPrefs.GetInt("money") >= 15000)
         {
-            DecisionPanel.SetActive(true);
+            StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
                 "Do you Set this Ship as Default ship ?";
             DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(ShipTwo);
@@ -169,21 +170,23 @@ public class ShopController : MonoBehaviour
         else
         {
             cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
-            NoDecisionPanel();
+            StartCoroutine(objectClosed(DecisionPanel));
         }
     }
 
-    public void ShipTwo()
+    void ShipTwo()
     {
+        PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 15000);
+        cashUpdate(PlayerPrefs.GetInt("money"));
         PlayerPrefs.SetInt("ship", 2);
-        NoDecisionPanel();
+        StartCoroutine(objectClosed(DecisionPanel));
     }
 
     public void shipThreeButton()
     {
         if (PlayerPrefs.GetInt("money") >= 25000)
         {
-            DecisionPanel.SetActive(true);
+            StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
                 "Do you Set this Ship as Default ship ?";
             DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(ShipThree);
@@ -191,21 +194,23 @@ public class ShopController : MonoBehaviour
         else
         {
             cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
-            NoDecisionPanel();
+            StartCoroutine(objectClosed(DecisionPanel));
         }
     }
 
-    public void ShipThree()
+    void ShipThree()
     {
+        PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 25000);
+        cashUpdate(PlayerPrefs.GetInt("money"));
         PlayerPrefs.SetInt("ship", 3);
-        NoDecisionPanel();
+        StartCoroutine(objectClosed(DecisionPanel));
     }
 
     public void shipFourButton()
     {
         if (PlayerPrefs.GetInt("money") >= 40000)
         {
-            DecisionPanel.SetActive(true);
+            StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
                 "Do you Set this Ship as Default ship ?";
             DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(ShipFour);
@@ -213,21 +218,23 @@ public class ShopController : MonoBehaviour
         else
         {
             cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
-            NoDecisionPanel();
+            StartCoroutine(objectClosed(DecisionPanel));
         }
     }
 
-    public void ShipFour()
+    void ShipFour()
     {
+        PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 40000);
+        cashUpdate(PlayerPrefs.GetInt("money"));
         PlayerPrefs.SetInt("ship", 4);
-        NoDecisionPanel();
+        StartCoroutine(objectClosed(DecisionPanel));
     }
 
     public void buyHayButton()
     {
         if (PlayerPrefs.GetInt("money") >= 15000)
         {
-            DecisionPanel.SetActive(true);
+            StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
                 "Do you wanna buy a HayStack (+1) ?";
             DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(buyHayStack);
@@ -235,7 +242,7 @@ public class ShopController : MonoBehaviour
         else
         {
             cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
-            NoDecisionPanel();
+            StartCoroutine(objectClosed(DecisionPanel));
         }
     }
 
@@ -244,14 +251,14 @@ public class ShopController : MonoBehaviour
         PlayerPrefs.SetInt("hayStackStock", PlayerPrefs.GetInt("hayStackStock") + 1);
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 15000);
         cashUpdate(PlayerPrefs.GetInt("money"));
-        NoDecisionPanel();
+        StartCoroutine(objectClosed(DecisionPanel));
     }
 
     public void buyNetButton()
     {
         if (PlayerPrefs.GetInt("money") >= 20000)
         {
-            DecisionPanel.SetActive(true);
+            StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
                 "Do you wanna buy a Net (+1) ?";
             DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(buyNet);
@@ -259,7 +266,7 @@ public class ShopController : MonoBehaviour
         else
         {
             cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
-            NoDecisionPanel();
+            StartCoroutine(objectClosed(DecisionPanel));
         }
     }
 
@@ -268,14 +275,14 @@ public class ShopController : MonoBehaviour
         PlayerPrefs.SetInt("netStock", PlayerPrefs.GetInt("netStock") + 1);
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 20000);
         cashUpdate(PlayerPrefs.GetInt("money"));
-        NoDecisionPanel();
+        StartCoroutine(objectClosed(DecisionPanel));
     }
 
     public void buyLoveButton()
     {
         if (PlayerPrefs.GetInt("money") >= 30000)
         {
-            DecisionPanel.SetActive(true);
+            StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
                 "Do you wanna buy a Female sheepy (+1) ?";
             DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(buyLove);
@@ -283,16 +290,16 @@ public class ShopController : MonoBehaviour
         else
         {
             cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
-            NoDecisionPanel();
+            StartCoroutine(objectClosed(DecisionPanel));
         }
     }
 
     public void buyLove()
     {
-            PlayerPrefs.SetInt("loveStock", PlayerPrefs.GetInt("loveStock") + 1);
-            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 30000);
-            cashUpdate(PlayerPrefs.GetInt("money"));
-        NoDecisionPanel();
+        PlayerPrefs.SetInt("loveStock", PlayerPrefs.GetInt("loveStock") + 1);
+        PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 30000);
+        cashUpdate(PlayerPrefs.GetInt("money"));
+        StartCoroutine(objectClosed(DecisionPanel));
     }
 
     void cashUpdate(int current)
@@ -302,6 +309,28 @@ public class ShopController : MonoBehaviour
 
     public void facebook()
     {
-        Application.OpenURL("https://www.facebook.com/JetLightstudio/");
+        Application.OpenURL("www.facebook.com/JetLightstudio/");
+    }
+
+    IEnumerator objectOpened(GameObject objectToOpen)
+    {
+        objectToOpen.SetActive(true);
+        for (int i = 0; i <= 10; i++)
+        {
+            float a = (float) i / 10;
+            objectToOpen.transform.localScale = new Vector3(a, a, 1);
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+
+    IEnumerator objectClosed(GameObject objectToOpen)
+    {
+        for (int i = 10; i >= 0; i--)
+        {
+            float a = (float) i / 10;
+            objectToOpen.transform.localScale = new Vector3(a, a, 1);
+            yield return new WaitForSeconds(0.01f);
+        }
+        objectToOpen.SetActive(false);
     }
 }

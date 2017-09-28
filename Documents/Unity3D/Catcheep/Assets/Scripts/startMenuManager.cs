@@ -313,5 +313,15 @@ public class startMenuManager : MonoBehaviour
     {
     }
 
-    
+    public void notifications()
+    {
+        if (PlayerPrefs.GetInt("notifications") == 0)
+        {
+            PlayerPrefs.SetInt("notifications", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("notifications", 0);
+        }
+    }
 }

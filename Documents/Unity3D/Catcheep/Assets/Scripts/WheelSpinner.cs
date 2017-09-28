@@ -43,23 +43,25 @@ public class WheelSpinner : MonoBehaviour
             triangl.transform.SetParent(wheelOfFortuneSelection.transform, true);
             StartCoroutine(wheelTurned());
             dailySpinTime();
-            var notificationParams = new NotificationParams
+            if (PlayerPrefs.GetInt("notifications") == 0)
             {
-                Id = Random.Range(0, int.MaxValue),
-                Delay = TimeSpan.FromDays(1),
-                Title = "Daily Spin :3",
-                Message = "Your Daily Spin is Ready, Go Catch sheeps !",
-                Ticker = "Ticker",
-                Sound = true,
-                Vibrate = true,
-                Light = true,
-                SmallIcon = NotificationIcon.Heart,
-                SmallIconColor = new Color(0, 0.5f, 0),
-                LargeIcon = "app_icon"
-            };
+                var notificationParams = new NotificationParams
+                {
+                    Id = Random.Range(0, int.MaxValue),
+                    Delay = TimeSpan.FromDays(1),
+                    Title = "Daily Spin :3",
+                    Message = "Your Daily Spin is Ready, Go Catch sheeps !",
+                    Ticker = "Ticker",
+                    Sound = true,
+                    Vibrate = true,
+                    Light = true,
+                    SmallIcon = NotificationIcon.Heart,
+                    SmallIconColor = new Color(0, 0.5f, 0),
+                    LargeIcon = "app_icon"
+                };
 
-            NotificationManager.SendCustom(notificationParams);
-
+                NotificationManager.SendCustom(notificationParams);
+            }
         }
     }
 
@@ -163,7 +165,6 @@ public class WheelSpinner : MonoBehaviour
         if (PlayerPrefs.GetInt("spin") == 0)
         {
             UTime.GetUtcTimeAsync(OnTimeReceived);
-
             UTime.HasConnection(connection => print(""));
         }
         else
@@ -203,6 +204,7 @@ public class WheelSpinner : MonoBehaviour
 
     public void watchAdSpin()
     {
+       
         if (Advertisement.IsReady())
         {
             PlayerPrefs.SetInt("spin", PlayerPrefs.GetInt("spin") + 1);

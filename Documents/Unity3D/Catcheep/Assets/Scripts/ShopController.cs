@@ -96,24 +96,43 @@ public class ShopController : MonoBehaviour
         PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") + 1);
         GameObject.Find("hearts").GetComponent<TextMeshProUGUI>().text =
             "x" + PlayerPrefs.GetInt("hearts");
+        NoDecisionPanel();
     }
 
-    public void killTime()
+    public void killTimeButton()
     {
         if (PlayerPrefs.GetInt("money") >= 3000 && PlayerPrefs.GetFloat("heartTime") >= 1)
         {
-            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 3000);
-            PlayerPrefs.SetFloat("heartTime", -1);
+            DecisionPanel.SetActive(true);
+            DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
+                "Do you wanna set the energy drink timer to 00:00 ?";
+            DecisionPanel.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(killTime);
+        }
+    }
+
+    void killTime()
+    {
+        PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 3000);
+        PlayerPrefs.SetFloat("heartTime", -1);
+        NoDecisionPanel();
+    }
+
+    public void moreCapacityButton()
+    {
+        if (PlayerPrefs.GetInt("money") >= 12500 && PlayerPrefs.GetInt("maxHearts") < 10)
+        {
+            DecisionPanel.SetActive(true);
+            DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
+                "Do you wanna buy more energy drinks capacity (+1) ?";
+            DecisionPanel.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(moreCapacity);
         }
     }
 
     public void moreCapacity()
     {
-        if (PlayerPrefs.GetInt("money") >= 12500 && PlayerPrefs.GetInt("maxHearts") < 10)
-        {
-            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 12500);
-            PlayerPrefs.SetInt("maxHearts", PlayerPrefs.GetInt("maxHearts") + 1);
-        }
+        PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 12500);
+        PlayerPrefs.SetInt("maxHearts", PlayerPrefs.GetInt("maxHearts") + 1);
+        NoDecisionPanel();
     }
 
     public void ShowAd()

@@ -1,35 +1,36 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.Advertisements;
+using UnityEngine.UI;
 
 public class ShopController : MonoBehaviour
 {
-    [Header("Shop Menu UI")]
-    public GameObject cashText;
+    [Header("Shop Menu UI")] public GameObject cashText;
     public GameObject BuyShipButtonGameObject;
     public GameObject ShopMenuGameObject;
     public GameObject HelpToolsGameObject;
     public GameObject EnergyGameObject;
     public GameObject WheelOfFortuneGameObject;
+    public GameObject DecisionPanel;
 
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         cashUpdate(PlayerPrefs.GetInt("money"));
-
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    // Update is called once per frame
+    void Update()
+    {
+    }
 
     public void buyShipButton()
-    { 
+    {
         BuyShipButtonGameObject.SetActive(true);
         ShopMenuGameObject.SetActive(false);
     }
+
     public void returnBuyShip()
     {
         BuyShipButtonGameObject.SetActive(false);
@@ -41,6 +42,7 @@ public class ShopController : MonoBehaviour
         HelpToolsGameObject.SetActive(true);
         ShopMenuGameObject.SetActive(false);
     }
+
     public void returnHelpTool()
     {
         HelpToolsGameObject.SetActive(false);
@@ -52,11 +54,11 @@ public class ShopController : MonoBehaviour
         WheelOfFortuneGameObject.SetActive(true);
         ShopMenuGameObject.SetActive(false);
     }
+
     public void wheelOfFortuneReturn()
     {
         WheelOfFortuneGameObject.SetActive(false);
         ShopMenuGameObject.SetActive(true);
-
     }
 
     public void energyDringButtonClick()
@@ -71,16 +73,29 @@ public class ShopController : MonoBehaviour
         EnergyGameObject.SetActive(false);
     }
 
-    public void buyALife()
+    public void buyALifeButton()
     {
         if (PlayerPrefs.GetInt("money") >= 7500 && PlayerPrefs.GetInt("hearts") < PlayerPrefs.GetInt("maxHearts"))
         {
-            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 7500);
-            cashUpdate(PlayerPrefs.GetInt("money"));
-            PlayerPrefs.SetInt("hearts",PlayerPrefs.GetInt("hearts")+1);
-            GameObject.Find("hearts").GetComponent<TextMeshProUGUI>().text =
-                "x" + PlayerPrefs.GetInt("hearts");
+            DecisionPanel.SetActive(true);
+            DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
+                "Do you wanna buy an energy drink ?";
+            DecisionPanel.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(buyALife);
         }
+    }
+
+    public void NoDecisionPanel()
+    {
+        DecisionPanel.SetActive(false);
+    }
+
+    void buyALife()
+    {
+        PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 7500);
+        cashUpdate(PlayerPrefs.GetInt("money"));
+        PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") + 1);
+        GameObject.Find("hearts").GetComponent<TextMeshProUGUI>().text =
+            "x" + PlayerPrefs.GetInt("hearts");
     }
 
     public void killTime()
@@ -119,11 +134,10 @@ public class ShopController : MonoBehaviour
         }
         else
         {
-
             cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
-
         }
     }
+
     public void ShipTwo()
     {
         if (PlayerPrefs.GetInt("money") >= 4000)
@@ -135,9 +149,9 @@ public class ShopController : MonoBehaviour
         else
         {
             cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
-
         }
     }
+
     public void ShipThree()
     {
         if (PlayerPrefs.GetInt("money") >= 8000)
@@ -151,6 +165,7 @@ public class ShopController : MonoBehaviour
             cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
         }
     }
+
     public void ShipFour()
     {
         if (PlayerPrefs.GetInt("money") >= 15000)
@@ -169,7 +184,7 @@ public class ShopController : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("money") >= 15000)
         {
-            PlayerPrefs.SetInt("hayStackStock",PlayerPrefs.GetInt("hayStackStock") + 1);
+            PlayerPrefs.SetInt("hayStackStock", PlayerPrefs.GetInt("hayStackStock") + 1);
             PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 15000);
             cashUpdate(PlayerPrefs.GetInt("money"));
         }
@@ -209,13 +224,11 @@ public class ShopController : MonoBehaviour
 
     void cashUpdate(int current)
     {
-        cashText.GetComponent<TextMeshProUGUI>().text = "$" +current;
+        cashText.GetComponent<TextMeshProUGUI>().text = "$" + current;
     }
 
     public void facebook()
     {
         Application.OpenURL("https://www.facebook.com/JetLightstudio/");
     }
-
-   
 }

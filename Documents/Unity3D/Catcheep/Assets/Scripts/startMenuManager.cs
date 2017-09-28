@@ -12,6 +12,7 @@ public class startMenuManager : MonoBehaviour
     [Header("in Game objects")] public GameObject sceneContent;
     public GameObject ScrollBarGameObject;
     public GameObject vibrationToggle;
+    public GameObject notificationToggle;
     public GameObject bossSheep;
     public GameObject timeText;
     public GameObject levelText;
@@ -48,6 +49,9 @@ public class startMenuManager : MonoBehaviour
         //reminding player of vibration (delete when finished devloping)
         if (PlayerPrefs.GetString("Vibration") == "True") vibrationToggle.GetComponent<Switch>().isOn = true;
         else vibrationToggle.GetComponent<Switch>().isOn = false;
+        if (PlayerPrefs.GetInt("notifications") == 0) notificationToggle.GetComponent<Switch>().isOn = true;
+        else notificationToggle.GetComponent<Switch>().isOn = false;
+
 
         //extracting necissary elements for functions
         ScrollBar = ScrollBarGameObject.GetComponent<Scrollbar>();

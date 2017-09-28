@@ -80,7 +80,7 @@ public class ShopController : MonoBehaviour
             DecisionPanel.SetActive(true);
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
                 "Do you wanna buy an energy drink ?";
-            DecisionPanel.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(buyALife);
+            DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(buyALife);
         }
     }
 
@@ -106,7 +106,7 @@ public class ShopController : MonoBehaviour
             DecisionPanel.SetActive(true);
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
                 "Do you wanna set the energy drink timer to 00:00 ?";
-            DecisionPanel.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(killTime);
+            DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(killTime);
         }
     }
 
@@ -124,11 +124,11 @@ public class ShopController : MonoBehaviour
             DecisionPanel.SetActive(true);
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
                 "Do you wanna buy more energy drinks capacity (+1) ?";
-            DecisionPanel.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(moreCapacity);
+            DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(moreCapacity);
         }
     }
 
-    public void moreCapacity()
+    void moreCapacity()
     {
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 12500);
         PlayerPrefs.SetInt("maxHearts", PlayerPrefs.GetInt("maxHearts") + 1);

@@ -143,88 +143,132 @@ public class ShopController : MonoBehaviour
         }
     }
 
-    public void ShipOne()
+    public void shipOneButton()
     {
-        if (PlayerPrefs.GetInt("money") >= 2500)
+        DecisionPanel.SetActive(true);
+        DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
+            "Do you Set this Ship as Default ship ?";
+        DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(ShipOne);
+    }
+
+    void ShipOne()
+    {
+        PlayerPrefs.SetInt("ship", 1);
+        NoDecisionPanel();
+    }
+
+    public void shipTwoButton()
+    {
+        if (PlayerPrefs.GetInt("money") >= 15000)
         {
-            PlayerPrefs.SetInt("ship", 1);
-            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 2500);
-            cashUpdate(PlayerPrefs.GetInt("money"));
+            DecisionPanel.SetActive(true);
+            DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
+                "Do you Set this Ship as Default ship ?";
+            DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(ShipTwo);
         }
         else
         {
             cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
+            NoDecisionPanel();
         }
     }
 
     public void ShipTwo()
     {
-        if (PlayerPrefs.GetInt("money") >= 4000)
+        PlayerPrefs.SetInt("ship", 2);
+        NoDecisionPanel();
+    }
+
+    public void shipThreeButton()
+    {
+        if (PlayerPrefs.GetInt("money") >= 25000)
         {
-            PlayerPrefs.SetInt("ship", 2);
-            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 4000);
-            cashUpdate(PlayerPrefs.GetInt("money"));
+            DecisionPanel.SetActive(true);
+            DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
+                "Do you Set this Ship as Default ship ?";
+            DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(ShipThree);
         }
         else
         {
             cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
+            NoDecisionPanel();
         }
     }
 
     public void ShipThree()
     {
-        if (PlayerPrefs.GetInt("money") >= 8000)
+        PlayerPrefs.SetInt("ship", 3);
+        NoDecisionPanel();
+    }
+
+    public void shipFourButton()
+    {
+        if (PlayerPrefs.GetInt("money") >= 40000)
         {
-            PlayerPrefs.SetInt("ship", 3);
-            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 8000);
-            cashUpdate(PlayerPrefs.GetInt("money"));
+            DecisionPanel.SetActive(true);
+            DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
+                "Do you Set this Ship as Default ship ?";
+            DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(ShipFour);
         }
         else
         {
             cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
+            NoDecisionPanel();
         }
     }
 
     public void ShipFour()
     {
-        if (PlayerPrefs.GetInt("money") >= 15000)
-        {
-            PlayerPrefs.SetInt("ship", 4);
-            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 15000);
-            cashUpdate(PlayerPrefs.GetInt("money"));
-        }
-        else
-        {
-            cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
-        }
+        PlayerPrefs.SetInt("ship", 4);
+        NoDecisionPanel();
     }
 
-    public void buyHayStack()
+    public void buyHayButton()
     {
         if (PlayerPrefs.GetInt("money") >= 15000)
         {
-            PlayerPrefs.SetInt("hayStackStock", PlayerPrefs.GetInt("hayStackStock") + 1);
-            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 15000);
-            cashUpdate(PlayerPrefs.GetInt("money"));
+            DecisionPanel.SetActive(true);
+            DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
+                "Do you wanna buy a HayStack (+1) ?";
+            DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(buyHayStack);
         }
         else
         {
             cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
+            NoDecisionPanel();
+        }
+    }
+
+    void buyHayStack()
+    {
+        PlayerPrefs.SetInt("hayStackStock", PlayerPrefs.GetInt("hayStackStock") + 1);
+        PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 15000);
+        cashUpdate(PlayerPrefs.GetInt("money"));
+        NoDecisionPanel();
+    }
+
+    public void buyNetButton()
+    {
+        if (PlayerPrefs.GetInt("money") >= 20000)
+        {
+            DecisionPanel.SetActive(true);
+            DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
+                "Do you wanna buy a Net (+1) ?";
+            DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(buyNet);
+        }
+        else
+        {
+            cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
+            NoDecisionPanel();
         }
     }
 
     public void buyNet()
     {
-        if (PlayerPrefs.GetInt("money") >= 20000)
-        {
-            PlayerPrefs.SetInt("netStock", PlayerPrefs.GetInt("netStock") + 1);
-            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 20000);
-            cashUpdate(PlayerPrefs.GetInt("money"));
-        }
-        else
-        {
-            cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
-        }
+        PlayerPrefs.SetInt("netStock", PlayerPrefs.GetInt("netStock") + 1);
+        PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 20000);
+        cashUpdate(PlayerPrefs.GetInt("money"));
+        NoDecisionPanel();
     }
 
     public void buyLove()

@@ -271,18 +271,28 @@ public class ShopController : MonoBehaviour
         NoDecisionPanel();
     }
 
-    public void buyLove()
+    public void buyLoveButton()
     {
         if (PlayerPrefs.GetInt("money") >= 30000)
         {
-            PlayerPrefs.SetInt("loveStock", PlayerPrefs.GetInt("loveStock") + 1);
-            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 30000);
-            cashUpdate(PlayerPrefs.GetInt("money"));
+            DecisionPanel.SetActive(true);
+            DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
+                "Do you wanna buy a Female sheepy (+1) ?";
+            DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(buyLove);
         }
         else
         {
             cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
+            NoDecisionPanel();
         }
+    }
+
+    public void buyLove()
+    {
+            PlayerPrefs.SetInt("loveStock", PlayerPrefs.GetInt("loveStock") + 1);
+            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 30000);
+            cashUpdate(PlayerPrefs.GetInt("money"));
+        NoDecisionPanel();
     }
 
     void cashUpdate(int current)

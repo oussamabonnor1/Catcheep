@@ -698,7 +698,7 @@ public class AlienManager : MonoBehaviour
             levelText.GetComponent<TextMeshProUGUI>().text = "" + (PlayerPrefs.GetInt("level") + 1);
             levelUpPanel.SetActive(true);
             levelUpPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
-                "" + PlayerPrefs.GetInt("level");
+                "" + (PlayerPrefs.GetInt("level")+1);
             StartCoroutine(objectOpened(levelUpPanel));
             loadTextFile("missions", level);
             PlayerPrefs.SetInt("levelUp", 0);

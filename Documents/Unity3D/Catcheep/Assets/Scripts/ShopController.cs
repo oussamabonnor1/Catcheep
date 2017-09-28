@@ -87,7 +87,7 @@ public class ShopController : MonoBehaviour
 
     public void NoDecisionPanel()
     {
-        DecisionPanel.SetActive(false);
+        StartCoroutine(objectClosed(DecisionPanel));
     }
 
     void buyALife()

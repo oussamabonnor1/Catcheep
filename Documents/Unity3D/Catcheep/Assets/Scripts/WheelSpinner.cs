@@ -6,6 +6,7 @@ using Assets.UTime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Advertisements;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
@@ -164,8 +165,8 @@ public class WheelSpinner : MonoBehaviour
         if (PlayerPrefs.GetString("spinTime").Equals("")) PlayerPrefs.SetString("spinTime", DateTime.Now.ToString());
         if (PlayerPrefs.GetInt("spin") == 0)
         {
-            UTime.GetUtcTimeAsync(OnTimeReceived);
-            UTime.HasConnection(connection => print(""));
+            GameObject.Find("Music Manager").GetComponent<UTime>().GetUtcTimeAsync(OnTimeReceived);
+            GameObject.Find("Music Manager").GetComponent<UTime>().HasConnection(connection => print(""));
         }
         else
         {
@@ -175,13 +176,16 @@ public class WheelSpinner : MonoBehaviour
 
     private void OnTimeReceived(bool success, string error, DateTime time)
     {
-        if (success)
+        if (SceneManager.GetActiveScene().name.Equals("Start"))
         {
-            rewardSpin(time.ToLocalTime().ToString(), PlayerPrefs.GetString("spinTime"));
-        }
-        else
-        {
-            rewardSpin(DateTime.Now.ToString(), PlayerPrefs.GetString("spinTime"));
+            if (success)
+            {
+                rewardSpin(time.ToLocalTime().ToString(), PlayerPrefs.GetString("spinTime"));
+            }
+            else
+            {
+                rewardSpin(DateTime.Now.ToString(), PlayerPrefs.GetString("spinTime"));
+            }
         }
     }
 

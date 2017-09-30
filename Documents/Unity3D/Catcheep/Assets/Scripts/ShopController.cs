@@ -169,7 +169,7 @@ public class ShopController : MonoBehaviour
 
     public void shipTwoButton()
     {
-        if (PlayerPrefs.GetInt("money") >= 15000)
+        if (PlayerPrefs.GetInt("money") >= 15000 && PlayerPrefs.GetInt("level") > 5)
         {
             StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
@@ -193,7 +193,7 @@ public class ShopController : MonoBehaviour
 
     public void shipThreeButton()
     {
-        if (PlayerPrefs.GetInt("money") >= 25000)
+        if (PlayerPrefs.GetInt("money") >= 25000 && PlayerPrefs.GetInt("level") > 10)
         {
             StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
@@ -217,7 +217,7 @@ public class ShopController : MonoBehaviour
 
     public void shipFourButton()
     {
-        if (PlayerPrefs.GetInt("money") >= 40000)
+        if (PlayerPrefs.GetInt("money") >= 40000 && PlayerPrefs.GetInt("level") > 15)
         {
             StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
@@ -360,6 +360,18 @@ public class ShopController : MonoBehaviour
     {
         ShowRewardedVideo(2);
     }
+    public void shipTwoAdFunction()
+    {
+        ShowRewardedVideo(3);
+    }
+    public void shipThreeAdFunction()
+    {
+        ShowRewardedVideo(4);
+    }
+    public void shipFourAdFunction()
+    {
+        ShowRewardedVideo(5);
+    }
     void ShowRewardedVideo(int index)
     {
         ShowOptions options = new ShowOptions();
@@ -374,8 +386,20 @@ public class ShopController : MonoBehaviour
             case 2:
                 options.resultCallback = loveAd;
                 break;
+            case 3:
+                options.resultCallback = shipTwoAd;
+                break;
+            case 4:
+                options.resultCallback = shipThreeAd;
+                break;
+            case 5:
+                options.resultCallback = shipFourAd;
+                break;
         }
-        Advertisement.Show("rewardedVideo", options);
+        if (Advertisement.IsReady())
+        {
+            Advertisement.Show("rewardedVideo", options);
+        }
     }
 
     void hayAd(ShowResult result)
@@ -400,6 +424,27 @@ public class ShopController : MonoBehaviour
         {
             PlayerPrefs.SetInt("loveStock", PlayerPrefs.GetInt("loveStock") + 1);
             HelpToolsGameObject.transform.GetChild(2).transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("loveStock");
+        }
+    }
+    void shipTwoAd(ShowResult result)
+    {
+        if (result == ShowResult.Finished && PlayerPrefs.GetInt("level") > 5)
+        {
+            PlayerPrefs.SetInt("ship", 2);
+        }
+    }
+    void shipThreeAd(ShowResult result)
+    {
+        if (result == ShowResult.Finished && PlayerPrefs.GetInt("level") > 10)
+        {
+            PlayerPrefs.SetInt("ship", 3);
+        }
+    }
+    void shipFourAd(ShowResult result)
+    {
+        if (result == ShowResult.Finished && PlayerPrefs.GetInt("level") > 15)
+        {
+            PlayerPrefs.SetInt("ship", 4);
         }
     }
 }

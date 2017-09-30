@@ -225,7 +225,6 @@ public class WheelSpinner : MonoBehaviour
     {
         if (result == ShowResult.Finished)
         {
-            Debug.Log("Video completed - Offer a reward to the player");
             spinText.GetComponent<TextMeshProUGUI>().text = "spin!";
             PlayerPrefs.SetString("spinTime", DateTime.Now.ToString());
             if (PlayerPrefs.GetInt("spin") == 0) PlayerPrefs.SetInt("spin", PlayerPrefs.GetInt("spin") + 1);

@@ -26,6 +26,20 @@ public class ShopController : MonoBehaviour
         HelpToolsGameObject.transform.GetChild(0).transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("hayStackStock");
         HelpToolsGameObject.transform.GetChild(1).transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("netStock");
         HelpToolsGameObject.transform.GetChild(2).transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("loveStock");
+        settingShipStatus();
+    }
+
+    void settingShipStatus()
+    {
+        for (int i = 1; i < 4; i++)
+        {
+            if (PlayerPrefs.GetInt("ship" + i) == 1)
+            {
+                BuyShipButtonGameObject.transform.GetChild(0).transform.GetChild(i).transform.GetChild(2)
+                    .GetComponentInChildren<TextMeshProUGUI>().text = "Sold";
+            }    
+        }
+        
     }
 
     // Update is called once per frame
@@ -169,7 +183,7 @@ public class ShopController : MonoBehaviour
 
     public void shipTwoButton()
     {
-        if (PlayerPrefs.GetInt("money") >= 15000 && PlayerPrefs.GetInt("level") > 5)
+        if (PlayerPrefs.GetInt("money") >= 15000)
         {
             StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
@@ -188,12 +202,14 @@ public class ShopController : MonoBehaviour
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 15000);
         cashUpdate(PlayerPrefs.GetInt("money"));
         PlayerPrefs.SetInt("ship", 2);
+        PlayerPrefs.SetInt("ship1", 1);
+        settingShipStatus();
         StartCoroutine(objectClosed(DecisionPanel));
     }
 
     public void shipThreeButton()
     {
-        if (PlayerPrefs.GetInt("money") >= 25000 && PlayerPrefs.GetInt("level") > 10)
+        if (PlayerPrefs.GetInt("money") >= 25000)
         {
             StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
@@ -212,12 +228,14 @@ public class ShopController : MonoBehaviour
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 25000);
         cashUpdate(PlayerPrefs.GetInt("money"));
         PlayerPrefs.SetInt("ship", 3);
+        PlayerPrefs.SetInt("ship2", 1);
+        settingShipStatus();
         StartCoroutine(objectClosed(DecisionPanel));
     }
 
     public void shipFourButton()
     {
-        if (PlayerPrefs.GetInt("money") >= 40000 && PlayerPrefs.GetInt("level") > 15)
+        if (PlayerPrefs.GetInt("money") >= 40000 )
         {
             StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
@@ -236,6 +254,8 @@ public class ShopController : MonoBehaviour
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 40000);
         cashUpdate(PlayerPrefs.GetInt("money"));
         PlayerPrefs.SetInt("ship", 4);
+        PlayerPrefs.SetInt("ship3", 1);
+        settingShipStatus();
         StartCoroutine(objectClosed(DecisionPanel));
     }
 
@@ -428,23 +448,29 @@ public class ShopController : MonoBehaviour
     }
     void shipTwoAd(ShowResult result)
     {
-        if (result == ShowResult.Finished && PlayerPrefs.GetInt("level") > 5)
+        if (result == ShowResult.Finished)
         {
             PlayerPrefs.SetInt("ship", 2);
+            PlayerPrefs.SetInt("ship1", 1);
+            settingShipStatus();
         }
     }
     void shipThreeAd(ShowResult result)
     {
-        if (result == ShowResult.Finished && PlayerPrefs.GetInt("level") > 10)
+        if (result == ShowResult.Finished)
         {
             PlayerPrefs.SetInt("ship", 3);
+            PlayerPrefs.SetInt("ship2", 1);
+            settingShipStatus();
         }
     }
     void shipFourAd(ShowResult result)
     {
-        if (result == ShowResult.Finished && PlayerPrefs.GetInt("level") > 15)
+        if (result == ShowResult.Finished)
         {
             PlayerPrefs.SetInt("ship", 4);
+            PlayerPrefs.SetInt("ship3", 1);
+            settingShipStatus();
         }
     }
 }

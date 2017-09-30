@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Advertisements;
@@ -20,6 +21,7 @@ public class ShopController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        Advertisement.Initialize("1453095");
         cashUpdate(PlayerPrefs.GetInt("money"));
         HelpToolsGameObject.transform.GetChild(0).transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("hayStackStock");
         HelpToolsGameObject.transform.GetChild(1).transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("netStock");
@@ -343,5 +345,61 @@ public class ShopController : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
         objectToOpen.SetActive(false);
+    }
+
+    //ADS SECTION
+    public void hayStackAdFunction()
+    {
+        ShowRewardedVideo(0);
+    }
+    public void netAdFunction()
+    {
+        ShowRewardedVideo(1);
+    }
+    public void loveAdFunction()
+    {
+        ShowRewardedVideo(2);
+    }
+    void ShowRewardedVideo(int index)
+    {
+        ShowOptions options = new ShowOptions();
+        switch (index)
+        {
+            case 0:
+                options.resultCallback = hayAd;
+                break;
+            case 1:
+                options.resultCallback = netAd;
+                break;
+            case 2:
+                options.resultCallback = loveAd;
+                break;
+        }
+        Advertisement.Show("rewardedVideo", options);
+    }
+
+    void hayAd(ShowResult result)
+    {
+        if (result == ShowResult.Finished)
+        {
+            PlayerPrefs.SetInt("hayStackStock", PlayerPrefs.GetInt("hayStackStock") + 1);
+            HelpToolsGameObject.transform.GetChild(0).transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("hayStackStock");
+        }
+    }
+    void netAd(ShowResult result)
+    {
+        if (result == ShowResult.Finished)
+        {
+            PlayerPrefs.SetInt("netStock", PlayerPrefs.GetInt("netStock") + 1);
+            HelpToolsGameObject.transform.GetChild(1).transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("netStock");
+        }
+    }
+    void loveAd(ShowResult result)
+    {
+        if (result == ShowResult.Finished)
+        {
+            PlayerPrefs.SetInt("loveStock", PlayerPrefs.GetInt("loveStock") + 1);
+            HelpToolsGameObject.transform.GetChild(2).transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("loveStock");
+        }
     }
 }

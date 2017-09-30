@@ -39,7 +39,7 @@ public class WheelSpinner : MonoBehaviour
         if (PlayerPrefs.GetInt("spin") > 0)
         {
             PlayerPrefs.SetString("spinTime", DateTime.Now.ToString());
-            PlayerPrefs.SetInt("spin",PlayerPrefs.GetInt("spin")-1);
+            PlayerPrefs.SetInt("spin", PlayerPrefs.GetInt("spin") - 1);
             triangl.transform.SetParent(wheelOfFortuneSelection.transform, true);
             StartCoroutine(wheelTurned());
             dailySpinTime();
@@ -119,7 +119,7 @@ public class WheelSpinner : MonoBehaviour
                 items[index].GetComponent<RectTransform>().transform.rotation.eulerAngles,
                 new Vector3(0, 0, 0), 3f * Time.deltaTime));
             yield return new WaitForSeconds(0.01f);
-        } while ((int) items[index].GetComponent<RectTransform>().transform.rotation.eulerAngles.z != 0);   
+        } while ((int) items[index].GetComponent<RectTransform>().transform.rotation.eulerAngles.z != 0);
     }
 
     void rewardCollectedCall()
@@ -130,7 +130,7 @@ public class WheelSpinner : MonoBehaviour
                 PlayerPrefs.SetInt("netStock", PlayerPrefs.GetInt("netStock") + 1);
                 break;
             case 1:
-                if(PlayerPrefs.GetInt("hearts") < PlayerPrefs.GetInt("maxHearts"))
+                if (PlayerPrefs.GetInt("hearts") < PlayerPrefs.GetInt("maxHearts"))
                 {
                     PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") + 1);
                 }
@@ -147,13 +147,12 @@ public class WheelSpinner : MonoBehaviour
             case 5:
                 PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + 5000);
                 break;
-
         }
         GameObject.Find("Cash text").GetComponent<TextMeshProUGUI>().text = "$" + PlayerPrefs.GetInt("money");
         items[index].transform.SetSiblingIndex(indexHiarchy);
         items[index].transform.position = originalVector3;
         items[index].transform.localRotation = originalQuaternion;
-        items[index].transform.localScale = new Vector3(1,1,1);
+        items[index].transform.localScale = new Vector3(1, 1, 1);
         spinButton.GetComponent<Button>().enabled = true;
         wheelOfLuck.transform.Rotate(0, 0, -wheelOfLuck.transform.rotation.eulerAngles.z);
         triangl.transform.SetParent(wheelOfLuck.transform, true);
@@ -207,11 +206,29 @@ public class WheelSpinner : MonoBehaviour
 
     public void watchAdSpin()
     {
-       
-        if (Advertisement.IsReady())
+        ShowRewardedVideo(0);
+    }
+
+    void ShowRewardedVideo(int index)
+    {
+        ShowOptions options = new ShowOptions();
+        switch (index)
         {
-            PlayerPrefs.SetInt("spin", PlayerPrefs.GetInt("spin") + 1);
-            Advertisement.Show();
+            case 0:
+                options.resultCallback = spinAd;
+                break;
+        }
+        Advertisement.Show("rewardedVideo", options);
+    }
+
+    void spinAd(ShowResult result)
+    {
+        if (result == ShowResult.Finished)
+        {
+            Debug.Log("Video completed - Offer a reward to the player");
+            spinText.GetComponent<TextMeshProUGUI>().text = "spin!";
+            PlayerPrefs.SetString("spinTime", DateTime.Now.ToString());
+            if (PlayerPrefs.GetInt("spin") == 0) PlayerPrefs.SetInt("spin", PlayerPrefs.GetInt("spin") + 1);
         }
     }
 }

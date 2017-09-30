@@ -6,7 +6,9 @@ using UnityEngine.UI;
 
 public class ShopController : MonoBehaviour
 {
-    [Header("Shop Menu UI")] public GameObject cashText;
+    [Header("Shop Menu UI")]
+    public GameObject cashText;
+    public GameObject MenuCashText;
     public GameObject BuyShipButtonGameObject;
     public GameObject ShopMenuGameObject;
     public GameObject HelpToolsGameObject;
@@ -19,6 +21,9 @@ public class ShopController : MonoBehaviour
     void Start()
     {
         cashUpdate(PlayerPrefs.GetInt("money"));
+        HelpToolsGameObject.transform.GetChild(0).transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("hayStackStock");
+        HelpToolsGameObject.transform.GetChild(1).transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("netStock");
+        HelpToolsGameObject.transform.GetChild(2).transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("loveStock");
     }
 
     // Update is called once per frame
@@ -28,50 +33,50 @@ public class ShopController : MonoBehaviour
 
     public void buyShipButton()
     {
-        BuyShipButtonGameObject.SetActive(true);
-        ShopMenuGameObject.SetActive(false);
+        StartCoroutine(objectOpened(BuyShipButtonGameObject));
+        StartCoroutine(objectClosed(ShopMenuGameObject));
     }
 
     public void returnBuyShip()
     {
-        BuyShipButtonGameObject.SetActive(false);
-        ShopMenuGameObject.SetActive(true);
+        StartCoroutine(objectClosed(BuyShipButtonGameObject));
+        StartCoroutine(objectOpened(ShopMenuGameObject));
     }
 
     public void helpToolButton()
     {
-        HelpToolsGameObject.SetActive(true);
-        ShopMenuGameObject.SetActive(false);
+        StartCoroutine(objectClosed(ShopMenuGameObject));
+        StartCoroutine(objectOpened(HelpToolsGameObject));
     }
 
     public void returnHelpTool()
     {
-        HelpToolsGameObject.SetActive(false);
-        ShopMenuGameObject.SetActive(true);
+        StartCoroutine(objectClosed(HelpToolsGameObject));
+        StartCoroutine(objectOpened(ShopMenuGameObject));
     }
 
     public void wheelOfFortuneButton()
     {
-        WheelOfFortuneGameObject.SetActive(true);
-        ShopMenuGameObject.SetActive(false);
+        StartCoroutine(objectClosed(ShopMenuGameObject));
+        StartCoroutine(objectOpened(WheelOfFortuneGameObject));
     }
 
     public void wheelOfFortuneReturn()
     {
-        WheelOfFortuneGameObject.SetActive(false);
-        ShopMenuGameObject.SetActive(true);
+        StartCoroutine(objectClosed(WheelOfFortuneGameObject));
+        StartCoroutine(objectOpened(ShopMenuGameObject));
     }
 
     public void energyDringButtonClick()
     {
-        ShopMenuGameObject.SetActive(false);
-        EnergyGameObject.SetActive(true);
+        StartCoroutine(objectClosed(ShopMenuGameObject));
+        StartCoroutine(objectOpened(EnergyGameObject));
     }
 
     public void energyDringButtonOff()
     {
-        ShopMenuGameObject.SetActive(true);
-        EnergyGameObject.SetActive(false);
+        StartCoroutine(objectClosed(EnergyGameObject));
+        StartCoroutine(objectOpened(ShopMenuGameObject));
     }
 
     public void buyALifeButton()
@@ -115,6 +120,7 @@ public class ShopController : MonoBehaviour
     {
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 3000);
         PlayerPrefs.SetFloat("heartTime", -1);
+        cashUpdate(PlayerPrefs.GetInt("money"));
         StartCoroutine(objectClosed(DecisionPanel));
     }
 
@@ -133,6 +139,7 @@ public class ShopController : MonoBehaviour
     {
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 12500);
         PlayerPrefs.SetInt("maxHearts", PlayerPrefs.GetInt("maxHearts") + 1);
+        cashUpdate(PlayerPrefs.GetInt("money"));
         StartCoroutine(objectClosed(DecisionPanel));
     }
 
@@ -251,6 +258,7 @@ public class ShopController : MonoBehaviour
         PlayerPrefs.SetInt("hayStackStock", PlayerPrefs.GetInt("hayStackStock") + 1);
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 15000);
         cashUpdate(PlayerPrefs.GetInt("money"));
+        HelpToolsGameObject.transform.GetChild(0).transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("hayStackStock");
         StartCoroutine(objectClosed(DecisionPanel));
     }
 
@@ -275,6 +283,7 @@ public class ShopController : MonoBehaviour
         PlayerPrefs.SetInt("netStock", PlayerPrefs.GetInt("netStock") + 1);
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 20000);
         cashUpdate(PlayerPrefs.GetInt("money"));
+        HelpToolsGameObject.transform.GetChild(1).transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("netStock");
         StartCoroutine(objectClosed(DecisionPanel));
     }
 
@@ -298,6 +307,7 @@ public class ShopController : MonoBehaviour
     {
         PlayerPrefs.SetInt("loveStock", PlayerPrefs.GetInt("loveStock") + 1);
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 30000);
+        HelpToolsGameObject.transform.GetChild(2).transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("loveStock");
         cashUpdate(PlayerPrefs.GetInt("money"));
         StartCoroutine(objectClosed(DecisionPanel));
     }
@@ -305,6 +315,7 @@ public class ShopController : MonoBehaviour
     void cashUpdate(int current)
     {
         cashText.GetComponent<TextMeshProUGUI>().text = "$" + current;
+        MenuCashText.GetComponent<TextMeshProUGUI>().text = "$" + current;
     }
 
     public void facebook()

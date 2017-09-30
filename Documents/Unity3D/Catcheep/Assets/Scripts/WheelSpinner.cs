@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using Assets.SimpleAndroidNotifications;
-using Assets.UTime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Advertisements;

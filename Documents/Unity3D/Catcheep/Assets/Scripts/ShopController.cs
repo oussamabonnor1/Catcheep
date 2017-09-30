@@ -392,6 +392,18 @@ public class ShopController : MonoBehaviour
     {
         ShowRewardedVideo(5);
     }
+    public void buyALifeAdFunction()
+    {
+        ShowRewardedVideo(6);
+    }
+    public void killTimeAdFunction()
+    {
+        ShowRewardedVideo(7);
+    }
+    public void moreCapacityAdFunction()
+    {
+        ShowRewardedVideo(8);
+    }
     void ShowRewardedVideo(int index)
     {
         ShowOptions options = new ShowOptions();
@@ -414,6 +426,15 @@ public class ShopController : MonoBehaviour
                 break;
             case 5:
                 options.resultCallback = shipFourAd;
+                break;
+            case 6:
+                options.resultCallback = buyALifeAd;
+                break;
+            case 7:
+                options.resultCallback = killTimeAd;
+                break;
+            case 8:
+                options.resultCallback = moreCapacityAd;
                 break;
         }
         if (Advertisement.IsReady())
@@ -471,6 +492,30 @@ public class ShopController : MonoBehaviour
             PlayerPrefs.SetInt("ship", 4);
             PlayerPrefs.SetInt("ship3", 1);
             settingShipStatus();
+        }
+    }
+    void moreCapacityAd(ShowResult result)
+    {
+        if (result == ShowResult.Finished && PlayerPrefs.GetInt("maxHearts") < 10)
+        {
+            PlayerPrefs.SetInt("maxHearts", PlayerPrefs.GetInt("maxHearts") + 1);
+        }
+    }
+    void buyALifeAd(ShowResult result)
+    {
+        if (result == ShowResult.Finished && PlayerPrefs.GetInt("hearts") < PlayerPrefs.GetInt("maxHearts"))
+        {
+            PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") + 1);
+            GameObject.Find("hearts").GetComponent<TextMeshProUGUI>().text =
+                "x" + PlayerPrefs.GetInt("hearts");
+        }
+    }
+    void killTimeAd(ShowResult result)
+    {
+        if (result == ShowResult.Finished && PlayerPrefs.GetFloat("heartTime") >= 1)
+        {
+            PlayerPrefs.SetFloat("heartTime", -1);
+            cashUpdate(PlayerPrefs.GetInt("money"));
         }
     }
 }

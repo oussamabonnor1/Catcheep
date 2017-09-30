@@ -320,7 +320,7 @@ public class ShopController : MonoBehaviour
 
     public void facebook()
     {
-        Application.OpenURL("www.facebook.com/JetLightstudio/");
+        Application.OpenURL("fb://page/344400029290078");
     }
 
     IEnumerator objectOpened(GameObject objectToOpen)

@@ -62,7 +62,7 @@ namespace Assets.Scripts
                 {
                     if (PlayerPrefs.GetInt("hearts") < PlayerPrefs.GetInt("maxHearts"))
                     {
-                        PlayerPrefs.SetFloat("heartTime", 90);
+                        PlayerPrefs.SetFloat("heartTime", 150);
                         PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") + 1);
                         if (SceneManager.GetActiveScene().name.Equals("Start"))
                         {

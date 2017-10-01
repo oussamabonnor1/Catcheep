@@ -3,6 +3,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Advertisements;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class ShopController : MonoBehaviour
@@ -46,6 +47,11 @@ public class ShopController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+    }
+
+    public void moreInfo()
+    {
+        SceneManager.LoadScene("Credit");
     }
 
     public void buyShipButton()

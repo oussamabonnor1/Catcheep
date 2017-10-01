@@ -115,9 +115,9 @@ public class gameManager : MonoBehaviour
         {
             if (!pausePanel.gameObject.activeSelf)
             {
-                Time.timeScale = 0;
                 PlayerPrefs.SetInt("sheepy", totalSheepsCaught);
                 pausePanel.SetActive(true);
+                Time.timeScale = 0;
             }
             else
             {
@@ -247,11 +247,21 @@ public class gameManager : MonoBehaviour
 
         if (gameOver)
         {
+            StartCoroutine(finishPanelShowing());
+        }
+    }
+
+    IEnumerator finishPanelShowing()
+    {
+        yield return new WaitForSeconds(1f);
+        if (!GameObject.FindGameObjectWithTag("sheepy") && !GameObject.FindGameObjectWithTag("blacky"))
+        {
             PlayerPrefs.SetInt("sheepy", totalSheepsCaught);
             //i wish i was focused enough to find a more beautiful way of assigning values but...
             //it's been a long 3 months working on this 'game' and i honestly jst wanna get it over with.
-            finishPanel.SetActive(true);
-            finishPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = "+" + (score - originalScore);
+            StartCoroutine(objectOpened(finishPanel));
+            finishPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
+                "+" + (score - originalScore);
             if (SceneManager.GetActiveScene().name.Equals("Farm"))
             {
                 finishPanel.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = "+" + sheepyCaught;
@@ -259,18 +269,25 @@ public class gameManager : MonoBehaviour
             }
             if (SceneManager.GetActiveScene().name.Equals("Snow"))
             {
-                finishPanel.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = "+" + snowSheepyCaught;
-                finishPanel.transform.GetChild(3).GetComponentInChildren<TextMeshProUGUI>().text = "+" + snowBlackyCaught;
+                finishPanel.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text =
+                    "+" + snowSheepyCaught;
+                finishPanel.transform.GetChild(3).GetComponentInChildren<TextMeshProUGUI>().text =
+                    "+" + snowBlackyCaught;
             }
             if (SceneManager.GetActiveScene().name.Equals("City"))
             {
-                finishPanel.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = "+" + citySheepyCaught;
-                finishPanel.transform.GetChild(3).GetComponentInChildren<TextMeshProUGUI>().text = "+" + cityBlackyCaught;
+                finishPanel.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text =
+                    "+" + citySheepyCaught;
+                finishPanel.transform.GetChild(3).GetComponentInChildren<TextMeshProUGUI>().text =
+                    "+" + cityBlackyCaught;
             }
             finishPanel.transform.GetChild(4).GetComponentInChildren<TextMeshProUGUI>().text = "+" + flashCaught;
         }
+        else
+        {
+            StartCoroutine(finishPanelShowing());
+        }
     }
-
     public void quit()
     {
         Time.timeScale = 1;
@@ -509,7 +526,7 @@ public class gameManager : MonoBehaviour
         StartCoroutine(badViewCoroutine());
     }
 
-    public IEnumerator badViewCoroutine()
+    IEnumerator badViewCoroutine()
     {
         BadViewGameObject.SetActive(true);
         StartCoroutine(objectOpened(BadViewGameObject));
@@ -521,6 +538,7 @@ public class gameManager : MonoBehaviour
 
     IEnumerator objectOpened(GameObject objectToOpen)
     {
+        objectToOpen.SetActive(true);
         for (int i = 0; i <= 10; i++)
         {
             float a = (float)i / 10;
@@ -537,5 +555,6 @@ public class gameManager : MonoBehaviour
             objectToOpen.transform.localScale = new Vector3(a, a, 1);
             yield return new WaitForSeconds(0.01f);
         }
+        objectToOpen.SetActive(false);
     }
 }

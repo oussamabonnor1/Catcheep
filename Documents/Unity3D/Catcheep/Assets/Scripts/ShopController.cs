@@ -16,6 +16,7 @@ public class ShopController : MonoBehaviour
     public GameObject EnergyGameObject;
     public GameObject WheelOfFortuneGameObject;
     public GameObject DecisionPanel;
+    public GameObject AdPanel;
 
 
     // Use this for initialization
@@ -106,9 +107,14 @@ public class ShopController : MonoBehaviour
         }
     }
 
-    public void NoDecisionPanel()
+    public void CloseDecisionPanel()
     {
         StartCoroutine(objectClosed(DecisionPanel));
+    }
+
+    public void CloseAdsPanel()
+    {
+        StartCoroutine(objectClosed(AdPanel));
     }
 
     void buyALife()
@@ -440,6 +446,10 @@ public class ShopController : MonoBehaviour
         if (Advertisement.IsReady())
         {
             Advertisement.Show("rewardedVideo", options);
+        }
+        else
+        {
+            StartCoroutine(objectOpened(AdPanel));
         }
     }
 

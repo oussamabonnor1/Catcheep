@@ -27,7 +27,8 @@ public class AlienManager : MonoBehaviour
     public GameObject levelText;
     public GameObject levelUpPanel;
 
-    [Header("indication elements")] public GameObject sheepHolder;
+    [Header("indication elements")]
+    public GameObject sheepHolder;
     public GameObject sheepNumberText;
     public GameObject moneyAmountText;
 
@@ -438,12 +439,14 @@ public class AlienManager : MonoBehaviour
 
     void activatingButtons()
     {
+        sheepHolder.GetComponent<Button>().enabled = true;
         rightButton.GetComponent<Button>().enabled = true;
         leftButton.GetComponent<Button>().enabled = true;
     }
 
     void deactivatingButtons()
     {
+        sheepHolder.GetComponent<Button>().enabled = false;
         rightButton.GetComponent<Button>().enabled = false;
         leftButton.GetComponent<Button>().enabled = false;
     }
@@ -623,6 +626,7 @@ public class AlienManager : MonoBehaviour
         else
         {
             deactivatingButtons();
+            sheepHolder.GetComponent<Button>().enabled = true;
             sheepMapNumberUpdate();
             SheepMapGameObject.SetActive(true);
             StartCoroutine(objectOpened(SheepMapGameObject));

@@ -10,7 +10,8 @@ using Random = UnityEngine.Random;
 
 public class startMenuManager : MonoBehaviour
 {
-    [Header("in Game objects")] public GameObject sceneContent;
+    [Header("in Game objects")] public GameObject quitPanel;
+    public GameObject sceneContent;
     public GameObject ScrollBarGameObject;
     public GameObject vibrationToggle;
     public GameObject notificationToggle;
@@ -70,6 +71,11 @@ public class startMenuManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKey(KeyCode.Escape) && !quitPanel.activeSelf)
+        {
+            StartCoroutine(objectOpened(quitPanel));
+        }
+
         //updating timer
         if (PlayerPrefs.GetInt("hearts") < PlayerPrefs.GetInt("maxHearts"))
         {
@@ -332,5 +338,31 @@ public class startMenuManager : MonoBehaviour
             PlayerPrefs.SetInt("notifications", 0);
         }
     }
-    
+
+    IEnumerator objectOpened(GameObject objectToOpen)
+    {
+        objectToOpen.SetActive(true);
+        for (int i = 0; i <= 10; i++)
+        {
+            float a = (float)i / 10;
+            objectToOpen.transform.localScale = new Vector3(a, a, 1);
+            yield return new WaitForSeconds(0.01f);
+        }
+    }
+
+    IEnumerator objectClosed(GameObject objectToOpen)
+    {
+        for (int i = 10; i >= 0; i--)
+        {
+            float a = (float)i / 10;
+            objectToOpen.transform.localScale = new Vector3(a, a, 1);
+            yield return new WaitForSeconds(0.01f);
+        }
+        objectToOpen.SetActive(false);
+    }
+
+    public void closeQuitPanel()
+    {
+        StartCoroutine(objectClosed(quitPanel));
+    }
 }

@@ -738,7 +738,7 @@ public class AlienManager : MonoBehaviour
     {
         if (result == ShowResult.Finished)
         {
-            PlayerPrefs.SetFloat("time" + currentSheepShowed, musicManager.timer[currentSheepShowed]);
+            musicManager.timer[currentSheepShowed] = 0f;
         }
     }
 }

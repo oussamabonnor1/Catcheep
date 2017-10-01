@@ -14,7 +14,7 @@ namespace Assets.Scripts
         void Start()
         {
              if (SceneManager.GetActiveScene().name.Equals("Start"))
-            {
+             {
                 if (PlayerPrefs.GetInt("maxHearts") == 0)
                 {
                     PlayerPrefs.SetInt("maxHearts", 5);

@@ -2,6 +2,7 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Advertisements;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -315,6 +316,9 @@ public class startMenuManager : MonoBehaviour
 
     public void deleteProgress()
     {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.SetInt("maxHearts", 5);
+        PlayerPrefs.SetInt("hearts", 3);
     }
 
     public void notifications()
@@ -328,4 +332,5 @@ public class startMenuManager : MonoBehaviour
             PlayerPrefs.SetInt("notifications", 0);
         }
     }
+    
 }

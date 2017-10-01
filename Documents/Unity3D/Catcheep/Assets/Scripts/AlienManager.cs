@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Assets.Scripts;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Advertisements;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -202,6 +203,7 @@ public class AlienManager : MonoBehaviour
 
     void shipClicked()
     {
+        deactivatingButtons();
         if (PlayerPrefs.GetInt("sheep" + currentSheepShowed) >= sheepyRequested[currentSheepShowed])
         {
             PlayerPrefs.SetInt("sheep" + currentSheepShowed,
@@ -232,10 +234,10 @@ public class AlienManager : MonoBehaviour
                 PlayerPrefs.SetInt("index" + toDelete, 0);
             }
             //end of confusing code
-
-            deactivatingButtons();
+            
             StartCoroutine(shipLeaving());
             if (checkingIfMissionCompleted()) setSlider(PlayerPrefs.GetInt("level") + 1);
+
         }
         else
         {
@@ -723,5 +725,20 @@ public class AlienManager : MonoBehaviour
     public void startMenu()
     {
         SceneManager.LoadScene(1);
+    }
+
+    public void ShowRewardedVideo()
+    {
+        ShowOptions options = new ShowOptions();
+        options.resultCallback = killTimeAd;
+        Advertisement.Show("rewardedVideo", options);
+    }
+
+    void killTimeAd(ShowResult result)
+    {
+        if (result == ShowResult.Finished)
+        {
+            PlayerPrefs.SetFloat("time" + currentSheepShowed, musicManager.timer[currentSheepShowed]);
+        }
     }
 }

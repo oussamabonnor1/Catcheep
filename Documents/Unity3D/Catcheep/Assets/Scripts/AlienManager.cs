@@ -26,9 +26,9 @@ public class AlienManager : MonoBehaviour
     public GameObject slider;
     public GameObject levelText;
     public GameObject levelUpPanel;
+    public GameObject AdPanel;
 
-    [Header("indication elements")]
-    public GameObject sheepHolder;
+    [Header("indication elements")] public GameObject sheepHolder;
     public GameObject sheepNumberText;
     public GameObject moneyAmountText;
 
@@ -211,7 +211,7 @@ public class AlienManager : MonoBehaviour
                 PlayerPrefs.GetInt("sheep" + currentSheepShowed) - sheepyRequested[currentSheepShowed]);
             PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") - sheepyRequested[currentSheepShowed]);
             PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + (sheepyRequested[currentSheepShowed] * 100));
-            moneyAmountText.GetComponent<TextMeshProUGUI>().text ="$"+ PlayerPrefs.GetInt("money");
+            moneyAmountText.GetComponent<TextMeshProUGUI>().text = "$" + PlayerPrefs.GetInt("money");
             sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
             sheepyRequested[currentSheepShowed] = 0;
             //this long thing will make sure the player will have updated hunting
@@ -235,10 +235,9 @@ public class AlienManager : MonoBehaviour
                 PlayerPrefs.SetInt("index" + toDelete, 0);
             }
             //end of confusing code
-            
+
             StartCoroutine(shipLeaving());
             if (checkingIfMissionCompleted()) setSlider(PlayerPrefs.GetInt("level") + 1);
-
         }
         else
         {
@@ -578,13 +577,14 @@ public class AlienManager : MonoBehaviour
             Destroy(mailPanel.transform.GetChild(i).gameObject);
         }
         StartCoroutine(objectClosed(mailPanel));
-        mailPanel.SetActive(false);
+        
     }
 
 
     //opening and closing objects animations (very important and used everywhere)
     IEnumerator objectOpened(GameObject objectToOpen)
     {
+        objectToOpen.SetActive(true);
         for (int i = 0; i <= 10; i++)
         {
             float a = (float) i / 10;
@@ -682,6 +682,11 @@ public class AlienManager : MonoBehaviour
         shipGoingRightButtonClicked();
     }
 
+    public void CloseAdsPanel()
+    {
+        StartCoroutine(objectClosed(AdPanel));
+    }
+
     //slider functions
     bool checkingIfMissionCompleted()
     {
@@ -704,7 +709,7 @@ public class AlienManager : MonoBehaviour
             levelText.GetComponent<TextMeshProUGUI>().text = "" + (PlayerPrefs.GetInt("level") + 1);
             levelUpPanel.SetActive(true);
             levelUpPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
-                "" + (PlayerPrefs.GetInt("level")+1);
+                "" + (PlayerPrefs.GetInt("level") + 1);
             StartCoroutine(objectOpened(levelUpPanel));
             loadTextFile("missions", level);
             PlayerPrefs.SetInt("levelUp", 0);
@@ -722,7 +727,6 @@ public class AlienManager : MonoBehaviour
     public void closeLevelUpPanel()
     {
         StartCoroutine(objectClosed(levelUpPanel));
-        levelUpPanel.SetActive(false);
         mailButton.GetComponent<Button>().enabled = true;
     }
 
@@ -734,8 +738,18 @@ public class AlienManager : MonoBehaviour
     public void ShowRewardedVideo()
     {
         ShowOptions options = new ShowOptions();
-        options.resultCallback = killTimeAd;
-        Advertisement.Show("rewardedVideo", options);
+        if (timeText.activeSelf)
+        {
+            if (Advertisement.IsReady())
+            {
+                options.resultCallback = killTimeAd;
+                Advertisement.Show("rewardedVideo", options);
+            }
+            else
+            {
+                StartCoroutine(objectOpened(AdPanel));
+            }
+        }
     }
 
     void killTimeAd(ShowResult result)

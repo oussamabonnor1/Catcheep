@@ -17,6 +17,7 @@ public class WheelSpinner : MonoBehaviour
     public GameObject spinButton;
     public GameObject wheelOfFortuneSelection;
     public GameObject spinText;
+    public GameObject noAdsPanel;
 
     private Vector3 originalVector3;
     private Quaternion originalQuaternion;
@@ -218,7 +219,14 @@ public class WheelSpinner : MonoBehaviour
                 options.resultCallback = spinAd;
                 break;
         }
-        Advertisement.Show("rewardedVideo", options);
+        if (Advertisement.IsReady())
+        {
+            Advertisement.Show("rewardedVideo", options);
+        }
+        else
+        {
+            noAdsPanel.SetActive(true);
+        }
     }
 
     void spinAd(ShowResult result)

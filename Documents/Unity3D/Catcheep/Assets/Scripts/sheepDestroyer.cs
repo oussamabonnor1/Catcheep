@@ -167,7 +167,7 @@ public class sheepDestroyer : MonoBehaviour
 
         //rewarding player
         ++gameManager.totalSheepsCaught;
-        sheepsCaughtText.GetComponent<Text>().text = " x " + gameManager.totalSheepsCaught;
+        sheepsCaughtText.GetComponent<TextMeshProUGUI>().text = " x " + gameManager.totalSheepsCaught;
         ++gameManager.combo;
         gameManager.score += 100 + 10 * gameManager.combo;
         PlayerPrefs.SetInt("money", gameManager.score);

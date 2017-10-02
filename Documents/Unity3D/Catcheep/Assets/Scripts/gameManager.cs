@@ -67,7 +67,7 @@ public class gameManager : MonoBehaviour
         
         scoreText = GameObject.Find("score");
         scoreText.GetComponent<TextMeshProUGUI>().text = "x " + score;
-        GameObject.Find("sheeps caught").GetComponent<Text>().text = " x " + totalSheepsCaught;
+        GameObject.Find("sheeps caught").GetComponent<TextMeshProUGUI>().text = "x " + totalSheepsCaught;
 
         //edge of screen is a vector3 that holds the screens width (can't get it directly cause of Screen/World point difference)
         Vector3 helpToolsPlateWidth = helpToolsPlate.GetComponent<RectTransform>().rect.size;

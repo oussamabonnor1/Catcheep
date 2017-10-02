@@ -1,5 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Net;
+using System.Net.Mail;
+using System.Net.Security;
+using System.Security.Cryptography.X509Certificates;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -27,4 +31,16 @@ public class creditController : MonoBehaviour {
     {
         Application.OpenURL("https://www.jetlight-studio.tk/");
     }
+
+    public void email()
+    {
+        string t =
+            "mailto:jetlightstudio@gmail.com?subject=Your%20Game%20Catcheep";
+        Application.OpenURL(t);
+    }
+    public void googlePlus()
+    {
+        Application.OpenURL("https://plus.google.com/106078600308560786022");
+    }
+
 }

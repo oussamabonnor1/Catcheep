@@ -18,6 +18,7 @@ public class ShopController : MonoBehaviour
     public GameObject WheelOfFortuneGameObject;
     public GameObject DecisionPanel;
     public GameObject AdPanel;
+    public GameObject moneyPanel;
 
 
     // Use this for initialization
@@ -122,6 +123,14 @@ public class ShopController : MonoBehaviour
     {
         StartCoroutine(objectClosed(AdPanel));
     }
+    public void CloseMoneyPanel()
+    {
+        StartCoroutine(objectClosed(moneyPanel));
+    }
+    public void OpenMoneyPanel()
+    {
+        StartCoroutine(objectOpened(moneyPanel));
+    }
 
     void buyALife()
     {
@@ -142,6 +151,10 @@ public class ShopController : MonoBehaviour
                 "Do you wanna set the energy drink timer to 00:00 ?";
             DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(killTime);
         }
+        else
+        {
+            StartCoroutine(objectOpened(moneyPanel));
+        }
     }
 
     void killTime()
@@ -160,6 +173,10 @@ public class ShopController : MonoBehaviour
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
                 "Do you wanna buy more energy drinks capacity (+1) ?";
             DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(moreCapacity);
+        }
+        else
+        {
+            StartCoroutine(objectOpened(moneyPanel));
         }
     }
 
@@ -204,7 +221,7 @@ public class ShopController : MonoBehaviour
         }
         else
         {
-            cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
+            StartCoroutine(objectOpened(moneyPanel));
             StartCoroutine(objectClosed(DecisionPanel));
         }
     }
@@ -230,7 +247,7 @@ public class ShopController : MonoBehaviour
         }
         else
         {
-            cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
+            StartCoroutine(objectOpened(moneyPanel));
             StartCoroutine(objectClosed(DecisionPanel));
         }
     }
@@ -256,7 +273,7 @@ public class ShopController : MonoBehaviour
         }
         else
         {
-            cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
+            StartCoroutine(objectOpened(moneyPanel));
             StartCoroutine(objectClosed(DecisionPanel));
         }
     }
@@ -282,7 +299,7 @@ public class ShopController : MonoBehaviour
         }
         else
         {
-            cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
+            StartCoroutine(objectOpened(moneyPanel));
             StartCoroutine(objectClosed(DecisionPanel));
         }
     }
@@ -307,7 +324,7 @@ public class ShopController : MonoBehaviour
         }
         else
         {
-            cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
+            StartCoroutine(objectOpened(moneyPanel));
             StartCoroutine(objectClosed(DecisionPanel));
         }
     }
@@ -332,7 +349,7 @@ public class ShopController : MonoBehaviour
         }
         else
         {
-            cashText.GetComponent<TextMeshProUGUI>().text = " Not enough Ca$h !!!";
+            StartCoroutine(objectOpened(moneyPanel));
             StartCoroutine(objectClosed(DecisionPanel));
         }
     }

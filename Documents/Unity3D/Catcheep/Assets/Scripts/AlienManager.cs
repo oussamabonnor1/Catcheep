@@ -27,6 +27,7 @@ public class AlienManager : MonoBehaviour
     public GameObject levelText;
     public GameObject levelUpPanel;
     public GameObject AdPanel;
+    public GameObject problemPanel;
 
     [Header("indication elements")] public GameObject sheepHolder;
     public GameObject sheepNumberText;
@@ -204,63 +205,54 @@ public class AlienManager : MonoBehaviour
 
     void shipClicked()
     {
-        deactivatingButtons();
-        if (PlayerPrefs.GetInt("sheep" + currentSheepShowed) >= sheepyRequested[currentSheepShowed])
+        if (sheepyRequested[currentSheepShowed] == 0)
         {
-            PlayerPrefs.SetInt("sheep" + currentSheepShowed,
-                PlayerPrefs.GetInt("sheep" + currentSheepShowed) - sheepyRequested[currentSheepShowed]);
-            PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") - sheepyRequested[currentSheepShowed]);
-            PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + (sheepyRequested[currentSheepShowed] * 100));
-            moneyAmountText.GetComponent<TextMeshProUGUI>().text = "$" + PlayerPrefs.GetInt("money");
-            sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
-            sheepyRequested[currentSheepShowed] = 0;
-            //this long thing will make sure the player will have updated hunting
-            int toDelete = 0;
-            bool found = false;
-            for (int i = 0; i < indexes.Length; i++)
-            {
-                if (indexes[i] >= 0)
-                {
-                    if (indexes[i] == currentSheepShowed)
-                    {
-                        print(toDelete + " is being killed " + indexes[i]);
-                        toDelete = i;
-                        found = true;
-                    }
-                }
-            }
-            if (found)
-            {
-                PlayerPrefs.SetInt("amount" + indexes[toDelete], 0);
-                PlayerPrefs.SetInt("index" + toDelete, 0);
-            }
-            //end of confusing code
-
-            StartCoroutine(shipLeaving());
-            if (checkingIfMissionCompleted()) setSlider(PlayerPrefs.GetInt("level") + 1);
+            openProblemPanel("This Sheep Is Not Needed !");
         }
         else
         {
-            StartCoroutine(notEnoughtSheeps());
-        }
+            deactivatingButtons();
+            if (PlayerPrefs.GetInt("sheep" + currentSheepShowed) >= sheepyRequested[currentSheepShowed])
+            {
+                PlayerPrefs.SetInt("sheep" + currentSheepShowed,
+                    PlayerPrefs.GetInt("sheep" + currentSheepShowed) - sheepyRequested[currentSheepShowed]);
+                PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") - sheepyRequested[currentSheepShowed]);
+                PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + (sheepyRequested[currentSheepShowed] * 100));
+                moneyAmountText.GetComponent<TextMeshProUGUI>().text = "$" + PlayerPrefs.GetInt("money");
+                sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
+                sheepyRequested[currentSheepShowed] = 0;
+                //this long thing will make sure the player will have updated hunting
+                int toDelete = 0;
+                bool found = false;
+                for (int i = 0; i < indexes.Length; i++)
+                {
+                    if (indexes[i] >= 0)
+                    {
+                        if (indexes[i] == currentSheepShowed)
+                        {
+                            print(toDelete + " is being killed " + indexes[i]);
+                            toDelete = i;
+                            found = true;
+                        }
+                    }
+                }
+                if (found)
+                {
+                    PlayerPrefs.SetInt("amount" + indexes[toDelete], 0);
+                    PlayerPrefs.SetInt("index" + toDelete, 0);
+                }
+                //end of confusing code
 
-        if (sheepyRequested[currentSheepShowed] == 0)
-        {
-            StartCoroutine(cameraVibrate());
+                StartCoroutine(shipLeaving());
+                if (checkingIfMissionCompleted()) setSlider(PlayerPrefs.GetInt("level") + 1);
+            }
+            else
+            {
+                openProblemPanel("You Don't Have Enough Sheeps !");
+            }
         }
     }
-
-    IEnumerator cameraVibrate()
-    {
-        for (int i = 0; i < 10; i++)
-        {
-            Vector3 a = Camera.main.transform.position;
-            if (i % 2 == 0) Camera.main.transform.position = new Vector3(a.x + 10, a.y, a.z);
-            else Camera.main.transform.position = new Vector3(a.x - 10, a.y, a.z);
-            yield return new WaitForSeconds(0.01f);
-        }
-    }
-
+    
     IEnumerator shipLeaving()
     {
         //setting spaceship UI
@@ -452,6 +444,16 @@ public class AlienManager : MonoBehaviour
         leftButton.GetComponent<Button>().enabled = false;
     }
 
+    public void openProblemPanel(string problemText)
+    {
+        StartCoroutine(objectOpened(problemPanel));
+        problemPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =problemText;
+    }
+
+    public void closeProblemPanel()
+    {
+        StartCoroutine(objectClosed(problemPanel));
+    }
 
     //mail related code
     void receivedMail(bool state)

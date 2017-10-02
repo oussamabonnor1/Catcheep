@@ -2,7 +2,6 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Advertisements;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
@@ -21,6 +20,7 @@ public class startMenuManager : MonoBehaviour
     public GameObject heartText;
     public GameObject moneyText;
     public GameObject ProgressPanel;
+    public GameObject rateUsPanel;
     private Scrollbar ScrollBar;
 
     private Vector2 edgeOfScreen;
@@ -63,6 +63,12 @@ public class startMenuManager : MonoBehaviour
         //starting boss sheep animation a second after the scene loading (explaining "1" as param)
         StartCoroutine(bossPopingUp(Random.Range(5, 10)));
 
+        //rate us panel potentiely showing up
+        if (PlayerPrefs.GetInt("rateUs") == 0)
+        {
+            int a = Random.Range(0, 20);
+            if(a == 12) openRateUsPanel();
+        }
         //giving data to texts (as late as possible)
         heartText.GetComponent<TextMeshProUGUI>().text = "x" + PlayerPrefs.GetInt("hearts");
         moneyText.GetComponent<TextMeshProUGUI>().text = "$" + PlayerPrefs.GetInt("money");
@@ -337,6 +343,34 @@ public class startMenuManager : MonoBehaviour
     {
         StartCoroutine(objectClosed(ProgressPanel));
     }
+
+    public void openRateUsPanel()
+    {
+        StartCoroutine(objectOpened(rateUsPanel));
+    }
+    public void closeRateUsPanel()
+    {
+        StartCoroutine(objectClosed(rateUsPanel));
+    }
+
+    public void rateUsYes()
+    { 
+        PlayerPrefs.SetInt("rateUs",1);
+        Application.OpenURL("");
+        closeRateUsPanel();
+    }
+
+    public void rateUsMaybe()
+    {
+        closeRateUsPanel();
+    }
+
+    public void rateUsNo()
+    {
+        PlayerPrefs.SetInt("rateUs", 1);
+        closeRateUsPanel();
+    }
+
     public void notifications()
     {
         if (PlayerPrefs.GetInt("notifications") == 0)

@@ -20,6 +20,7 @@ public class startMenuManager : MonoBehaviour
     public GameObject levelText;
     public GameObject heartText;
     public GameObject moneyText;
+    public GameObject ProgressPanel;
     private Scrollbar ScrollBar;
 
     private Vector2 edgeOfScreen;
@@ -325,8 +326,17 @@ public class startMenuManager : MonoBehaviour
         PlayerPrefs.DeleteAll();
         PlayerPrefs.SetInt("maxHearts", 5);
         PlayerPrefs.SetInt("hearts", 3);
+        closeDeleteProgress();
     }
 
+    public void deleteProgressButton()
+    {
+        StartCoroutine(objectOpened(ProgressPanel));
+    }
+    public void closeDeleteProgress()
+    {
+        StartCoroutine(objectClosed(ProgressPanel));
+    }
     public void notifications()
     {
         if (PlayerPrefs.GetInt("notifications") == 0)

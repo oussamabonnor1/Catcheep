@@ -441,10 +441,12 @@ public class AlienManager : MonoBehaviour
         sheepHolder.GetComponent<Button>().enabled = true;
         rightButton.GetComponent<Button>().enabled = true;
         leftButton.GetComponent<Button>().enabled = true;
+        mailButton.GetComponent<Button>().enabled = true;
     }
 
     void deactivatingButtons()
     {
+        mailButton.GetComponent<Button>().enabled = false;
         sheepHolder.GetComponent<Button>().enabled = false;
         rightButton.GetComponent<Button>().enabled = false;
         leftButton.GetComponent<Button>().enabled = false;

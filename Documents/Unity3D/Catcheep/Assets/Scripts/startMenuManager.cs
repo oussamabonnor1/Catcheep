@@ -356,8 +356,8 @@ public class startMenuManager : MonoBehaviour
     public void rateUsYes()
     { 
         PlayerPrefs.SetInt("rateUs",1);
-        Application.OpenURL("");
         closeRateUsPanel();
+        Application.OpenURL("");
     }
 
     public void rateUsMaybe()

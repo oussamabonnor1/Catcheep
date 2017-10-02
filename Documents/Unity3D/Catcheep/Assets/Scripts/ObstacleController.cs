@@ -40,15 +40,16 @@ public class ObstacleController : MonoBehaviour
             {
                 Destroy(obstacle);
                 //making sure we restart the creation AFTER we destroyed the first one
-                StartCoroutine(createObstacle());
+                if(!gameManager.gameOver) StartCoroutine(createObstacle());
             }
             if (obstacle.transform.position.x <= -edgeOfScreen.x -
                 obstacle.GetComponent<SpriteRenderer>().sprite.bounds.size.x && i == 1)
             {
                 Destroy(obstacle);
                 //making sure we restart the creation AFTER we destroyed the first one
-                StartCoroutine(createObstacle());
+                if (!gameManager.gameOver) StartCoroutine(createObstacle());
             }
+            //i can make it into one big ass condition but why slow stuff down, right ?
         }
     }
 

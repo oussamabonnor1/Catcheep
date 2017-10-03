@@ -20,9 +20,11 @@ public class sheepDestroyer : MonoBehaviour
     public Collider2D BigCollider;
 
     private Touch touchHolder;
+    private float[] timeOfTouch;
 
     void Start()
     {
+        timeOfTouch = new float[2];
         caught = false;
         sheepsCaughtText = GameObject.Find("sheeps caught");
         scoreText = GameObject.Find("score");
@@ -32,27 +34,8 @@ public class sheepDestroyer : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) )
+        /*if (Input.GetMouseButtonDown(0))
         {
-            /*  foreach (Touch touch in Input.touches)
-            {
-           
-            if (touchHolder.Equals(null)) touchHolder = touch;
-                else
-                {
-                    if (touch.phase == TouchPhase.Canceled && touch.phase == TouchPhase.Ended)
-                    {
-                        scoreText.GetComponent<TextMeshProUGUI>().text = "still going";
-                    }
-                    if (touch.phase == TouchPhase.Canceled && touch.phase == TouchPhase.Ended)
-                    {
-                        scoreText.GetComponent<TextMeshProUGUI>().text = "end";
-                    }
-
-
-                }*/
-
-
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
 
@@ -81,9 +64,57 @@ public class sheepDestroyer : MonoBehaviour
                     obstacleClicked(hit.collider.gameObject);
                 }
             }
+        }*/
+        if (Input.touchCount < 3 && Input.touchCount > 0)
+        {
+            foreach (Touch touch in Input.touches)
+            {
+                if (touch.phase == TouchPhase.Began)
+                {
+                    timeOfTouch[touch.fingerId] = 0;
+                }
+                if (touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Moved)
+                {
+                    timeOfTouch[touch.fingerId] += Time.deltaTime;
+                }
+
+                    if (timeOfTouch[touch.fingerId] <= 0.042)
+                    {
+                        Ray ray = Camera.main.ScreenPointToRay(touch.position);
+                        RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
+
+                        if (tag != "group")
+                        {
+                            if (hit.collider == smallCollider && hit.collider.transform == transform)
+                            {
+                                if (gameObject.tag.Equals("sick"))
+                                {
+                                    sickClicked();
+                                }
+                                else
+                                {
+                                    // raycast hit this gameobject
+                                    gameManager.catchedSomething = true;
+                                    sheepClicked();
+                                }
+                            }
+                        }
+
+                        if (tag == "group")
+                        {
+                            if (hit.collider == BigCollider)
+                            {
+                                gameManager.catchedSomething = true;
+                                obstacleClicked(hit.collider.gameObject);
+                            }
+                        }
+                    }
+                if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+                {
+                    timeOfTouch[touch.fingerId] = 0;
+                }
+            }
         }
-
-
         if (caught)
         {
             transform.position = Vector3.Lerp(transform.position, sheepCage.transform.position, Time.deltaTime * speed);
@@ -94,7 +125,7 @@ public class sheepDestroyer : MonoBehaviour
     {
         caught = true;
         StartCoroutine(GameObject.Find("Game Manager").GetComponent<ObstacleController>().createObstacle());
-         gameManager.score += 200 + 10 * gameManager.combo;
+        gameManager.score += 200 + 10 * gameManager.combo;
         scoreText.GetComponent<TextMeshProUGUI>().text = "x " + (gameManager.score);
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + 200 + 10 * gameManager.combo);
         if (obstacle.gameObject.name == "Car(Clone)")
@@ -121,7 +152,7 @@ public class sheepDestroyer : MonoBehaviour
         if (gameObject.name.Contains("sheepy"))
         {
             gameManager.sheepyCaught++;
-            PlayerPrefs.SetInt("sheep0",PlayerPrefs.GetInt("sheep0")+1);
+            PlayerPrefs.SetInt("sheep0", PlayerPrefs.GetInt("sheep0") + 1);
         }
         if (gameObject.tag.Equals("blacky"))
         {
@@ -161,7 +192,7 @@ public class sheepDestroyer : MonoBehaviour
         Vector3 position = Camera.main.WorldToScreenPoint(transform.position);
         hit.transform.SetParent(canvas.transform, false);
         hit.transform.SetPositionAndRotation(position, Quaternion.identity);
-        
+
         //deactivating collider so that it doesnt disturb the scene (collision detection)
         smallCollider.enabled = false;
 
@@ -171,7 +202,7 @@ public class sheepDestroyer : MonoBehaviour
         ++gameManager.combo;
         gameManager.score += 100 + 10 * gameManager.combo;
         PlayerPrefs.SetInt("money", gameManager.score);
-        scoreText.GetComponent<TextMeshProUGUI>().text = "x " + (gameManager.score );
+        scoreText.GetComponent<TextMeshProUGUI>().text = "x " + (gameManager.score);
 
         //destroying sheep
         speed = Mathf.Clamp(Vector3.Distance(transform.position, sheepCage.transform.position), 1f, 6f);
@@ -183,7 +214,7 @@ public class sheepDestroyer : MonoBehaviour
     {
         //deactivating collider so that it doesnt disturb the scene (collision detection)
         smallCollider.enabled = false;
-        
+
         //punishing player
         GameObject.Find("Game Manager").GetComponent<gameManager>().badView();
         gameManager.score -= 500;
@@ -211,7 +242,7 @@ public class sheepDestroyer : MonoBehaviour
             Destroy(transform.parent.gameObject, 0.5f);
         }
 
-        if(gameObject.name != "Snow ball(Clone)") Destroy(gameObject);
+        if (gameObject.name != "Snow ball(Clone)") Destroy(gameObject);
         else gameObject.SetActive(false);
     }
 

@@ -61,6 +61,7 @@ public class WheelSpinner : MonoBehaviour
                     LargeIcon = "app_icon"
                 };
 
+                NotificationManager.CancelAll();
                 NotificationManager.SendCustom(notificationParams);
             }
         }

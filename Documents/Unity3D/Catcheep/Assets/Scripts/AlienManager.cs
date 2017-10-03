@@ -211,9 +211,9 @@ public class AlienManager : MonoBehaviour
         }
         else
         {
-            deactivatingButtons();
             if (PlayerPrefs.GetInt("sheep" + currentSheepShowed) >= sheepyRequested[currentSheepShowed])
             {
+                deactivatingButtons();
                 PlayerPrefs.SetInt("sheep" + currentSheepShowed,
                     PlayerPrefs.GetInt("sheep" + currentSheepShowed) - sheepyRequested[currentSheepShowed]);
                 PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") - sheepyRequested[currentSheepShowed]);

@@ -134,6 +134,7 @@ public class ShopController : MonoBehaviour
 
     void buyALife()
     {
+        DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 7500);
         cashUpdate(PlayerPrefs.GetInt("money"));
         PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") + 1);
@@ -162,6 +163,7 @@ public class ShopController : MonoBehaviour
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 3000);
         PlayerPrefs.SetFloat("heartTime", -1);
         cashUpdate(PlayerPrefs.GetInt("money"));
+        DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         StartCoroutine(objectClosed(DecisionPanel));
     }
 
@@ -185,6 +187,7 @@ public class ShopController : MonoBehaviour
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 12500);
         PlayerPrefs.SetInt("maxHearts", PlayerPrefs.GetInt("maxHearts") + 1);
         cashUpdate(PlayerPrefs.GetInt("money"));
+        DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         StartCoroutine(objectClosed(DecisionPanel));
     }
 
@@ -207,6 +210,7 @@ public class ShopController : MonoBehaviour
     void ShipOne()
     {
         PlayerPrefs.SetInt("ship", 1);
+        DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         StartCoroutine(objectClosed(DecisionPanel));
     }
 
@@ -232,6 +236,7 @@ public class ShopController : MonoBehaviour
         cashUpdate(PlayerPrefs.GetInt("money"));
         PlayerPrefs.SetInt("ship", 2);
         PlayerPrefs.SetInt("ship1", 1);
+        DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         settingShipStatus();
         StartCoroutine(objectClosed(DecisionPanel));
     }
@@ -258,6 +263,7 @@ public class ShopController : MonoBehaviour
         cashUpdate(PlayerPrefs.GetInt("money"));
         PlayerPrefs.SetInt("ship", 3);
         PlayerPrefs.SetInt("ship2", 1);
+        DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         settingShipStatus();
         StartCoroutine(objectClosed(DecisionPanel));
     }
@@ -284,6 +290,7 @@ public class ShopController : MonoBehaviour
         cashUpdate(PlayerPrefs.GetInt("money"));
         PlayerPrefs.SetInt("ship", 4);
         PlayerPrefs.SetInt("ship3", 1);
+        DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         settingShipStatus();
         StartCoroutine(objectClosed(DecisionPanel));
     }
@@ -309,6 +316,7 @@ public class ShopController : MonoBehaviour
         PlayerPrefs.SetInt("hayStackStock", PlayerPrefs.GetInt("hayStackStock") + 1);
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 15000);
         cashUpdate(PlayerPrefs.GetInt("money"));
+        DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         HelpToolsGameObject.transform.GetChild(0).transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("hayStackStock");
         StartCoroutine(objectClosed(DecisionPanel));
     }
@@ -335,6 +343,7 @@ public class ShopController : MonoBehaviour
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 20000);
         cashUpdate(PlayerPrefs.GetInt("money"));
         HelpToolsGameObject.transform.GetChild(1).transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("netStock");
+        DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         StartCoroutine(objectClosed(DecisionPanel));
     }
 
@@ -360,6 +369,7 @@ public class ShopController : MonoBehaviour
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 30000);
         HelpToolsGameObject.transform.GetChild(2).transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("loveStock");
         cashUpdate(PlayerPrefs.GetInt("money"));
+        DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         StartCoroutine(objectClosed(DecisionPanel));
     }
 

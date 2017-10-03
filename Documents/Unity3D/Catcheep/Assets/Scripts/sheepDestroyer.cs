@@ -78,37 +78,37 @@ public class sheepDestroyer : MonoBehaviour
                     timeOfTouch[touch.fingerId] += Time.deltaTime;
                 }
 
-                    if (timeOfTouch[touch.fingerId] <= 0.042)
+                if (timeOfTouch[touch.fingerId] <= 0.042)
+                {
+                    Ray ray = Camera.main.ScreenPointToRay(touch.position);
+                    RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
+
+                    if (tag != "group")
                     {
-                        Ray ray = Camera.main.ScreenPointToRay(touch.position);
-                        RaycastHit2D hit = Physics2D.GetRayIntersection(ray, Mathf.Infinity);
-
-                        if (tag != "group")
+                        if (hit.collider == smallCollider && hit.collider.transform == transform)
                         {
-                            if (hit.collider == smallCollider && hit.collider.transform == transform)
+                            if (gameObject.tag.Equals("sick"))
                             {
-                                if (gameObject.tag.Equals("sick"))
-                                {
-                                    sickClicked();
-                                }
-                                else
-                                {
-                                    // raycast hit this gameobject
-                                    gameManager.catchedSomething = true;
-                                    sheepClicked();
-                                }
+                                sickClicked();
                             }
-                        }
-
-                        if (tag == "group")
-                        {
-                            if (hit.collider == BigCollider)
+                            else
                             {
+                                // raycast hit this gameobject
                                 gameManager.catchedSomething = true;
-                                obstacleClicked(hit.collider.gameObject);
+                                sheepClicked();
                             }
                         }
                     }
+
+                    if (tag == "group")
+                    {
+                        if (hit.collider == BigCollider)
+                        {
+                            gameManager.catchedSomething = true;
+                            obstacleClicked(hit.collider.gameObject);
+                        }
+                    }
+                }
                 if (touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
                 {
                     timeOfTouch[touch.fingerId] = 0;

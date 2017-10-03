@@ -216,6 +216,7 @@ public class startMenuManager : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("hearts") > 0)
         {
+            if (PlayerPrefs.GetInt("tuto") == 1) PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
             PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") - 1);
             LoadingScreenManager.sceneToLoad = 3;
             SceneManager.LoadScene(4);
@@ -244,6 +245,8 @@ public class startMenuManager : MonoBehaviour
 
     public void alien()
     {
+        if (PlayerPrefs.GetInt("tuto") == 6) PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
+
         LoadingScreenManager.sceneToLoad = 6;
         SceneManager.LoadScene(4);
     }

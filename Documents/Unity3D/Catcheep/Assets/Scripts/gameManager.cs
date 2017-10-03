@@ -89,7 +89,15 @@ public class gameManager : MonoBehaviour
             yield return new WaitForSeconds(0.03f);
         }
         if(backgroundOfTrees != null )backgroundOfTrees.SetActive(true);
-        StartCoroutine(sheepSpawner());
+        if (PlayerPrefs.GetInt("tuto") == 2 || PlayerPrefs.GetInt("tuto") == 3)
+        {
+            GameObject sheep = Instantiate(sheeps[0]);
+            sheep.GetComponent<SheepMovement>().Speed = 0;
+        }
+        else
+        {
+            StartCoroutine(sheepSpawner());
+        }
     }
 
     void Update()
@@ -152,7 +160,7 @@ public class gameManager : MonoBehaviour
     
     //THE MAIN SHEEP CREATOR, DO NOT ULTER UNLESS YOU UNDERSTAND THE CODE 100% 
     //this bit is in relation with many scripts
-    IEnumerator sheepSpawner()
+    public IEnumerator sheepSpawner()
     {
         //yield return new WaitForSeconds(1f);
         int size = sheeps.Length -1;

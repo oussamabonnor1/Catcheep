@@ -336,6 +336,7 @@ public class startMenuManager : MonoBehaviour
         PlayerPrefs.SetInt("maxHearts", 5);
         PlayerPrefs.SetInt("hearts", 3);
         closeDeleteProgress();
+        SceneManager.LoadScene(1);
     }
 
     public void deleteProgressButton()

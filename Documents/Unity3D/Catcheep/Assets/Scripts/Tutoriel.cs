@@ -17,10 +17,13 @@ public class Tutoriel : MonoBehaviour
         if (PlayerPrefs.GetInt("tuto") < 10)
 	    {
 	        //PlayerPrefs.SetInt("tuto",0);
-            TutoGameObject.SetActive(true);
             if(SceneManager.GetActiveScene().name.Equals("Start")) startSceneTutoriel();
 	        if (SceneManager.GetActiveScene().name.Equals("Farm")) FarmSceneTutoriel();
 	        if (SceneManager.GetActiveScene().name.Equals("Alien")) AlienSceneTutoriel();
+        }
+        else
+        {
+            TutoGameObject.SetActive(false);
         }
 	}
 	
@@ -58,6 +61,7 @@ public class Tutoriel : MonoBehaviour
             textBox.GetComponentInChildren<TextMeshProUGUI>().text = "Visit the shop or setting using the panels below...";
             PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
             shopSettingsImage.SetActive(true);
+            StartCoroutine(hideTuto());
             return;
         }
     }
@@ -115,7 +119,7 @@ public class Tutoriel : MonoBehaviour
     IEnumerator hideTuto()
     {
         yield return new WaitForSeconds(2f);
-        if(SceneManager.GetActiveScene().name.Equals("Farm")) StartCoroutine(GameObject.Find("Game Manager").GetComponent<gameManager>().sheepSpawner());
+        if(SceneManager.GetActiveScene().name.Equals("Farm")) GameObject.Find("Game Manager").GetComponent<gameManager>().tutorielFinished = true;
         TutoGameObject.SetActive(false);
     }
 }

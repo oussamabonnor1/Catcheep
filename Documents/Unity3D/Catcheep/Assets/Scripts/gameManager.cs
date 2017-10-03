@@ -39,6 +39,7 @@ public class gameManager : MonoBehaviour
     public static int snowBlackyCaught;
     public static int cityBlackyCaught;
     public static bool catchedSomething;
+    public bool tutorielFinished;
 
     private int originalScore;
 
@@ -47,6 +48,7 @@ public class gameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        tutorielFinished = false;
         catchedSomething = false;
         totalSheepsCaught = PlayerPrefs.GetInt("sheepy");
         combo = 0;
@@ -102,7 +104,11 @@ public class gameManager : MonoBehaviour
 
     void Update()
     {
-
+        if (tutorielFinished)
+        {
+            StartCoroutine(sheepSpawner());
+            tutorielFinished = false;
+        }
         if (Input.GetMouseButtonDown(0))
         {
             if (!catchedSomething && combo > 0)

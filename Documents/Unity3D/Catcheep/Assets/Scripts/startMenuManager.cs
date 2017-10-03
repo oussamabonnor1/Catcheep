@@ -20,6 +20,7 @@ public class startMenuManager : MonoBehaviour
     public GameObject heartText;
     public GameObject moneyText;
     public GameObject ProgressPanel;
+    public GameObject noHeartsPanel;
     public GameObject rateUsPanel;
     private Scrollbar ScrollBar;
 
@@ -221,6 +222,10 @@ public class startMenuManager : MonoBehaviour
             LoadingScreenManager.sceneToLoad = 3;
             SceneManager.LoadScene(4);
         }
+        else
+        {
+            openNoHeartPanel();
+        }
     }
 
     public void snow()
@@ -231,6 +236,10 @@ public class startMenuManager : MonoBehaviour
             LoadingScreenManager.sceneToLoad = 2;
             SceneManager.LoadScene(4);
         }
+        else
+        {
+            openNoHeartPanel();
+        }
     }
 
     public void city()
@@ -240,6 +249,10 @@ public class startMenuManager : MonoBehaviour
             PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") - 1);
             LoadingScreenManager.sceneToLoad = 5;
             SceneManager.LoadScene(4);
+        }
+        else
+        {
+            openNoHeartPanel();
         }
     }
 
@@ -346,6 +359,14 @@ public class startMenuManager : MonoBehaviour
     public void closeDeleteProgress()
     {
         StartCoroutine(objectClosed(ProgressPanel));
+    }
+    void openNoHeartPanel()
+    {
+        StartCoroutine(objectOpened(noHeartsPanel));
+    }
+    public void closeNoHeartPanel()
+    {
+        StartCoroutine(objectClosed(noHeartsPanel));
     }
 
     public void openRateUsPanel()

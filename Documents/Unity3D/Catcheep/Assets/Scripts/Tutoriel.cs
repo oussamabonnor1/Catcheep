@@ -101,14 +101,14 @@ public class Tutoriel : MonoBehaviour
         }
         if (PlayerPrefs.GetInt("tuto") == 8)
         {
-            textBox.GetComponentInChildren<TextMeshProUGUI>().text = "Your Mission: Click on Mail";
+            textBox.GetComponentInChildren<TextMeshProUGUI>().text = "To Get Mission: Click on Mail";
             PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
             shopSettingsImage.SetActive(true);
             return;
         }
         if (PlayerPrefs.GetInt("tuto") == 9)
         {
-            textBox.GetComponentInChildren<TextMeshProUGUI>().text = "Click On Sign To see your Sheeps !";
+            textBox.GetComponentInChildren<TextMeshProUGUI>().text = "Click On Sign To see your Sheep !";
             sheepImage.SetActive(true);
             StartCoroutine(hideTuto());
             return;

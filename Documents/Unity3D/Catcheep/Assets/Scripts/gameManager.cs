@@ -10,6 +10,7 @@ using UnityEngine.UI;
 public class gameManager : MonoBehaviour
 {
     [Header("Sheep related objects")]
+    public GameObject tutoSheep;
     public GameObject[] sheeps;
     public GameObject[] formationSheepys;
     public AudioClip[] sheepSound;
@@ -93,8 +94,7 @@ public class gameManager : MonoBehaviour
         if(backgroundOfTrees != null )backgroundOfTrees.SetActive(true);
         if (PlayerPrefs.GetInt("tuto") == 2 || PlayerPrefs.GetInt("tuto") == 3)
         {
-            GameObject sheep = Instantiate(sheeps[0]);
-            sheep.GetComponent<SheepMovement>().Speed = 0;
+            Instantiate(tutoSheep);
         }
         else
         {

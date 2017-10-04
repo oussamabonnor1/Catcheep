@@ -8,24 +8,25 @@ public class Tutoriel : MonoBehaviour
 {
     public GameObject TutoGameObject;
     public GameObject textBox;
-    public GameObject shopSettingsImage;
-    public GameObject sheepImage;
+    public GameObject firstImage;
+    public GameObject secondImage;
+    public GameObject thirdImage;
 
 	// Use this for initialization
-	void Start ()
-	{
+    void Start()
+    {
         if (PlayerPrefs.GetInt("tuto") < 10)
-	    {
-	        //PlayerPrefs.SetInt("tuto",0);
-            if(SceneManager.GetActiveScene().name.Equals("Start")) startSceneTutoriel();
-	        if (SceneManager.GetActiveScene().name.Equals("Farm")) FarmSceneTutoriel();
-	        if (SceneManager.GetActiveScene().name.Equals("Alien")) AlienSceneTutoriel();
+        {
+            //PlayerPrefs.SetInt("tuto",0);
+            if (SceneManager.GetActiveScene().name.Equals("Start")) startSceneTutoriel();
+            if (SceneManager.GetActiveScene().name.Equals("Farm")) FarmSceneTutoriel();
+            if (SceneManager.GetActiveScene().name.Equals("Alien")) AlienSceneTutoriel();
         }
         else
         {
             TutoGameObject.SetActive(false);
         }
-	}
+}
 	
 	// Update is called once per frame
 	void Update () {
@@ -34,92 +35,99 @@ public class Tutoriel : MonoBehaviour
 
     public void startSceneTutoriel()
     {
+        textBox.SetActive(true);
+        textBox.GetComponentInChildren<TextMeshProUGUI>().text = "Click on the red circle !";
         if (PlayerPrefs.GetInt("tuto") == 0)
         {
-            textBox.GetComponentInChildren<TextMeshProUGUI>().text = "Hey There !";
-            PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
+            firstImage.SetActive(true);
+            StartCoroutine(incrementTuto(true));
             return;
         }
-        if (PlayerPrefs.GetInt("tuto") == 1)
+        else if (PlayerPrefs.GetInt("tuto") == 4)
         {
-            textBox.GetComponentInChildren<TextMeshProUGUI>().text = "To Catch sheeps: Click On the Barn Below...";
+            secondImage.SetActive(true);
+            StartCoroutine(incrementTuto(true));
             return;
         }
-        if (PlayerPrefs.GetInt("tuto") == 5)
+        else if(PlayerPrefs.GetInt("tuto") == 8)
         {
-            textBox.GetComponentInChildren<TextMeshProUGUI>().text = "You should have some sheeps by Now !";
-            PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
+            thirdImage.SetActive(true);
+            StartCoroutine(incrementTuto(true));
             return;
         }
-        if (PlayerPrefs.GetInt("tuto") == 6)
+        else
         {
-            textBox.GetComponentInChildren<TextMeshProUGUI>().text = "To Sell Sheeps: Click on The Space Ship Below...";
-            return;
-        }
-        if (PlayerPrefs.GetInt("tuto") == 9)
-        {
-            textBox.GetComponentInChildren<TextMeshProUGUI>().text = "Visit the shop or setting using the panels below...";
-            PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
-            shopSettingsImage.SetActive(true);
-            StartCoroutine(hideTuto());
-            return;
+            TutoGameObject.SetActive(false);
         }
     }
 
     public void FarmSceneTutoriel()
     {
+        textBox.SetActive(true);
+        textBox.GetComponentInChildren<TextMeshProUGUI>().text = "Click on the red circle !";
         if (PlayerPrefs.GetInt("tuto") == 2)
         {
-            textBox.GetComponentInChildren<TextMeshProUGUI>().text = "To Catch sheeps: Click on Them !";
-            PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
+            firstImage.SetActive(true);
+            StartCoroutine(incrementTuto(false));
             return;
         }
-        if (PlayerPrefs.GetInt("tuto") == 3)
+        else if (PlayerPrefs.GetInt("tuto") == 3)
         {
-            textBox.GetComponentInChildren<TextMeshProUGUI>().text = "You can use help tools to catch them";
-            PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
-            shopSettingsImage.SetActive(true);
+            secondImage.SetActive(true);
+            StartCoroutine(incrementTuto(true));
             return;
         }
-        if (PlayerPrefs.GetInt("tuto") == 4)
+        else
         {
-            textBox.GetComponentInChildren<TextMeshProUGUI>().text = "You can Buy help tools at the shop !";
-            PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
-            StartCoroutine(hideTuto());
-            return;
+            TutoGameObject.SetActive(false);
         }
-
     }
 
     public void AlienSceneTutoriel()
     {
-        if (PlayerPrefs.GetInt("tuto") == 7)
+        textBox.SetActive(true);
+        textBox.GetComponentInChildren<TextMeshProUGUI>().text = "Click on the red circle !";
+        if (PlayerPrefs.GetInt("tuto") == 5)
         {
-            textBox.GetComponentInChildren<TextMeshProUGUI>().text = "To Sell sheeps: Click on Ship !";
-            PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
+            firstImage.SetActive(true);
+            StartCoroutine(incrementTuto(false));
             return;
         }
-        if (PlayerPrefs.GetInt("tuto") == 8)
+        else if (PlayerPrefs.GetInt("tuto") == 6)
         {
-            textBox.GetComponentInChildren<TextMeshProUGUI>().text = "To Get Mission: Click on Mail";
-            PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
-            shopSettingsImage.SetActive(true);
+            secondImage.SetActive(true);
+            StartCoroutine(incrementTuto(false));
             return;
         }
-        if (PlayerPrefs.GetInt("tuto") == 9)
+        else if (PlayerPrefs.GetInt("tuto") == 7)
         {
-            textBox.GetComponentInChildren<TextMeshProUGUI>().text = "Click On Sign To see your Sheep !";
-            sheepImage.SetActive(true);
-            StartCoroutine(hideTuto());
+            thirdImage.SetActive(true);
+            StartCoroutine(incrementTuto(true));
             return;
         }
-
+        else
+        {
+            TutoGameObject.SetActive(false);
+        }
     }
 
     IEnumerator hideTuto()
     {
         yield return new WaitForSeconds(2f);
-        if(SceneManager.GetActiveScene().name.Equals("Farm")) GameObject.Find("Game Manager").GetComponent<gameManager>().tutorielFinished = true;
+        firstImage.SetActive(false);
+        secondImage.SetActive(false);
+        thirdImage.SetActive(false);
+        if (SceneManager.GetActiveScene().name.Equals("Farm")) GameObject.Find("Game Manager").GetComponent<gameManager>().tutorielFinished = true;
         TutoGameObject.SetActive(false);
+    }
+
+    IEnumerator incrementTuto(bool state)
+    {
+        yield return new WaitForSeconds(3);
+        PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
+        if (SceneManager.GetActiveScene().name.Equals("Start")) startSceneTutoriel();
+        if (SceneManager.GetActiveScene().name.Equals("Farm")) FarmSceneTutoriel();
+        if (SceneManager.GetActiveScene().name.Equals("Alien")) AlienSceneTutoriel();
+        if (state) StartCoroutine(hideTuto());
     }
 }

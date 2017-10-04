@@ -258,7 +258,7 @@ public class startMenuManager : MonoBehaviour
 
     public void alien()
     {
-        if (PlayerPrefs.GetInt("tuto") == 6) PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
+        if (PlayerPrefs.GetInt("tuto") == 4) PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
 
         LoadingScreenManager.sceneToLoad = 6;
         SceneManager.LoadScene(4);

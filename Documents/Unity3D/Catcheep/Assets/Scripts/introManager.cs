@@ -128,7 +128,7 @@ public class introManager : MonoBehaviour
         }
         objectToOpen.SetActive(false);
         PlayerPrefs.SetInt("intro",1);
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(0.5f);
         SceneManager.LoadScene(1);
     }
 }

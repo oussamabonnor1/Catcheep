@@ -76,7 +76,6 @@ public class Tutoriel : MonoBehaviour
             secondImage.SetActive(true);
             if (SceneManager.GetActiveScene().name.Equals("Farm"))
             {
-                print("doing");
                 GameObject.Find("Game Manager").GetComponent<gameManager>().tutorielFinished = true;
             }
             StartCoroutine(incrementTuto(true));

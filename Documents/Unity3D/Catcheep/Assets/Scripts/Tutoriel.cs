@@ -74,6 +74,11 @@ public class Tutoriel : MonoBehaviour
         else if (PlayerPrefs.GetInt("tuto") == 3)
         {
             secondImage.SetActive(true);
+            if (SceneManager.GetActiveScene().name.Equals("Farm"))
+            {
+                print("doing");
+                GameObject.Find("Game Manager").GetComponent<gameManager>().tutorielFinished = true;
+            }
             StartCoroutine(incrementTuto(true));
             return;
         }
@@ -117,7 +122,6 @@ public class Tutoriel : MonoBehaviour
         firstImage.SetActive(false);
         secondImage.SetActive(false);
         thirdImage.SetActive(false);
-        if (SceneManager.GetActiveScene().name.Equals("Farm")) GameObject.Find("Game Manager").GetComponent<gameManager>().tutorielFinished = true;
         TutoGameObject.SetActive(false);
     }
 
@@ -125,9 +129,10 @@ public class Tutoriel : MonoBehaviour
     {
         yield return new WaitForSeconds(3);
         PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
+        if (state) StartCoroutine(hideTuto());
         if (SceneManager.GetActiveScene().name.Equals("Start")) startSceneTutoriel();
         if (SceneManager.GetActiveScene().name.Equals("Farm")) FarmSceneTutoriel();
         if (SceneManager.GetActiveScene().name.Equals("Alien")) AlienSceneTutoriel();
-        if (state) StartCoroutine(hideTuto());
+
     }
 }

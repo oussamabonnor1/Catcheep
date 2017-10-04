@@ -25,7 +25,14 @@ public class OpeningSceneScript : MonoBehaviour
     IEnumerator opening()
     {
         yield return new WaitForSeconds(0.5f);
-        SceneManager.LoadScene(1);
+        if (PlayerPrefs.GetInt("intro") == 0)
+        {
+            SceneManager.LoadScene(8);
+        }
+        else
+        {
+            SceneManager.LoadScene(1);
+        }
     }
 
 }

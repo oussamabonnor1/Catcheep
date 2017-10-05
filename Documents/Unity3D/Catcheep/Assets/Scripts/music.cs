@@ -7,6 +7,7 @@ namespace Assets.Scripts
 {
     public class music : MonoBehaviour
     {
+        public AudioClip[] spaceShipSounds;
         public static music Instance;
         public float[] timer;
 
@@ -79,6 +80,15 @@ namespace Assets.Scripts
                     timer[i] -= Time.deltaTime;
                     PlayerPrefs.SetFloat("time" + i, timer[i]);
                 }
+            }
+        }
+
+        public void spaceShipSound(int index)
+        {
+            if (PlayerPrefs.GetInt("SFX") == 0)
+            {
+                GetComponents<AudioSource>()[2].clip = spaceShipSounds[index];
+                GetComponents<AudioSource>()[2].Play();
             }
         }
     }

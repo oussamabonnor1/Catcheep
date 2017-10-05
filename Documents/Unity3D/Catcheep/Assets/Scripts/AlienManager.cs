@@ -22,6 +22,7 @@ public class AlienManager : MonoBehaviour
     public GameObject SheepMapGameObject;
     public GameObject mailPanel;
     public GameObject mailButton;
+    public GameObject adButton;
     public GameObject neededPrayPrefab;
     public GameObject slider;
     public GameObject levelText;
@@ -79,6 +80,7 @@ public class AlienManager : MonoBehaviour
             timeText.transform.GetChild(1).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
                 minutes + ":" + seconds;
             timeText.SetActive(true);
+            adButton.SetActive(true);
             StartCoroutine(objectOpened(timeText));
         }
     }
@@ -169,9 +171,11 @@ public class AlienManager : MonoBehaviour
         }
         else if (spaceShipForScript == null)
         {
+            adButton.SetActive(false);
             StartCoroutine(objectClosed(timeText));
             StartCoroutine(alienSpawner());
         }
+       
     }
 
     IEnumerator alienSpawner()
@@ -181,6 +185,9 @@ public class AlienManager : MonoBehaviour
         spaceShipForScript = Instantiate(alienShip[shipType], alienShip[shipType].transform.localPosition,
             alienShip[shipType].transform.rotation);
         spaceShipForScript.transform.SetParent(GameObject.Find("Canvas").transform, false);
+
+        //sound of going away
+        GameObject.Find("Music Manager").GetComponent<music>().spaceShipSound(0);
 
         //this next line makes the button of prefab ship clickable, do not alter !
         spaceShipForScript.GetComponentInChildren<Button>().onClick.AddListener(call: shipClicked);
@@ -198,11 +205,6 @@ public class AlienManager : MonoBehaviour
         activatingButtons();
     }
 
-    IEnumerator notEnoughtSheeps()
-    {
-        yield return new WaitForSeconds(1);
-    }
-
     void shipClicked()
     {
         if (sheepyRequested[currentSheepShowed] == 0)
@@ -215,7 +217,7 @@ public class AlienManager : MonoBehaviour
             {
                 deactivatingButtons();
                 PlayerPrefs.SetInt("sheep" + currentSheepShowed,
-                    PlayerPrefs.GetInt("sheep" + currentSheepShowed) - sheepyRequested[currentSheepShowed]);
+                PlayerPrefs.GetInt("sheep" + currentSheepShowed) - sheepyRequested[currentSheepShowed]);
                 PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") - sheepyRequested[currentSheepShowed]);
                 PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + (sheepyRequested[currentSheepShowed] * 100));
                 moneyAmountText.GetComponent<TextMeshProUGUI>().text = "$" + PlayerPrefs.GetInt("money");
@@ -260,6 +262,8 @@ public class AlienManager : MonoBehaviour
         spaceShipForScript.transform.GetChild(2).gameObject.SetActive(false);
         spaceShipForScript.transform.GetChild(2).gameObject.SetActive(true);
         spaceShipForScript.transform.GetChild(0).gameObject.SetActive(true);
+        //sound of going away
+        GameObject.Find("Music Manager").GetComponent<music>().spaceShipSound(2);
 
         //setting sheeps to hover
         GameObject sheepHoverTemp = Instantiate(SheepHoverGameObject, SheepHoverGameObject.transform.localPosition,
@@ -289,6 +293,7 @@ public class AlienManager : MonoBehaviour
 
         //setting Timer
         timeText.SetActive(true);
+        adButton.SetActive(true);
         StartCoroutine(objectOpened(timeText));
         spaceShipForScript = null;
         if (musicManager.timer[currentSheepShowed] <= 0)
@@ -341,6 +346,7 @@ public class AlienManager : MonoBehaviour
     {
         if (timeText.gameObject.activeSelf)
         {
+            adButton.SetActive(false);
             StartCoroutine(objectClosed(timeText));
         }
         if (spaceShipForScript != null)
@@ -420,10 +426,12 @@ public class AlienManager : MonoBehaviour
             timeText.transform.GetChild(1).transform.GetChild(0).GetComponent<TextMeshProUGUI>().text =
                 minutes + ":" + seconds;
             timeText.SetActive(true);
+            adButton.SetActive(true);
             StartCoroutine(objectOpened(timeText));
         }
         else
         {
+            adButton.SetActive(false);
             timeText.SetActive(false);
         }
     }

@@ -11,11 +11,12 @@ public class Tutoriel : MonoBehaviour
     public GameObject firstImage;
     public GameObject secondImage;
     public GameObject thirdImage;
+    public GameObject fourthImage;
 
 	// Use this for initialization
     void Start()
     {
-        if (PlayerPrefs.GetInt("tuto") < 8)
+        if (PlayerPrefs.GetInt("tuto") < 10)
         {
             //PlayerPrefs.SetInt("tuto",0);
             if (SceneManager.GetActiveScene().name.Equals("Start")) startSceneTutoriel();
@@ -55,6 +56,12 @@ public class Tutoriel : MonoBehaviour
         else if(PlayerPrefs.GetInt("tuto") == 8)
         {
             thirdImage.SetActive(true);
+            StartCoroutine(incrementTuto(false));
+            return;
+        }
+        else if (PlayerPrefs.GetInt("tuto") == 9)
+        {
+            fourthImage.SetActive(true);
             StartCoroutine(incrementTuto(true));
             return;
         }
@@ -109,12 +116,14 @@ public class Tutoriel : MonoBehaviour
         }
         else if (PlayerPrefs.GetInt("tuto") == 6)
         {
+            firstImage.SetActive(false);
             secondImage.SetActive(true);
             StartCoroutine(incrementTuto(false));
             return;
         }
         else if (PlayerPrefs.GetInt("tuto") == 7)
         {
+            secondImage.SetActive(false);
             thirdImage.SetActive(true);
             StartCoroutine(incrementTuto(true));
             return;

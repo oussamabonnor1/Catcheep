@@ -114,7 +114,6 @@ public class WheelSpinner : MonoBehaviour
             if (i < 2.5f) items[index].transform.localScale = new Vector3(i, i, i);
             yield return new WaitForSeconds(0.01f);
         } while ((int) items[index].transform.localPosition.x != 0);
-        items[index].GetComponent<Button>().onClick.AddListener(call: rewardCollectedCall);
         do
         {
             items[index].GetComponent<RectTransform>().transform.rotation = Quaternion.Euler(Vector3.Lerp(
@@ -122,6 +121,7 @@ public class WheelSpinner : MonoBehaviour
                 new Vector3(0, 0, 0), 3f * Time.deltaTime));
             yield return new WaitForSeconds(0.01f);
         } while ((int) items[index].GetComponent<RectTransform>().transform.rotation.eulerAngles.z != 0);
+        rewardCollectedCall();
     }
 
     void rewardCollectedCall()

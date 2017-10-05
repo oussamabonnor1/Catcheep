@@ -53,7 +53,7 @@ public class SheepMovement : MonoBehaviour
             }
             else
             {
-                GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
+               GetComponent<Rigidbody2D>().velocity = new Vector2(0f, 0f);
             }
         }
         else

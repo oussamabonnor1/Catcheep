@@ -16,6 +16,9 @@ public class introManager : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
+        PlayerPrefs.SetInt("netStock",1);
+        PlayerPrefs.SetInt("hayStackStock",1);
+        PlayerPrefs.SetInt("loveStock",1);
         StartCoroutine(objectOpened(mainPanel));
     }
 	

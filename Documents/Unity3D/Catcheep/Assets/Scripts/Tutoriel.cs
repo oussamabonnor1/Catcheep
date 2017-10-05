@@ -15,7 +15,7 @@ public class Tutoriel : MonoBehaviour
 	// Use this for initialization
     void Start()
     {
-        if (PlayerPrefs.GetInt("tuto") < 10)
+        if (PlayerPrefs.GetInt("tuto") < 8)
         {
             //PlayerPrefs.SetInt("tuto",0);
             if (SceneManager.GetActiveScene().name.Equals("Start")) startSceneTutoriel();
@@ -24,6 +24,9 @@ public class Tutoriel : MonoBehaviour
         }
         else
         {
+            firstImage.SetActive(false);
+            secondImage.SetActive(false);
+            thirdImage.SetActive(false);
             TutoGameObject.SetActive(false);
         }
 }
@@ -57,6 +60,9 @@ public class Tutoriel : MonoBehaviour
         }
         else
         {
+            firstImage.SetActive(false);
+            secondImage.SetActive(false);
+            thirdImage.SetActive(false);
             TutoGameObject.SetActive(false);
         }
     }
@@ -64,7 +70,7 @@ public class Tutoriel : MonoBehaviour
     public void FarmSceneTutoriel()
     {
         textBox.SetActive(true);
-        textBox.GetComponentInChildren<TextMeshProUGUI>().text = "Click on the red circle !";
+        textBox.GetComponentInChildren<TextMeshProUGUI>().text = "Click on the SHEEPS !";
         if (PlayerPrefs.GetInt("tuto") == 2)
         {
             firstImage.SetActive(true);
@@ -73,6 +79,7 @@ public class Tutoriel : MonoBehaviour
         }
         else if (PlayerPrefs.GetInt("tuto") == 3)
         {
+            textBox.GetComponentInChildren<TextMeshProUGUI>().text = "Drag the help tools to use them";
             secondImage.SetActive(true);
             if (SceneManager.GetActiveScene().name.Equals("Farm"))
             {
@@ -83,6 +90,9 @@ public class Tutoriel : MonoBehaviour
         }
         else
         {
+            firstImage.SetActive(false);
+            secondImage.SetActive(false);
+            thirdImage.SetActive(false);
             TutoGameObject.SetActive(false);
         }
     }
@@ -111,6 +121,9 @@ public class Tutoriel : MonoBehaviour
         }
         else
         {
+            firstImage.SetActive(false);
+            secondImage.SetActive(false);
+            thirdImage.SetActive(false);
             TutoGameObject.SetActive(false);
         }
     }
@@ -126,8 +139,8 @@ public class Tutoriel : MonoBehaviour
 
     IEnumerator incrementTuto(bool state)
     {
-        yield return new WaitForSeconds(3);
         PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
+        yield return new WaitForSeconds(3);
         if (state) StartCoroutine(hideTuto());
         if (SceneManager.GetActiveScene().name.Equals("Start")) startSceneTutoriel();
         if (SceneManager.GetActiveScene().name.Equals("Farm")) FarmSceneTutoriel();

@@ -244,7 +244,6 @@ public class AlienManager : MonoBehaviour
                 //end of confusing code
 
                 StartCoroutine(shipLeaving());
-                if (checkingIfMissionCompleted()) setSlider(PlayerPrefs.GetInt("level") + 1);
             }
             else
             {
@@ -297,6 +296,7 @@ public class AlienManager : MonoBehaviour
             musicManager.timer[currentSheepShowed] = settingTimes(currentSheepShowed);
             PlayerPrefs.SetFloat("time" + currentSheepShowed, musicManager.timer[currentSheepShowed]);
         }
+        if (checkingIfMissionCompleted()) setSlider(PlayerPrefs.GetInt("level") + 1);
     }
 
     public void shipGoingRightButtonClicked()

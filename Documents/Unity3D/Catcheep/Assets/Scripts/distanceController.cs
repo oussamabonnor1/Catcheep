@@ -7,10 +7,14 @@ public class distanceController : MonoBehaviour
     private int speed;
     private float slideSpeed;
     private GameObject pathCollsionGameObject;
+    private bool isTouching;
+    private bool helpCouroutineCalled;
 
     // Use this for initialization
     void Start()
     {
+        isTouching = false;
+        helpCouroutineCalled = false;
         speed = gameObject.GetComponent<SheepMovement>().Speed;
         slideSpeed = gameObject.GetComponent<SheepMovement>().slideSpeed;
     }
@@ -18,8 +22,16 @@ public class distanceController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!isTouching)
+        {
+            gameObject.GetComponent<SheepMovement>().Speed = speed;
+        }
+        else
+        {
+            isTouching = false;
+        }
     }
-
+    
     void OnTriggerEnter2D(Collider2D other)
     {
         //not a group (collider below screen)
@@ -91,6 +103,7 @@ public class distanceController : MonoBehaviour
         {
             if (other.gameObject == pathCollsionGameObject || other.gameObject.tag == "heyStack")
             {
+                isTouching = false;
                 gameObject.GetComponent<SheepMovement>().Speed = speed;
 
                 if (gameObject.tag == "blacky")
@@ -100,6 +113,45 @@ public class distanceController : MonoBehaviour
                 }
             }
             
+        }
+    }
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+        isTouching = true;
+        //not a group (collider below screen)
+        if (other.gameObject.tag != "group" && !helpCouroutineCalled)
+        {
+            //speed is lower (collision will happen)
+            if (other.GetComponent<SheepMovement>().Speed <= speed)
+            {
+                pathCollsionGameObject = other.gameObject;
+                if (other.gameObject.tag != "hayStack" && other.gameObject.tag != "net" &&
+                    other.gameObject.tag != "loveHelp")
+                {
+                    //so that a break happens: object must be beneths the speeding object, and a collision must be imminant in the X axis
+                    float width = other.gameObject.GetComponent<SpriteRenderer>().sprite.bounds.extents.x +
+                                  GetComponent<SpriteRenderer>().sprite.bounds.extents.x;
+
+                    float distance = Mathf.Abs(transform.position.x - other.transform.position.x);
+
+                    if (other.gameObject.transform.position.y < transform.position.y && distance < width)
+                    {
+                        gameObject.GetComponent<SheepMovement>().Speed =
+                            other.gameObject.GetComponent<SheepMovement>().Speed;
+                    }
+                }
+                else if (!helpCouroutineCalled)
+                {
+                    StartCoroutine(sheepyCaughtByHelpTool(other.gameObject));
+                    helpCouroutineCalled = true;
+                }
+
+                if (tag == "blacky")
+                {
+                    goingSidewaysSpeedControl(other);
+                }
+            }
         }
     }
 

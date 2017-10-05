@@ -73,7 +73,7 @@ public class startMenuManager : MonoBehaviour
         //giving data to texts (as late as possible)
         heartText.GetComponent<TextMeshProUGUI>().text = "x" + PlayerPrefs.GetInt("hearts");
         moneyText.GetComponent<TextMeshProUGUI>().text = "$" + PlayerPrefs.GetInt("money");
-        levelText.GetComponent<TextMeshProUGUI>().text = "Level " + PlayerPrefs.GetInt("level");
+        levelText.GetComponent<TextMeshProUGUI>().text = "Level " + (PlayerPrefs.GetInt("level")+1);
     }
 
     // Update is called once per frame

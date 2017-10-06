@@ -68,7 +68,7 @@ public class ShopController : MonoBehaviour
 
     public void returnBuyShip()
     {
-        musicManager.UISFX(2);
+        musicManager.UISFX(1);
         StartCoroutine(objectClosed(BuyShipButtonGameObject));
         StartCoroutine(objectOpened(ShopMenuGameObject));
     }
@@ -82,7 +82,7 @@ public class ShopController : MonoBehaviour
 
     public void returnHelpTool()
     {
-        musicManager.UISFX(2);
+        musicManager.UISFX(1);
         StartCoroutine(objectClosed(HelpToolsGameObject));
         StartCoroutine(objectOpened(ShopMenuGameObject));
     }
@@ -96,7 +96,7 @@ public class ShopController : MonoBehaviour
 
     public void wheelOfFortuneReturn()
     {
-        musicManager.UISFX(2);
+        musicManager.UISFX(1);
         StartCoroutine(objectClosed(WheelOfFortuneGameObject));
         StartCoroutine(objectOpened(ShopMenuGameObject));
     }
@@ -110,7 +110,7 @@ public class ShopController : MonoBehaviour
 
     public void energyDringButtonOff()
     {
-        musicManager.UISFX(2);
+        musicManager.UISFX(1);
         StartCoroutine(objectClosed(EnergyGameObject));
         StartCoroutine(objectOpened(ShopMenuGameObject));
     }

@@ -56,6 +56,8 @@ public class startMenuManager : MonoBehaviour
         if (sceneContent == null) sceneContent = GameObject.Find("Scene content");
 
         //reminding player of vibration (delete when finished devloping)
+        //removing listeners to not call functions on start, then putting them back on
+
         if (PlayerPrefs.GetString("Vibration") == "True") vibrationToggle.GetComponent<Switch>().isOn = true;
         else vibrationToggle.GetComponent<Switch>().isOn = false;
         if (PlayerPrefs.GetInt("notifications") == 0) notificationToggle.GetComponent<Switch>().isOn = true;
@@ -348,6 +350,7 @@ public class startMenuManager : MonoBehaviour
 
     public void vibration()
     {
+        vibrationToggle.GetComponent<Switch>().isOn = !vibrationToggle.GetComponent<Switch>().isOn;
         PlayerPrefs.SetString("Vibration", vibrationToggle.GetComponent<Switch>().isOn.ToString());
         if (vibrationToggle.GetComponent<Switch>().isOn &&
             (int) sceneContent.transform.localPosition.x != 0)
@@ -435,11 +438,13 @@ public class startMenuManager : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("notifications") == 0)
         {
+            notificationToggle.GetComponent<Switch>().isOn = false;
             musicManager.UISFX(2);
             PlayerPrefs.SetInt("notifications", 1);
         }
         else
         {
+            notificationToggle.GetComponent<Switch>().isOn = true;
             musicManager.UISFX(1);
             PlayerPrefs.SetInt("notifications", 0);
         }
@@ -448,28 +453,31 @@ public class startMenuManager : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("SFX") == 0)
         {
+            sfxToggle.GetComponent<Switch>().isOn = false;
             PlayerPrefs.SetInt("SFX", 1);
         }
         else
         {
+            sfxToggle.GetComponent<Switch>().isOn = true;
             musicManager.UISFX(1);
             PlayerPrefs.SetInt("SFX", 0);
         }
     }
-
-    public void music()
+     public void music()
     {
         if (PlayerPrefs.GetInt("music") == 0)
         {
+            musicToggle.GetComponent<Switch>().isOn = false;
             PlayerPrefs.SetInt("music", 1);
         }
         else
         {
+            musicToggle.GetComponent<Switch>().isOn = true;
             PlayerPrefs.SetInt("music", 0);
         }
         musicManager.BackgroundMusic(0);
     }
-
+    
     IEnumerator objectOpened(GameObject objectToOpen)
     {
         objectToOpen.SetActive(true);

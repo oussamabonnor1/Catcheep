@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using System.Collections.Generic;
+using Assets.Scripts;
 using Assets.SimpleAndroidNotifications;
 using TMPro;
 using UnityEngine;
@@ -23,10 +23,12 @@ public class WheelSpinner : MonoBehaviour
     private Quaternion originalQuaternion;
     private int index;
     private int indexHiarchy;
+    private music musicManager;
 
     // Use this for initialization
     void Start()
     {
+        musicManager = GameObject.Find("Music Manager").GetComponent<music>();
         dailySpinTime();
     }
 
@@ -39,6 +41,7 @@ public class WheelSpinner : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("spin") > 0)
         {
+            musicManager.UISFX(3);
             PlayerPrefs.SetString("spinTime", DateTime.Now.ToString());
             PlayerPrefs.SetInt("spin", PlayerPrefs.GetInt("spin") - 1);
             triangl.transform.SetParent(wheelOfFortuneSelection.transform, true);
@@ -73,6 +76,7 @@ public class WheelSpinner : MonoBehaviour
         int i = Random.Range(5, 15);
         do
         {
+            musicManager.UISFX(0);
             wheelOfLuck.GetComponent<Rigidbody2D>().AddTorque(10);
             i++;
             yield return new WaitForSeconds(0.01f);

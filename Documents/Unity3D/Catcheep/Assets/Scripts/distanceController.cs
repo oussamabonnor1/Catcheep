@@ -157,6 +157,7 @@ public class distanceController : MonoBehaviour
 
     IEnumerator sheepyCaughtByHelpTool(GameObject other)
     {
+        if (PlayerPrefs.GetInt("SFX") == 0) GetComponent<AudioSource>().Play();
         if (gameObject.tag.Equals("sick"))
         {
             GetComponent<SheepMovement>().SheepDestroyer.Destruction();

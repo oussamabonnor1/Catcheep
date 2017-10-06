@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Assets.Scripts;
 using TMPro;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -42,7 +43,7 @@ public class gameManager : MonoBehaviour
     public bool tutorielFinished;
 
     private int originalScore;
-
+    private music musicManager;
 
 
     // Use this for initialization
@@ -54,6 +55,7 @@ public class gameManager : MonoBehaviour
         combo = 0;
         originalScore= PlayerPrefs.GetInt("money");
         score = PlayerPrefs.GetInt("money");
+        musicManager = GameObject.Find("Music Manager").GetComponent<music>();
 
         if (background == null)
         {
@@ -128,6 +130,7 @@ public class gameManager : MonoBehaviour
         {
             if (!pausePanel.gameObject.activeSelf)
             {
+                musicManager.UISFX(1);
                 PlayerPrefs.SetInt("sheepy", totalSheepsCaught);
                 pausePanel.SetActive(true);
                 Time.timeScale = 0;
@@ -269,6 +272,7 @@ public class gameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         if (!GameObject.FindGameObjectWithTag("sheepy") && !GameObject.FindGameObjectWithTag("blacky"))
         {
+            musicManager.GetComponent<music>().UISFX(1);
             PlayerPrefs.SetInt("sheepy", totalSheepsCaught);
             //i wish i was focused enough to find a more beautiful way of assigning values but...
             //it's been a long 3 months working on this 'game' and i honestly jst wanna get it over with.
@@ -310,6 +314,7 @@ public class gameManager : MonoBehaviour
     }
     public void ContinueGame()
     {
+        musicManager.GetComponent<music>().UISFX(2);
         Time.timeScale = 1;
         pausePanel.SetActive(false);
     }
@@ -317,6 +322,7 @@ public class gameManager : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("hearts") > 0)
         {
+            musicManager.GetComponent<music>().UISFX(0);
             PlayerPrefs.SetInt("hearts",PlayerPrefs.GetInt("hearts")-1);
             Time.timeScale = 1;
             ShowAd();

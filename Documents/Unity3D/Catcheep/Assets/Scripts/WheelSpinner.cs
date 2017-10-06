@@ -76,7 +76,6 @@ public class WheelSpinner : MonoBehaviour
         int i = Random.Range(5, 15);
         do
         {
-            musicManager.UISFX(0);
             wheelOfLuck.GetComponent<Rigidbody2D>().AddTorque(10);
             i++;
             yield return new WaitForSeconds(0.01f);

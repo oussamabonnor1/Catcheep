@@ -87,6 +87,7 @@ public class sheepDestroyer : MonoBehaviour
                     {
                         if (hit.collider == smallCollider && hit.collider.transform == transform)
                         {
+                            if(PlayerPrefs.GetInt("SFX") == 0 ) GetComponent<AudioSource>().Play();
                             if (gameObject.tag.Equals("sick"))
                             {
                                 sickClicked();

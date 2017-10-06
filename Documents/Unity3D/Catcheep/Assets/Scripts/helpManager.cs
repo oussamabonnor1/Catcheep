@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Assets.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -105,7 +106,7 @@ public class helpManager : MonoBehaviour
     void helpToolCreated(int index)
     {
         gameManager.catchedSomething = true;
-
+        GameObject.Find("Music Manager").GetComponent<music>().UISFX(4);
         Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 spawnPosition = new Vector3(position.x, position.y, 0f);
         
@@ -173,6 +174,8 @@ public class helpManager : MonoBehaviour
 
     IEnumerator loveClickedcall()
     {
+
+        GameObject.Find("Music Manager").GetComponent<music>().UISFX(4);
         gameManager.catchedSomething = true;
         loveUsed = true;
 

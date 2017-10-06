@@ -97,12 +97,12 @@ namespace Assets.Scripts
         {
             if (PlayerPrefs.GetInt("music") == 0)
             {
-                GetComponents<AudioSource>()[index].clip = MusicClip[index];
-                GetComponents<AudioSource>()[index].Play();
+                GetComponents<AudioSource>()[0].clip = MusicClip[index];
+                GetComponents<AudioSource>()[0].Play();
             }
             else if(GetComponent<AudioSource>().isPlaying)
             {
-                GetComponents<AudioSource>()[index].Pause();
+                GetComponents<AudioSource>()[0].Pause();
             }
         }
         public void UISFX(int index)

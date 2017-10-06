@@ -8,6 +8,8 @@ namespace Assets.Scripts
     public class music : MonoBehaviour
     {
         public AudioClip[] spaceShipSounds;
+        public AudioClip[] uiSounds;
+        public AudioClip[] MusicClip;
         public static music Instance;
         public float[] timer;
 
@@ -89,6 +91,26 @@ namespace Assets.Scripts
             {
                 GetComponents<AudioSource>()[2].clip = spaceShipSounds[index];
                 GetComponents<AudioSource>()[2].Play();
+            }
+        }
+        public void BackgroundMusic(int index)
+        {
+            if (PlayerPrefs.GetInt("music") == 0)
+            {
+                GetComponents<AudioSource>()[0].clip = MusicClip[index];
+                GetComponents<AudioSource>()[0].Play();
+            }
+            else
+            {
+                GetComponents<AudioSource>()[0].Pause();
+            }
+        }
+        public void UISFX(int index)
+        {
+            if (PlayerPrefs.GetInt("SFX") == 0)
+            {
+                GetComponents<AudioSource>()[1].clip = uiSounds[index];
+                GetComponents<AudioSource>()[1].Play();
             }
         }
     }

@@ -4,7 +4,6 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.Advertisements;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 
 public class gameManager : MonoBehaviour

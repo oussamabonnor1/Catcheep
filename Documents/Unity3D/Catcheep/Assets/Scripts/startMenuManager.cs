@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Assets.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,6 +15,8 @@ public class startMenuManager : MonoBehaviour
     public GameObject ScrollBarGameObject;
     public GameObject vibrationToggle;
     public GameObject notificationToggle;
+    public GameObject sfxToggle;
+    public GameObject musicToggle;
     public GameObject bossSheep;
     public GameObject timeText;
     public GameObject levelText;
@@ -23,6 +26,8 @@ public class startMenuManager : MonoBehaviour
     public GameObject noHeartsPanel;
     public GameObject rateUsPanel;
     private Scrollbar ScrollBar;
+
+    private music musicManager;
 
     private Vector2 edgeOfScreen;
     private Vector2 oldPosition;
@@ -45,7 +50,7 @@ public class startMenuManager : MonoBehaviour
 
         portion = (float) 1 / menuCount;
         portion = (float) Math.Round(portion, 2);
-
+        musicManager = GameObject.Find("Music Manager").GetComponent<music>();
         //making sure all objects are affected and not null
         if (ScrollBarGameObject == null) ScrollBarGameObject = GameObject.Find("Horizontal scrollbar");
         if (sceneContent == null) sceneContent = GameObject.Find("Scene content");
@@ -55,7 +60,13 @@ public class startMenuManager : MonoBehaviour
         else vibrationToggle.GetComponent<Switch>().isOn = false;
         if (PlayerPrefs.GetInt("notifications") == 0) notificationToggle.GetComponent<Switch>().isOn = true;
         else notificationToggle.GetComponent<Switch>().isOn = false;
+        if (PlayerPrefs.GetInt("SFX") == 0) sfxToggle.GetComponent<Switch>().isOn = true;
+        else sfxToggle.GetComponent<Switch>().isOn = false;
+        if (PlayerPrefs.GetInt("music") == 0) musicToggle.GetComponent<Switch>().isOn = true;
+        else musicToggle.GetComponent<Switch>().isOn = false;
 
+        //Sounds
+        musicManager.BackgroundMusic(0);
 
         //extracting necissary elements for functions
         ScrollBar = ScrollBarGameObject.GetComponent<Scrollbar>();
@@ -81,6 +92,7 @@ public class startMenuManager : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Escape) && !quitPanel.activeSelf)
         {
+            musicManager.UISFX(1);
             StartCoroutine(objectOpened(quitPanel));
         }
 
@@ -179,6 +191,7 @@ public class startMenuManager : MonoBehaviour
 
     public void goingUpButtonClick()
     {
+        musicManager.UISFX(0);
         destination = ScrollBar.value + portion;
         isGoingUp = true;
         StartCoroutine(goingUp());
@@ -186,6 +199,7 @@ public class startMenuManager : MonoBehaviour
 
     public void goingDownButtonClick()
     {
+        musicManager.UISFX(0);
         destination = ScrollBar.value - portion;
         isGoingDown = true;
         StartCoroutine(goingDown());
@@ -217,6 +231,7 @@ public class startMenuManager : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("hearts") > 0)
         {
+            musicManager.UISFX(0);
             if (PlayerPrefs.GetInt("tuto") == 1) PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
             PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") - 1);
             LoadingScreenManager.sceneToLoad = 3;
@@ -232,6 +247,7 @@ public class startMenuManager : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("hearts") > 0)
         {
+            musicManager.UISFX(0);
             PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") - 1);
             LoadingScreenManager.sceneToLoad = 2;
             SceneManager.LoadScene(4);
@@ -246,6 +262,7 @@ public class startMenuManager : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("hearts") > 0)
         {
+            musicManager.UISFX(0);
             PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") - 1);
             LoadingScreenManager.sceneToLoad = 5;
             SceneManager.LoadScene(4);
@@ -258,8 +275,8 @@ public class startMenuManager : MonoBehaviour
 
     public void alien()
     {
+        musicManager.UISFX(0);
         if (PlayerPrefs.GetInt("tuto") == 4) PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
-
         LoadingScreenManager.sceneToLoad = 6;
         SceneManager.LoadScene(4);
     }
@@ -268,6 +285,7 @@ public class startMenuManager : MonoBehaviour
     {
         if (sceneContent.transform.localPosition.x > -800)
         {
+            musicManager.UISFX(0);
             StartCoroutine(shop());
         }
     }
@@ -286,6 +304,7 @@ public class startMenuManager : MonoBehaviour
 
     public void playButtonClicked()
     {
+        musicManager.UISFX(0);
         StartCoroutine(play());
     }
 
@@ -310,6 +329,7 @@ public class startMenuManager : MonoBehaviour
     {
         if (sceneContent.transform.localPosition.x < 800)
         {
+            musicManager.UISFX(0);
             StartCoroutine(settings());
         }
     }
@@ -330,7 +350,15 @@ public class startMenuManager : MonoBehaviour
     {
         PlayerPrefs.SetString("Vibration", vibrationToggle.GetComponent<Switch>().isOn.ToString());
         if (vibrationToggle.GetComponent<Switch>().isOn &&
-            (int) sceneContent.transform.localPosition.x != 0) Handheld.Vibrate();
+            (int) sceneContent.transform.localPosition.x != 0)
+        {
+            musicManager.UISFX(1);
+            Handheld.Vibrate();
+        }
+        else
+        {
+            musicManager.UISFX(2);
+        }
     }
 
     public void quit()
@@ -345,6 +373,7 @@ public class startMenuManager : MonoBehaviour
 
     public void deleteProgress()
     {
+        musicManager.UISFX(0);
         PlayerPrefs.DeleteAll();
         PlayerPrefs.SetInt("maxHearts", 5);
         PlayerPrefs.SetInt("hearts", 3);
@@ -354,27 +383,33 @@ public class startMenuManager : MonoBehaviour
 
     public void deleteProgressButton()
     {
+        musicManager.UISFX(1);
         StartCoroutine(objectOpened(ProgressPanel));
     }
     public void closeDeleteProgress()
     {
+        musicManager.UISFX(2);
         StartCoroutine(objectClosed(ProgressPanel));
     }
     void openNoHeartPanel()
     {
+        musicManager.UISFX(1);
         StartCoroutine(objectOpened(noHeartsPanel));
     }
     public void closeNoHeartPanel()
     {
+        musicManager.UISFX(2);
         StartCoroutine(objectClosed(noHeartsPanel));
     }
 
     public void openRateUsPanel()
     {
+        musicManager.UISFX(1);
         StartCoroutine(objectOpened(rateUsPanel));
     }
     public void closeRateUsPanel()
     {
+        musicManager.UISFX(2);
         StartCoroutine(objectClosed(rateUsPanel));
     }
 
@@ -400,12 +435,39 @@ public class startMenuManager : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("notifications") == 0)
         {
+            musicManager.UISFX(2);
             PlayerPrefs.SetInt("notifications", 1);
         }
         else
         {
+            musicManager.UISFX(1);
             PlayerPrefs.SetInt("notifications", 0);
         }
+    }
+    public void SFX()
+    {
+        if (PlayerPrefs.GetInt("SFX") == 0)
+        {
+            PlayerPrefs.SetInt("SFX", 1);
+        }
+        else
+        {
+            musicManager.UISFX(1);
+            PlayerPrefs.SetInt("SFX", 0);
+        }
+    }
+
+    public void music()
+    {
+        if (PlayerPrefs.GetInt("music") == 0)
+        {
+            PlayerPrefs.SetInt("music", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("music", 0);
+        }
+        musicManager.BackgroundMusic(0);
     }
 
     IEnumerator objectOpened(GameObject objectToOpen)
@@ -432,6 +494,7 @@ public class startMenuManager : MonoBehaviour
 
     public void closeQuitPanel()
     {
+        musicManager.UISFX(2);
         StartCoroutine(objectClosed(quitPanel));
     }
 }

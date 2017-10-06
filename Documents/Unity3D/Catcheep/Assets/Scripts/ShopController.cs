@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using Assets.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Advertisements;
@@ -20,11 +21,13 @@ public class ShopController : MonoBehaviour
     public GameObject AdPanel;
     public GameObject moneyPanel;
 
+    private music musicManager;
 
     // Use this for initialization
     void Start()
     {
         Advertisement.Initialize("1453095");
+        musicManager = GameObject.Find("Music Manager").GetComponent<music>();
         cashUpdate(PlayerPrefs.GetInt("money"));
         HelpToolsGameObject.transform.GetChild(0).transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("hayStackStock");
         HelpToolsGameObject.transform.GetChild(1).transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("netStock");
@@ -52,53 +55,62 @@ public class ShopController : MonoBehaviour
 
     public void moreInfo()
     {
+        musicManager.UISFX(0);
         SceneManager.LoadScene("Credit");
     }
 
     public void buyShipButton()
     {
+        musicManager.UISFX(1);
         StartCoroutine(objectOpened(BuyShipButtonGameObject));
         StartCoroutine(objectClosed(ShopMenuGameObject));
     }
 
     public void returnBuyShip()
     {
+        musicManager.UISFX(2);
         StartCoroutine(objectClosed(BuyShipButtonGameObject));
         StartCoroutine(objectOpened(ShopMenuGameObject));
     }
 
     public void helpToolButton()
     {
+        musicManager.UISFX(1);
         StartCoroutine(objectClosed(ShopMenuGameObject));
         StartCoroutine(objectOpened(HelpToolsGameObject));
     }
 
     public void returnHelpTool()
     {
+        musicManager.UISFX(2);
         StartCoroutine(objectClosed(HelpToolsGameObject));
         StartCoroutine(objectOpened(ShopMenuGameObject));
     }
 
     public void wheelOfFortuneButton()
     {
+        musicManager.UISFX(1);
         StartCoroutine(objectClosed(ShopMenuGameObject));
         StartCoroutine(objectOpened(WheelOfFortuneGameObject));
     }
 
     public void wheelOfFortuneReturn()
     {
+        musicManager.UISFX(2);
         StartCoroutine(objectClosed(WheelOfFortuneGameObject));
         StartCoroutine(objectOpened(ShopMenuGameObject));
     }
 
     public void energyDringButtonClick()
     {
+        musicManager.UISFX(1);
         StartCoroutine(objectClosed(ShopMenuGameObject));
         StartCoroutine(objectOpened(EnergyGameObject));
     }
 
     public void energyDringButtonOff()
     {
+        musicManager.UISFX(2);
         StartCoroutine(objectClosed(EnergyGameObject));
         StartCoroutine(objectOpened(ShopMenuGameObject));
     }
@@ -107,6 +119,7 @@ public class ShopController : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("money") >= 7500 && PlayerPrefs.GetInt("hearts") < PlayerPrefs.GetInt("maxHearts"))
         {
+            musicManager.UISFX(1);
             StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
                 "Do you wanna buy an energy drink ?";
@@ -116,24 +129,29 @@ public class ShopController : MonoBehaviour
 
     public void CloseDecisionPanel()
     {
+        musicManager.UISFX(2);
         StartCoroutine(objectClosed(DecisionPanel));
     }
 
     public void CloseAdsPanel()
     {
+        musicManager.UISFX(2);
         StartCoroutine(objectClosed(AdPanel));
     }
     public void CloseMoneyPanel()
     {
+        musicManager.UISFX(2);
         StartCoroutine(objectClosed(moneyPanel));
     }
     public void OpenMoneyPanel()
     {
+        musicManager.UISFX(1);
         StartCoroutine(objectOpened(moneyPanel));
     }
 
     void buyALife()
     {
+        musicManager.UISFX(0);
         DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 7500);
         cashUpdate(PlayerPrefs.GetInt("money"));
@@ -147,6 +165,7 @@ public class ShopController : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("money") >= 3000 && PlayerPrefs.GetFloat("heartTime") >= 1)
         {
+            musicManager.UISFX(1);
             StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
                 "Do you wanna set the energy drink timer to 00:00 ?";
@@ -154,12 +173,14 @@ public class ShopController : MonoBehaviour
         }
         else
         {
+            musicManager.UISFX(1);
             StartCoroutine(objectOpened(moneyPanel));
         }
     }
 
     void killTime()
     {
+        musicManager.UISFX(0);
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 3000);
         PlayerPrefs.SetFloat("heartTime", -1);
         cashUpdate(PlayerPrefs.GetInt("money"));
@@ -169,6 +190,7 @@ public class ShopController : MonoBehaviour
 
     public void moreCapacityButton()
     {
+        musicManager.UISFX(1);
         if (PlayerPrefs.GetInt("money") >= 12500 && PlayerPrefs.GetInt("maxHearts") < 10)
         {
             StartCoroutine(objectOpened(DecisionPanel));
@@ -184,6 +206,7 @@ public class ShopController : MonoBehaviour
 
     void moreCapacity()
     {
+        musicManager.UISFX(0);
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 12500);
         PlayerPrefs.SetInt("maxHearts", PlayerPrefs.GetInt("maxHearts") + 1);
         cashUpdate(PlayerPrefs.GetInt("money"));
@@ -201,6 +224,7 @@ public class ShopController : MonoBehaviour
 
     public void shipOneButton()
     {
+        musicManager.UISFX(1);
         StartCoroutine(objectOpened(DecisionPanel));
         DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
             "Do you Set this Ship as Default ship ?";
@@ -209,6 +233,7 @@ public class ShopController : MonoBehaviour
 
     void ShipOne()
     {
+        musicManager.UISFX(0);
         PlayerPrefs.SetInt("ship", 1);
         DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         StartCoroutine(objectClosed(DecisionPanel));
@@ -216,6 +241,7 @@ public class ShopController : MonoBehaviour
 
     public void shipTwoButton()
     {
+        musicManager.UISFX(1);
         if (PlayerPrefs.GetInt("money") >= 15000)
         {
             StartCoroutine(objectOpened(DecisionPanel));
@@ -232,6 +258,7 @@ public class ShopController : MonoBehaviour
 
     void ShipTwo()
     {
+        musicManager.UISFX(0);
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 15000);
         cashUpdate(PlayerPrefs.GetInt("money"));
         PlayerPrefs.SetInt("ship", 2);
@@ -243,6 +270,7 @@ public class ShopController : MonoBehaviour
 
     public void shipThreeButton()
     {
+        musicManager.UISFX(1);
         if (PlayerPrefs.GetInt("money") >= 25000)
         {
             StartCoroutine(objectOpened(DecisionPanel));
@@ -259,6 +287,7 @@ public class ShopController : MonoBehaviour
 
     void ShipThree()
     {
+        musicManager.UISFX(0);
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 25000);
         cashUpdate(PlayerPrefs.GetInt("money"));
         PlayerPrefs.SetInt("ship", 3);
@@ -270,6 +299,7 @@ public class ShopController : MonoBehaviour
 
     public void shipFourButton()
     {
+        musicManager.UISFX(1);
         if (PlayerPrefs.GetInt("money") >= 40000 )
         {
             StartCoroutine(objectOpened(DecisionPanel));
@@ -286,6 +316,7 @@ public class ShopController : MonoBehaviour
 
     void ShipFour()
     {
+        musicManager.UISFX(0);
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 40000);
         cashUpdate(PlayerPrefs.GetInt("money"));
         PlayerPrefs.SetInt("ship", 4);
@@ -297,6 +328,7 @@ public class ShopController : MonoBehaviour
 
     public void buyHayButton()
     {
+        musicManager.UISFX(1);
         if (PlayerPrefs.GetInt("money") >= 15000)
         {
             StartCoroutine(objectOpened(DecisionPanel));
@@ -313,6 +345,7 @@ public class ShopController : MonoBehaviour
 
     void buyHayStack()
     {
+        musicManager.UISFX(0);
         PlayerPrefs.SetInt("hayStackStock", PlayerPrefs.GetInt("hayStackStock") + 1);
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 15000);
         cashUpdate(PlayerPrefs.GetInt("money"));
@@ -323,6 +356,7 @@ public class ShopController : MonoBehaviour
 
     public void buyNetButton()
     {
+        musicManager.UISFX(1);
         if (PlayerPrefs.GetInt("money") >= 20000)
         {
             StartCoroutine(objectOpened(DecisionPanel));
@@ -339,6 +373,7 @@ public class ShopController : MonoBehaviour
 
     public void buyNet()
     {
+        musicManager.UISFX(0);
         PlayerPrefs.SetInt("netStock", PlayerPrefs.GetInt("netStock") + 1);
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 20000);
         cashUpdate(PlayerPrefs.GetInt("money"));
@@ -349,6 +384,7 @@ public class ShopController : MonoBehaviour
 
     public void buyLoveButton()
     {
+        musicManager.UISFX(1);
         if (PlayerPrefs.GetInt("money") >= 30000)
         {
             StartCoroutine(objectOpened(DecisionPanel));
@@ -365,6 +401,7 @@ public class ShopController : MonoBehaviour
 
     public void buyLove()
     {
+        musicManager.UISFX(0);
         PlayerPrefs.SetInt("loveStock", PlayerPrefs.GetInt("loveStock") + 1);
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 30000);
         HelpToolsGameObject.transform.GetChild(2).transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("loveStock");
@@ -375,6 +412,7 @@ public class ShopController : MonoBehaviour
 
     void cashUpdate(int current)
     {
+        musicManager.UISFX(3);
         cashText.GetComponent<TextMeshProUGUI>().text = "$" + current;
         MenuCashText.GetComponent<TextMeshProUGUI>().text = "$" + current;
     }

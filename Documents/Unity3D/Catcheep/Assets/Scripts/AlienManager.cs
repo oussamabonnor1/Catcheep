@@ -465,8 +465,6 @@ public class AlienManager : MonoBehaviour
     }
     public void openinfoPanel()
     {
-        infoPanel.GetComponent<alienTuto>().i = 0;
-        infoPanel.GetComponent<alienTuto>().j = 0;
         StartCoroutine(objectOpened(infoPanel));
     }
 

@@ -8,17 +8,23 @@ public class alienTuto : MonoBehaviour
     public GameObject textBox;
     public GameObject imageBox;
 
-    public  int i, j;
+    private int i, j;
 
 	// Use this for initialization
 	void Start ()
 	{
         textBox.SetActive(true);
         imageBox.SetActive(true);
-        showData();
 	    i = j = 0;
+        showData();
 	}
-	
+
+    void OnEnable()
+    {
+        i = j = 0;
+        showData();
+    }
+
 	// Update is called once per frame
 	void Update () {
 		

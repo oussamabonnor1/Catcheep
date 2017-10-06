@@ -29,6 +29,7 @@ public class AlienManager : MonoBehaviour
     public GameObject levelUpPanel;
     public GameObject AdPanel;
     public GameObject problemPanel;
+    public GameObject infoPanel;
 
     [Header("indication elements")] public GameObject sheepHolder;
     public GameObject sheepNumberText;
@@ -455,12 +456,16 @@ public class AlienManager : MonoBehaviour
     public void openProblemPanel(string problemText)
     {
         StartCoroutine(objectOpened(problemPanel));
-        problemPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =problemText;
+        problemPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = problemText;
     }
 
     public void closeProblemPanel()
     {
         StartCoroutine(objectClosed(problemPanel));
+    }
+    public void openinfoPanel()
+    {
+        StartCoroutine(objectOpened(infoPanel));
     }
 
     //mail related code

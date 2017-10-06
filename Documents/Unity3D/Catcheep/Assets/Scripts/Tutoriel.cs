@@ -117,15 +117,14 @@ public class Tutoriel : MonoBehaviour
         else if (PlayerPrefs.GetInt("tuto") == 6)
         {
             firstImage.SetActive(false);
-            secondImage.SetActive(true);
-            StartCoroutine(incrementTuto(false));
+            PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
+            AlienSceneTutoriel();
             return;
         }
         else if (PlayerPrefs.GetInt("tuto") == 7)
         {
-            secondImage.SetActive(false);
-            thirdImage.SetActive(true);
-            StartCoroutine(incrementTuto(true));
+            PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
+            AlienSceneTutoriel();
             return;
         }
         else
@@ -133,6 +132,7 @@ public class Tutoriel : MonoBehaviour
             firstImage.SetActive(false);
             secondImage.SetActive(false);
             thirdImage.SetActive(false);
+            fourthImage.SetActive(false);
             TutoGameObject.SetActive(false);
         }
     }
@@ -143,6 +143,7 @@ public class Tutoriel : MonoBehaviour
         firstImage.SetActive(false);
         secondImage.SetActive(false);
         thirdImage.SetActive(false);
+        fourthImage.SetActive(false);
         TutoGameObject.SetActive(false);
     }
 

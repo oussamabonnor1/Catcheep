@@ -8,7 +8,7 @@ public class alienTuto : MonoBehaviour
     public GameObject textBox;
     public GameObject imageBox;
 
-    private int i, j;
+    public  int i, j;
 
 	// Use this for initialization
 	void Start ()
@@ -36,13 +36,13 @@ public class alienTuto : MonoBehaviour
         if (i < 10)
         {
             i++;
-            if (j != 4 && j != 7)
+            if ((i >= 4 && i < 6) || i == 10)
             {
-                j++;
+                print("stady");
             }
             else
             {
-                if (i == 7) j++;
+                j++;
             }
             showData();
         }
@@ -53,17 +53,35 @@ public class alienTuto : MonoBehaviour
     }
     public void back()
     {
-        killEverything();
         if (i > 0)
         {
+            killEverything();
             i--;
-            if (j != 4 && j != 7)
+            switch (i)
             {
-                j--;
-            }
-            else
-            {
-                if (i == 4) j--;
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                    j = i;
+                    break;
+                case 5:
+                    j = 4;
+                    break;
+                case 6:
+                case 7:
+                case 8:
+                case 9:
+                    j = i - 2;
+                    break;
+                case 10:
+                    j = 7;
+                    break;
+                default:
+                    i = 0;
+                    j = 0;
+                    break;
             }
             showData();
         }

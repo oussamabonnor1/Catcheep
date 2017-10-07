@@ -233,6 +233,7 @@ public class startMenuManager : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("hearts") > 0)
         {
+            musicManager.GetComponent<music>().BackgroundMusic(1);
             musicManager.UISFX(0);
             if (PlayerPrefs.GetInt("tuto") == 1) PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
             PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") - 1);
@@ -249,6 +250,7 @@ public class startMenuManager : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("hearts") > 0)
         {
+            musicManager.GetComponent<music>().BackgroundMusic(2);
             musicManager.UISFX(0);
             PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") - 1);
             LoadingScreenManager.sceneToLoad = 2;
@@ -264,6 +266,7 @@ public class startMenuManager : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("hearts") > 0)
         {
+            musicManager.GetComponent<music>().BackgroundMusic(3);
             musicManager.UISFX(0);
             PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") - 1);
             LoadingScreenManager.sceneToLoad = 5;

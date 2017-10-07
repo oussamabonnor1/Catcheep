@@ -59,7 +59,6 @@ public class gameManager : MonoBehaviour
         originalScore= PlayerPrefs.GetInt("money");
         score = PlayerPrefs.GetInt("money");
         musicManager = GameObject.Find("Music Manager").GetComponent<music>();
-        musicManager.GetComponent<music>().BackgroundMusic(1);
 
         if (background == null)
         {
@@ -82,7 +81,6 @@ public class gameManager : MonoBehaviour
         edgeOfScreen = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - helpToolsPlateWidth.x, Screen.height, 0f));
         gameOver = false;
         StartCoroutine(animatedBackgrounds(background, menuBackground));
-        
     }
 
     IEnumerator animatedBackgrounds(GameObject a, GameObject b)
@@ -175,7 +173,18 @@ public class gameManager : MonoBehaviour
         }
         pausePanel.transform.GetChild(4).GetComponent<Image>().sprite =
             musicImages[PlayerPrefs.GetInt("music")];
-        musicManager.BackgroundMusic(0);
+        if (SceneManager.GetActiveScene().name.Equals("Farm"))
+        {
+            musicManager.GetComponent<music>().BackgroundMusic(1);
+        }
+        if (SceneManager.GetActiveScene().name.Equals("Snow"))
+        {
+            musicManager.GetComponent<music>().BackgroundMusic(2);
+        }
+        if (SceneManager.GetActiveScene().name.Equals("City"))
+        {
+            musicManager.GetComponent<music>().BackgroundMusic(3);
+        }
     }
     void ResizeBackground(GameObject background)
     {

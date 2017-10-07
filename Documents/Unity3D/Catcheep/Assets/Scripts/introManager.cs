@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Assets.Scripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +12,7 @@ public class introManager : MonoBehaviour
 
     public GameObject ImagesBG;
     public GameObject[] ImagesIteams;
+    private music musicManager;
 
     public int index;
     // Use this for initialization
@@ -19,6 +21,8 @@ public class introManager : MonoBehaviour
         PlayerPrefs.SetInt("netStock",1);
         PlayerPrefs.SetInt("hayStackStock",1);
         PlayerPrefs.SetInt("loveStock",1);
+        musicManager = GameObject.Find("Music Manager").GetComponent<music>();
+        musicManager.UISFX(1);
         StartCoroutine(objectOpened(mainPanel));
     }
 	
@@ -84,12 +88,14 @@ public class introManager : MonoBehaviour
 
     public void forward()
     {
+        musicManager.UISFX(0);
         killEverything();
         index += 1;
         manager();
     }
     public void back()
     {
+        musicManager.UISFX(0);
         killEverything();
         if(index > 0) index -= 1;
         manager();

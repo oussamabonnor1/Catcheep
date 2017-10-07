@@ -5,6 +5,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 using UnityEngine.Advertisements;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 
 public class gameManager : MonoBehaviour
@@ -24,6 +25,8 @@ public class gameManager : MonoBehaviour
     public GameObject helpToolsPlate;
     public GameObject pausePanel;
     public GameObject BadViewGameObject;
+    public Sprite[] sfxImages;
+    public Sprite[] musicImages;
     
     public static bool gameOver;
     private Vector3 edgeOfScreen;
@@ -56,6 +59,7 @@ public class gameManager : MonoBehaviour
         originalScore= PlayerPrefs.GetInt("money");
         score = PlayerPrefs.GetInt("money");
         musicManager = GameObject.Find("Music Manager").GetComponent<music>();
+        musicManager.GetComponent<music>().BackgroundMusic(1);
 
         if (background == null)
         {
@@ -133,6 +137,10 @@ public class gameManager : MonoBehaviour
                 musicManager.UISFX(1);
                 PlayerPrefs.SetInt("sheepy", totalSheepsCaught);
                 pausePanel.SetActive(true);
+                pausePanel.transform.GetChild(4).GetComponent<Image>().sprite =
+                    musicImages[PlayerPrefs.GetInt("music")];
+                pausePanel.transform.GetChild(5).GetComponent<Image>().sprite =
+                    sfxImages[PlayerPrefs.GetInt("SFX")];
                 Time.timeScale = 0;
             }
             else
@@ -141,7 +149,34 @@ public class gameManager : MonoBehaviour
             }
         }
     }
-
+    public void SFX()
+    {
+        if (PlayerPrefs.GetInt("SFX") == 0)
+        {
+            PlayerPrefs.SetInt("SFX", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("SFX", 0);
+            musicManager.UISFX(1);
+        }
+        pausePanel.transform.GetChild(5).GetComponent<Image>().sprite =
+            sfxImages[PlayerPrefs.GetInt("SFX")];
+    }
+    public void music()
+    {
+        if (PlayerPrefs.GetInt("music") == 0)
+        {
+            PlayerPrefs.SetInt("music", 1);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("music", 0);
+        }
+        pausePanel.transform.GetChild(4).GetComponent<Image>().sprite =
+            musicImages[PlayerPrefs.GetInt("music")];
+        musicManager.BackgroundMusic(0);
+    }
     void ResizeBackground(GameObject background)
     {
         SpriteRenderer sr = background.GetComponent<SpriteRenderer>();
@@ -272,7 +307,7 @@ public class gameManager : MonoBehaviour
         yield return new WaitForSeconds(1f);
         if (!GameObject.FindGameObjectWithTag("sheepy") && !GameObject.FindGameObjectWithTag("blacky"))
         {
-            musicManager.GetComponent<music>().UISFX(1);
+            musicManager.GetComponent<music>().UISFX(4);
             PlayerPrefs.SetInt("sheepy", totalSheepsCaught);
             //i wish i was focused enough to find a more beautiful way of assigning values but...
             //it's been a long 3 months working on this 'game' and i honestly jst wanna get it over with.

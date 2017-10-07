@@ -458,9 +458,9 @@ public class startMenuManager : MonoBehaviour
         }
         else
         {
+            PlayerPrefs.SetInt("SFX", 0);
             sfxToggle.GetComponent<Switch>().isOn = true;
             musicManager.UISFX(1);
-            PlayerPrefs.SetInt("SFX", 0);
         }
     }
      public void music()

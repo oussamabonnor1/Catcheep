@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.IO;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -16,8 +17,8 @@ namespace Assets.Scripts
         // Use this for initialization
         void Start()
         {
-             if (SceneManager.GetActiveScene().name.Equals("Start"))
-             {
+            if (SceneManager.GetActiveScene().name.Equals("Start"))
+            {
                 if (PlayerPrefs.GetInt("maxHearts") == 0)
                 {
                     PlayerPrefs.SetInt("maxHearts", 5);
@@ -90,9 +91,11 @@ namespace Assets.Scripts
             if (PlayerPrefs.GetInt("SFX") == 0)
             {
                 GetComponents<AudioSource>()[2].clip = spaceShipSounds[index];
+                GetComponents<AudioSource>()[2].loop = index == 1;
                 GetComponents<AudioSource>()[2].Play();
             }
         }
+
         public void BackgroundMusic(int index)
         {
             if (PlayerPrefs.GetInt("music") == 0)
@@ -100,11 +103,12 @@ namespace Assets.Scripts
                 GetComponents<AudioSource>()[0].clip = MusicClip[index];
                 GetComponents<AudioSource>()[0].Play();
             }
-            else if(GetComponent<AudioSource>().isPlaying)
+            else if (GetComponent<AudioSource>().isPlaying)
             {
                 GetComponents<AudioSource>()[0].Pause();
             }
         }
+
         public void UISFX(int index)
         {
             if (PlayerPrefs.GetInt("SFX") == 0)

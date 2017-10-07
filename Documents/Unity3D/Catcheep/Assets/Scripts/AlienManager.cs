@@ -186,7 +186,7 @@ public class AlienManager : MonoBehaviour
             alienShip[shipType].transform.rotation);
         spaceShipForScript.transform.SetParent(GameObject.Find("Canvas").transform, false);
 
-        //sound of going away
+        //sound of coming
         musicManager.spaceShipSound(0);
 
         //this next line makes the button of prefab ship clickable, do not alter !
@@ -203,6 +203,7 @@ public class AlienManager : MonoBehaviour
         spaceShipForScript.transform.SetParent(maskHolder.transform, true);
         maskHolder.GetComponent<ScrollRect>().content = spaceShipForScript.GetComponent<RectTransform>();
         activatingButtons();
+        musicManager.spaceShipSound(1);
     }
 
     void shipClicked()
@@ -768,6 +769,7 @@ public class AlienManager : MonoBehaviour
     public void startMenu()
     {
         musicManager.BackgroundMusic(0);
+        GameObject.Find("Music Manager").GetComponents<AudioSource>()[2].Stop();
         SceneManager.LoadScene(1);
     }
 

@@ -152,7 +152,7 @@ public class sheepDestroyer : MonoBehaviour
 
         if (gameObject.name.Contains("sheepy"))
         {
-            gameManager.sheepyCaught++;
+            ++gameManager.sheepyCaught;
             PlayerPrefs.SetInt("sheep0", PlayerPrefs.GetInt("sheep0") + 1);
         }
         if (gameObject.tag.Equals("blacky"))

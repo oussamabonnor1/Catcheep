@@ -325,8 +325,10 @@ public class gameManager : MonoBehaviour
                 "+" + (score - originalScore);
             if (SceneManager.GetActiveScene().name.Equals("Farm"))
             {
-                finishPanel.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text = "+" + sheepyCaught;
-                finishPanel.transform.GetChild(3).GetComponentInChildren<TextMeshProUGUI>().text = "+" + blackyCaught;
+                finishPanel.transform.GetChild(2).GetComponentInChildren<TextMeshProUGUI>().text =
+                    "+" + sheepyCaught;
+                finishPanel.transform.GetChild(3).GetComponentInChildren<TextMeshProUGUI>().text =
+                    "+" + blackyCaught;
             }
             if (SceneManager.GetActiveScene().name.Equals("Snow"))
             {
@@ -342,7 +344,8 @@ public class gameManager : MonoBehaviour
                 finishPanel.transform.GetChild(3).GetComponentInChildren<TextMeshProUGUI>().text =
                     "+" + cityBlackyCaught;
             }
-            finishPanel.transform.GetChild(4).GetComponentInChildren<TextMeshProUGUI>().text = "+" + flashCaught;
+            finishPanel.transform.GetChild(4).GetComponentInChildren<TextMeshProUGUI>().text =
+                "+" + flashCaught;
         }
         else
         {

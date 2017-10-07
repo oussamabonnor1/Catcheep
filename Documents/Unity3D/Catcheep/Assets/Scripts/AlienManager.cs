@@ -187,7 +187,7 @@ public class AlienManager : MonoBehaviour
         spaceShipForScript.transform.SetParent(GameObject.Find("Canvas").transform, false);
 
         //sound of going away
-        GameObject.Find("Music Manager").GetComponent<music>().spaceShipSound(0);
+        musicManager.spaceShipSound(0);
 
         //this next line makes the button of prefab ship clickable, do not alter !
         spaceShipForScript.GetComponentInChildren<Button>().onClick.AddListener(call: shipClicked);
@@ -244,11 +244,11 @@ public class AlienManager : MonoBehaviour
                     PlayerPrefs.SetInt("index" + toDelete, 0);
                 }
                 //end of confusing code
-
+                musicManager.UISFX(3);
                 StartCoroutine(shipLeaving());
             }
             else
-            {
+            { 
                 openProblemPanel("You Don't Have Enough Sheeps !");
             }
         }
@@ -263,7 +263,7 @@ public class AlienManager : MonoBehaviour
         spaceShipForScript.transform.GetChild(2).gameObject.SetActive(true);
         spaceShipForScript.transform.GetChild(0).gameObject.SetActive(true);
         //sound of going away
-        GameObject.Find("Music Manager").GetComponent<music>().spaceShipSound(2);
+        musicManager.spaceShipSound(2);
 
         //setting sheeps to hover
         GameObject sheepHoverTemp = Instantiate(SheepHoverGameObject, SheepHoverGameObject.transform.localPosition,
@@ -307,6 +307,8 @@ public class AlienManager : MonoBehaviour
     public void shipGoingRightButtonClicked()
     {
         StartCoroutine(shipGoingRight());
+        musicManager.UISFX(0);
+        musicManager.spaceShipSound(2);
     }
 
     IEnumerator shipGoingRight()
@@ -340,6 +342,8 @@ public class AlienManager : MonoBehaviour
     public void shipGoingLeftButtonClicked()
     {
         StartCoroutine(shipGoingLeft());
+        musicManager.UISFX(0);
+        musicManager.spaceShipSound(2);
     }
 
     IEnumerator shipGoingLeft()
@@ -454,16 +458,19 @@ public class AlienManager : MonoBehaviour
 
     public void openProblemPanel(string problemText)
     {
+        musicManager.UISFX(1);
         StartCoroutine(objectOpened(problemPanel));
         problemPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text = problemText;
     }
 
     public void closeProblemPanel()
     {
+        musicManager.UISFX(2);
         StartCoroutine(objectClosed(problemPanel));
     }
     public void openinfoPanel()
     {
+        musicManager.UISFX(1);
         StartCoroutine(objectOpened(infoPanel));
     }
 
@@ -552,6 +559,7 @@ public class AlienManager : MonoBehaviour
         StartCoroutine(fillingMailPanel(indexes, amounts));
         mailButton.GetComponent<Button>().enabled = false;
         mailPanel.SetActive(true);
+        musicManager.UISFX(1);
     }
 
     IEnumerator fillingMailPanel(int[] index, int[] need)
@@ -593,7 +601,7 @@ public class AlienManager : MonoBehaviour
             Destroy(mailPanel.transform.GetChild(i).gameObject);
         }
         StartCoroutine(objectClosed(mailPanel));
-        
+        musicManager.UISFX(2);
     }
 
 
@@ -638,6 +646,7 @@ public class AlienManager : MonoBehaviour
         {
             StartCoroutine(objectClosed(SheepMapGameObject));
             activatingButtons();
+            musicManager.UISFX(2);
         }
         else
         {
@@ -646,11 +655,13 @@ public class AlienManager : MonoBehaviour
             sheepMapNumberUpdate();
             SheepMapGameObject.SetActive(true);
             StartCoroutine(objectOpened(SheepMapGameObject));
+            musicManager.UISFX(1);
         }
     }
 
     public void sheepyClicked()
     {
+        musicManager.UISFX(0);
         StartCoroutine(objectClosed(SheepMapGameObject));
         currentSheepShowed = -1;
         shipGoingRightButtonClicked();
@@ -658,6 +669,7 @@ public class AlienManager : MonoBehaviour
 
     public void blackyClicked()
     {
+        musicManager.UISFX(0);
         StartCoroutine(objectClosed(SheepMapGameObject));
         currentSheepShowed = 0;
         shipGoingRightButtonClicked();
@@ -665,6 +677,7 @@ public class AlienManager : MonoBehaviour
 
     public void flashClicked()
     {
+        musicManager.UISFX(0);
         StartCoroutine(objectClosed(SheepMapGameObject));
         currentSheepShowed = 1;
         shipGoingRightButtonClicked();
@@ -672,6 +685,7 @@ public class AlienManager : MonoBehaviour
 
     public void sheepySnowClicked()
     {
+        musicManager.UISFX(0);
         StartCoroutine(objectClosed(SheepMapGameObject));
         currentSheepShowed = 2;
         shipGoingRightButtonClicked();
@@ -679,6 +693,7 @@ public class AlienManager : MonoBehaviour
 
     public void blackySnowClicked()
     {
+        musicManager.UISFX(0);
         StartCoroutine(objectClosed(SheepMapGameObject));
         currentSheepShowed = 3;
         shipGoingRightButtonClicked();
@@ -686,6 +701,7 @@ public class AlienManager : MonoBehaviour
 
     public void sheepyCityClicked()
     {
+        musicManager.UISFX(0);
         StartCoroutine(objectClosed(SheepMapGameObject));
         currentSheepShowed = 4;
         shipGoingRightButtonClicked();
@@ -693,6 +709,7 @@ public class AlienManager : MonoBehaviour
 
     public void blackyCityClicked()
     {
+        musicManager.UISFX(0);
         StartCoroutine(objectClosed(SheepMapGameObject));
         currentSheepShowed = 5;
         shipGoingRightButtonClicked();
@@ -700,6 +717,7 @@ public class AlienManager : MonoBehaviour
 
     public void CloseAdsPanel()
     {
+        musicManager.UISFX(2);
         StartCoroutine(objectClosed(AdPanel));
     }
 
@@ -742,12 +760,14 @@ public class AlienManager : MonoBehaviour
 
     public void closeLevelUpPanel()
     {
+        musicManager.UISFX(2);
         StartCoroutine(objectClosed(levelUpPanel));
         mailButton.GetComponent<Button>().enabled = true;
     }
 
     public void startMenu()
     {
+        musicManager.BackgroundMusic(0);
         SceneManager.LoadScene(1);
     }
 
@@ -763,6 +783,7 @@ public class AlienManager : MonoBehaviour
             }
             else
             {
+                musicManager.UISFX(1);
                 StartCoroutine(objectOpened(AdPanel));
             }
         }

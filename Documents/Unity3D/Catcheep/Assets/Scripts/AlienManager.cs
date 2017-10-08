@@ -187,7 +187,7 @@ public class AlienManager : MonoBehaviour
         spaceShipForScript.transform.SetParent(GameObject.Find("Canvas").transform, false);
 
         //sound of coming
-        musicManager.spaceShipSound(0);
+        musicManager.ObjectsSound(0);
 
         //this next line makes the button of prefab ship clickable, do not alter !
         spaceShipForScript.GetComponentInChildren<Button>().onClick.AddListener(call: shipClicked);
@@ -203,7 +203,7 @@ public class AlienManager : MonoBehaviour
         spaceShipForScript.transform.SetParent(maskHolder.transform, true);
         maskHolder.GetComponent<ScrollRect>().content = spaceShipForScript.GetComponent<RectTransform>();
         activatingButtons();
-        musicManager.spaceShipSound(1);
+        musicManager.ObjectsSound(1);
     }
 
     void shipClicked()
@@ -264,7 +264,7 @@ public class AlienManager : MonoBehaviour
         spaceShipForScript.transform.GetChild(2).gameObject.SetActive(true);
         spaceShipForScript.transform.GetChild(0).gameObject.SetActive(true);
         //sound of going away
-        musicManager.spaceShipSound(2);
+        musicManager.ObjectsSound(2);
 
         //setting sheeps to hover
         GameObject sheepHoverTemp = Instantiate(SheepHoverGameObject, SheepHoverGameObject.transform.localPosition,
@@ -309,7 +309,7 @@ public class AlienManager : MonoBehaviour
     {
         StartCoroutine(shipGoingRight());
         musicManager.UISFX(0);
-        musicManager.spaceShipSound(2);
+        musicManager.ObjectsSound(2);
     }
 
     IEnumerator shipGoingRight()
@@ -344,7 +344,7 @@ public class AlienManager : MonoBehaviour
     {
         StartCoroutine(shipGoingLeft());
         musicManager.UISFX(0);
-        musicManager.spaceShipSound(2);
+        musicManager.ObjectsSound(2);
     }
 
     IEnumerator shipGoingLeft()

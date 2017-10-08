@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.IO;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,7 +6,7 @@ namespace Assets.Scripts
 {
     public class music : MonoBehaviour
     {
-        public AudioClip[] spaceShipSounds;
+        public AudioClip[] objectsSounds;
         public AudioClip[] uiSounds;
         public AudioClip[] MusicClip;
         public static music Instance;
@@ -86,11 +84,11 @@ namespace Assets.Scripts
             }
         }
 
-        public void spaceShipSound(int index)
+        public void ObjectsSound(int index)
         {
             if (PlayerPrefs.GetInt("SFX") == 0)
             {
-                GetComponents<AudioSource>()[2].clip = spaceShipSounds[index];
+                GetComponents<AudioSource>()[2].clip = objectsSounds[index];
                 GetComponents<AudioSource>()[2].loop = index == 1;
                 GetComponents<AudioSource>()[2].Play();
             }

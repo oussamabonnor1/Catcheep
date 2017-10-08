@@ -1,5 +1,7 @@
 ﻿using System.Collections;
+using Assets.Scripts;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ObstacleController : MonoBehaviour
 {
@@ -56,6 +58,8 @@ public class ObstacleController : MonoBehaviour
     public IEnumerator createObstacle()
     {
         yield return new WaitForSeconds(Random.Range(1, 5));
+        if(SceneManager.GetActiveScene().name.Equals("Snow")) GameObject.Find("Music Manager").GetComponent<music>().ObjectsSound(4);
+        if(SceneManager.GetActiveScene().name.Equals("City")) GameObject.Find("Music Manager").GetComponent<music>().ObjectsSound(3);
         i = Random.Range(0, 2);
         Vector3 position = new Vector3(-obstaclePrefab.transform.position.x, obstaclePrefab.transform.position.y,
             obstaclePrefab.transform.position.z);

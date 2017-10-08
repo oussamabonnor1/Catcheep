@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -131,6 +132,7 @@ public class sheepDestroyer : MonoBehaviour
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + 200 + 10 * gameManager.combo);
         if (obstacle.gameObject.name == "Car(Clone)")
         {
+            GameObject.Find("Music Manager").GetComponent<music>().ObjectsSound(5);
             GameObject explosionGameObject = Instantiate(explosion, obstacle.transform.position, Quaternion.identity);
             Destroy(explosionGameObject, 1f);
             obstacle.gameObject.SetActive(false);

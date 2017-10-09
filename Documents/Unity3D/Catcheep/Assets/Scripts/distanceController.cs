@@ -35,7 +35,7 @@ public class distanceController : MonoBehaviour
     void OnTriggerEnter2D(Collider2D other)
     {
         //not a group (collider below screen)
-        if (other.gameObject.tag != "group")
+        if (other.gameObject.tag != "group" && !other.gameObject.name.Equals("Sound Collider"))
         {
             //speed is lower (collision will happen)
             if (other.GetComponent<SheepMovement>().Speed <= speed)
@@ -120,7 +120,7 @@ public class distanceController : MonoBehaviour
     {
         isTouching = true;
         //not a group (collider below screen)
-        if (other.gameObject.tag != "group" && !helpCouroutineCalled)
+        if (other.gameObject.tag != "group" && !helpCouroutineCalled && !other.gameObject.name.Equals("Sound Collider"))
         {
             //speed is lower (collision will happen)
             if (other.GetComponent<SheepMovement>().Speed <= speed)

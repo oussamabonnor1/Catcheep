@@ -17,7 +17,7 @@ public class ObstacleController : MonoBehaviour
     void Start()
     {
         edgeOfScreen = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, Screen.height, 0f));
-        StartCoroutine(createObstacle());
+        if(!gameObject.name.Equals("Sound Collider")) StartCoroutine(createObstacle());
     }
 
     // Update is called once per frame
@@ -70,5 +70,12 @@ public class ObstacleController : MonoBehaviour
         obstacle = Instantiate(obstaclePrefab, position, obstaclePrefab.transform.rotation);
         obstacle.SetActive(true);
         if (obstacle.gameObject.name.Contains("Car") && i == 1) obstacle.transform.Rotate(0, 180, 0);
+    }
+
+    //This Code section is strictly reserved for the sound collider to make sheeps SFX
+    //it ll be used here only not to create and compile more scripts
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (PlayerPrefs.GetInt("SFX") == 0 && gameObject.name.Equals("Sound Collider")) GetComponent<AudioSource>().Play();
     }
 }

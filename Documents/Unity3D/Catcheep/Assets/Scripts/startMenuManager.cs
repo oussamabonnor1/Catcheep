@@ -40,6 +40,7 @@ public class startMenuManager : MonoBehaviour
 
     private bool isGoingUp;
     private bool isGoingDown;
+    private bool isGoingSideWays;
 
 
     // Use this for initialization
@@ -47,6 +48,7 @@ public class startMenuManager : MonoBehaviour
     {
         isGoingDown = false;
         isGoingUp = false;
+        isGoingSideWays = false;
 
         portion = (float) 1 / menuCount;
         portion = (float) Math.Round(portion, 2);
@@ -288,7 +290,7 @@ public class startMenuManager : MonoBehaviour
 
     public void shopButtonClicked()
     {
-        if (sceneContent.transform.localPosition.x > -800)
+        if (sceneContent.transform.localPosition.x > -800 && !isGoingSideWays)
         {
             musicManager.UISFX(0);
             StartCoroutine(shop());
@@ -297,6 +299,7 @@ public class startMenuManager : MonoBehaviour
 
     IEnumerator shop()
     {
+        isGoingSideWays = true;
         Vector3 destination = new Vector3(-800, sceneContent.transform.localPosition.y,
             sceneContent.transform.localPosition.z);
         do
@@ -305,6 +308,7 @@ public class startMenuManager : MonoBehaviour
                 sceneContent.transform.localPosition.y, sceneContent.transform.localPosition.z);
             yield return new WaitForSeconds(0.01f);
         } while ((int) sceneContent.transform.localPosition.x != (int) destination.x);
+        isGoingSideWays = false;
     }
 
     public void playButtonClicked()
@@ -315,6 +319,7 @@ public class startMenuManager : MonoBehaviour
 
     IEnumerator play()
     {
+        isGoingSideWays = true;
         Vector3 destination = new Vector3(0, sceneContent.transform.localPosition.y,
             sceneContent.transform.localPosition.z);
         bool direction = sceneContent.transform.localPosition.x < destination.x;
@@ -328,6 +333,7 @@ public class startMenuManager : MonoBehaviour
                     sceneContent.transform.localPosition.y, sceneContent.transform.localPosition.z);
             yield return new WaitForSeconds(0.01f);
         } while ((int) sceneContent.transform.localPosition.x != (int) destination.x);
+        isGoingSideWays = false;
     }
 
     public void settingsButtonClicked()

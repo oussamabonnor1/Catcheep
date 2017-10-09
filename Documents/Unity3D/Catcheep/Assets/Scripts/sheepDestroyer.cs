@@ -31,7 +31,6 @@ public class sheepDestroyer : MonoBehaviour
         scoreText = GameObject.Find("score");
         scoreText.GetComponent<TextMeshProUGUI>().text = "x " + gameManager.score;
         sheepCage = GameObject.Find("sheep cage");
-        GameObject.Find("Music Manager").GetComponent<music>().ObjectsSound(6);
     }
 
 

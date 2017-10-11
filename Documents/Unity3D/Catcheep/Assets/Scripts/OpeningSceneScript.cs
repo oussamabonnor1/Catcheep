@@ -14,7 +14,8 @@ public class OpeningSceneScript : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-	    Text.GetComponent<TextMeshProUGUI>().text = hints[Random.Range(0,hints.Length)];
+	    PlayerPrefs.SetInt("intro", 0);
+        Text.GetComponent<TextMeshProUGUI>().text = hints[Random.Range(0,hints.Length)];
 	    StartCoroutine(opening());
     }
 	
@@ -22,12 +23,7 @@ public class OpeningSceneScript : MonoBehaviour
 	void Update () {
 		
 	}
-
-    void OnCollisionEnter2D(Collision2D other)
-    {
-        i++;
-        print(i);
-    }
+    
 
     IEnumerator opening()
     {

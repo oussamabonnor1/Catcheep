@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Assets.Scripts;
 using UnityEngine;
 
 public class alienTuto : MonoBehaviour
@@ -56,6 +57,7 @@ public class alienTuto : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+        GameObject.Find("Music Manager").GetComponent<music>().UISFX(0);
     }
     public void back()
     {
@@ -91,6 +93,7 @@ public class alienTuto : MonoBehaviour
             }
             showData();
         }
+        GameObject.Find("Music Manager").GetComponent<music>().UISFX(0);
     }
     void killEverything()
     {

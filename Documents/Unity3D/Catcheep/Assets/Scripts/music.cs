@@ -15,7 +15,7 @@ namespace Assets.Scripts
         // Use this for initialization
         void Start()
         {
-            if (SceneManager.GetActiveScene().name.Equals("Start"))
+            if (SceneManager.GetActiveScene().name.Equals("Opening"))
             {
                 if (PlayerPrefs.GetInt("maxHearts") == 0)
                 {

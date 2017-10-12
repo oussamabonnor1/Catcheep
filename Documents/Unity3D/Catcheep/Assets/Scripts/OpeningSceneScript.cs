@@ -14,7 +14,6 @@ public class OpeningSceneScript : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
-	    PlayerPrefs.SetInt("intro", 0);
         Text.GetComponent<TextMeshProUGUI>().text = hints[Random.Range(0,hints.Length)];
 	    StartCoroutine(opening());
     }
@@ -24,7 +23,6 @@ public class OpeningSceneScript : MonoBehaviour
 		
 	}
     
-
     IEnumerator opening()
     {
         yield return new WaitForSeconds(3.5f);
@@ -37,5 +35,4 @@ public class OpeningSceneScript : MonoBehaviour
             SceneManager.LoadScene(1);
         }
     }
-
 }

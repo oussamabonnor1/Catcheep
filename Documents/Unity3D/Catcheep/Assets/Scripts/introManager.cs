@@ -23,6 +23,7 @@ public class introManager : MonoBehaviour
         PlayerPrefs.SetInt("hayStackStock", 1);
         PlayerPrefs.SetInt("loveStock", 1);
         musicManager = GameObject.Find("Music Manager").GetComponent<music>();
+        musicManager.ObjectsSound(1);
         musicManager.UISFX(1);
         StartCoroutine(objectOpened(mainPanel));
     }
@@ -184,6 +185,7 @@ public class introManager : MonoBehaviour
         objectToOpen.SetActive(false);
         PlayerPrefs.SetInt("intro", 1);
         yield return new WaitForSeconds(0.5f);
+        musicManager.GetComponents<AudioSource>()[2].Stop();
         SceneManager.LoadScene(1);
     }
 }

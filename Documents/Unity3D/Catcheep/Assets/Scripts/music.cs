@@ -15,14 +15,7 @@ namespace Assets.Scripts
         // Use this for initialization
         void Start()
         {
-            if (SceneManager.GetActiveScene().name.Equals("Opening"))
-            {
-                if (PlayerPrefs.GetInt("maxHearts") == 0)
-                {
-                    PlayerPrefs.SetInt("maxHearts", 5);
-                    PlayerPrefs.SetInt("hearts", 3);
-                }
-            }
+            
         }
 
         // Update is called once per frame

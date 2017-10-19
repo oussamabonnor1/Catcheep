@@ -107,17 +107,14 @@ public class Tutoriel : MonoBehaviour
 
     public void AlienSceneTutoriel()
     {
-        textBox.SetActive(true);
-        textBox.GetComponentInChildren<TextMeshProUGUI>().text = "Click on the red circle !";
         if (PlayerPrefs.GetInt("tuto") == 5)
         {
-            firstImage.SetActive(true);
+            GameObject.Find("Manager").GetComponent<AlienManager>().infoPanel.SetActive(true);
             StartCoroutine(incrementTuto(false));
             return;
         }
         else if (PlayerPrefs.GetInt("tuto") == 6)
         {
-            firstImage.SetActive(false);
             PlayerPrefs.SetInt("tuto", PlayerPrefs.GetInt("tuto") + 1);
             AlienSceneTutoriel();
             return;
@@ -130,7 +127,7 @@ public class Tutoriel : MonoBehaviour
         }
         else
         {
-            firstImage.SetActive(false);
+            //firstImage.SetActive(false);
             secondImage.SetActive(false);
             thirdImage.SetActive(false);
             fourthImage.SetActive(false);

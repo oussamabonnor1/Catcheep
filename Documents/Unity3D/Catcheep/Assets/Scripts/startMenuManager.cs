@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
-
 public class startMenuManager : MonoBehaviour
 {
     [Header("in Game objects")] public GameObject quitPanel;
@@ -42,7 +41,6 @@ public class startMenuManager : MonoBehaviour
     private bool isGoingDown;
     private bool isGoingSideWays;
 
-
     // Use this for initialization
     void Start()
     {
@@ -53,6 +51,12 @@ public class startMenuManager : MonoBehaviour
         portion = (float) 1 / menuCount;
         portion = (float) Math.Round(portion, 2);
         musicManager = GameObject.Find("Music Manager").GetComponent<music>();
+        //first time playing: giving the player some hearts 
+        if (PlayerPrefs.GetInt("maxHearts") == 0)
+        {
+            PlayerPrefs.SetInt("maxHearts", 5);
+            PlayerPrefs.SetInt("hearts", 3);
+        }
         //making sure all objects are affected and not null
         if (ScrollBarGameObject == null) ScrollBarGameObject = GameObject.Find("Horizontal scrollbar");
         if (sceneContent == null) sceneContent = GameObject.Find("Scene content");
@@ -70,7 +74,7 @@ public class startMenuManager : MonoBehaviour
         else musicToggle.GetComponent<Switch>().isOn = false;
 
         //Sounds
-        musicManager.BackgroundMusic(0);
+        if(!GameObject.Find("Music Manager").GetComponents<AudioSource>()[0].isPlaying) musicManager.BackgroundMusic(0);
 
         //extracting necissary elements for functions
         ScrollBar = ScrollBarGameObject.GetComponent<Scrollbar>();

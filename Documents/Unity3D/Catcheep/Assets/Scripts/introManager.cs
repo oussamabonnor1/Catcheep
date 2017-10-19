@@ -58,34 +58,30 @@ public class introManager : MonoBehaviour
                 textIteams[2].SetActive(true);
                 break;
             case 5:
-                textBG.SetActive(true);
-                textIteams[3].SetActive(true);
-                break;
-            case 6:
                 ImagesBG.SetActive(true);
                 ImagesIteams[2].SetActive(true);
                 break;
-            case 7:
+            case 6:
                 textBG.SetActive(true);
                 textIteams[4].SetActive(true);
                 break;
-            case 8:
+            case 7:
                 ImagesBG.SetActive(true);
                 ImagesIteams[3].SetActive(true);
                 break;
-            case 9:
+            case 8:
                 ImagesBG.SetActive(true);
                 ImagesIteams[4].SetActive(true);
                 break;
-            case 10:
+            case 9:
                 ImagesBG.SetActive(true);
                 ImagesIteams[5].SetActive(true);
                 break;
-            case 11:
+            case 10:
                 textBG.SetActive(true);
                 textIteams[5].SetActive(true);
                 break;
-            case 12:
+            case 11:
                 textBG.SetActive(true);
                 textIteams[6].SetActive(true);
                 break;

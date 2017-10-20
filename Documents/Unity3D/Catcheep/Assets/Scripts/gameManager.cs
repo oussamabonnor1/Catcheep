@@ -46,12 +46,14 @@ public class gameManager : MonoBehaviour
     public bool tutorielFinished;
 
     private int originalScore;
+    private int finishPanelSafetyNet; //this var is here to make sure we dont wait for more than 3 seconds
     private music musicManager;
 
 
     // Use this for initialization
     void Start()
     {
+        finishPanelSafetyNet = 0;
         tutorielFinished = false;
         catchedSomething = false;
         totalSheepsCaught = PlayerPrefs.GetInt("sheepy");
@@ -313,8 +315,10 @@ public class gameManager : MonoBehaviour
 
     IEnumerator finishPanelShowing()
     {
+        ++finishPanelSafetyNet;
         yield return new WaitForSeconds(1f);
-        if (!GameObject.FindGameObjectWithTag("sheepy") && !GameObject.FindGameObjectWithTag("blacky"))
+        if ((!GameObject.FindGameObjectWithTag("sheepy") && !GameObject.FindGameObjectWithTag("blacky"))
+            || finishPanelSafetyNet > 2)
         {
             musicManager.GetComponent<music>().UISFX(4);
             PlayerPrefs.SetInt("sheepy", totalSheepsCaught);

@@ -243,7 +243,7 @@ public class sheepDestroyer : MonoBehaviour
 
         if (transform.parent != null && transform.parent.childCount == 1)
         {
-            Destroy(transform.parent.gameObject, 0.5f);
+            Destroy(transform.parent.gameObject);
         }
 
         if (gameObject.name != "Snow ball(Clone)") Destroy(gameObject);

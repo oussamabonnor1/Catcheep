@@ -10,14 +10,12 @@ using UnityEngine.UI;
 
 public class gameManager : MonoBehaviour
 {
-    [Header("Sheep related objects")]
-    public GameObject tutoSheep;
+    [Header("Sheep related objects")] public GameObject tutoSheep;
     public GameObject[] sheeps;
     public GameObject[] formationSheepys;
     public AudioClip[] sheepSound;
 
-    [Header("UI components")]
-    public GameObject background;
+    [Header("UI components")] public GameObject background;
     public GameObject menuBackground;
     public GameObject backgroundOfTrees;
     public GameObject finishPanel;
@@ -27,7 +25,7 @@ public class gameManager : MonoBehaviour
     public GameObject BadViewGameObject;
     public Sprite[] sfxImages;
     public Sprite[] musicImages;
-    
+
     public static bool gameOver;
     private Vector3 edgeOfScreen;
     private GameObject scoreText;
@@ -53,12 +51,20 @@ public class gameManager : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        //intialising the vars of caught sheeps (huge problem happens on finish panel if this isnt here)
+        sheepyCaught = 0;
+        blackyCaught = 0;
+        flashCaught = 0;
+        snowSheepyCaught = 0;
+        snowBlackyCaught = 0;
+        citySheepyCaught = 0;
+        cityBlackyCaught = 0;
         finishPanelSafetyNet = 0;
         tutorielFinished = false;
         catchedSomething = false;
         totalSheepsCaught = PlayerPrefs.GetInt("sheepy");
         combo = 0;
-        originalScore= PlayerPrefs.GetInt("money");
+        originalScore = PlayerPrefs.GetInt("money");
         score = PlayerPrefs.GetInt("money");
         musicManager = GameObject.Find("Music Manager").GetComponent<music>();
 
@@ -73,14 +79,15 @@ public class gameManager : MonoBehaviour
             backgroundOfTrees = GameObject.Find("Trees");
             ResizeBackground(backgroundOfTrees);
         }
-        
+
         scoreText = GameObject.Find("score");
         scoreText.GetComponent<TextMeshProUGUI>().text = "x " + score;
         GameObject.Find("sheeps caught").GetComponent<TextMeshProUGUI>().text = "x " + totalSheepsCaught;
 
         //edge of screen is a vector3 that holds the screens width (can't get it directly cause of Screen/World point difference)
         Vector3 helpToolsPlateWidth = helpToolsPlate.GetComponent<RectTransform>().rect.size;
-        edgeOfScreen = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - helpToolsPlateWidth.x, Screen.height, 0f));
+        edgeOfScreen =
+            Camera.main.ScreenToWorldPoint(new Vector3(Screen.width - helpToolsPlateWidth.x, Screen.height, 0f));
         gameOver = false;
         StartCoroutine(animatedBackgrounds(background, menuBackground));
     }
@@ -96,7 +103,7 @@ public class gameManager : MonoBehaviour
             b.transform.position = new Vector3(v2.x, v2.y + 1, v2.z);
             yield return new WaitForSeconds(0.03f);
         }
-        if(backgroundOfTrees != null )backgroundOfTrees.SetActive(true);
+        if (backgroundOfTrees != null) backgroundOfTrees.SetActive(true);
         if (PlayerPrefs.GetInt("tuto") == 2 || PlayerPrefs.GetInt("tuto") == 3)
         {
             Instantiate(tutoSheep);
@@ -120,7 +127,7 @@ public class gameManager : MonoBehaviour
             {
                 combo = 0;
                 StartCoroutine(flareMaker(0.45f));
-                if(PlayerPrefs.GetString("Vibration") == "True") Handheld.Vibrate();
+                if (PlayerPrefs.GetString("Vibration") == "True") Handheld.Vibrate();
             }
 
             if (catchedSomething)
@@ -149,6 +156,7 @@ public class gameManager : MonoBehaviour
             }
         }
     }
+
     public void SFX()
     {
         if (PlayerPrefs.GetInt("SFX") == 0)
@@ -163,6 +171,7 @@ public class gameManager : MonoBehaviour
         pausePanel.transform.GetChild(5).GetComponent<Image>().sprite =
             sfxImages[PlayerPrefs.GetInt("SFX")];
     }
+
     public void music()
     {
         if (PlayerPrefs.GetInt("music") == 0)
@@ -188,6 +197,7 @@ public class gameManager : MonoBehaviour
             musicManager.GetComponent<music>().BackgroundMusic(3);
         }
     }
+
     void ResizeBackground(GameObject background)
     {
         SpriteRenderer sr = background.GetComponent<SpriteRenderer>();
@@ -198,61 +208,62 @@ public class gameManager : MonoBehaviour
 
         float width = sr.sprite.bounds.size.x;
         float height = sr.sprite.bounds.size.y;
-        
+
         float worldScreenHeight = Camera.main.orthographicSize * 2f;
         float worldScreenWidth = worldScreenHeight / Screen.height * Screen.width;
 
         Vector3 xWidth = background.transform.localScale;
         xWidth.x = worldScreenWidth / width;
         background.transform.localScale = xWidth;
-        
+
         Vector3 yHeight = background.transform.localScale;
         yHeight.y = worldScreenHeight / height;
         background.transform.localScale = yHeight;
-
     }
-    
+
     //THE MAIN SHEEP CREATOR, DO NOT ULTER UNLESS YOU UNDERSTAND THE CODE 100% 
     //this bit is in relation with many scripts
     public IEnumerator sheepSpawner()
     {
         //yield return new WaitForSeconds(1f);
-        int size = sheeps.Length -1;
-        float taux = (float) PlayerPrefs.GetInt("level")/100;
+        int size = sheeps.Length - 1;
+        float taux = (float) PlayerPrefs.GetInt("level") / 100;
         while (!gameOver)
         {
             Collider2D collisions = Physics2D.OverlapBox(new Vector2(transform.position.x, transform.position.y),
                 new Vector2(edgeOfScreen.x, 2.5f), 0f);
-            
+
             if (collisions == null)
             {
                 if (taux < 0.9f) taux += 0.05f;
                 int i = Random.Range(-5, 10);
-                
+                if (PlayerPrefs.GetInt("level") < 5) i = 0;
+                else if (PlayerPrefs.GetInt("level") < 10) i = Random.Range(-1, 2);
+                else if (PlayerPrefs.GetInt("level") < 15) i = Random.Range(-4, 9);
                 switch (i)
                 {
                     case -6:
                         //making sure boss sheepy is rare af
                         int j = Random.Range(0, 10);
-                        if(j == 1) StartCoroutine(bossSheepy());
+                        if (j == 1) StartCoroutine(bossSheepy());
                         break;
                     case -5:
                     case -4:
                     case -3:
                     case -2:
                     case -1:
-                    case  0:
+                    case 0:
                         oneSheepyRandom(Random.Range(0, size));
                         //yield return new WaitForSeconds(2 - taux);
                         break;
 
                     case 1:
-                        threeSheepySlidingRightUpDown(1, Random.Range(0, size));
+                        int num = Random.Range(1, 4);
+                        twoSheepyHorizontalManySet(num, Random.Range(0, size));
                         //yield return new WaitForSeconds(3 - taux);
                         break;
                     case 2:
-                        int num = Random.Range(1, 4);
-                        twoSheepyHorizontalManySet(num, Random.Range(0, size));
+                        threeSheepySlidingRightUpDown(1, Random.Range(0, size));
                         //yield return new WaitForSeconds(num - taux);
                         break;
 
@@ -286,11 +297,10 @@ public class gameManager : MonoBehaviour
                         //yield return new WaitForSeconds(3 - taux);
                         break;
                     case 9:
-                        preMadeFormation(Random.Range(0,formationSheepys.Length));
+                        preMadeFormation(Random.Range(0, formationSheepys.Length));
                         //yield return new WaitForSeconds();
                         break;
                 }
-
             }
             else
             {
@@ -347,24 +357,27 @@ public class gameManager : MonoBehaviour
             StartCoroutine(finishPanelShowing());
         }
     }
+
     public void quit()
     {
         Time.timeScale = 1;
         PlayerPrefs.SetInt("sheepy", totalSheepsCaught);
         SceneManager.LoadScene(1);
     }
+
     public void ContinueGame()
     {
         musicManager.GetComponent<music>().UISFX(2);
         Time.timeScale = 1;
         pausePanel.SetActive(false);
     }
+
     public void restart()
     {
         if (PlayerPrefs.GetInt("hearts") > 0)
         {
             musicManager.GetComponent<music>().UISFX(0);
-            PlayerPrefs.SetInt("hearts",PlayerPrefs.GetInt("hearts")-1);
+            PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("hearts") - 1);
             Time.timeScale = 1;
             PlayerPrefs.SetInt("sheepy", totalSheepsCaught);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
@@ -388,8 +401,7 @@ public class gameManager : MonoBehaviour
 
     IEnumerator bossSheepy()
     {
-        
-        Vector2 spawnPosition = new Vector2(Random.Range(-edgeOfScreen.x,edgeOfScreen.x),
+        Vector2 spawnPosition = new Vector2(Random.Range(-edgeOfScreen.x, edgeOfScreen.x),
             Random.Range(-edgeOfScreen.y / 2, edgeOfScreen.y / 2));
         for (int i = 0; i < 3; i++)
         {
@@ -397,7 +409,7 @@ public class gameManager : MonoBehaviour
 
             if (collisions)
             {
-                GameObject boss = Instantiate(sheeps[sheeps.Length - 1] , spawnPosition, Quaternion.identity);
+                GameObject boss = Instantiate(sheeps[sheeps.Length - 1], spawnPosition, Quaternion.identity);
                 yield return new WaitForSeconds(1.5f);
                 boss.GetComponent<sheepDestroyer>().Destruction();
                 break;
@@ -443,7 +455,7 @@ public class gameManager : MonoBehaviour
         }
     }
 
-    void threeSheepySlidingRightUpDown(int direction ,int index)
+    void threeSheepySlidingRightUpDown(int direction, int index)
     {
         // positioning the first (left = 1 or right = -1 depending on the direction) sheepy
         float sheepyWidth = (sheeps[index].GetComponent<SpriteRenderer>().bounds.size).x;
@@ -569,13 +581,15 @@ public class gameManager : MonoBehaviour
 
     void preMadeFormation(int index)
     {
-        Instantiate(formationSheepys[index], formationSheepys[index].transform.position, formationSheepys[index].transform.rotation);
+        Instantiate(formationSheepys[index], formationSheepys[index].transform.position,
+            formationSheepys[index].transform.rotation);
     }
 
     IEnumerator flareMaker(float time)
     {
         Vector3 position = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        GameObject flareGameObject =  Instantiate(flare,new Vector3(position.x,position.y, transform.position.z) , Quaternion.identity);
+        GameObject flareGameObject = Instantiate(flare, new Vector3(position.x, position.y, transform.position.z),
+            Quaternion.identity);
         yield return new WaitForSeconds(time);
         Destroy(flareGameObject);
     }
@@ -600,7 +614,7 @@ public class gameManager : MonoBehaviour
         objectToOpen.SetActive(true);
         for (int i = 0; i <= 10; i++)
         {
-            float a = (float)i / 10;
+            float a = (float) i / 10;
             objectToOpen.transform.localScale = new Vector3(a, a, 1);
             yield return new WaitForSeconds(0.01f);
         }
@@ -610,7 +624,7 @@ public class gameManager : MonoBehaviour
     {
         for (int i = 10; i >= 0; i--)
         {
-            float a = (float)i / 10;
+            float a = (float) i / 10;
             objectToOpen.transform.localScale = new Vector3(a, a, 1);
             yield return new WaitForSeconds(0.01f);
         }

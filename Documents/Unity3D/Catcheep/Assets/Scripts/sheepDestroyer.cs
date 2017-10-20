@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Assets.Scripts;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class sheepDestroyer : MonoBehaviour
 {
@@ -204,7 +203,7 @@ public class sheepDestroyer : MonoBehaviour
         ++gameManager.totalSheepsCaught;
         sheepsCaughtText.GetComponent<TextMeshProUGUI>().text = " x " + gameManager.totalSheepsCaught;
         ++gameManager.combo;
-        gameManager.score += 100 + 10 * gameManager.combo;
+        gameManager.score += 10 * gameManager.combo;
         PlayerPrefs.SetInt("money", gameManager.score);
         scoreText.GetComponent<TextMeshProUGUI>().text = "x " + (gameManager.score);
 

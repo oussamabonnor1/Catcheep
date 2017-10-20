@@ -74,7 +74,7 @@ public class startMenuManager : MonoBehaviour
         else musicToggle.GetComponent<Switch>().isOn = false;
 
         //Sounds
-        if(!GameObject.Find("Music Manager").GetComponents<AudioSource>()[0].isPlaying) musicManager.BackgroundMusic(0);
+        musicManager.BackgroundMusic(0);
 
         //extracting necissary elements for functions
         ScrollBar = ScrollBarGameObject.GetComponent<Scrollbar>();

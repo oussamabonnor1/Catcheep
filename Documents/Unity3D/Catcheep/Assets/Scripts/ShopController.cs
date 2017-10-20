@@ -117,6 +117,7 @@ public class ShopController : MonoBehaviour
 
     public void buyALifeButton()
     {
+        DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         if (PlayerPrefs.GetInt("money") >= 7500 && PlayerPrefs.GetInt("hearts") < PlayerPrefs.GetInt("maxHearts"))
         {
             musicManager.UISFX(1);
@@ -163,6 +164,7 @@ public class ShopController : MonoBehaviour
 
     public void killTimeButton()
     {
+        DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         if (PlayerPrefs.GetInt("money") >= 3000 && PlayerPrefs.GetFloat("heartTime") >= 1)
         {
             musicManager.UISFX(1);
@@ -190,6 +192,7 @@ public class ShopController : MonoBehaviour
 
     public void moreCapacityButton()
     {
+        DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         musicManager.UISFX(1);
         if (PlayerPrefs.GetInt("money") >= 12500 && PlayerPrefs.GetInt("maxHearts") < 10)
         {
@@ -224,6 +227,7 @@ public class ShopController : MonoBehaviour
 
     public void shipOneButton()
     {
+        DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         musicManager.UISFX(1);
         StartCoroutine(objectOpened(DecisionPanel));
         DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
@@ -241,6 +245,7 @@ public class ShopController : MonoBehaviour
 
     public void shipTwoButton()
     {
+        DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         musicManager.UISFX(1);
         if (PlayerPrefs.GetInt("money") >= 15000)
         {
@@ -270,6 +275,7 @@ public class ShopController : MonoBehaviour
 
     public void shipThreeButton()
     {
+        DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         musicManager.UISFX(1);
         if (PlayerPrefs.GetInt("money") >= 25000)
         {
@@ -299,6 +305,7 @@ public class ShopController : MonoBehaviour
 
     public void shipFourButton()
     {
+        DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         musicManager.UISFX(1);
         if (PlayerPrefs.GetInt("money") >= 40000 )
         {
@@ -328,6 +335,7 @@ public class ShopController : MonoBehaviour
 
     public void buyHayButton()
     {
+        DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         musicManager.UISFX(1);
         if (PlayerPrefs.GetInt("money") >= 15000)
         {
@@ -356,6 +364,7 @@ public class ShopController : MonoBehaviour
 
     public void buyNetButton()
     {
+        DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         musicManager.UISFX(1);
         if (PlayerPrefs.GetInt("money") >= 20000)
         {
@@ -384,6 +393,7 @@ public class ShopController : MonoBehaviour
 
     public void buyLoveButton()
     {
+        DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         musicManager.UISFX(1);
         if (PlayerPrefs.GetInt("money") >= 30000)
         {

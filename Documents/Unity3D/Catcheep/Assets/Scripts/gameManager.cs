@@ -248,12 +248,22 @@ public class gameManager : MonoBehaviour
                         if (j == 1) StartCoroutine(bossSheepy());
                         break;
                     case -5:
+                        oneSheepyRandom(0);
+                        break;
                     case -4:
+                        oneSheepyRandom(0);
+                        break;
                     case -3:
+                        oneSheepyRandom(1);
+                        break;
                     case -2:
+                        oneSheepyRandom(2);
+                        break;
                     case -1:
+                        oneSheepyRandom(3);
+                        break;
                     case 0:
-                        oneSheepyRandom(Random.Range(0, size));
+                        oneSheepyRandom(3);
                         //yield return new WaitForSeconds(2 - taux);
                         break;
 

@@ -218,7 +218,7 @@ public class gameManager : MonoBehaviour
     {
         //yield return new WaitForSeconds(1f);
         int size = sheeps.Length -1;
-        float taux = 0;
+        float taux = (float) PlayerPrefs.GetInt("level")/100;
         while (!gameOver)
         {
             Collider2D collisions = Physics2D.OverlapBox(new Vector2(transform.position.x, transform.position.y),
@@ -226,7 +226,7 @@ public class gameManager : MonoBehaviour
             
             if (collisions == null)
             {
-                if (taux < 2f) taux += 0.065f;
+                if (taux < 0.9f) taux += 0.05f;
                 int i = Random.Range(-5, 10);
                 
                 switch (i)

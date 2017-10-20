@@ -737,7 +737,7 @@ public class AlienManager : MonoBehaviour
 
     void setSlider(int level)
     {
-        if (level < 50)
+        if (level < 49)
         {
             PlayerPrefs.SetInt("level", level);
             slider.GetComponent<Slider>().value = level;
@@ -753,7 +753,7 @@ public class AlienManager : MonoBehaviour
         }
         else
         {
-            //wining game is put here
+            SceneManager.LoadScene("Introduction");
         }
     }
 

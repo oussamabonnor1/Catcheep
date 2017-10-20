@@ -227,7 +227,7 @@ public class gameManager : MonoBehaviour
             if (collisions == null)
             {
                 if (taux < 2f) taux += 0.065f;
-                int i = Random.Range(-6, 12);
+                int i = Random.Range(-5, 10);
                 
                 switch (i)
                 {
@@ -285,25 +285,16 @@ public class gameManager : MonoBehaviour
                         fourSheepyTriangleLookingDownUp(1, Random.Range(0, size));
                         //yield return new WaitForSeconds(3 - taux);
                         break;
-
                     case 9:
                         preMadeFormation(Random.Range(0,formationSheepys.Length));
                         //yield return new WaitForSeconds();
-                        break;
-                    case 10:
-                        preMadeFormation(2);
-                        yield return new WaitForSeconds(2f - taux);
-                        break;
-                    case 11:
-                        preMadeFormation(3);
-                        yield return new WaitForSeconds(2.5f - taux);
                         break;
                 }
 
             }
             else
             {
-                yield return new WaitForSeconds(2f - taux);
+                yield return new WaitForSeconds(1f - taux);
             }
         }
 

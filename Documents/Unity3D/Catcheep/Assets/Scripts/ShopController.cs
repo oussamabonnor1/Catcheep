@@ -126,6 +126,10 @@ public class ShopController : MonoBehaviour
                 "Do you wanna buy an energy drink ?";
             DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(buyALife);
         }
+        else
+        {
+            OpenMoneyPanel("You Can't Have this item now !");
+        }
     }
 
     public void CloseDecisionPanel()
@@ -144,8 +148,9 @@ public class ShopController : MonoBehaviour
         musicManager.UISFX(2);
         StartCoroutine(objectClosed(moneyPanel));
     }
-    public void OpenMoneyPanel()
+    public void OpenMoneyPanel(string title)
     {
+        moneyPanel.transform.GetChild(1).transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = title;
         musicManager.UISFX(1);
         StartCoroutine(objectOpened(moneyPanel));
     }
@@ -175,8 +180,7 @@ public class ShopController : MonoBehaviour
         }
         else
         {
-            musicManager.UISFX(1);
-            StartCoroutine(objectOpened(moneyPanel));
+            OpenMoneyPanel("You Don't Have Enough Money To Buy This Item");
         }
     }
 
@@ -194,7 +198,11 @@ public class ShopController : MonoBehaviour
     {
         DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         musicManager.UISFX(1);
-        if (PlayerPrefs.GetInt("money") >= 12500 && PlayerPrefs.GetInt("maxHearts") < 10)
+        if (PlayerPrefs.GetInt("maxHearts") >= 10)
+        {
+            OpenMoneyPanel("You Reached maximum energy Drinks capacity !");
+        }
+        else if (PlayerPrefs.GetInt("money") >= 12500)
         {
             StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
@@ -203,7 +211,7 @@ public class ShopController : MonoBehaviour
         }
         else
         {
-            StartCoroutine(objectOpened(moneyPanel));
+            OpenMoneyPanel("You Don't Have Enough Money To Buy This Item");
         }
     }
 
@@ -247,7 +255,13 @@ public class ShopController : MonoBehaviour
     {
         DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         musicManager.UISFX(1);
-        if (PlayerPrefs.GetInt("money") >= 15000)
+
+        if (PlayerPrefs.GetInt("ship1")== 1)
+        {
+            musicManager.UISFX(0);
+            PlayerPrefs.SetInt("ship", 2);
+        }
+        else if (PlayerPrefs.GetInt("money") >= 15000)
         {
             StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
@@ -256,7 +270,7 @@ public class ShopController : MonoBehaviour
         }
         else
         {
-            StartCoroutine(objectOpened(moneyPanel));
+            OpenMoneyPanel("You Don't Have Enough Money To Buy This Item");
             StartCoroutine(objectClosed(DecisionPanel));
         }
     }
@@ -277,7 +291,12 @@ public class ShopController : MonoBehaviour
     {
         DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         musicManager.UISFX(1);
-        if (PlayerPrefs.GetInt("money") >= 25000)
+        if (PlayerPrefs.GetInt("ship2") == 1)
+        {
+            musicManager.UISFX(0);
+            PlayerPrefs.SetInt("ship", 3);
+        }
+        else if(PlayerPrefs.GetInt("money") >= 25000)
         {
             StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
@@ -286,7 +305,7 @@ public class ShopController : MonoBehaviour
         }
         else
         {
-            StartCoroutine(objectOpened(moneyPanel));
+            OpenMoneyPanel("You Don't Have Enough Money To Buy This Item");
             StartCoroutine(objectClosed(DecisionPanel));
         }
     }
@@ -307,7 +326,12 @@ public class ShopController : MonoBehaviour
     {
         DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         musicManager.UISFX(1);
-        if (PlayerPrefs.GetInt("money") >= 40000 )
+        if (PlayerPrefs.GetInt("ship3") == 1)
+        {
+            musicManager.UISFX(0);
+            PlayerPrefs.SetInt("ship", 4);
+        }
+        else if (PlayerPrefs.GetInt("money") >= 40000 )
         {
             StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
@@ -316,7 +340,7 @@ public class ShopController : MonoBehaviour
         }
         else
         {
-            StartCoroutine(objectOpened(moneyPanel));
+            OpenMoneyPanel("You Don't Have Enough Money To Buy This Item");
             StartCoroutine(objectClosed(DecisionPanel));
         }
     }
@@ -346,7 +370,7 @@ public class ShopController : MonoBehaviour
         }
         else
         {
-            StartCoroutine(objectOpened(moneyPanel));
+            OpenMoneyPanel("You Don't Have Enough Money To Buy This Item");
             StartCoroutine(objectClosed(DecisionPanel));
         }
     }
@@ -375,7 +399,7 @@ public class ShopController : MonoBehaviour
         }
         else
         {
-            StartCoroutine(objectOpened(moneyPanel));
+            OpenMoneyPanel("You Don't Have Enough Money To Buy This Item");
             StartCoroutine(objectClosed(DecisionPanel));
         }
     }
@@ -404,7 +428,7 @@ public class ShopController : MonoBehaviour
         }
         else
         {
-            StartCoroutine(objectOpened(moneyPanel));
+            OpenMoneyPanel("You Don't Have Enough Money To Buy This Item");
             StartCoroutine(objectClosed(DecisionPanel));
         }
     }

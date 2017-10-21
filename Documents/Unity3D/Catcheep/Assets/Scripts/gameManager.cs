@@ -236,9 +236,9 @@ public class gameManager : MonoBehaviour
             if (collisions == null)
             {
                 if (taux < 0.9f) taux += 0.05f;
-                int i = Random.Range(-5, 10);
-                if (PlayerPrefs.GetInt("level") < 5) i = 0;
-                else if (PlayerPrefs.GetInt("level") < 10) i = Random.Range(-1, 2);
+                int i = Random.Range(-6, 10);
+                if (PlayerPrefs.GetInt("level") < 5) i = Random.Range(-5, 1);
+                else if (PlayerPrefs.GetInt("level") < 10) i = Random.Range(-5, 2);
                 else if (PlayerPrefs.GetInt("level") < 15) i = Random.Range(-4, 9);
                 switch (i)
                 {
@@ -248,19 +248,19 @@ public class gameManager : MonoBehaviour
                         if (j == 1) StartCoroutine(bossSheepy());
                         break;
                     case -5:
-                        oneSheepyRandom(0);
-                        break;
-                    case -4:
-                        oneSheepyRandom(0);
-                        break;
-                    case -3:
                         oneSheepyRandom(1);
                         break;
-                    case -2:
+                    case -4:
                         oneSheepyRandom(2);
                         break;
+                    case -3:
+                        oneSheepyRandom(0);
+                        break;
+                    case -2:
+                        oneSheepyRandom(0);
+                        break;
                     case -1:
-                        oneSheepyRandom(3);
+                        oneSheepyRandom(0);
                         break;
                     case 0:
                         oneSheepyRandom(3);

@@ -84,6 +84,8 @@ public class introManager : MonoBehaviour
             case 11:
                 textBG.SetActive(true);
                 textIteams[6].SetActive(true);
+                index += 1;
+                manager();
                 break;
             default:
                 killEverything();
@@ -172,6 +174,7 @@ public class introManager : MonoBehaviour
 
     IEnumerator objectClosed(GameObject objectToOpen)
     {
+        yield return new WaitForSeconds(1f);
         for (int i = 10; i >= 0; i--)
         {
             float a = (float) i / 10;

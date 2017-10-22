@@ -237,13 +237,13 @@ public class gameManager : MonoBehaviour
                 if (taux < 0.9f) taux += 0.05f;
                 int i = Random.Range(-6, 10);
                 if (PlayerPrefs.GetInt("level") < 5) i = Random.Range(-5, 1);
-                else if (PlayerPrefs.GetInt("level") < 10) i = Random.Range(-5, 2);
-                else if (PlayerPrefs.GetInt("level") < 15) i = Random.Range(-4, 9);
+                else if (PlayerPrefs.GetInt("level") < 7) i = Random.Range(-5, 2);
+                else if (PlayerPrefs.GetInt("level") < 10) i = Random.Range(-4, 9);
                 switch (i)
                 {
                     case -6:
                         //making sure boss sheepy is rare af
-                        int j = Random.Range(0, 10);
+                        int j = Random.Range(0, 15);
                         if (j == 1) StartCoroutine(bossSheepy());
                         break;
                     case -5:

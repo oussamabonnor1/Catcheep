@@ -175,7 +175,6 @@ public class AlienManager : MonoBehaviour
             StartCoroutine(objectClosed(timeText));
             StartCoroutine(alienSpawner());
         }
-       
     }
 
     IEnumerator alienSpawner()
@@ -218,43 +217,38 @@ public class AlienManager : MonoBehaviour
             {
                 deactivatingButtons();
                 PlayerPrefs.SetInt("sheep" + currentSheepShowed,
-                PlayerPrefs.GetInt("sheep" + currentSheepShowed) - sheepyRequested[currentSheepShowed]);
+                    PlayerPrefs.GetInt("sheep" + currentSheepShowed) - sheepyRequested[currentSheepShowed]);
                 PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") - sheepyRequested[currentSheepShowed]);
                 PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + (sheepyRequested[currentSheepShowed] * 100));
                 moneyAmountText.GetComponent<TextMeshProUGUI>().text = "$" + PlayerPrefs.GetInt("money");
                 sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
                 sheepyRequested[currentSheepShowed] = 0;
                 //this long thing will make sure the player will have updated hunting
-                int toDelete = 0;
-                bool found = false;
+
                 for (int i = 0; i < indexes.Length; i++)
                 {
                     if (indexes[i] >= 0)
                     {
                         if (indexes[i] == currentSheepShowed)
                         {
-                            print(toDelete + " is being killed " + indexes[i]);
-                            toDelete = i;
-                            found = true;
+                            amounts[i] = 0;
+                            PlayerPrefs.SetInt("amount" + i, 0);
                         }
                     }
                 }
-                if (found)
-                {
-                    PlayerPrefs.SetInt("amount" + indexes[toDelete], 0);
-                    PlayerPrefs.SetInt("index" + toDelete, 0);
-                }
+
+                loadCurrentMission();
                 //end of confusing code
                 musicManager.UISFX(3);
                 StartCoroutine(shipLeaving());
             }
             else
-            { 
+            {
                 openProblemPanel("You Don't Have Enough Sheeps !");
             }
         }
     }
-    
+
     IEnumerator shipLeaving()
     {
         //setting spaceship UI
@@ -469,6 +463,7 @@ public class AlienManager : MonoBehaviour
         musicManager.UISFX(2);
         StartCoroutine(objectClosed(problemPanel));
     }
+
     public void openinfoPanel()
     {
         musicManager.UISFX(1);
@@ -494,6 +489,7 @@ public class AlienManager : MonoBehaviour
                 amounts[i] = PlayerPrefs.GetInt("amount" + i);
             }
         }
+
         settingDemands(indexes, amounts);
     }
 
@@ -542,7 +538,7 @@ public class AlienManager : MonoBehaviour
             //sheep needed (index) = demand (i is used to make things organised)
             //index and demand must be synched and taken from missions.txt
             //making sure it's not -1 (initialy)
-            if (index[i] >= 0)
+            if (index[i] >= 0 && demand[i] > 0)
             {
                 if (sheepyRequested[index[i]] == 0) sheepyRequested[index[i]] = demand[i];
             }
@@ -737,7 +733,7 @@ public class AlienManager : MonoBehaviour
 
     void setSlider(int level)
     {
-        if (level < 49)
+        if (level <= 49)
         {
             PlayerPrefs.SetInt("level", level);
             slider.GetComponent<Slider>().value = level;
@@ -776,18 +772,16 @@ public class AlienManager : MonoBehaviour
     public void ShowRewardedVideo()
     {
         ShowOptions options = new ShowOptions();
-        if (timeText.activeSelf)
+
+        if (Advertisement.IsReady())
         {
-            if (Advertisement.IsReady())
-            {
-                options.resultCallback = killTimeAd;
-                Advertisement.Show("rewardedVideo", options);
-            }
-            else
-            {
-                musicManager.UISFX(1);
-                StartCoroutine(objectOpened(AdPanel));
-            }
+            options.resultCallback = killTimeAd;
+            Advertisement.Show("rewardedVideo", options);
+        }
+        else
+        {
+            musicManager.UISFX(1);
+            StartCoroutine(objectOpened(AdPanel));
         }
     }
 

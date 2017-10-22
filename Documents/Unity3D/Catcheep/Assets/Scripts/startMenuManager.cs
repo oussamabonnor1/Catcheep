@@ -24,6 +24,7 @@ public class startMenuManager : MonoBehaviour
     public GameObject ProgressPanel;
     public GameObject noHeartsPanel;
     public GameObject rateUsPanel;
+    public GameObject AlienButton;
     private Scrollbar ScrollBar;
 
     private music musicManager;
@@ -92,6 +93,7 @@ public class startMenuManager : MonoBehaviour
         //giving data to texts (as late as possible)
         heartText.GetComponent<TextMeshProUGUI>().text = "x" + PlayerPrefs.GetInt("hearts");
         moneyText.GetComponent<TextMeshProUGUI>().text = "$" + PlayerPrefs.GetInt("money");
+        if(PlayerPrefs.GetInt("level") >49) AlienButton.SetActive(false);
         levelText.GetComponent<TextMeshProUGUI>().text = "Level " + (PlayerPrefs.GetInt("level")+1);
     }
 

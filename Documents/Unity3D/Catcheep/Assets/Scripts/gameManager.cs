@@ -132,7 +132,6 @@ public class gameManager : MonoBehaviour
 
             if (catchedSomething)
             {
-                PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") + 1);
                 catchedSomething = false;
             }
         }
@@ -606,7 +605,7 @@ public class gameManager : MonoBehaviour
 
     public void badView()
     {
-        StartCoroutine(badViewCoroutine());
+        if (!BadViewGameObject.gameObject.activeSelf) StartCoroutine(badViewCoroutine());
     }
 
     IEnumerator badViewCoroutine()

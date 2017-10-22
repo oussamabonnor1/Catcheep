@@ -50,6 +50,7 @@ public class Tutoriel : MonoBehaviour
         }
         else if (PlayerPrefs.GetInt("tuto") == 4)
         {
+            textBox.GetComponentInChildren<TextMeshProUGUI>().text = "Click on the space ship !";
             secondImage.SetActive(true);
             StartCoroutine(incrementTuto(true));
             return;

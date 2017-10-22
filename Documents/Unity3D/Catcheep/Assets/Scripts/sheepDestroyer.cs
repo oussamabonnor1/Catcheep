@@ -148,44 +148,49 @@ public class sheepDestroyer : MonoBehaviour
         if (gameObject.tag.Contains("Boss"))
         {
             //Giving the player a great reward for an amazing opening
-            print("You caught a sheepy !");
             gameManager.score += 10000 + 1000 * gameManager.combo;
         }
 
-        if (gameObject.name.Contains("sheepy"))
-        {
+        if (gameObject.tag.Equals("sheepy")) {
+
+            if (gameObject.name.Contains("skiing"))
+            {
+                gameManager.snowSheepyCaught++;
+                PlayerPrefs.SetInt("sheep3", PlayerPrefs.GetInt("sheep3") + 1);
+            }
+            else if (gameObject.name.Contains("city"))
+            {
+                gameManager.citySheepyCaught++;
+                PlayerPrefs.SetInt("sheep5", PlayerPrefs.GetInt("sheep5") + 1);
+            }
+            else if (gameObject.name.Contains("flash"))
+            {
+                gameManager.flashCaught++;
+                PlayerPrefs.SetInt("sheep2", PlayerPrefs.GetInt("sheep2") + 1);
+            }
+            else
+            {
             ++gameManager.sheepyCaught;
             PlayerPrefs.SetInt("sheep0", PlayerPrefs.GetInt("sheep0") + 1);
+            }
         }
         if (gameObject.tag.Equals("blacky"))
         {
-            gameManager.blackyCaught++;
-            PlayerPrefs.SetInt("sheep1", PlayerPrefs.GetInt("sheep1") + 1);
-        }
-        if (gameObject.name.Contains("flash"))
-        {
-            gameManager.flashCaught++;
-            PlayerPrefs.SetInt("sheep2", PlayerPrefs.GetInt("sheep2") + 1);
-        }
-        if (gameObject.name.Contains("sheepy skiing"))
-        {
-            gameManager.snowSheepyCaught++;
-            PlayerPrefs.SetInt("sheep3", PlayerPrefs.GetInt("sheep3") + 1);
-        }
-        if (gameObject.name.Contains("blacky skiing"))
-        {
-            gameManager.snowBlackyCaught++;
-            PlayerPrefs.SetInt("sheep4", PlayerPrefs.GetInt("sheep4") + 1);
-        }
-        if (gameObject.name.Contains("sheepy city"))
-        {
-            gameManager.citySheepyCaught++;
-            PlayerPrefs.SetInt("sheep5", PlayerPrefs.GetInt("sheep5") + 1);
-        }
-        if (gameObject.name.Contains("blacky city"))
-        {
-            gameManager.cityBlackyCaught++;
-            PlayerPrefs.SetInt("sheep6", PlayerPrefs.GetInt("sheep6") + 1);
+            if (gameObject.name.Contains("skiing"))
+            {
+                gameManager.snowBlackyCaught++;
+                PlayerPrefs.SetInt("sheep4", PlayerPrefs.GetInt("sheep4") + 1);
+            }
+            else if (gameObject.name.Contains("city"))
+            {
+                gameManager.cityBlackyCaught++;
+                PlayerPrefs.SetInt("sheep6", PlayerPrefs.GetInt("sheep6") + 1);
+            }
+            else
+            {
+                gameManager.blackyCaught++;
+                PlayerPrefs.SetInt("sheep1", PlayerPrefs.GetInt("sheep1") + 1);
+            }
         }
 
         caught = true;
@@ -201,6 +206,7 @@ public class sheepDestroyer : MonoBehaviour
 
         //rewarding player
         ++gameManager.totalSheepsCaught;
+        PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") + 1);
         sheepsCaughtText.GetComponent<TextMeshProUGUI>().text = " x " + gameManager.totalSheepsCaught;
         ++gameManager.combo;
         gameManager.score += 10 * gameManager.combo;

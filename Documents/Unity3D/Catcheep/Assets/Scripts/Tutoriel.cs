@@ -26,12 +26,12 @@ public class Tutoriel : MonoBehaviour
         }
         else
         {
-            firstImage.SetActive(false);
+            if(!SceneManager.GetActiveScene().name.Equals("Alien")) firstImage.SetActive(false);
             secondImage.SetActive(false);
             thirdImage.SetActive(false);
             TutoGameObject.SetActive(false);
         }
-}
+    }
 	
 	// Update is called once per frame
 	void Update () {

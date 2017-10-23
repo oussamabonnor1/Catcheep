@@ -18,7 +18,6 @@ public class Tutoriel : MonoBehaviour
     {
         if (PlayerPrefs.GetInt("tuto") < 10)
         {
-            //PlayerPrefs.SetInt("tuto",0);
             if (SceneManager.GetActiveScene().name.Equals("Start")) startSceneTutoriel();
             else if (SceneManager.GetActiveScene().name.Equals("Farm")) FarmSceneTutoriel();
             else if (SceneManager.GetActiveScene().name.Equals("Alien")) AlienSceneTutoriel();
@@ -72,6 +71,7 @@ public class Tutoriel : MonoBehaviour
             firstImage.SetActive(false);
             secondImage.SetActive(false);
             thirdImage.SetActive(false);
+            fourthImage.SetActive(false);
             TutoGameObject.SetActive(false);
         }
     }

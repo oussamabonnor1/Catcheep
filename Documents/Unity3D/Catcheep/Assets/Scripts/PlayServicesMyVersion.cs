@@ -61,7 +61,7 @@ public class PlayServicesMyVersion : MonoBehaviour {
 
     public void addValueToLeaderbord(string id, int score)
     {
-        Social.ReportScore(score, id, succes => {print("score added");});
+        Social.ReportScore(score, id, succes => {print("score added to leaderbord");});
     }
 
     public void showLeaderbordUI()

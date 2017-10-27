@@ -49,9 +49,9 @@ public class PlayServicesMyVersion : MonoBehaviour {
         Social.ReportProgress(id, 100, succes => { print("achievement unlocked !"); });
     }
 
-    public void unlockPartialAchievement(string id, int pourcentage)
+    public void unlockPartialAchievement(string id, double pourcentage)
     {
-        Social.ReportProgress(id,pourcentage,succes => {print("achievement unlocked partialy !");});
+        Social.ReportProgress(id,pourcentage,succes => {print("achievement partialy unlocked !");});
     }
 
     public void showAchievementUI()
@@ -67,5 +67,9 @@ public class PlayServicesMyVersion : MonoBehaviour {
     public void showLeaderbordUI()
     {
         Social.ShowLeaderboardUI();
+    }
+
+    public void showQuest()
+    {
     }
 }

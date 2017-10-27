@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Globalization;
 using Assets.Scripts;
 using TMPro;
 using UnityEngine;
@@ -81,7 +82,7 @@ public class gameManager : MonoBehaviour
         }
 
         scoreText = GameObject.Find("score");
-        scoreText.GetComponent<TextMeshProUGUI>().text = "x " + score;
+        cashUpdate(score);
         GameObject.Find("sheeps caught").GetComponent<TextMeshProUGUI>().text = "x " + totalSheepsCaught;
 
         //edge of screen is a vector3 that holds the screens width (can't get it directly cause of Screen/World point difference)
@@ -638,5 +639,15 @@ public class gameManager : MonoBehaviour
             yield return new WaitForSeconds(0.01f);
         }
         objectToOpen.SetActive(false);
+    }
+
+    void cashUpdate(int current)
+    {
+        string cash = current.ToString("N0", new NumberFormatInfo()
+        {
+            NumberGroupSizes = new[] { 3 },
+            NumberGroupSeparator = ","
+        });
+        scoreText.GetComponent<TextMeshProUGUI>().text = "$" + cash;
     }
 }

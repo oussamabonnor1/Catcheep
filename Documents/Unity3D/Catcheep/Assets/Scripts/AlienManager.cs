@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Globalization;
 using Assets.Scripts;
 using TMPro;
 using UnityEngine;
@@ -54,7 +55,7 @@ public class AlienManager : MonoBehaviour
         shipType = PlayerPrefs.GetInt("ship") - 1;
         edgeOfScreen = new Vector2(Screen.width, Screen.height);
         sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
-        moneyAmountText.GetComponent<TextMeshProUGUI>().text = "$" + PlayerPrefs.GetInt("money");
+        cashUpdate(PlayerPrefs.GetInt("money"));
 
         sheepyRequested = new[] {0, 0, 0, 0, 0, 0, 0};
         if (PlayerPrefs.GetInt("levelUp") == 0)
@@ -220,7 +221,7 @@ public class AlienManager : MonoBehaviour
                     PlayerPrefs.GetInt("sheep" + currentSheepShowed) - sheepyRequested[currentSheepShowed]);
                 PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") - sheepyRequested[currentSheepShowed]);
                 PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + (sheepyRequested[currentSheepShowed] * 100));
-                moneyAmountText.GetComponent<TextMeshProUGUI>().text = "$" + PlayerPrefs.GetInt("money");
+                cashUpdate(PlayerPrefs.GetInt("money"));
                 sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
                 sheepyRequested[currentSheepShowed] = 0;
                 //this long thing will make sure the player will have updated hunting
@@ -236,7 +237,6 @@ public class AlienManager : MonoBehaviour
                         }
                     }
                 }
-
                 loadCurrentMission();
                 //end of confusing code
                 musicManager.UISFX(3);
@@ -791,5 +791,16 @@ public class AlienManager : MonoBehaviour
         {
             musicManager.timer[currentSheepShowed] = 0f;
         }
+    }
+
+    void cashUpdate(int current)
+    {
+        musicManager.UISFX(3);
+        string cash = current.ToString("N0", new NumberFormatInfo()
+        {
+            NumberGroupSizes = new[] { 3 },
+            NumberGroupSeparator = ","
+        });
+        moneyAmountText.GetComponent<TextMeshProUGUI>().text = "$" + cash;
     }
 }

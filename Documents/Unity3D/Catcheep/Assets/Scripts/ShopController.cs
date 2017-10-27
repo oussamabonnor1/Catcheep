@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Globalization;
 using Assets.Scripts;
 using TMPro;
 using UnityEngine;
@@ -446,8 +447,13 @@ public class ShopController : MonoBehaviour
     void cashUpdate(int current)
     {
         musicManager.UISFX(3);
-        cashText.GetComponent<TextMeshProUGUI>().text = "$" + current;
-        MenuCashText.GetComponent<TextMeshProUGUI>().text = "$" + current;
+        string cash = current.ToString("N0", new NumberFormatInfo()
+        {
+            NumberGroupSizes = new[] {3},
+            NumberGroupSeparator = ","
+        });
+        cashText.GetComponent<TextMeshProUGUI>().text = "$" + cash;
+        MenuCashText.GetComponent<TextMeshProUGUI>().text = "$" + cash;
     }
 
     public void facebook()

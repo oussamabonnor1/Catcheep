@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using Assets.Scripts;
 using TMPro;
 using UnityEngine;
@@ -28,7 +29,7 @@ public class sheepDestroyer : MonoBehaviour
         caught = false;
         sheepsCaughtText = GameObject.Find("sheeps caught");
         scoreText = GameObject.Find("score");
-        scoreText.GetComponent<TextMeshProUGUI>().text = "x " + gameManager.score;
+        cashUpdate(gameManager.score);
         sheepCage = GameObject.Find("sheep cage");
     }
 
@@ -128,7 +129,7 @@ public class sheepDestroyer : MonoBehaviour
         caught = true;
         StartCoroutine(GameObject.Find("Game Manager").GetComponent<ObstacleController>().createObstacle());
         gameManager.score += 200 + 10 * gameManager.combo;
-        scoreText.GetComponent<TextMeshProUGUI>().text = "x " + (gameManager.score);
+        cashUpdate(gameManager.score);
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + 200 + 10 * gameManager.combo);
         if (obstacle.gameObject.name == "Car(Clone)")
         {
@@ -211,7 +212,7 @@ public class sheepDestroyer : MonoBehaviour
         ++gameManager.combo;
         gameManager.score += 10 * gameManager.combo;
         PlayerPrefs.SetInt("money", gameManager.score);
-        scoreText.GetComponent<TextMeshProUGUI>().text = "x " + (gameManager.score);
+        cashUpdate(gameManager.score);
 
         //destroying sheep
         speed = Mathf.Clamp(Vector3.Distance(transform.position, sheepCage.transform.position), 1f, 6f);
@@ -226,9 +227,9 @@ public class sheepDestroyer : MonoBehaviour
 
         //punishing player
         GameObject.Find("Game Manager").GetComponent<gameManager>().badView();
-        gameManager.score -= 500;
+        if(gameManager.score  > 500 ) gameManager.score -= 500;
         PlayerPrefs.SetInt("money", gameManager.score);
-        scoreText.GetComponent<TextMeshProUGUI>().text = "x " + (gameManager.score);
+        cashUpdate(gameManager.score);
 
         //destroying sheep
         speed = Mathf.Clamp(Vector3.Distance(transform.position, sheepCage.transform.position), 1f, 6f);
@@ -258,5 +259,15 @@ public class sheepDestroyer : MonoBehaviour
     public void Destruction()
     {
         StartCoroutine(deathAnimation());
+    }
+
+    void cashUpdate(int current)
+    {
+        string cash = current.ToString("N0", new NumberFormatInfo()
+        {
+            NumberGroupSizes = new[] { 3 },
+            NumberGroupSeparator = ","
+        });
+        scoreText.GetComponent<TextMeshProUGUI>().text = "$" + cash;
     }
 }

@@ -6,17 +6,11 @@ public class PlayServicesMyVersion : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		PlayGamesClientConfiguration config = new PlayGamesClientConfiguration();
+		PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder().Build();
 	    PlayGamesPlatform.DebugLogEnabled = true;
         PlayGamesPlatform.InitializeInstance(config);
 	    PlayGamesPlatform.Activate();
 	    GooglePlayGames.OurUtils.Logger.DebugLogEnabled = true;
-	    signIn();
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
 	}
 
     public void SignInCallback(bool success)
@@ -25,9 +19,13 @@ public class PlayServicesMyVersion : MonoBehaviour {
         {
             print("yey");
         }
+        else
+        {
+            print("err");
+        }
     }
 
-    void signIn()
+    public void signIn()
     {
         if (!Social.localUser.authenticated)
         {
@@ -38,7 +36,7 @@ public class PlayServicesMyVersion : MonoBehaviour {
         }
         else
         {
-            print("error");
+            print("already In");
         }
 
     }

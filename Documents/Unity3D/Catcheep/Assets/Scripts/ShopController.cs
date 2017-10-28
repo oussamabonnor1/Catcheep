@@ -62,11 +62,13 @@ public class ShopController : MonoBehaviour
 
     public void showLeaderBoard()
     {
+        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().signIn();
         GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().showLeaderbordUI();
     }
 
     public void ShowAchievements()
     {
+        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().signIn();
         GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().showAchievementUI();
     }
 

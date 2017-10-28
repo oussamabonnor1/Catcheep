@@ -52,6 +52,7 @@ public class startMenuManager : MonoBehaviour
         portion = (float) 1 / menuCount;
         portion = (float) Math.Round(portion, 2);
         musicManager = GameObject.Find("Music Manager").GetComponent<music>();
+        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().signIn();
         //first time playing: giving the player some hearts 
         if (PlayerPrefs.GetInt("maxHearts") == 0)
         {
@@ -435,7 +436,7 @@ public class startMenuManager : MonoBehaviour
     { 
         PlayerPrefs.SetInt("rateUs",1);
         closeRateUsPanel();
-        Application.OpenURL("");
+        Application.OpenURL("https://play.google.com/store/apps/details?id=com.JetLightstudio.Catcheep");
     }
 
     public void rateUsMaybe()
@@ -448,7 +449,7 @@ public class startMenuManager : MonoBehaviour
         PlayerPrefs.SetInt("rateUs", 1);
         closeRateUsPanel();
     }
-
+    
     public void notifications()
     {
         if (PlayerPrefs.GetInt("notifications") == 0)

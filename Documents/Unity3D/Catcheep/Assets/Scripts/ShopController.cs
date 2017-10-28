@@ -213,11 +213,11 @@ public class ShopController : MonoBehaviour
         {
             OpenMoneyPanel("You Reached maximum energy Drinks capacity !");
         }
-        else if (PlayerPrefs.GetInt("money") >= 20000)
+        else if (PlayerPrefs.GetInt("money") >= 75000)
         {
             StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
-                "Do you wanna buy more energy drinks capacity (+1) ?";
+                "Do you wanna max fill energy drinks ?";
             DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(moreCapacity);
         }
         else
@@ -229,8 +229,11 @@ public class ShopController : MonoBehaviour
     void moreCapacity()
     {
         musicManager.UISFX(0);
-        PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 20000);
+        PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 75000);
         PlayerPrefs.SetInt("maxHearts", PlayerPrefs.GetInt("maxHearts") + 1);
+        PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("maxHearts"));
+        GameObject.Find("hearts").GetComponent<TextMeshProUGUI>().text =
+            "x" + PlayerPrefs.GetInt("hearts");
         cashUpdate(PlayerPrefs.GetInt("money"));
         DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         StartCoroutine(objectClosed(DecisionPanel));

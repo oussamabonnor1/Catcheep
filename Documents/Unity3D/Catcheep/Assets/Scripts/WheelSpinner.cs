@@ -145,12 +145,14 @@ public class WheelSpinner : MonoBehaviour
                 break;
             case 3:
                 PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + 10000);
+                PlayerPrefs.SetInt("mostMoney", PlayerPrefs.GetInt("mostMoney") + 10000);
                 break;
             case 4:
                 PlayerPrefs.SetInt("hayStackStock", PlayerPrefs.GetInt("hayStackStock") + 1);
                 break;
             case 5:
                 PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + 5000);
+                PlayerPrefs.SetInt("mostMoney", PlayerPrefs.GetInt("mostMoney") + 5000);
                 break;
         }
         GameObject.Find("Cash text").GetComponent<TextMeshProUGUI>().text = "$" + PlayerPrefs.GetInt("money");

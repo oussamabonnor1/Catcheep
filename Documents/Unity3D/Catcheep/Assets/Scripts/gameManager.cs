@@ -186,15 +186,15 @@ public class gameManager : MonoBehaviour
             musicImages[PlayerPrefs.GetInt("music")];
         if (SceneManager.GetActiveScene().name.Equals("Farm"))
         {
-            musicManager.GetComponent<music>().BackgroundMusic(1);
+            musicManager.BackgroundMusic(1);
         }
         if (SceneManager.GetActiveScene().name.Equals("Snow"))
         {
-            musicManager.GetComponent<music>().BackgroundMusic(2);
+            musicManager.BackgroundMusic(2);
         }
         if (SceneManager.GetActiveScene().name.Equals("City"))
         {
-            musicManager.GetComponent<music>().BackgroundMusic(3);
+            musicManager.BackgroundMusic(3);
         }
     }
 
@@ -332,6 +332,8 @@ public class gameManager : MonoBehaviour
             || finishPanelSafetyNet > 2)
         {
             musicManager.GetComponent<music>().UISFX(4);
+            GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().addValueToLeaderbord(GPGSIds.leaderboard_most_money_earned,PlayerPrefs.GetInt("mostMoney"));
+            GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().addValueToLeaderbord(GPGSIds.leaderboard_most_sheep_caught,PlayerPrefs.GetInt("mostSheepy"));
             PlayerPrefs.SetInt("sheepy", totalSheepsCaught);
             //i wish i was focused enough to find a more beautiful way of assigning values but...
             //it's been a long 3 months working on this 'game' and i honestly jst wanna get it over with.

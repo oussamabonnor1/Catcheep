@@ -221,6 +221,7 @@ public class AlienManager : MonoBehaviour
                     PlayerPrefs.GetInt("sheep" + currentSheepShowed) - sheepyRequested[currentSheepShowed]);
                 PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") - sheepyRequested[currentSheepShowed]);
                 PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + (sheepyRequested[currentSheepShowed] * 100));
+                PlayerPrefs.SetInt("mostMoney", PlayerPrefs.GetInt("mostMoney") + (sheepyRequested[currentSheepShowed] * 100));
                 cashUpdate(PlayerPrefs.GetInt("money"));
                 sheepNumberText.GetComponent<TextMeshProUGUI>().text = " x " + PlayerPrefs.GetInt("sheepy");
                 sheepyRequested[currentSheepShowed] = 0;
@@ -746,9 +747,24 @@ public class AlienManager : MonoBehaviour
             PlayerPrefs.SetInt("levelUp", 0);
             receivedMail(true);
             mailButton.GetComponent<Button>().enabled = false;
+            switch ((PlayerPrefs.GetInt("level")))
+            {
+                case 10:
+                    GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockAchievement(GPGSIds.achievement_reach_level_10);
+                    break;
+                case 20:
+                    GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockAchievement(GPGSIds.achievement_reach_level_20);
+                    break;
+                case 30:
+                    GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockAchievement(GPGSIds.achievement_reach_level_30);
+                    break;
+                case 40:
+                    GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockAchievement(GPGSIds.achievement_reach_level_40);
+                    break;
+            }
         }
-        else
-        {
+        else { 
+            GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockAchievement(GPGSIds.achievement_reach_level_50);
             SceneManager.LoadScene("Introduction");
         }
     }

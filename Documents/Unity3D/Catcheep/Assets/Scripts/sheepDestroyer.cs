@@ -131,6 +131,7 @@ public class sheepDestroyer : MonoBehaviour
         gameManager.score += 200 + 10 * gameManager.combo;
         cashUpdate(gameManager.score);
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") + 200 + 10 * gameManager.combo);
+        PlayerPrefs.SetInt("mostMoney", PlayerPrefs.GetInt("mostMoney") + 200 + 10 * gameManager.combo);
         if (obstacle.gameObject.name == "Car(Clone)")
         {
             GameObject.Find("Music Manager").GetComponent<music>().ObjectsSound(5);
@@ -208,10 +209,14 @@ public class sheepDestroyer : MonoBehaviour
         //rewarding player
         ++gameManager.totalSheepsCaught;
         PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") + 1);
-        sheepsCaughtText.GetComponent<TextMeshProUGUI>().text = " x " + gameManager.totalSheepsCaught;
+        PlayerPrefs.SetInt("mostSheepy", PlayerPrefs.GetInt("mostSheepy") + 1);
+        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockPartialAchievement(GPGSIds.achievement_catch_1000_sheeps, PlayerPrefs.GetInt("mostSheepy"));
+        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockPartialAchievement(GPGSIds.achievement_catch_2500_sheeps, PlayerPrefs.GetInt("mostSheepy"));
+            sheepsCaughtText.GetComponent<TextMeshProUGUI>().text = " x " + gameManager.totalSheepsCaught;
         ++gameManager.combo;
         gameManager.score += 10 * gameManager.combo;
         PlayerPrefs.SetInt("money", gameManager.score);
+        PlayerPrefs.SetInt("mostMoney", PlayerPrefs.GetInt("mostMoney") + 10 * gameManager.combo);
         cashUpdate(gameManager.score);
 
         //destroying sheep

@@ -6,12 +6,12 @@ public class PlayServicesMyVersion : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		/*PlayGamesClientConfiguration config = new PlayGamesClientConfiguration();
+		PlayGamesClientConfiguration config = new PlayGamesClientConfiguration();
 	    PlayGamesPlatform.DebugLogEnabled = true;
         PlayGamesPlatform.InitializeInstance(config);
 	    PlayGamesPlatform.Activate();
 	    GooglePlayGames.OurUtils.Logger.DebugLogEnabled = true;
-	    signIn();*/
+	    signIn();
 	}
 	
 	// Update is called once per frame

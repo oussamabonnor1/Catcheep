@@ -56,7 +56,18 @@ public class ShopController : MonoBehaviour
     public void moreInfo()
     {
         musicManager.UISFX(0);
+        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockAchievement(GPGSIds.achievement_curious_player);
         SceneManager.LoadScene("Credit");
+    }
+
+    public void showLeaderBoard()
+    {
+        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().showLeaderbordUI();
+    }
+
+    public void ShowAchievements()
+    {
+        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().showAchievementUI();
     }
 
     public void buyShipButton()

@@ -14,6 +14,7 @@ public class OpeningSceneScript : MonoBehaviour
 	// Use this for initialization
 	void Start ()
 	{
+	    GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().signIn();
         Text.GetComponent<TextMeshProUGUI>().text = hints[Random.Range(0,hints.Length)];
 	    StartCoroutine(opening());
     }

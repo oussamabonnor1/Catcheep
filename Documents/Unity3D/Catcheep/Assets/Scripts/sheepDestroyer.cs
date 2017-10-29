@@ -210,8 +210,8 @@ public class sheepDestroyer : MonoBehaviour
         ++gameManager.totalSheepsCaught;
         PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") + 1);
         PlayerPrefs.SetInt("mostSheepy", PlayerPrefs.GetInt("mostSheepy") + 1);
-        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockPartialAchievement(GPGSIds.achievement_catch_1000_sheeps, PlayerPrefs.GetInt("mostSheepy"));
-        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockPartialAchievement(GPGSIds.achievement_catch_2500_sheeps, PlayerPrefs.GetInt("mostSheepy"));
+        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockPartialAchievement(GPGSIds.achievement_catch_1000_sheeps, (double) PlayerPrefs.GetInt("mostSheepy") / 1000);
+        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockPartialAchievement(GPGSIds.achievement_catch_2500_sheeps, (double) PlayerPrefs.GetInt("mostSheepy") / 1000);
             sheepsCaughtText.GetComponent<TextMeshProUGUI>().text = " x " + gameManager.totalSheepsCaught;
         ++gameManager.combo;
         gameManager.score += 10 * gameManager.combo;

@@ -16,7 +16,7 @@ public class OpeningSceneScript : MonoBehaviour
 	{
 	    GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().signIn();
         Text.GetComponent<TextMeshProUGUI>().text = hints[Random.Range(0,hints.Length)];
-	    StartCoroutine(opening());
+            StartCoroutine(opening());
     }
 	
 	// Update is called once per frame

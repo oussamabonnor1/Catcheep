@@ -180,7 +180,7 @@ public class helpManager : MonoBehaviour
         loveUsed = true;
 
         GameObject loveGameObject = Instantiate(helpTools[2], transform.position, Quaternion.identity);
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(8f);
         Destroy(loveGameObject);
 
         loveUsed = false;

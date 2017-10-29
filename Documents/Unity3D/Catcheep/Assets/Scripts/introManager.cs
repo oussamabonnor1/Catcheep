@@ -22,6 +22,7 @@ public class introManager : MonoBehaviour
         PlayerPrefs.SetInt("netStock", 1);
         PlayerPrefs.SetInt("hayStackStock", 1);
         PlayerPrefs.SetInt("loveStock", 1);
+        PlayerPrefs.GetString("Vibration", "True");
         musicManager = GameObject.Find("Music Manager").GetComponent<music>();
         musicManager.ObjectsSound(1);
         musicManager.UISFX(1);

@@ -641,6 +641,9 @@ public class ShopController : MonoBehaviour
         if (result == ShowResult.Finished && PlayerPrefs.GetInt("maxHearts") < 10)
         {
             PlayerPrefs.SetInt("maxHearts", PlayerPrefs.GetInt("maxHearts") + 1);
+            PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("maxHearts"));
+            GameObject.Find("hearts").GetComponent<TextMeshProUGUI>().text =
+                "x" + PlayerPrefs.GetInt("hearts");
         }
     }
     void buyALifeAd(ShowResult result)

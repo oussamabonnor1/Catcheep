@@ -63,14 +63,19 @@ public class ShopController : MonoBehaviour
     public void showLeaderBoard()
     {
         PlayServicesMyVersion music = GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>();
-        //music.signIn();
-        music.showLeaderbordUI();
+        if (!music.showLeaderbordUI())
+        {
+            OpenMoneyPanel("You are not logged in to google play !");
+        }
     }
 
     public void ShowAchievements()
     {
-        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().signIn();
-        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().showAchievementUI();
+        PlayServicesMyVersion music = GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>();
+        if (!music.showAchievementUI())
+        {
+            OpenMoneyPanel("You are not logged in to google play !");
+        }
     }
 
     public void buyShipButton()

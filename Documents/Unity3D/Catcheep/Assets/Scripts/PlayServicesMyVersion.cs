@@ -1,5 +1,6 @@
 ﻿using GooglePlayGames;
 using GooglePlayGames.BasicApi;
+using UnityEngine.SocialPlatforms;
 using UnityEngine;
 
 public class PlayServicesMyVersion : MonoBehaviour {
@@ -52,9 +53,10 @@ public class PlayServicesMyVersion : MonoBehaviour {
         Social.ReportProgress(id,pourcentage,succes => {print("achievement partialy unlocked !");});
     }
 
-    public void showAchievementUI()
+    public bool showAchievementUI()
     {
         Social.ShowAchievementsUI();
+        return Social.localUser.authenticated;
     }
 
     public void addValueToLeaderbord(string id, int score)
@@ -62,9 +64,10 @@ public class PlayServicesMyVersion : MonoBehaviour {
         Social.ReportScore(score, id, succes => {print("score added to leaderbord");});
     }
 
-    public void showLeaderbordUI()
+    public bool showLeaderbordUI()
     {
         Social.ShowLeaderboardUI();
+        return Social.localUser.authenticated;
     }
 
     public void showQuest()

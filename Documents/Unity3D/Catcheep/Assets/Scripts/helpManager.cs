@@ -172,6 +172,15 @@ public class helpManager : MonoBehaviour
         gameManager.gameOver = true;
     }
 
+    public IEnumerator errorCall()
+    {
+        slider.GetComponent<Slider>().value += 0.1f;
+        Color color = slider.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>().color;
+        slider.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = new Color(255,47,0);
+        yield return new WaitForSeconds(0.5f);
+        slider.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = color;
+    }
+
     IEnumerator loveClickedcall()
     {
 

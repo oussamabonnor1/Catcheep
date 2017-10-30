@@ -128,6 +128,7 @@ public class gameManager : MonoBehaviour
             {
                 combo = 0;
                 StartCoroutine(flareMaker(0.45f));
+                StartCoroutine(GameObject.Find("Help Manager").GetComponent<helpManager>().errorCall());
                 if (PlayerPrefs.GetString("Vibration") == "True") Handheld.Vibrate();
             }
 

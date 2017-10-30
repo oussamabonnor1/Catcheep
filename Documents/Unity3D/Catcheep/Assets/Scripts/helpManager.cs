@@ -174,9 +174,9 @@ public class helpManager : MonoBehaviour
 
     public IEnumerator errorCall()
     {
-        slider.GetComponent<Slider>().value += 0.1f;
+        slider.GetComponent<Slider>().value += 0.025f;
         Color color = slider.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>().color;
-        slider.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = new Color(255,47,0);
+        slider.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = Color.red;
         yield return new WaitForSeconds(0.5f);
         slider.transform.GetChild(1).transform.GetChild(0).GetComponent<Image>().color = color;
     }

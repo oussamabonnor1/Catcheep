@@ -659,58 +659,79 @@ public class AlienManager : MonoBehaviour
 
     public void sheepyClicked()
     {
-        musicManager.UISFX(0);
-        StartCoroutine(objectClosed(SheepMapGameObject));
-        currentSheepShowed = -1;
-        shipGoingRightButtonClicked();
+        if (currentSheepShowed != 0)
+        {
+            musicManager.UISFX(0);
+            StartCoroutine(objectClosed(SheepMapGameObject));
+            currentSheepShowed = -1;
+            shipGoingRightButtonClicked();
+        }
     }
 
     public void blackyClicked()
     {
-        musicManager.UISFX(0);
-        StartCoroutine(objectClosed(SheepMapGameObject));
-        currentSheepShowed = 0;
-        shipGoingRightButtonClicked();
+        if (currentSheepShowed != 1)
+        {
+            musicManager.UISFX(0);
+            StartCoroutine(objectClosed(SheepMapGameObject));
+            currentSheepShowed = 0;
+            shipGoingRightButtonClicked();
+        }
     }
 
     public void flashClicked()
     {
-        musicManager.UISFX(0);
-        StartCoroutine(objectClosed(SheepMapGameObject));
-        currentSheepShowed = 1;
-        shipGoingRightButtonClicked();
+        if (currentSheepShowed != 2)
+        {
+            musicManager.UISFX(0);
+            StartCoroutine(objectClosed(SheepMapGameObject));
+            currentSheepShowed = 1;
+            shipGoingRightButtonClicked();
+        }
     }
 
     public void sheepySnowClicked()
     {
-        musicManager.UISFX(0);
-        StartCoroutine(objectClosed(SheepMapGameObject));
-        currentSheepShowed = 2;
-        shipGoingRightButtonClicked();
+        if (currentSheepShowed != 3)
+        {
+            musicManager.UISFX(0);
+            StartCoroutine(objectClosed(SheepMapGameObject));
+            currentSheepShowed = 2;
+            shipGoingRightButtonClicked();
+        }
     }
 
     public void blackySnowClicked()
     {
-        musicManager.UISFX(0);
-        StartCoroutine(objectClosed(SheepMapGameObject));
-        currentSheepShowed = 3;
-        shipGoingRightButtonClicked();
+        if (currentSheepShowed != 4)
+        {
+            musicManager.UISFX(0);
+            StartCoroutine(objectClosed(SheepMapGameObject));
+            currentSheepShowed = 3;
+            shipGoingRightButtonClicked();
+        }
     }
 
     public void sheepyCityClicked()
     {
-        musicManager.UISFX(0);
-        StartCoroutine(objectClosed(SheepMapGameObject));
-        currentSheepShowed = 4;
-        shipGoingRightButtonClicked();
+        if (currentSheepShowed != 5)
+        {
+            musicManager.UISFX(0);
+            StartCoroutine(objectClosed(SheepMapGameObject));
+            currentSheepShowed = 4;
+            shipGoingRightButtonClicked();
+        }
     }
 
     public void blackyCityClicked()
     {
-        musicManager.UISFX(0);
-        StartCoroutine(objectClosed(SheepMapGameObject));
-        currentSheepShowed = 5;
-        shipGoingRightButtonClicked();
+        if (currentSheepShowed != 6)
+        {
+            musicManager.UISFX(0);
+            StartCoroutine(objectClosed(SheepMapGameObject));
+            currentSheepShowed = 5;
+            shipGoingRightButtonClicked();
+        }
     }
 
     public void CloseAdsPanel()
@@ -768,8 +789,6 @@ public class AlienManager : MonoBehaviour
             SceneManager.LoadScene("Introduction");
         }
     }
-
-    //level up panel functions
 
     public void closeLevelUpPanel()
     {

@@ -217,11 +217,7 @@ public class ShopController : MonoBehaviour
     {
         DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         musicManager.UISFX(1);
-        if (PlayerPrefs.GetInt("maxHearts") >= 10)
-        {
-            OpenMoneyPanel("You Reached maximum energy Drinks capacity !");
-        }
-        else if (PlayerPrefs.GetInt("money") >= 75000)
+        if (PlayerPrefs.GetInt("money") >= 75000)
         {
             StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
@@ -238,7 +234,7 @@ public class ShopController : MonoBehaviour
     {
         musicManager.UISFX(0);
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 75000);
-        PlayerPrefs.SetInt("maxHearts", PlayerPrefs.GetInt("maxHearts") + 1);
+        if(PlayerPrefs.GetInt("maxHearts") < 10) PlayerPrefs.SetInt("maxHearts", PlayerPrefs.GetInt("maxHearts") + 1);
         PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("maxHearts"));
         GameObject.Find("hearts").GetComponent<TextMeshProUGUI>().text =
             "x" + PlayerPrefs.GetInt("hearts");
@@ -638,9 +634,9 @@ public class ShopController : MonoBehaviour
     }
     void moreCapacityAd(ShowResult result)
     {
-        if (result == ShowResult.Finished && PlayerPrefs.GetInt("maxHearts") < 10)
+        if (result == ShowResult.Finished)
         {
-            PlayerPrefs.SetInt("maxHearts", PlayerPrefs.GetInt("maxHearts") + 1);
+            if(PlayerPrefs.GetInt("maxHearts") < 10) PlayerPrefs.SetInt("maxHearts", PlayerPrefs.GetInt("maxHearts") + 1);
             PlayerPrefs.SetInt("hearts", PlayerPrefs.GetInt("maxHearts"));
             GameObject.Find("hearts").GetComponent<TextMeshProUGUI>().text =
                 "x" + PlayerPrefs.GetInt("hearts");

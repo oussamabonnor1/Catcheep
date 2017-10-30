@@ -749,16 +749,16 @@ public class AlienManager : MonoBehaviour
             mailButton.GetComponent<Button>().enabled = false;
             switch ((PlayerPrefs.GetInt("level")))
             {
-                case 10:
+                case 9:
                     GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockAchievement(GPGSIds.achievement_reach_level_10);
                     break;
-                case 20:
+                case 19:
                     GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockAchievement(GPGSIds.achievement_reach_level_20);
                     break;
-                case 30:
+                case 29:
                     GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockAchievement(GPGSIds.achievement_reach_level_30);
                     break;
-                case 40:
+                case 39:
                     GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockAchievement(GPGSIds.achievement_reach_level_40);
                     break;
             }

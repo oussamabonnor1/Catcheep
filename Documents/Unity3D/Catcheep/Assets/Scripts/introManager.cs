@@ -85,8 +85,6 @@ public class introManager : MonoBehaviour
             case 11:
                 textBG.SetActive(true);
                 textIteams[6].SetActive(true);
-                index += 1;
-                manager();
                 break;
             default:
                 killEverything();
@@ -124,10 +122,13 @@ public class introManager : MonoBehaviour
         musicManager.UISFX(0);
         killEverything();
         index += 1;
-        if (PlayerPrefs.GetInt("level") == 0) manager();
-        else
-        {
-            ending();
+        if(index > 11) StartCoroutine(objectClosed(mainPanel));
+        else {
+            if (PlayerPrefs.GetInt("level") == 0) manager();
+            else
+            {
+                ending();
+            }
         }
     }
 
@@ -175,7 +176,6 @@ public class introManager : MonoBehaviour
 
     IEnumerator objectClosed(GameObject objectToOpen)
     {
-        yield return new WaitForSeconds(1f);
         for (int i = 10; i >= 0; i--)
         {
             float a = (float) i / 10;
@@ -184,7 +184,7 @@ public class introManager : MonoBehaviour
         }
         objectToOpen.SetActive(false);
         PlayerPrefs.SetInt("intro", 1);
-        yield return new WaitForSeconds(0.5f);
+        //yield return new WaitForSeconds(0.5f);
         musicManager.GetComponents<AudioSource>()[2].Stop();
         SceneManager.LoadScene(1);
     }

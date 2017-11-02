@@ -245,7 +245,7 @@ public class gameManager : MonoBehaviour
                 {
                     case -6:
                         //making sure boss sheepy is rare af
-                        int j = Random.Range(0, 15);
+                        int j = Random.Range(0, 20);
                         if (j == 1) StartCoroutine(bossSheepy());
                         break;
                     case -5:

@@ -18,6 +18,7 @@ public class creditController : MonoBehaviour {
 
     public void facebook()
     {
+        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockAchievement(GPGSIds.achievement_social_media);
         Application.OpenURL("fb://page/344400029290078");
     }
 

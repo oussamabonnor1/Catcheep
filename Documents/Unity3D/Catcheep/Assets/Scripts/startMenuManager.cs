@@ -387,6 +387,7 @@ public class startMenuManager : MonoBehaviour
 
     public void moreGames()
     {
+        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockAchievement(GPGSIds.achievement_seeking_our_games);
         Application.OpenURL("https://play.google.com/store/apps/dev?id=5638230701137828274");
     }
 
@@ -433,7 +434,8 @@ public class startMenuManager : MonoBehaviour
     }
 
     public void rateUsYes()
-    { 
+    {
+        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockAchievement(GPGSIds.achievement_thanks_for_rating_us);
         PlayerPrefs.SetInt("rateUs",1);
         closeRateUsPanel();
         Application.OpenURL("https://play.google.com/store/apps/details?id=com.JetLightstudio.Catcheep");

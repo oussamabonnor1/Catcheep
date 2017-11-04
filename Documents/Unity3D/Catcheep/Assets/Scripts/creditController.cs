@@ -37,4 +37,8 @@ public class creditController : MonoBehaviour {
         Application.OpenURL("https://plus.google.com/106078600308560786022");
     }
 
+    public void donate()
+    {
+        Application.OpenURL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZSFVQGH5P7SQS");
+    }
 }

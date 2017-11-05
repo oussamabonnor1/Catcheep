@@ -90,14 +90,18 @@ public class startMenuManager : MonoBehaviour
         if (PlayerPrefs.GetInt("rateUs") == 0)
         {
             int a = Random.Range(0, 20);
-            if(a == 12) openRateUsPanel();
+            if (a == 12) openRateUsPanel();
+            else
+            {
+                //donate panel potentiely showing up
+                if (PlayerPrefs.GetInt("donate") == 0)
+                {
+                    int b = Random.Range(0, 20);
+                    if (b == 12) openDonatePanel();
+                }
+            }
         }
-        //rate us panel potentiely showing up
-        if (PlayerPrefs.GetInt("donate") == 0)
-        {
-            int a = Random.Range(0, 20);
-            if (a == 12) openDonatePanel();
-        }
+        
         //giving data to texts (as late as possible)
         heartText.GetComponent<TextMeshProUGUI>().text = "x" + PlayerPrefs.GetInt("hearts");
         moneyText.GetComponent<TextMeshProUGUI>().text = "$" + PlayerPrefs.GetInt("money");
@@ -476,6 +480,7 @@ public class startMenuManager : MonoBehaviour
     }
     public void donateYes()
     {
+        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockAchievement(GPGSIds.achievement_donator);
         PlayerPrefs.SetInt("donate", 1);
         closeRateUsPanel();
         Application.OpenURL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZSFVQGH5P7SQS");

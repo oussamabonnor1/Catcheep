@@ -296,6 +296,7 @@ public class ShopController : MonoBehaviour
     void ShipTwo()
     {
         musicManager.UISFX(0);
+        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockAchievement(GPGSIds.achievement_buy_space_ship_2);
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 150000);
         cashUpdate(PlayerPrefs.GetInt("money"));
         PlayerPrefs.SetInt("ship", 2);
@@ -331,6 +332,7 @@ public class ShopController : MonoBehaviour
     void ShipThree()
     {
         musicManager.UISFX(0);
+        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockAchievement(GPGSIds.achievement_buy_spaceship_3);
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 400000);
         cashUpdate(PlayerPrefs.GetInt("money"));
         PlayerPrefs.SetInt("ship", 3);
@@ -366,6 +368,7 @@ public class ShopController : MonoBehaviour
     void ShipFour()
     {
         musicManager.UISFX(0);
+        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockAchievement(GPGSIds.achievement_buy_spaceship_4);
         PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 750000);
         cashUpdate(PlayerPrefs.GetInt("money"));
         PlayerPrefs.SetInt("ship", 4);

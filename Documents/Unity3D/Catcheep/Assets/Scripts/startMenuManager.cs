@@ -24,6 +24,7 @@ public class startMenuManager : MonoBehaviour
     public GameObject ProgressPanel;
     public GameObject noHeartsPanel;
     public GameObject rateUsPanel;
+    public GameObject donatePanel;
     public GameObject AlienButton;
     private Scrollbar ScrollBar;
 
@@ -90,6 +91,12 @@ public class startMenuManager : MonoBehaviour
         {
             int a = Random.Range(0, 20);
             if(a == 12) openRateUsPanel();
+        }
+        //rate us panel potentiely showing up
+        if (PlayerPrefs.GetInt("donate") == 0)
+        {
+            int a = Random.Range(0, 20);
+            if (a == 12) openDonatePanel();
         }
         //giving data to texts (as late as possible)
         heartText.GetComponent<TextMeshProUGUI>().text = "x" + PlayerPrefs.GetInt("hearts");
@@ -422,6 +429,8 @@ public class startMenuManager : MonoBehaviour
         StartCoroutine(objectClosed(noHeartsPanel));
     }
 
+    #region rate us panel
+    
     public void openRateUsPanel()
     {
         musicManager.UISFX(1);
@@ -432,7 +441,7 @@ public class startMenuManager : MonoBehaviour
         musicManager.UISFX(2);
         StartCoroutine(objectClosed(rateUsPanel));
     }
-
+    
     public void rateUsYes()
     {
         GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockAchievement(GPGSIds.achievement_thanks_for_rating_us);
@@ -451,7 +460,39 @@ public class startMenuManager : MonoBehaviour
         PlayerPrefs.SetInt("rateUs", 1);
         closeRateUsPanel();
     }
-    
+    #endregion
+
+    #region donate panel
+
+    public void openDonatePanel()
+    {
+        musicManager.UISFX(1);
+        StartCoroutine(objectOpened(donatePanel));
+    }
+    public void closeDonatePanel()
+    {
+        musicManager.UISFX(2);
+        StartCoroutine(objectClosed(donatePanel));
+    }
+    public void donateYes()
+    {
+        PlayerPrefs.SetInt("donate", 1);
+        closeRateUsPanel();
+        Application.OpenURL("https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=ZSFVQGH5P7SQS");
+    }
+
+    public void donateMaybe()
+    {
+        closeRateUsPanel();
+    }
+
+    public void donateNo()
+    {
+        PlayerPrefs.SetInt("donate", 1);
+        closeRateUsPanel();
+    }
+    #endregion
+
     public void notifications()
     {
         if (PlayerPrefs.GetInt("notifications") == 0)

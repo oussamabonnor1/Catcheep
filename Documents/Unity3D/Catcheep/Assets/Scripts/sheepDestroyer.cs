@@ -147,7 +147,7 @@ public class sheepDestroyer : MonoBehaviour
             GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockPartialAchievement(GPGSIds.achievement_car_crasher, (double)PlayerPrefs.GetInt("snowCrushed") / 50);
             StartCoroutine(deathAnimation());
         }
-        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().addValueToLeaderbord(GPGSIds.leaderboard_obstacles_destroyed, (PlayerPrefs.GetInt("snowCrushed") + PlayerPrefs.GetInt("carsCrushed")));
+        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().addValueToLeaderbord(GPGSIds.leaderboard_obstacles_destroyed, PlayerPrefs.GetInt("snowCrushed") + PlayerPrefs.GetInt("carsCrushed"));
     }
 
     public void sheepClicked()

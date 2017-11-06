@@ -135,8 +135,7 @@ public class sheepDestroyer : MonoBehaviour
         if (obstacle.gameObject.name == "Car(Clone)")
         {
             PlayerPrefs.SetInt("carsCrushed", PlayerPrefs.GetInt("carsCrushed") + 1);
-            GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockPartialAchievement(GPGSIds.achievement_car_crasher,(double) PlayerPrefs.GetInt("carsCrushed")/50);
-            GameObject.Find("Music Manager").GetComponent<music>().ObjectsSound(5);
+             GameObject.Find("Music Manager").GetComponent<music>().ObjectsSound(5);
             GameObject explosionGameObject = Instantiate(explosion, obstacle.transform.position, Quaternion.identity);
             Destroy(explosionGameObject, 1f);
             obstacle.gameObject.SetActive(false);
@@ -144,10 +143,8 @@ public class sheepDestroyer : MonoBehaviour
         else
         {
             PlayerPrefs.SetInt("snowCrushed", PlayerPrefs.GetInt("snowCrushed") + 1);
-            GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockPartialAchievement(GPGSIds.achievement_car_crasher, (double)PlayerPrefs.GetInt("snowCrushed") / 50);
             StartCoroutine(deathAnimation());
         }
-        GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().addValueToLeaderbord(GPGSIds.leaderboard_obstacles_destroyed, PlayerPrefs.GetInt("snowCrushed") + PlayerPrefs.GetInt("carsCrushed"));
     }
 
     public void sheepClicked()

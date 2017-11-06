@@ -31,11 +31,6 @@ public class Tutoriel : MonoBehaviour
             TutoGameObject.SetActive(false);
         }
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public void startSceneTutoriel()
     {

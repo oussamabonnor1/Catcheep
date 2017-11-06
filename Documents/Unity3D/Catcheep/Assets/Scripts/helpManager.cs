@@ -136,7 +136,7 @@ public class helpManager : MonoBehaviour
         
         if (helpGameObject.tag == "hayStack")
         {
-            StartCoroutine(helpDestroyer(3f, helpToolGameObject));
+            StartCoroutine(helpDestroyer(8f, helpToolGameObject));
         }
         if (helpGameObject.tag == "net")
         {

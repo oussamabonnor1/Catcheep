@@ -411,7 +411,7 @@ public class ShopController : MonoBehaviour
     {
         DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();
         musicManager.UISFX(1);
-        if (PlayerPrefs.GetInt("money") >= 100000)
+        if (PlayerPrefs.GetInt("money") >= 50000)
         {
             StartCoroutine(objectOpened(DecisionPanel));
             DecisionPanel.transform.GetChild(1).GetComponentInChildren<TextMeshProUGUI>().text =
@@ -429,7 +429,7 @@ public class ShopController : MonoBehaviour
     {
         musicManager.UISFX(0);
         PlayerPrefs.SetInt("netStock", PlayerPrefs.GetInt("netStock") + 1);
-        PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 100000);
+        PlayerPrefs.SetInt("money", PlayerPrefs.GetInt("money") - 50000);
         cashUpdate(PlayerPrefs.GetInt("money"));
         HelpToolsGameObject.transform.GetChild(1).transform.GetChild(5).GetComponent<TextMeshProUGUI>().text = "" + PlayerPrefs.GetInt("netStock");
         DecisionPanel.transform.GetChild(3).GetComponent<Button>().onClick.RemoveAllListeners();

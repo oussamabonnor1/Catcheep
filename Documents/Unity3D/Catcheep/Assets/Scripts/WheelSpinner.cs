@@ -31,12 +31,7 @@ public class WheelSpinner : MonoBehaviour
         musicManager = GameObject.Find("Music Manager").GetComponent<music>();
         dailySpinTime();
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-    }
-
+    
     public void spin()
     {
         if (PlayerPrefs.GetInt("spin") > 0)

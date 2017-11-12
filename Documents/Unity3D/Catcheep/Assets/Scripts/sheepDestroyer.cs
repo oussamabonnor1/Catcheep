@@ -67,7 +67,7 @@ public class sheepDestroyer : MonoBehaviour
                 }
             }
         }*/
-        if (Input.touchCount < 3 && Input.touchCount > 0)
+        if (Input.touchCount < 3 && Input.touchCount > 0 && !gameManager.pukeShowed)
         {
             foreach (Touch touch in Input.touches)
             {
@@ -212,13 +212,7 @@ public class sheepDestroyer : MonoBehaviour
         ++gameManager.totalSheepsCaught;
         PlayerPrefs.SetInt("sheepy", PlayerPrefs.GetInt("sheepy") + 1);
         PlayerPrefs.SetInt("mostSheepy", PlayerPrefs.GetInt("mostSheepy") + 1);
-        PlayServicesMyVersion psmv = GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>();
-        psmv.unlockPartialAchievement(GPGSIds.achievement_catch_1000_sheeps, (double) PlayerPrefs.GetInt("mostSheepy") / 1000);
-        psmv.unlockPartialAchievement(GPGSIds.achievement_catch_2500_sheeps, (double) PlayerPrefs.GetInt("mostSheepy") / 2500);
-        psmv.unlockPartialAchievement(GPGSIds.achievement_catch_5000_sheeps, (double) PlayerPrefs.GetInt("mostSheepy") / 5000);
-        psmv.unlockPartialAchievement(GPGSIds.achievement_catch_7500_sheeps, (double) PlayerPrefs.GetInt("mostSheepy") / 7500);
-        psmv.unlockPartialAchievement(GPGSIds.achievement_catche_10000_sheeps, (double) PlayerPrefs.GetInt("mostSheepy") / 10000);
-            sheepsCaughtText.GetComponent<TextMeshProUGUI>().text = " x " + gameManager.totalSheepsCaught;
+        sheepsCaughtText.GetComponent<TextMeshProUGUI>().text = " x " + gameManager.totalSheepsCaught;
         ++gameManager.combo;
         gameManager.score += 10 * gameManager.combo;
         PlayerPrefs.SetInt("money", gameManager.score);

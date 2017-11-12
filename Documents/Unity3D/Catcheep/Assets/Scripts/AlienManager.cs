@@ -784,7 +784,9 @@ public class AlienManager : MonoBehaviour
                     break;
             }
         }
-        else { 
+        else
+        {
+            PlayerPrefs.SetInt("level", PlayerPrefs.GetInt("level") + 1);
             GameObject.Find("Music Manager").GetComponent<PlayServicesMyVersion>().unlockAchievement(GPGSIds.achievement_reach_level_50);
             SceneManager.LoadScene("Introduction");
         }

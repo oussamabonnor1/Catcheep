@@ -91,17 +91,14 @@ public class startMenuManager : MonoBehaviour
         {
             int a = Random.Range(0, 20);
             if (a == 12) openRateUsPanel();
-            else
-            {
-                //donate panel potentiely showing up
-                if (PlayerPrefs.GetInt("donate") == 0)
-                {
-                    int b = Random.Range(0, 20);
-                    if (b == 12) openDonatePanel();
-                }
-            }
         }
-        
+        //donate panel potentiely showing up
+        if (PlayerPrefs.GetInt("donate") == 0 && !rateUsPanel.activeSelf)
+        {
+            int b = Random.Range(0, 20);
+            if (b == 12) openDonatePanel();
+        }
+
         //giving data to texts (as late as possible)
         heartText.GetComponent<TextMeshProUGUI>().text = "x" + PlayerPrefs.GetInt("hearts");
         moneyText.GetComponent<TextMeshProUGUI>().text = "$" + PlayerPrefs.GetInt("money");

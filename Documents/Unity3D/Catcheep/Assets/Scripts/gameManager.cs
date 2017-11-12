@@ -42,6 +42,7 @@ public class gameManager : MonoBehaviour
     public static int snowBlackyCaught;
     public static int cityBlackyCaught;
     public static bool catchedSomething;
+    public static bool pukeShowed;
     public bool tutorielFinished;
 
     private int originalScore;
@@ -63,6 +64,7 @@ public class gameManager : MonoBehaviour
         finishPanelSafetyNet = 0;
         tutorielFinished = false;
         catchedSomething = false;
+        pukeShowed = false;
         totalSheepsCaught = PlayerPrefs.GetInt("sheepy");
         combo = 0;
         originalScore = PlayerPrefs.GetInt("money");
@@ -339,6 +341,12 @@ public class gameManager : MonoBehaviour
             psvm.unlockPartialAchievement(GPGSIds.achievement_car_crasher, (double)PlayerPrefs.GetInt("carsCrushed") / 50);
             psvm.unlockPartialAchievement(GPGSIds.achievement_car_crasher, (double)PlayerPrefs.GetInt("snowCrushed") / 50);
             psvm.addValueToLeaderbord(GPGSIds.leaderboard_obstacles_destroyed, PlayerPrefs.GetInt("snowCrushed") + PlayerPrefs.GetInt("carsCrushed"));
+            psvm.unlockPartialAchievement(GPGSIds.achievement_catch_1000_sheeps, (double)PlayerPrefs.GetInt("mostSheepy") / 1000);
+            psvm.unlockPartialAchievement(GPGSIds.achievement_catch_2500_sheeps, (double)PlayerPrefs.GetInt("mostSheepy") / 2500);
+            psvm.unlockPartialAchievement(GPGSIds.achievement_catch_5000_sheeps, (double)PlayerPrefs.GetInt("mostSheepy") / 5000);
+            psvm.unlockPartialAchievement(GPGSIds.achievement_catch_7500_sheeps, (double)PlayerPrefs.GetInt("mostSheepy") / 7500);
+            psvm.unlockPartialAchievement(GPGSIds.achievement_catche_10000_sheeps, (double)PlayerPrefs.GetInt("mostSheepy") / 10000);
+
             PlayerPrefs.SetInt("sheepy", totalSheepsCaught);
             //i wish i was focused enough to find a more beautiful way of assigning values but...
             //it's been a long 3 months working on this 'game' and i honestly jst wanna get it over with.
@@ -402,6 +410,7 @@ public class gameManager : MonoBehaviour
         }
     }
 
+    #region sheep formations
     //one sheepy formations
     void oneSheepyRandom(int index)
     {
@@ -588,6 +597,7 @@ public class gameManager : MonoBehaviour
         }
     }
     //end of sliding forme sheepy
+    #endregion
 
     public void ShowAd()
     {
@@ -619,12 +629,14 @@ public class gameManager : MonoBehaviour
 
     IEnumerator badViewCoroutine()
     {
+        pukeShowed = true;
         BadViewGameObject.SetActive(true);
         StartCoroutine(objectOpened(BadViewGameObject));
         yield return new WaitForSeconds(2);
         StartCoroutine(objectClosed(BadViewGameObject));
         yield return new WaitForSeconds(0.3f);
         BadViewGameObject.SetActive(false);
+        pukeShowed = false;
     }
 
     IEnumerator objectOpened(GameObject objectToOpen)

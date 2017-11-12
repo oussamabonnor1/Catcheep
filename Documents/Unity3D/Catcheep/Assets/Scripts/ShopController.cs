@@ -278,6 +278,7 @@ public class ShopController : MonoBehaviour
         {
             musicManager.UISFX(0);
             PlayerPrefs.SetInt("ship", 2);
+            OpenMoneyPanel("You Selected Ship 2");
         }
         else if (PlayerPrefs.GetInt("money") >= 150000)
         {
@@ -314,6 +315,7 @@ public class ShopController : MonoBehaviour
         {
             musicManager.UISFX(0);
             PlayerPrefs.SetInt("ship", 3);
+            OpenMoneyPanel("You Selected Ship 3");
         }
         else if(PlayerPrefs.GetInt("money") >= 400000)
         {
@@ -350,6 +352,7 @@ public class ShopController : MonoBehaviour
         {
             musicManager.UISFX(0);
             PlayerPrefs.SetInt("ship", 4);
+            OpenMoneyPanel("You Selected Ship 4");
         }
         else if (PlayerPrefs.GetInt("money") >= 750000 )
         {

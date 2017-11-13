@@ -263,7 +263,7 @@ public class gameManager : MonoBehaviour
                         oneSheepyRandom(0);
                         break;
                     case -1:
-                        oneSheepyRandom(0);
+                        oneSheepyRandom(4);
                         break;
                     case 0:
                         oneSheepyRandom(3);

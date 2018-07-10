@@ -1,12 +1,12 @@
-"# Catcheep" 
+# Catcheep 
 Catcheep is an android game where you play as someone helping aliens to go back to their planet, the way to do so is by catching sheep that are concidered as their energy source, Made with Unity3D!
 
-# Aliens came to visit our planet but guess what? They ran out of fuel and you've got to help them out! 
+## Aliens came to visit our planet but guess what? They ran out of fuel and you've got to help them out! 
 Here's the kicker though: Sheep are the fuel aliens need for their spaceships engines to start!
 
 ![screenshot_20171005-231640](https://user-images.githubusercontent.com/17766221/33531668-9eea2b6c-d890-11e7-989c-b1c363817e6c.png)
 
-# Wolfy is their savior, Fortunately!
+## Wolfy is their savior, Fortunately!
 he proposed a deal and they agreed to pay for the amount of sheep needed. But Wolfy can't do it on his own. Your mission, then, is to help Wolfy catch the right number of sheep! But beware of the sick sheepies; the aliens are very picky when it comes to quality! 
 
 ![screenshot_20171103-193109](https://user-images.githubusercontent.com/17766221/33531680-b5c650f4-d890-11e7-96d8-94987c4291b2.png)
@@ -15,7 +15,7 @@ he proposed a deal and they agreed to pay for the amount of sheep needed. But Wo
 
 Follow Wolfy's instructions in order to properly catch the requested sheep amounts in each mission and then exchange them with cash. 
 
-# You can also purchase the sheepy help tools in the shop to make it easier to catch them ! 
+## You can also purchase the sheepy help tools in the shop to make it easier to catch them ! 
 
 ![screenshot_20171103-192346](https://user-images.githubusercontent.com/17766221/33531713-2b263d78-d891-11e7-9082-8df2098b928a.png)
 

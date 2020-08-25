@@ -1,9 +1,9 @@
 # Catcheep 
+
+![GitHub license](https://img.shields.io/github/license/oussamabonnor1/Catcheep.svg)
+![Jetlight studio](https://img.shields.io/badge/Made%20by-Jetlight%20studio-blue.svg?color=082544)
+
 Catcheep is an android game where you play as someone helping aliens to go back to their planet, the way to do so is by catching sheep that are concidered as their energy source, Made with Unity3D!
-
-## Art made by:
-
-  [Khadidja Boukridmi](https://github.com/BK-Star)
 
 ## Aliens came to visit our planet but guess what? They ran out of fuel and you've got to help them out! 
 Here's the kicker though: Sheep are the fuel aliens need for their spaceships engines to start!
@@ -30,3 +30,9 @@ To get even more help, search for the sheepy tips we gave you to have an even be
 <img src="https://user-images.githubusercontent.com/17766221/33531677-b51e3202-d890-11e7-91d6-7ed6bc2ce323.png" width="250" /> &nbsp;&nbsp;
 <img src="https://user-images.githubusercontent.com/17766221/33531683-b6395522-d890-11e7-9ce4-e70c7aaf0b4b.png" width="250" /> &nbsp;&nbsp;
 <img src="https://user-images.githubusercontent.com/17766221/33531684-b65ea872-d890-11e7-981e-41f9b9becf69.png" width="250" /> &nbsp;&nbsp;
+
+## Team:
+[Jetlighters](https://github.com/JetLightStudio) having fun.
+
+### special thanks to: 
+ [Khadidja Boukridmi](https://github.com/BK-Star)

@@ -1,6 +1,10 @@
 # Catcheep 
 Catcheep is an android game where you play as someone helping aliens to go back to their planet, the way to do so is by catching sheep that are concidered as their energy source, Made with Unity3D!
 
+## Art made by:
+
+  [Khadidja Boukridmi](https://github.com/BK-Star)
+
 ## Aliens came to visit our planet but guess what? They ran out of fuel and you've got to help them out! 
 Here's the kicker though: Sheep are the fuel aliens need for their spaceships engines to start!
 
